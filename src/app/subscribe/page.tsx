@@ -20,16 +20,16 @@ export default function Subscribe() {
     employees: ''
   });
 
-  const validateEmail = (email) => {
+  const validateEmail = (email: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
 
-  const validatePhone = (phone) => {
+  const validatePhone = (phone: string) => {
     return /^\d{7}$/.test(phone);
   };
 
-  const parseEmployees = (employeesText) => {
+  const parseEmployees = (employeesText: string) => {
     if (!employeesText.trim()) return [];
     
     const lines = employeesText.split('\n').filter(line => line.trim());
@@ -52,7 +52,7 @@ export default function Subscribe() {
     return employees;
   };
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
@@ -61,7 +61,7 @@ export default function Subscribe() {
     setError('');
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     setError('');
@@ -303,7 +303,7 @@ export default function Subscribe() {
                   onChange={handleInputChange}
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
                   placeholder="1234567"
-                  maxLength="7"
+                  maxLength={7}
                 />
                 <p className="text-sm text-gray-500 mt-1">
                   <LanguageContent fallback="Fyrir Aur greiðslur">

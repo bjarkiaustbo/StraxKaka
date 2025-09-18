@@ -6,10 +6,32 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
 import LanguageContent from '@/components/LanguageContent';
 
+interface Company {
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+  subscriptionStatus: string;
+  monthlyCost: number;
+  employeeCount: number;
+  nextBillingDate: string;
+  lastPaymentDate: string;
+}
+
+interface Payment {
+  id: string;
+  orderId: string;
+  amount: number;
+  status: string;
+  aurStatus: string;
+  createdAt: string;
+  completedAt: string;
+}
+
 export default function Dashboard() {
   const { t } = useLanguage();
-  const [companies, setCompanies] = useState([]);
-  const [payments, setPayments] = useState([]);
+  const [companies, setCompanies] = useState<Company[]>([]);
+  const [payments, setPayments] = useState<Payment[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
@@ -61,7 +83,7 @@ export default function Dashboard() {
     }
   };
 
-  const getStatusColor = (status) => {
+  const getStatusColor = (status: string) => {
     switch (status) {
       case 'active': return 'text-green-600 bg-green-100';
       case 'pending_payment': return 'text-yellow-600 bg-yellow-100';
@@ -71,7 +93,7 @@ export default function Dashboard() {
     }
   };
 
-  const getPaymentStatusColor = (status) => {
+  const getPaymentStatusColor = (status: string) => {
     switch (status) {
       case 'completed': return 'text-green-600 bg-green-100';
       case 'processing': return 'text-blue-600 bg-blue-100';

@@ -92,8 +92,8 @@ export default function EnhancedFileUpload({ onEmployeesAdded, onError }: Enhanc
             const rows: FileRow[] = [];
             
             // Skip header row
-            jsonData.slice(1).forEach((row: unknown[], index) => {
-              const stringRow = row.map(cell => String(cell || '').trim());
+            jsonData.slice(1).forEach((row: unknown, index) => {
+              const stringRow = (row as unknown[]).map(cell => String(cell || '').trim());
               rows.push(validateRow(stringRow, index + 2)); // +2 because we skip header and 0-indexed
             });
             
@@ -195,8 +195,9 @@ export default function EnhancedFileUpload({ onEmployeesAdded, onError }: Enhanc
       name: row.data[0].trim(),
       birthday: row.data[1].trim(),
       cakeType: row.data[2].trim(),
-      dietaryRestrictions: row.data[3]?.trim() || '',
-      specialNotes: row.data[4]?.trim() || ''
+      cakeSize: row.data[3]?.trim() || '',
+      dietaryRestrictions: row.data[4]?.trim() || '',
+      specialNotes: row.data[5]?.trim() || ''
     }));
 
     onEmployeesAdded(employees);

@@ -103,7 +103,7 @@ export default function Subscription() {
     setCompanyData(prev => ({ ...prev, [field]: value }));
   };
 
-  const handleFileEmployeesAdded = (newEmployees: any[]) => {
+  const handleFileEmployeesAdded = (newEmployees: Employee[]) => {
     setEmployees(prev => [...prev, ...newEmployees]);
     setSuccess(`${newEmployees.length} ${t('subscription.success.employees_added')}`);
     setShowFileUpload(false);
