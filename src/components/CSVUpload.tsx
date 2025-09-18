@@ -156,7 +156,10 @@ export default function CSVUpload({ onEmployeesAdded, onError }: CSVUploadProps)
   };
 
   const downloadTemplate = () => {
-    const template = 'Employee Name,Birthday (YYYY-MM-DD),Cake Type,Dietary Restrictions,Special Notes\nJohn Doe,1990-05-15,Chocolate,None,Extra chocolate frosting\nJane Smith,1985-12-03,Vanilla,Lactose-free,Small size please';
+    // Only run on client side
+    if (typeof window === 'undefined') return;
+    
+    const template = 'Employee Name,Birthday (YYYY-MM-DD),Cake Type,Cake Size,Dietary Restrictions,Special Notes\nJohn Doe,1990-05-15,Chocolate,Medium,None,Extra chocolate frosting\nJane Smith,1985-12-03,Vanilla,Small,Lactose-free,Small size please';
     const blob = new Blob([template], { type: 'text/csv' });
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');

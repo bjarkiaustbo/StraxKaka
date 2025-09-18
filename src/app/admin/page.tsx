@@ -10,6 +10,7 @@ interface Employee {
   name: string;
   birthday: string;
   cakeType: string;
+  cakeSize: string;
   dietaryRestrictions: string;
   specialNotes: string;
 }
@@ -143,8 +144,11 @@ export default function Admin() {
   };
 
   const exportToCSV = () => {
+    // Only run on client side
+    if (typeof window === 'undefined') return;
+    
     const csvContent = [
-      ['Company Name', 'Contact Person', 'Email', 'Phone', 'Address', 'Employee Name', 'Birthday', 'Cake Type', 'Dietary Restrictions', 'Special Notes', 'Date Created'],
+      ['Company Name', 'Contact Person', 'Email', 'Phone', 'Address', 'Employee Name', 'Birthday', 'Cake Type', 'Cake Size', 'Dietary Restrictions', 'Special Notes', 'Date Created'],
       ...submissions.flatMap(submission => 
         submission.employees.map(employee => [
           submission.companyName,
@@ -155,6 +159,7 @@ export default function Admin() {
           employee.name,
           employee.birthday,
           employee.cakeType,
+          employee.cakeSize || '',
           employee.dietaryRestrictions,
           employee.specialNotes,
           new Date(submission.dateCreated).toLocaleDateString()

@@ -67,13 +67,13 @@ export default function About() {
                 {t('about.mission.desc')}
               </p>
               <p className="text-lg text-gray-600 mb-6">
-                Ég byrjaði þetta verkefni árið 2024 til að hjálpa fyrirtækjum að gleyma aldrei afmælisdögum starfsmanna með AI sjálfvirkni.
+                {t('about.mission.desc2')}
               </p>
             </div>
             <div className="bg-yellow-100 rounded-2xl p-8 text-center">
               <div className="text-6xl mb-4">🚀</div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">Nýtt verkefni</h3>
-              <p className="text-gray-600">Í þróun fyrir íslensk fyrirtæki</p>
+              <h3 className="text-2xl font-bold text-gray-900 mb-4">{t('about.project.title')}</h3>
+              <p className="text-gray-600">{t('about.project.desc')}</p>
             </div>
           </div>
         </div>
@@ -254,6 +254,32 @@ export default function About() {
               </>
             )}
           </LanguageContent>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-20 bg-yellow-500">
+        <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl md:text-4xl font-bold text-black mb-6">
+            {t('about.cta.title')}
+          </h2>
+          <p className="text-xl text-black mb-8">
+            {t('about.cta.subtitle')}
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link 
+              href="/subscription" 
+              className="bg-black text-yellow-500 px-8 py-4 rounded-full hover:bg-gray-800 transition-colors font-semibold text-lg"
+            >
+              {t('about.cta.subscribe')}
+            </Link>
+            <Link 
+              href="/contact" 
+              className="bg-white text-black px-8 py-4 rounded-full hover:bg-gray-100 transition-colors font-semibold text-lg"
+            >
+              {t('about.cta.contact')}
+            </Link>
+          </div>
         </div>
       </section>
 

@@ -197,9 +197,14 @@ export default function Services() {
           <p className="text-xl text-gray-800 mb-8">
             {t('services.cta.subtitle')}
           </p>
-          <a href="/contact" className="bg-black text-yellow-500 px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-800 transition-colors">
-            Hafa samband
-          </a>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="/subscription" className="bg-yellow-500 text-black px-8 py-4 rounded-full text-lg font-semibold hover:bg-yellow-400 transition-colors">
+              {t('services.cta.subscribe')}
+            </a>
+            <a href="/contact" className="bg-black text-yellow-500 px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-800 transition-colors">
+              {t('services.cta.contact')}
+            </a>
+          </div>
         </div>
       </section>
 

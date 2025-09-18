@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import LanguageContent from '@/components/LanguageContent';
 
@@ -31,7 +31,13 @@ export default function EnhancedFileUpload({ onEmployeesAdded, onError }: Enhanc
   const [isProcessing, setIsProcessing] = useState(false);
   const [showPreview, setShowPreview] = useState(false);
   const [fileName, setFileName] = useState('');
+  const [isClient, setIsClient] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // Only render on client side
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   const validateDate = (dateString: string): boolean => {
     const date = new Date(dateString);
@@ -219,12 +225,15 @@ export default function EnhancedFileUpload({ onEmployeesAdded, onError }: Enhanc
   };
 
   const downloadTemplate = async (format: 'csv' | 'xlsx') => {
+    // Only run on client side
+    if (typeof window === 'undefined') return;
+    
     try {
       const templateData = [
-        ['Employee Name', 'Birthday (YYYY-MM-DD)', 'Cake Type', 'Dietary Restrictions', 'Special Notes'],
-        ['John Doe', '1990-05-15', 'Chocolate', 'None', 'Extra chocolate frosting'],
-        ['Jane Smith', '1985-12-03', 'Vanilla', 'Lactose-free', 'Small size please'],
-        ['Mike Johnson', '1992-08-22', 'Strawberry', 'Gluten-free', 'Birthday celebration']
+        ['Employee Name', 'Birthday (YYYY-MM-DD)', 'Cake Type', 'Cake Size', 'Dietary Restrictions', 'Special Notes'],
+        ['John Doe', '1990-05-15', 'Chocolate', 'Medium', 'None', 'Extra chocolate frosting'],
+        ['Jane Smith', '1985-12-03', 'Vanilla', 'Small', 'Lactose-free', 'Small size please'],
+        ['Mike Johnson', '1992-08-22', 'Strawberry', 'Large', 'Gluten-free', 'Birthday celebration']
       ];
 
       if (format === 'csv') {
@@ -256,9 +265,17 @@ export default function EnhancedFileUpload({ onEmployeesAdded, onError }: Enhanc
   };
 
   const openGoogleSheets = () => {
+    // Only run on client side
+    if (typeof window === 'undefined') return;
+    
     const templateUrl = 'https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit?usp=sharing';
     window.open(templateUrl, '_blank');
   };
+
+  // Don't render on server side
+  if (!isClient) {
+    return <div className="space-y-6"><div className="text-center py-8">Loading...</div></div>;
+  }
 
   return (
     <div className="space-y-6">
