@@ -66,7 +66,7 @@ export default function About() {
                   <h3 className="text-xl font-semibold text-gray-900 mb-2">Stofnandi</h3>
                   <p className="text-yellow-600 font-medium mb-2">Einn maður, mikil draumur</p>
                   <p className="text-gray-600">
-                    Ég er einn maður sem byrjaði þetta verkefni árið 2024 til að hjálpa fyrirtækjum að gleyma aldrei afmælisdögum starfsmanna með AI sjálfvirkni.
+                    Ég er einn maður sem byrjaði þetta verkefni árið 2025 til að hjálpa fyrirtækjum að gleyma aldrei afmælisdögum starfsmanna með AI sjálfvirkni.
                   </p>
                 </>
               }>
@@ -301,7 +301,7 @@ export default function About() {
           </div>
           
           <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-            <p>&copy; 2024 StraxKaka. {t('footer.copyright')}</p>
+            <p>&copy; 2025 StraxKaka. {t('footer.copyright')}</p>
           </div>
         </div>
       </footer>

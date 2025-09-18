@@ -43,7 +43,7 @@ export default function Legal() {
                 <div>
                   <p className="text-gray-700"><strong>Fyrirtækisheiti:</strong> StraxKaka ehf.</p>
                   <p className="text-gray-700"><strong>Kennitala:</strong> 123456-7890</p>
-                  <p className="text-gray-700"><strong>Stofnun:</strong> 2024</p>
+                  <p className="text-gray-700"><strong>Stofnun:</strong> 2025</p>
                   <p className="text-gray-700"><strong>Rechtsform:</strong> Einstaklingsfyrirtæki</p>
                 </div>
                 <div>
@@ -207,7 +207,7 @@ export default function Legal() {
           </div>
           
           <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-            <p>&copy; 2024 StraxKaka. Allur réttur áskilinn.</p>
+            <p>&copy; 2025 StraxKaka. Allur réttur áskilinn.</p>
           </div>
         </div>
       </footer>

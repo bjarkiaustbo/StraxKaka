@@ -38,7 +38,7 @@ export default function Privacy() {
           
           <div className="prose prose-lg max-w-none">
             <p className="text-gray-600 mb-6">
-              <strong>Síðast uppfært:</strong> 17. september 2024
+              <strong>Síðast uppfært:</strong> 18. september 2025
             </p>
 
             <h2 className="text-2xl font-bold text-gray-900 mb-4">1. Inngangur</h2>
@@ -178,7 +178,7 @@ export default function Privacy() {
           </div>
           
           <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-            <p>&copy; 2024 StraxKaka. Allur réttur áskilinn.</p>
+            <p>&copy; 2025 StraxKaka. Allur réttur áskilinn.</p>
           </div>
         </div>
       </footer>
