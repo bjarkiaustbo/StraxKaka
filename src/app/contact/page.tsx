@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useLanguage } from '@/contexts/LanguageContext';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
 import LanguageContent from '@/components/LanguageContent';
+import Navigation from '@/components/Navigation';
 
 export default function Contact() {
   const { t } = useLanguage();
@@ -72,39 +73,7 @@ export default function Contact() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
-      {/* Navigation */}
-      <nav className="bg-black shadow-lg">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-6">
-                <div className="flex items-center">
-                  <Link href="/" className="text-2xl font-bold text-yellow-500">StraxKaka</Link>
-                </div>
-                <div className="hidden md:flex space-x-8">
-                  <LanguageContent fallback={<Link href="/" className="text-gray-300 hover:text-yellow-400 transition-colors">Heim</Link>}>
-                    {(t) => <Link href="/" className="text-gray-300 hover:text-yellow-400 transition-colors">{t('nav.home')}</Link>}
-                  </LanguageContent>
-                  <LanguageContent fallback={<Link href="/about" className="text-gray-300 hover:text-yellow-400 transition-colors">Um okkur</Link>}>
-                    {(t) => <Link href="/about" className="text-gray-300 hover:text-yellow-400 transition-colors">{t('nav.about')}</Link>}
-                  </LanguageContent>
-                  <LanguageContent fallback={<Link href="/services" className="text-gray-300 hover:text-yellow-400 transition-colors">Þjónusta</Link>}>
-                    {(t) => <Link href="/services" className="text-gray-300 hover:text-yellow-400 transition-colors">{t('nav.services')}</Link>}
-                  </LanguageContent>
-                  <LanguageContent fallback={<Link href="/contact" className="text-yellow-500 font-semibold">Hafa samband</Link>}>
-                    {(t) => <Link href="/contact" className="text-yellow-500 font-semibold">{t('nav.contact')}</Link>}
-                  </LanguageContent>
-                  <LanguageContent fallback={<Link href="/subscription" className="text-gray-300 hover:text-yellow-400 transition-colors">Áskrift</Link>}>
-                    {(t) => <Link href="/subscription" className="text-gray-300 hover:text-yellow-400 transition-colors">{t('nav.subscription')}</Link>}
-                  </LanguageContent>
-                </div>
-                <div className="flex items-center space-x-4">
-                  <LanguageSwitcher />
-                  <Link href="/contact" className="bg-yellow-500 text-black px-6 py-2 rounded-full hover:bg-yellow-400 transition-colors font-semibold">
-                    {t('nav.start_now')}
-                  </Link>
-                </div>
-          </div>
-        </div>
-      </nav>
+      <Navigation currentPage="contact" />
 
       {/* Hero Section */}
       <section className="py-20 px-4 sm:px-6 lg:px-8">

@@ -5,6 +5,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import ClientOnly from "@/components/ClientOnly";
 import LanguageContent from "@/components/LanguageContent";
+import Navigation from "@/components/Navigation";
 
 export default function Home() {
   const { t, isHydrated } = useLanguage();
@@ -39,50 +40,7 @@ export default function Home() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
       <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
-        {/* Navigation */}
-        <nav className="bg-black shadow-lg">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-6">
-            <div className="flex items-center">
-        <Image
-                src="/logo.svg"
-                alt="StraxKaka Logo"
-                width={200}
-                height={60}
-                className="h-12 w-auto"
-              />
-            </div>
-            <div className="hidden md:flex space-x-8">
-              <LanguageContent fallback={<a href="/about" className="text-gray-300 hover:text-yellow-400 transition-colors">Um okkur</a>}>
-                {(t) => <a href="/about" className="text-gray-300 hover:text-yellow-400 transition-colors">{t('nav.about')}</a>}
-              </LanguageContent>
-              <LanguageContent fallback={<a href="/services" className="text-gray-300 hover:text-yellow-400 transition-colors">Þjónusta</a>}>
-                {(t) => <a href="/services" className="text-gray-300 hover:text-yellow-400 transition-colors">{t('nav.services')}</a>}
-              </LanguageContent>
-              <LanguageContent fallback={<a href="#how-it-works" className="text-gray-300 hover:text-yellow-400 transition-colors scroll-smooth">Hvernig virkar þetta?</a>}>
-                {(t) => <a href="#how-it-works" className="text-gray-300 hover:text-yellow-400 transition-colors scroll-smooth">{t('home.how_it_works.title')}</a>}
-              </LanguageContent>
-              <LanguageContent fallback={<a href="/contact" className="text-gray-300 hover:text-yellow-400 transition-colors">Hafa samband</a>}>
-                {(t) => <a href="/contact" className="text-gray-300 hover:text-yellow-400 transition-colors">{t('nav.contact')}</a>}
-              </LanguageContent>
-              <LanguageContent fallback={<a href="/subscription" className="text-gray-300 hover:text-yellow-400 transition-colors">Áskrift</a>}>
-                {(t) => <a href="/subscription" className="text-gray-300 hover:text-yellow-400 transition-colors">{t('nav.subscription')}</a>}
-              </LanguageContent>
-            </div>
-            
-                <div className="flex items-center space-x-4">
-                  <LanguageSwitcher />
-                  <LanguageContent fallback={<a href="/contact" className="bg-yellow-500 text-black px-6 py-2 rounded-full hover:bg-yellow-400 transition-colors font-semibold">Byrja núna</a>}>
-                    {(t) => <a href="/contact" className="bg-yellow-500 text-black px-6 py-2 rounded-full hover:bg-yellow-400 transition-colors font-semibold">
-                      {t('nav.start_now')}
-                    </a>}
-                  </LanguageContent>
-
-                </div>
-          </div>
-          
-        </div>
-      </nav>
+        <Navigation currentPage="home" />
 
       {/* Hero Section */}
       <section className="relative py-20 px-4 sm:px-6 lg:px-8">

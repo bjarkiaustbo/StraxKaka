@@ -8,6 +8,7 @@ import LanguageSwitcher from '@/components/LanguageSwitcher';
 import LanguageContent from '@/components/LanguageContent';
 import EnhancedFileUpload from '@/components/EnhancedFileUpload';
 import PricingTable from '@/components/PricingTable';
+import Navigation from '@/components/Navigation';
 
 interface Employee {
   name: string;
@@ -266,19 +267,7 @@ export default function Subscription() {
   if (isSubmitted) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
-        {/* Navigation */}
-        <nav className="bg-black shadow-lg">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex justify-between items-center py-6">
-              <div className="flex items-center">
-                <Link href="/" className="text-2xl font-bold text-yellow-500">StraxKaka</Link>
-              </div>
-              <div className="flex items-center space-x-4">
-                <LanguageSwitcher />
-              </div>
-            </div>
-          </div>
-        </nav>
+        <Navigation currentPage="subscription" />
 
         {/* Success Message */}
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
@@ -408,36 +397,7 @@ export default function Subscription() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
-      {/* Navigation */}
-      <nav className="bg-black shadow-lg">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-6">
-            <div className="flex items-center">
-              <Link href="/" className="text-2xl font-bold text-yellow-500">StraxKaka</Link>
-            </div>
-            <div className="hidden md:flex space-x-8">
-              <LanguageContent fallback={<Link href="/" className="text-gray-300 hover:text-yellow-400 transition-colors">Heim</Link>}>
-                {(t) => <Link href="/" className="text-gray-300 hover:text-yellow-400 transition-colors">{t('nav.home')}</Link>}
-              </LanguageContent>
-              <LanguageContent fallback={<Link href="/about" className="text-gray-300 hover:text-yellow-400 transition-colors">Um okkur</Link>}>
-                {(t) => <Link href="/about" className="text-gray-300 hover:text-yellow-400 transition-colors">{t('nav.about')}</Link>}
-              </LanguageContent>
-              <LanguageContent fallback={<Link href="/services" className="text-gray-300 hover:text-yellow-400 transition-colors">Þjónusta</Link>}>
-                {(t) => <Link href="/services" className="text-gray-300 hover:text-yellow-400 transition-colors">{t('nav.services')}</Link>}
-              </LanguageContent>
-              <LanguageContent fallback={<Link href="/contact" className="text-gray-300 hover:text-yellow-400 transition-colors">Hafa samband</Link>}>
-                {(t) => <Link href="/contact" className="text-gray-300 hover:text-yellow-400 transition-colors">{t('nav.contact')}</Link>}
-              </LanguageContent>
-              <LanguageContent fallback={<Link href="/subscription" className="text-yellow-500 font-semibold">Áskrift</Link>}>
-                {(t) => <Link href="/subscription" className="text-yellow-500 font-semibold">{t('nav.subscription')}</Link>}
-              </LanguageContent>
-            </div>
-            <div className="flex items-center space-x-4">
-              <LanguageSwitcher />
-            </div>
-          </div>
-        </div>
-      </nav>
+      <Navigation currentPage="subscription" />
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Progress Indicator */}
