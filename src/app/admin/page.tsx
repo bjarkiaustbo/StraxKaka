@@ -32,6 +32,9 @@ interface CompanySubmission {
 
 export default function Admin() {
   const { t } = useLanguage();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [password, setPassword] = useState('');
+  const [passwordError, setPasswordError] = useState('');
   const [submissions, setSubmissions] = useState<CompanySubmission[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedSubmission, setSelectedSubmission] = useState<CompanySubmission | null>(null);
@@ -39,7 +42,17 @@ export default function Admin() {
   const [filterCompany, setFilterCompany] = useState('');
   const [filterStatus, setFilterStatus] = useState('');
 
+  // Check if already authenticated
   useEffect(() => {
+    const authStatus = localStorage.getItem('straxkaka_admin_auth');
+    if (authStatus === 'true') {
+      setIsAuthenticated(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!isAuthenticated) return;
+    
     // Load submissions from localStorage
     const storedSubmissions = localStorage.getItem('straxkaka_submissions');
     const storedSubscriptions = localStorage.getItem('straxkaka_subscriptions');
@@ -52,7 +65,19 @@ export default function Admin() {
       setSubmissions(JSON.parse(storedSubmissions));
     }
     setLoading(false);
-  }, []);
+  }, [isAuthenticated]);
+
+  const handlePasswordSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Simple password check - you can change this password
+    if (password === 'straxkaka2025') {
+      setIsAuthenticated(true);
+      localStorage.setItem('straxkaka_admin_auth', 'true');
+      setPasswordError('');
+    } else {
+      setPasswordError('Incorrect password');
+    }
+  };
 
   const filteredSubmissions = submissions.filter(submission => {
     const matchesSearch = searchTerm === '' || 
@@ -145,6 +170,43 @@ export default function Admin() {
     a.click();
     window.URL.revokeObjectURL(url);
   };
+
+  // Password form
+  if (!isAuthenticated) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center">
+        <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+          <div className="text-center mb-6">
+            <h1 className="text-2xl font-bold text-gray-900 mb-2">Admin Access</h1>
+            <p className="text-gray-600">Enter password to access admin panel</p>
+          </div>
+          
+          <form onSubmit={handlePasswordSubmit} className="space-y-4">
+            <div>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Enter admin password"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                required
+              />
+              {passwordError && (
+                <p className="text-red-500 text-sm mt-2">{passwordError}</p>
+              )}
+            </div>
+            
+            <button
+              type="submit"
+              className="w-full bg-yellow-500 hover:bg-yellow-600 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200"
+            >
+              Access Admin Panel
+            </button>
+          </form>
+        </div>
+      </div>
+    );
+  }
 
   if (loading) {
     return (
