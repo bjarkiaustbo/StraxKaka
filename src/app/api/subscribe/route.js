@@ -3,6 +3,7 @@ import connectDB from '@/lib/mongodb';
 import Company from '@/models/Company';
 import Payment from '@/models/Payment';
 import aurService from '@/lib/aurService';
+import { sendSubscriptionConfirmation } from '@/lib/emailService';
 
 export async function POST(request) {
   try {
@@ -106,6 +107,20 @@ export async function POST(request) {
       // Update company with Aur customer ID
       company.aurCustomerId = aurResult.aurToken;
       await company.save();
+
+      // Send subscription confirmation email
+      try {
+        await sendSubscriptionConfirmation({
+          companyName: company.name,
+          contactName: company.email, // Using email as contact name for now
+          contactEmail: company.email,
+          tier: company.subscriptionTier,
+          monthlyCost: company.monthlyCost
+        });
+      } catch (emailError) {
+        console.error('Failed to send subscription email:', emailError);
+        // Don't fail the subscription if email fails
+      }
 
       return NextResponse.json({
         success: true,
