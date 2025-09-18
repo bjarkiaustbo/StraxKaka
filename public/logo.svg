@@ -1,0 +1,25 @@
+<svg width="200" height="60" viewBox="0 0 200 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Cake Icon -->
+  <g transform="translate(10, 10)">
+    <!-- Bottom tier of cake -->
+    <rect x="5" y="25" width="30" height="15" fill="#D4AF37" stroke="#B8860B" stroke-width="1"/>
+    <!-- Top tier of cake -->
+    <rect x="10" y="15" width="20" height="10" fill="#D4AF37" stroke="#B8860B" stroke-width="1"/>
+    <!-- Frosting decoration between tiers -->
+    <path d="M5 25 Q20 20 35 25" stroke="#B8860B" stroke-width="2" fill="none"/>
+    <!-- Candles -->
+    <rect x="18" y="8" width="2" height="8" fill="#D4AF37"/>
+    <rect x="20" y="8" width="2" height="8" fill="#D4AF37"/>
+    <rect x="22" y="8" width="2" height="8" fill="#D4AF37"/>
+    <!-- Flames -->
+    <circle cx="19" cy="6" r="1.5" fill="#FFD700"/>
+    <circle cx="21" cy="6" r="1.5" fill="#FFD700"/>
+    <circle cx="23" cy="6" r="1.5" fill="#FFD700"/>
+  </g>
+  
+  <!-- StraxKaka Text -->
+  <text x="55" y="35" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#D4AF37" text-shadow="2px 2px 4px rgba(0,0,0,0.3)">
+    StraxKaka
+  </text>
+</svg>
+

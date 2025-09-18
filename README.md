@@ -1,36 +1,101 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# StraxKaka Website
 
-## Getting Started
+AI sjálfvirkni fyrirtæki sem panta kökur fyrir starfsmenn fyrirtækja svo enginn gleymi afmælisdögum.
 
-First, run the development server:
+## Tæknistack
+
+- **Next.js 15** - React framework
+- **TypeScript** - Type safety
+- **Tailwind CSS** - Styling
+- **Vercel** - Deployment
+
+## Key Features
+
+- 🇮🇸 **Icelandic Language** - Full Icelandic content
+- 📱 **Responsive Design** - Works on all devices
+- ⚡ **Fast Performance** - Optimized for speed
+- 🔍 **SEO Optimized** - Search engine friendly
+- 📧 **Contact Forms** - Lead generation
+- 🎨 **Modern UI** - Beautiful design
+
+## Pages
+
+- **Homepage** (`/`) - Hero section, features, how it works
+- **About** (`/about`) - Company story, team, values
+- **Services** (`/services`) - Service offerings, pricing, process
+- **Contact** (`/contact`) - Contact form, information, FAQ
+
+## Development
+
+### Prerequisites
+
+- Node.js 18+ 
+- npm or yarn
+
+### Installation
 
 ```bash
+# Install dependencies
+npm install
+
+# Start development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Visit [http://localhost:3000](http://localhost:3000) to view the website.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Build for Production
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+# Build the application
+npm run build
 
-## Learn More
+# Start production server
+npm start
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Deployment
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Vercel (Recommended)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. Push code to GitHub
+2. Connect repository to Vercel
+3. Deploy automatically
 
-## Deploy on Vercel
+### Manual Deployment
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. Build the application: `npm run build`
+2. Deploy the `out` folder to your hosting provider
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Domain Setup
+
+1. Register domain: `straxkaka.is` or `straxkaka.com`
+2. Configure DNS to point to Vercel
+3. Add SSL certificate (automatic with Vercel)
+
+## Content Management
+
+All content is in Icelandic and can be updated in the respective page files:
+
+- `src/app/page.tsx` - Homepage content
+- `src/app/about/page.tsx` - About page content
+- `src/app/services/page.tsx` - Services page content
+- `src/app/contact/page.tsx` - Contact page content
+
+## SEO Features
+
+- Meta tags for each page
+- Sitemap generation
+- Robots.txt
+- Open Graph tags
+- Structured data ready
+
+## Contact Information
+
+- **Email**: info@straxkaka.is
+- **Phone**: +354 XXX XXXX
+- **Address**: Reykjavík, Ísland
+
+## License
+
+© 2024 StraxKaka. All rights reserved.

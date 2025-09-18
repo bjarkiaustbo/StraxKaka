@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StraxKaka Employee Template - Google Sheets</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .instructions {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 30px;
+        }
+        .instructions h2 {
+            color: #856404;
+            margin-top: 0;
+        }
+        .instructions ol {
+            color: #856404;
+        }
+        .template-link {
+            display: block;
+            background: #4285f4;
+            color: white;
+            text-decoration: none;
+            padding: 15px 30px;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            margin: 20px 0;
+            transition: background-color 0.3s;
+        }
+        .template-link:hover {
+            background: #3367d6;
+        }
+        .format-info {
+            background: #e8f5e8;
+            border: 1px solid #c3e6c3;
+            padding: 20px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        .format-info h3 {
+            color: #2d5a2d;
+            margin-top: 0;
+        }
+        .format-info ul {
+            color: #2d5a2d;
+        }
+        .example-table {
+            margin: 20px 0;
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        .required {
+            color: #d32f2f;
+            font-weight: bold;
+        }
+        .optional {
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎂 StraxKaka Employee Template</h1>
+        
+        <div class="instructions">
+            <h2>📋 Instructions</h2>
+            <ol>
+                <li>Click the button below to open the Google Sheets template</li>
+                <li>Make a copy of the template to your Google Drive</li>
+                <li>Fill in your employee information following the format shown</li>
+                <li>Download the file as Excel (.xlsx) or CSV format</li>
+                <li>Upload the file to the StraxKaka subscription form</li>
+            </ol>
+        </div>
+
+        <a href="https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/copy" 
+           class="template-link" 
+           target="_blank">
+            📊 Open Google Sheets Template
+        </a>
+
+        <div class="format-info">
+            <h3>📝 Required Format</h3>
+            <p>Your file should have the following columns (in this exact order):</p>
+            
+            <div class="example-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Column A<br><span class="required">Employee Name *</span></th>
+                            <th>Column B<br><span class="required">Birthday (YYYY-MM-DD) *</span></th>
+                            <th>Column C<br><span class="required">Cake Type *</span></th>
+                            <th>Column D<br><span class="required">Cake Size *</span></th>
+                            <th>Column E<br><span class="optional">Dietary Restrictions</span></th>
+                            <th>Column F<br><span class="optional">Special Notes</span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Jón Jónsson</td>
+                            <td>1990-05-15</td>
+                            <td>Chocolate</td>
+                            <td>Medium</td>
+                            <td>None</td>
+                            <td>Extra chocolate frosting</td>
+                        </tr>
+                        <tr>
+                            <td>Anna Sigurðardóttir</td>
+                            <td>1985-12-03</td>
+                            <td>Vanilla</td>
+                            <td>Small</td>
+                            <td>Lactose-free</td>
+                            <td>Small size please</td>
+                        </tr>
+                        <tr>
+                            <td>Gunnar Pétursson</td>
+                            <td>1992-08-20</td>
+                            <td>Strawberry</td>
+                            <td>Large</td>
+                            <td>Gluten-free</td>
+                            <td>Birthday is on weekend</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <ul>
+                <li><strong>Employee Name:</strong> Full name of the employee</li>
+                <li><strong>Birthday:</strong> Must be in YYYY-MM-DD format (e.g., 1990-05-15)</li>
+                <li><strong>Cake Type:</strong> Preferred cake flavor (e.g., Chocolate, Vanilla, Strawberry)</li>
+                <li><strong>Cake Size:</strong> Size of the cake (Small, Medium, Large)</li>
+                <li><strong>Dietary Restrictions:</strong> Any food allergies or dietary requirements</li>
+                <li><strong>Special Notes:</strong> Additional information or special requests</li>
+            </ul>
+        </div>
+
+        <div class="format-info">
+            <h3>✅ Supported File Formats</h3>
+            <ul>
+                <li><strong>CSV (.csv):</strong> Comma-separated values file</li>
+                <li><strong>Excel (.xlsx):</strong> Microsoft Excel 2007+ format</li>
+                <li><strong>Excel (.xls):</strong> Microsoft Excel 97-2003 format</li>
+            </ul>
+        </div>
+
+        <div class="format-info">
+            <h3>⚠️ Important Notes</h3>
+            <ul>
+                <li>Make sure the first row contains the column headers</li>
+                <li>Birthday dates must be valid and not in the future</li>
+                <li>Employee Name, Birthday, Cake Type, and Cake Size are required fields</li>
+                <li>Dietary Restrictions and Special Notes are optional</li>
+                <li>Empty rows will be ignored</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
+
