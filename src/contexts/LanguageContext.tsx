@@ -31,12 +31,12 @@ const translations = {
     'home.cta.subtitle': 'Hafðu samband við okkur í dag og fáðu að vita hvernig StraxKaka getur bætt stemninguna á vinnustaðnum þínum.',
     
     // Features
-    'features.registration.title': 'Skráning án vandræða',
+    'features.registration.title': 'Skráning í öruggu kerfi',
     'features.registration.desc': 'Hlaða inn Excel skrá eða tengja við HR kerfið. Engin flókin uppsetning, bara skrá og gleyma.',
-    'features.ai.title': 'Við muna fyrir þig',
-    'features.ai.desc': 'Kerfið muna allt: hver á afmælisdag, hvaða köku þeir vilja, og panta rétt á réttum tíma.',
-    'features.delivery.title': 'Kökurnar koma til þín',
-    'features.delivery.desc': 'Engin að fara í búð, engin að muna að panta. Kökurnar bara birtast á vinnustaðnum.',
+    'features.ai.title': 'Kerfið panta kökur fyrir þig',
+    'features.ai.desc': 'Kökurnar koma með engum áhyggjum á sérstakan daginn, með tilkynningum og öllu.',
+    'features.delivery.title': 'Við vinnum með frábærum bakaríum',
+    'features.delivery.desc': 'Sem bjóða upp á toppstig kökur og tryggja afhendingu á réttum tíma, með fjölbreytilegum valkostum.',
     
     // How it works
     'how_it_works.step1.title': '1. Skrá starfsmenn',
@@ -71,7 +71,7 @@ const translations = {
     // About page
     'about.hero.title': 'Um okkur',
     'about.hero.subtitle': 'Lausn fyrir vandamálið sem allir þekkja: gleymdir afmælisdagum',
-    'about.intro.title': 'Um okkur',
+    'about.intro.title': 'Vandamálið',
     'about.intro.desc': 'Í starfsmannadeildinni er nóg að gera – það þarf að muna afmælisdagsetningar, panta köku, sækja hana og bera fram. þetta getur verið auka stress eða þá gleymist þetta stundum. Það sem átti að vera gleðistund verður stress, og gleymdur afmælisdagur getur jafnvel skemmd vinnumorale.',
     'about.solution.title': 'Straxkaka er lausnin',
     'about.solution.desc': 'Við sjáum um allt ferlið – þú þarft ekki að lifta fingur. Enginn gleymir lengur, og fersk kaka birtist á vinnustaðnum á afmælisdaginn.',
@@ -350,20 +350,20 @@ const translations = {
     'services.cta.contact': 'Hafa samband',
     
     // Services features
-    'services.registration.feature1': 'Einföld skráning',
+    'services.registration.feature1': 'Skráning í öruggu kerfi',
     'services.registration.feature2': 'Hlaða inn Excel skrá',
     'services.registration.feature3': 'Engin flókin uppsetning',
     'services.registration.feature4': 'Örugg gagnavörn',
-    'services.ai.desc': 'Kerfið muna allt fyrir þig: hver á afmælisdag, hvaða köku þeir vilja, og panta rétt á réttum tíma. Engin að gleyma neitt.',
-    'services.ai.feature1': 'Við muna fyrir þig',
-    'services.ai.feature2': 'Sjálfvirk kökupöntun',
-    'services.ai.feature3': 'Tilkynningar til þín',
-    'services.ai.feature4': 'Engin gleymdir',
-    'services.delivery.desc': 'Við vinnum með góðum kökubúðum og sjáum um að kökurnar komi á vinnustaðinn á réttum tíma. Engin að fara í búð.',
-    'services.delivery.feature1': 'Góðar kökubúðir',
-    'services.delivery.feature2': 'Kökurnar koma til þín',
-    'services.delivery.feature3': 'Margir valkostir',
-    'services.delivery.feature4': 'Áreiðanleg þjónusta',
+    'services.ai.desc': 'Kerfið panta kökur fyrir þig. Kökurnar koma með engum áhyggjum á sérstakan daginn, með tilkynningum og öllu.',
+    'services.ai.feature1': 'Kerfið panta kökur fyrir þig',
+    'services.ai.feature2': 'Kökurnar koma með engum áhyggjum',
+    'services.ai.feature3': 'Tilkynningar og allt',
+    'services.ai.feature4': 'Á sérstakan daginn',
+    'services.delivery.desc': 'Við vinnum með frábærum bakaríum sem bjóða upp á toppstig kökur og tryggja afhendingu á réttum tíma, með fjölbreytilegum valkostum.',
+    'services.delivery.feature1': 'Frábær kökubúðir',
+    'services.delivery.feature2': 'Toppstig kökur',
+    'services.delivery.feature3': 'Fjölbreytilegir valkostir',
+    'services.delivery.feature4': 'Áreiðanleg afhending',
     
     // Contact page
     'contact.hero.title': 'Hafa samband',
@@ -704,7 +704,7 @@ const translations = {
     // About page
     'about.hero.title': 'About Us',
     'about.hero.subtitle': 'Solution for the problem everyone knows: forgotten birthdays',
-    'about.intro.title': 'About Us',
+    'about.intro.title': 'The Problem',
     'about.intro.desc': 'In HR or management, there\'s always plenty to do – remembering birthdays, ordering cakes, picking them up, serving them. Even with the best intentions, things sometimes get forgotten. What should have been a joyful moment turns into stress, and a forgotten birthday can even harm morale and damage the workplace culture.',
     'about.solution.title': 'Straxkaka is the solution',
     'about.solution.desc': 'We take care of everything – you don\'t need to lift a finger. Nobody forgets anymore, and a fresh cake shows up at the office on the birthday.',
