@@ -37,95 +37,146 @@ export default function BlogArticle() {
       {/* Article Content */}
       <section className="py-20 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="prose prose-lg max-w-none">
+          <article className="prose prose-lg max-w-none">
             <p className="text-lg text-gray-700 leading-relaxed mb-8">
-              <LanguageContent fallback="Afmælisfagnaður á vinnustaðnum er ekki bara góður fyrir starfsmenn - þeir eru líka mikilvægir fyrir fyrirtækið. Rannsóknir sýna að starfsmenn sem finna sig verðlaunaðir og virtir eru líklegri til að vera ánægðir með vinnuna og vera áfram hjá fyrirtækinu.">
+              <LanguageContent fallback="Vinnustaðir eru meira en skrifstofur þar sem verkefni eru unnin – þeir eru samfélög þar sem fólk eyðir stórum hluta lífs síns. Í þessum rýmum skiptir máli að fólk líði vel, finni sig metið og upplifi þakklæti. Ein af einföldustu en áhrifaríkustu leiðunum til að skapa þessa menningu? Að fagna afmælum.">
                 {(t) => t('blog.content.intro')}
               </LanguageContent>
             </p>
 
-            <div className="space-y-12">
-              {/* Morale Section */}
+            <div className="space-y-8">
+              {/* Why Celebrations Matter */}
+              <div>
+                <h2 className="text-xl font-bold text-gray-900 mb-4">
+                  <LanguageContent fallback="Af hverju fagnað skiptir máli">
+                    {(t) => t('blog.content.why_matter.title')}
+                  </LanguageContent>
+                </h2>
+                <p className="text-gray-700 leading-relaxed">
+                  <LanguageContent fallback="Það virðist smátt, en það að muna afmæli sendir sterkt skilaboð: „Þú skiptir máli hér." Regluleg fagnaðshátíð styrkir samstöðu og samstarf á milli starfsmanna og eykur tilfinningu um samhug. Þegar fólk finnur sig metið eykst áhugi, samvinna og framleiðni. Með öðrum orðum, smá gjörningur getur haft stór áhrif á vinnustaðinn.">
+                    {(t) => t('blog.content.why_matter.desc')}
+                  </LanguageContent>
+                </p>
+              </div>
+
+              {/* The Cost of Forgetting */}
+              <div>
+                <h2 className="text-xl font-bold text-gray-900 mb-4">
+                  <LanguageContent fallback="Afleiðingar þess að gleyma">
+                    {(t) => t('blog.content.cost_forgetting.title')}
+                  </LanguageContent>
+                </h2>
+                <p className="text-gray-700 leading-relaxed">
+                  <LanguageContent fallback="Aftur á móti, þegar afmæli gleymist, getur það valdið streitu, misskilningi og jafnvel pirringi, sem smátt og smátt skemmir starfsanda og vinnumenningu. Starfsmenn í mannauði reyna að muna öll afmæli, en í uppteknum vinnustofum með mörgum starfsmönnum er auðvelt að gleyma einhverjum. Jafnvel þegar einhver man, getur ferlið við að panta, samræma og afhenda köku verið tímafrekt og stressandi.">
+                    {(t) => t('blog.content.cost_forgetting.desc')}
+                  </LanguageContent>
+                </p>
+              </div>
+
+              {/* Enter StraxKaka */}
               <div className="bg-gradient-to-r from-yellow-50 to-amber-50 rounded-2xl p-8">
-                <h2 className="text-2xl font-bold text-gray-900 mb-4">
-                  <LanguageContent fallback="Bætir stemningu og hamingju">
-                    {(t) => t('blog.content.morale.title')}
+                <h2 className="text-xl font-bold text-gray-900 mb-4">
+                  <LanguageContent fallback="Hér kemur StraxKaka inn">
+                    {(t) => t('blog.content.enter_straxkaka.title')}
+                  </LanguageContent>
+                </h2>
+                <p className="text-gray-700 leading-relaxed mb-6">
+                  <LanguageContent fallback="Þar kemur StraxKaka til sögunnar. Þjónustan okkar tryggir að enginn afmælisdagur fari framhjá og léttir álag af mannauði og stjórnendum. Með sjálfvirkum áminningum og einfaldri kökuafhendingu sjáum við til þess að starfsmenn finni sig metna og fagnað—án þess að nokkur þurfi að lyfta fingri.">
+                    {(t) => t('blog.content.enter_straxkaka.desc')}
+                  </LanguageContent>
+                </p>
+                
+                <p className="text-gray-700 leading-relaxed mb-4">
+                  <LanguageContent fallback="Með því að fjárfesta í StraxKaka fjárfestir fyrirtækið í:">
+                    {(t) => t('blog.content.investment.intro')}
+                  </LanguageContent>
+                </p>
+                
+                <ul className="space-y-2 text-gray-700">
+                  <li className="flex items-start">
+                    <span className="text-yellow-600 mr-2">•</span>
+                    <span>
+                      <LanguageContent fallback="Hamingju starfsmanna: Litlir gjörningar eins og að muna afmæli auka starfsanda.">
+                        {(t) => t('blog.content.investment.happiness')}
+                      </LanguageContent>
+                    </span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-yellow-600 mr-2">•</span>
+                    <span>
+                      <LanguageContent fallback="Samstöðu í teymi: Að deila fagnaðshátíðum styrkir tengsl og samstarf.">
+                        {(t) => t('blog.content.investment.cohesion')}
+                      </LanguageContent>
+                    </span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-yellow-600 mr-2">•</span>
+                    <span>
+                      <LanguageContent fallback="Framleiðni: Hamingjusamir starfsmenn eru hvattari og skila betri árangri.">
+                        {(t) => t('blog.content.investment.productivity')}
+                      </LanguageContent>
+                    </span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-yellow-600 mr-2">•</span>
+                    <span>
+                      <LanguageContent fallback="Tíma og álags minnkun mannauðs: Sjálfvirkni sparar tíma og dregur úr álagi.">
+                        {(t) => t('blog.content.investment.efficiency')}
+                      </LanguageContent>
+                    </span>
+                  </li>
+                </ul>
+              </div>
+
+              {/* More Than Just Cake */}
+              <div>
+                <h2 className="text-xl font-bold text-gray-900 mb-4">
+                  <LanguageContent fallback="Meira en bara köka">
+                    {(t) => t('blog.content.more_than_cake.title')}
                   </LanguageContent>
                 </h2>
                 <p className="text-gray-700 leading-relaxed">
-                  <LanguageContent fallback="Afmælisfagnaður sýnir starfsmönnum að þeir séu virtir og verðlaunaðir. Þetta skilar sér í aukinni hamingju, betri stemningu og meiri vinnufúsleika.">
-                    {(t) => t('blog.content.morale.desc')}
+                  <LanguageContent fallback="Þetta snýst ekki bara um kökuna—heldur um að byggja menningu þar sem fólk finnur sig metið. Hvert afmæli er áminning um að hver starfsmaður skiptir máli, sem skapar vinnustað þar sem fólk hlakkar til að mæta, vinnur betur saman og byggir sterkari tengsl.">
+                    {(t) => t('blog.content.more_than_cake.desc')}
                   </LanguageContent>
                 </p>
               </div>
 
-              {/* Recognition Section */}
-              <div className="bg-gradient-to-r from-amber-50 to-orange-50 rounded-2xl p-8">
-                <h2 className="text-2xl font-bold text-gray-900 mb-4">
-                  <LanguageContent fallback="Starfsmenn finna sig séðir">
-                    {(t) => t('blog.content.recognition.title')}
-                  </LanguageContent>
-                </h2>
-                <p className="text-gray-700 leading-relaxed">
-                  <LanguageContent fallback="Þegar fyrirtæki minnist á afmælisdaga starfsmanna sýnir það að þeir séu ekki bara númer. Þetta byggir upp tengingu milli starfsmanna og fyrirtækis.">
-                    {(t) => t('blog.content.recognition.desc')}
+              {/* Conclusion */}
+              <div className="bg-gradient-to-r from-gray-50 to-yellow-50 rounded-2xl p-8">
+                <p className="text-lg text-gray-700 leading-relaxed mb-4">
+                  <LanguageContent fallback="StraxKaka gleymir ekki afmælum. Hún sætir menninguna og breytir venjulegum vinnudögum í stundir tengsla, gleði og viðurkenningar.">
+                    {(t) => t('blog.content.conclusion.main')}
                   </LanguageContent>
                 </p>
-              </div>
-
-              {/* Motivation Section */}
-              <div className="bg-gradient-to-r from-orange-50 to-yellow-50 rounded-2xl p-8">
-                <h2 className="text-2xl font-bold text-gray-900 mb-4">
-                  <LanguageContent fallback="Aukir hvatningu">
-                    {(t) => t('blog.content.motivation.title')}
-                  </LanguageContent>
-                </h2>
-                <p className="text-gray-700 leading-relaxed">
-                  <LanguageContent fallback="Starfsmenn sem finna sig verðlaunaðir eru líklegri til að leggja sig fram meira og vera afkastamikilir. Afmælisfagnaður er einfaldur en áhrifaríkur leið til að sýna þakklæti.">
-                    {(t) => t('blog.content.motivation.desc')}
-                  </LanguageContent>
-                </p>
-              </div>
-
-              {/* Time Saving Section */}
-              <div className="bg-gradient-to-r from-yellow-50 to-amber-50 rounded-2xl p-8">
-                <h2 className="text-2xl font-bold text-gray-900 mb-4">
-                  <LanguageContent fallback="Sparar tíma fyrir HR deildina">
-                    {(t) => t('blog.content.time_saving.title')}
-                  </LanguageContent>
-                </h2>
-                <p className="text-gray-700 leading-relaxed">
-                  <LanguageContent fallback="Með StraxKaka þurfa HR starfsmenn ekki að hugsa um afmælisdaga. Kerfið sér um allt - frá skráningu til afhendingar. Þetta gefur HR deildinni tíma til að einbeita sér að öðrum mikilvægum verkefnum.">
-                    {(t) => t('blog.content.time_saving.desc')}
+                <p className="text-lg font-semibold text-gray-900">
+                  <LanguageContent fallback="Fjárfestu í hamingju teymisins þíns. Fjárfestu í StraxKaka. Því þegar enginn afmælisdagur gleymist, verður vinnumenningin aðeins sætari á hverjum degi.">
+                    {(t) => t('blog.content.conclusion.cta')}
                   </LanguageContent>
                 </p>
               </div>
             </div>
 
-            {/* Conclusion */}
-            <div className="mt-12 bg-gradient-to-r from-gray-50 to-yellow-50 rounded-2xl p-8">
-              <p className="text-lg text-gray-700 leading-relaxed">
-                <LanguageContent fallback="Afmælisfagnaður á vinnustaðnum er ekki lúxus - það er nauðsynlegt fyrir heilbrigða vinnustofukúltúr. Með StraxKaka getur fyrirtækið þitt auðveldlega byrjað að fagna afmælisdögum án þess að eyða tíma í skipulagningu.">
-                  {(t) => t('blog.content.conclusion')}
-                </LanguageContent>
-              </p>
-            </div>
-
-            {/* CTA */}
-            <div className="mt-12 text-center">
+            {/* CTA Buttons */}
+            <div className="mt-12 text-center space-x-4">
               <a 
                 href="/subscription" 
                 className="inline-flex items-center bg-yellow-500 text-black px-8 py-4 rounded-full text-lg font-semibold hover:bg-yellow-400 transition-colors"
               >
-                <LanguageContent fallback="Byrjaðu að nota StraxKaka">
-                  {(t) => t('home.cta.subscribe')}
+                <LanguageContent fallback="Subscription">
+                  {(t) => t('nav.subscription')}
                 </LanguageContent>
-                <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
+              </a>
+              <a 
+                href="/contact" 
+                className="inline-flex items-center bg-white text-yellow-500 border-2 border-yellow-500 px-8 py-4 rounded-full text-lg font-semibold hover:bg-yellow-50 transition-colors"
+              >
+                <LanguageContent fallback="Contact us">
+                  {(t) => t('nav.contact')}
+                </LanguageContent>
               </a>
             </div>
-          </div>
+          </article>
         </div>
       </section>
 
