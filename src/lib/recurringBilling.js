@@ -230,7 +230,6 @@ class RecurringBillingService {
 
       const today = new Date();
       const thisMonth = new Date(today.getFullYear(), today.getMonth(), 1);
-      const lastMonth = new Date(today.getFullYear(), today.getMonth() - 1, 1);
 
       const stats = await Payment.aggregate([
         {
@@ -297,5 +296,6 @@ class RecurringBillingService {
 }
 
 // Export singleton instance
-export default new RecurringBillingService();
+const recurringBillingService = new RecurringBillingService();
+export default recurringBillingService;
 
