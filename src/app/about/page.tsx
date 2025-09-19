@@ -24,225 +24,124 @@ export default function About() {
         </div>
       </section>
 
-      {/* Mission Section */}
+      {/* Introduction Section */}
       <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-6">{t('about.mission.title')}</h2>
-              <p className="text-lg text-gray-600 mb-6">
-                {t('about.mission.desc')}
-              </p>
-              <p className="text-lg text-gray-600 mb-6">
-                {t('about.mission.desc2')}
-              </p>
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 mb-6">{t('about.intro.title')}</h2>
+            <p className="text-lg text-gray-600 leading-relaxed">
+              {t('about.intro.desc')}
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Solution Section */}
+      <section className="py-20 bg-yellow-50">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <h2 className="text-3xl font-bold text-gray-900 mb-6">{t('about.solution.title')}</h2>
+            <p className="text-lg text-gray-600 leading-relaxed">
+              {t('about.solution.desc')}
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Why Straxkaka Section */}
+      <section className="py-20 bg-white">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">{t('about.why.title')}</h2>
+          </div>
+          
+          <div className="grid md:grid-cols-3 gap-8">
+            <div className="text-center">
+              <div className="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-3">{t('about.why.no_forgotten.title')}</h3>
+              <p className="text-gray-600">{t('about.why.no_forgotten.desc')}</p>
             </div>
-            <div className="bg-yellow-100 rounded-2xl p-8 text-center">
-              <div className="text-6xl mb-4">🚀</div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">{t('about.project.title')}</h3>
-              <p className="text-gray-600">{t('about.project.desc')}</p>
+            
+            <div className="text-center">
+              <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-3">{t('about.why.zero_hassle.title')}</h3>
+              <p className="text-gray-600">{t('about.why.zero_hassle.desc')}</p>
             </div>
+            
+            <div className="text-center">
+              <div className="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg className="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-3">{t('about.why.culture.title')}</h3>
+              <p className="text-gray-600">{t('about.why.culture.desc')}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Our Promise Section */}
+      <section className="py-20 bg-gray-50">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <h2 className="text-3xl font-bold text-gray-900 mb-6">{t('about.promise.title')}</h2>
+            <p className="text-lg text-gray-600 leading-relaxed">
+              {t('about.promise.desc')}
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* The Future Section */}
+      <section className="py-20 bg-white">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <h2 className="text-3xl font-bold text-gray-900 mb-6">{t('about.future.title')}</h2>
+            <p className="text-lg text-gray-600 leading-relaxed">
+              {t('about.future.desc')}
+            </p>
           </div>
         </div>
       </section>
 
       {/* Team Section */}
-      <section className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">{t('about.team.title')}</h2>
-            <p className="text-xl text-gray-600">
+      <section className="py-20 bg-yellow-50">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 mb-6">{t('about.team.title')}</h2>
+            <p className="text-lg text-gray-600 leading-relaxed">
               {t('about.team.desc')}
             </p>
           </div>
-          
-          <div className="max-w-md mx-auto">
-            <div className="bg-white rounded-2xl p-8 text-center shadow-sm">
-              <div className="w-24 h-24 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-3xl">👨‍💻</span>
-              </div>
-              <LanguageContent fallback={
-                <>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2">Stofnandi</h3>
-                  <p className="text-yellow-600 font-medium mb-2">Einn maður, mikil draumur</p>
-                  <p className="text-gray-600">
-                    Ég er einn maður sem byrjaði þetta verkefni árið 2025 til að hjálpa fyrirtækjum að gleyma aldrei afmælisdögum starfsmanna með AI sjálfvirkni.
-                  </p>
-                </>
-              }>
-                {(t) => (
-                  <>
-                    <h3 className="text-xl font-semibold text-gray-900 mb-2">{t('about.founder.title')}</h3>
-                    <p className="text-yellow-600 font-medium mb-2">{t('about.founder.tagline')}</p>
-                    <p className="text-gray-600">
-                      {t('about.founder.desc')}
-                    </p>
-                  </>
-                )}
-              </LanguageContent>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Values Section */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">{t('about.values.title')}</h2>
-            <p className="text-xl text-gray-600">
-              {t('about.values.desc')}
-            </p>
-          </div>
-          
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="text-center">
-              <div className="bg-pink-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl">🤝</span>
-              </div>
-              <LanguageContent fallback={
-                <>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">Samvinnu</h3>
-                  <p className="text-gray-600 text-sm">
-                    Við vinnum náið með fyrirtækjum og kökubúðum til að tryggja bestu þjónustuna.
-                  </p>
-                </>
-              }>
-                {(t) => (
-                  <>
-                    <h3 className="text-lg font-semibold text-gray-900 mb-2">{t('about.values.cooperation.title')}</h3>
-                    <p className="text-gray-600 text-sm">
-                      {t('about.values.cooperation.desc')}
-                    </p>
-                  </>
-                )}
-              </LanguageContent>
-            </div>
-            
-            <div className="text-center">
-              <div className="bg-pink-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl">⚡</span>
-              </div>
-              <LanguageContent fallback={
-                <>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">Nýsköpun</h3>
-                  <p className="text-gray-600 text-sm">
-                    Við notum nýjasta tækni til að gera ferlið eins einfalt og sjálfvirkt og mögulegt er.
-                  </p>
-                </>
-              }>
-                {(t) => (
-                  <>
-                    <h3 className="text-lg font-semibold text-gray-900 mb-2">{t('about.values.innovation.title')}</h3>
-                    <p className="text-gray-600 text-sm">
-                      {t('about.values.innovation.desc')}
-                    </p>
-                  </>
-                )}
-              </LanguageContent>
-            </div>
-            
-            <div className="text-center">
-              <div className="bg-pink-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl">❤️</span>
-              </div>
-              <LanguageContent fallback={
-                <>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">Umhyggja</h3>
-                  <p className="text-gray-600 text-sm">
-                    Við höfum áhyggjur af því að starfsmenn fái að fagna afmælisdag sínum á vinnustaðnum.
-                  </p>
-                </>
-              }>
-                {(t) => (
-                  <>
-                    <h3 className="text-lg font-semibold text-gray-900 mb-2">{t('about.values.care.title')}</h3>
-                    <p className="text-gray-600 text-sm">
-                      {t('about.values.care.desc')}
-                    </p>
-                  </>
-                )}
-              </LanguageContent>
-            </div>
-            
-            <div className="text-center">
-              <div className="bg-pink-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl">🎯</span>
-              </div>
-              <LanguageContent fallback={
-                <>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">Gæði</h3>
-                  <p className="text-gray-600 text-sm">
-                    Við tryggjum aðeins bestu gæði í öllu sem við gerum - frá kökum til þjónustu.
-                  </p>
-                </>
-              }>
-                {(t) => (
-                  <>
-                    <h3 className="text-lg font-semibold text-gray-900 mb-2">{t('about.values.quality.title')}</h3>
-                    <p className="text-gray-600 text-sm">
-                      {t('about.values.quality.desc')}
-                    </p>
-                  </>
-                )}
-              </LanguageContent>
-            </div>
-          </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-yellow-500">
-        <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-          <LanguageContent fallback={
-            <>
-              <h2 className="text-3xl md:text-4xl font-bold text-black mb-4">
-                Viltu vinna með okkur?
-              </h2>
-              <p className="text-xl text-gray-800 mb-8">
-                Hafðu samband við okkur og fáðu að vita hvernig við getum hjálpað fyrirtækinu þínu
-              </p>
-              <a href="/contact" className="bg-black text-yellow-500 px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-800 transition-colors">
-                Hafa samband
-              </a>
-            </>
-          }>
-            {(t) => (
-              <>
-                <h2 className="text-3xl md:text-4xl font-bold text-black mb-4">
-                  {t('about.cta.title')}
-                </h2>
-                <p className="text-xl text-gray-800 mb-8">
-                  {t('about.cta.subtitle')}
-                </p>
-                <a href="/contact" className="bg-black text-yellow-500 px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-800 transition-colors">
-                  {t('nav.contact')}
-                </a>
-              </>
-            )}
-          </LanguageContent>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-20 bg-yellow-500">
-        <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl md:text-4xl font-bold text-black mb-6">
-            {t('about.cta.title')}
-          </h2>
-          <p className="text-xl text-black mb-8">
+      <section className="py-20 bg-gray-900">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-3xl font-bold text-white mb-6">{t('about.cta.title')}</h2>
+          <p className="text-xl text-gray-300 mb-8">
             {t('about.cta.subtitle')}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link 
               href="/subscription" 
-              className="bg-black text-yellow-500 px-8 py-4 rounded-full hover:bg-gray-800 transition-colors font-semibold text-lg"
+              className="bg-yellow-500 text-black px-8 py-3 rounded-full hover:bg-yellow-400 transition-colors font-semibold"
             >
               {t('about.cta.subscribe')}
             </Link>
             <Link 
               href="/contact" 
-              className="bg-white text-black px-8 py-4 rounded-full hover:bg-gray-100 transition-colors font-semibold text-lg"
+              className="border border-white text-white px-8 py-3 rounded-full hover:bg-white hover:text-gray-900 transition-colors font-semibold"
             >
               {t('about.cta.contact')}
             </Link>
@@ -253,49 +152,39 @@ export default function About() {
       {/* Footer */}
       <footer className="bg-black text-white py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-5 gap-8">
-            <div>
-              <h3 className="text-xl font-bold mb-4 text-yellow-500">StraxKaka</h3>
-              <p className="text-gray-400">
+          <div className="grid md:grid-cols-4 gap-8">
+            <div className="md:col-span-2">
+              <h3 className="text-2xl font-bold text-yellow-500 mb-4">StraxKaka</h3>
+              <p className="text-gray-300 mb-4">
                 {t('footer.description')}
               </p>
+              <div className="flex space-x-4">
+                <a href={`tel:${t('common.phone')}`} className="text-gray-300 hover:text-yellow-400 transition-colors">
+                  {t('common.phone')}
+                </a>
+                <a href={`mailto:${t('common.email')}`} className="text-gray-300 hover:text-yellow-400 transition-colors">
+                  {t('common.email')}
+                </a>
+              </div>
             </div>
-
+            
             <div>
-              <h4 className="text-lg font-semibold mb-4 text-yellow-500">{t('footer.services.title')}</h4>
-              <ul className="space-y-2 text-gray-400">
-                <li>{t('footer.services.birthday')}</li>
-                <li>{t('footer.services.ai')}</li>
-                <li>{t('footer.services.ordering')}</li>
-                <li>{t('footer.services.delivery')}</li>
-              </ul>
-            </div>
-
-            <div>
-              <h4 className="text-lg font-semibold mb-4 text-yellow-500">{t('footer.company.title')}</h4>
-              <ul className="space-y-2 text-gray-400">
-                <li><a href="/about" className="hover:text-yellow-400">{t('nav.about')}</a></li>
-                <li><a href="/contact" className="hover:text-yellow-400">{t('nav.contact')}</a></li>
-                <li><a href="/services" className="hover:text-yellow-400">{t('footer.company.pricing')}</a></li>
-                <li>{t('footer.company.blog')}</li>
-              </ul>
-            </div>
-
-            <div>
-              <h4 className="text-lg font-semibold mb-4 text-yellow-500">{t('footer.contact.title')}</h4>
-              <ul className="space-y-2 text-gray-400">
-                <li>{t('common.email')}</li>
-                <li>{t('common.phone')}</li>
+              <h4 className="text-lg font-semibold text-white mb-4">{t('footer.services.title')}</h4>
+              <ul className="space-y-2">
+                <li><a href="/services" className="text-gray-300 hover:text-yellow-400 transition-colors">{t('footer.services.birthday')}</a></li>
+                <li><a href="/services" className="text-gray-300 hover:text-yellow-400 transition-colors">{t('footer.services.ai')}</a></li>
+                <li><a href="/services" className="text-gray-300 hover:text-yellow-400 transition-colors">{t('footer.services.ordering')}</a></li>
+                <li><a href="/services" className="text-gray-300 hover:text-yellow-400 transition-colors">{t('footer.services.delivery')}</a></li>
               </ul>
             </div>
             
             <div>
-              <h4 className="text-lg font-semibold mb-4 text-yellow-500">{t('footer.legal.title')}</h4>
-              <ul className="space-y-2 text-gray-400">
-                <li><a href="/privacy" className="hover:text-yellow-400">{t('footer.legal.privacy')}</a></li>
-                <li><a href="/terms" className="hover:text-yellow-400">{t('footer.legal.terms')}</a></li>
-                <li><a href="/cookies" className="hover:text-yellow-400">{t('footer.legal.cookies')}</a></li>
-                <li><a href="/legal" className="hover:text-yellow-400">{t('footer.legal.legal')}</a></li>
+              <h4 className="text-lg font-semibold text-white mb-4">{t('footer.legal.title')}</h4>
+              <ul className="space-y-2">
+                <li><a href="/privacy" className="text-gray-300 hover:text-yellow-400 transition-colors">{t('footer.legal.privacy')}</a></li>
+                <li><a href="/terms" className="text-gray-300 hover:text-yellow-400 transition-colors">{t('footer.legal.terms')}</a></li>
+                <li><a href="/cookies" className="text-gray-300 hover:text-yellow-400 transition-colors">{t('footer.legal.cookies')}</a></li>
+                <li><a href="/legal" className="text-gray-300 hover:text-yellow-400 transition-colors">{t('footer.legal.legal')}</a></li>
               </ul>
             </div>
           </div>
