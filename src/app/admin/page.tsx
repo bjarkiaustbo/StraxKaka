@@ -29,6 +29,7 @@ interface CompanySubmission {
   status: 'pending_payment' | 'paid' | 'cancelled';
   dateCreated: string;
   orderId: string;
+  delivered: boolean;
 }
 
 export default function Admin() {
@@ -103,6 +104,14 @@ export default function Admin() {
   const updatePaymentStatus = (companyId: string, newStatus: 'pending_payment' | 'paid' | 'cancelled') => {
     const updatedSubmissions = submissions.map(sub => 
       sub.id === companyId ? { ...sub, status: newStatus } : sub
+    );
+    setSubmissions(updatedSubmissions);
+    localStorage.setItem('straxkaka_subscriptions', JSON.stringify(updatedSubmissions));
+  };
+
+  const toggleDeliveredStatus = (companyId: string) => {
+    const updatedSubmissions = submissions.map(sub => 
+      sub.id === companyId ? { ...sub, delivered: !sub.delivered } : sub
     );
     setSubmissions(updatedSubmissions);
     localStorage.setItem('straxkaka_subscriptions', JSON.stringify(updatedSubmissions));
@@ -239,8 +248,8 @@ export default function Admin() {
               <LanguageContent fallback={<Link href="/" className="text-gray-300 hover:text-yellow-400 transition-colors">Heim</Link>}>
                 {(t) => <Link href="/" className="text-gray-300 hover:text-yellow-400 transition-colors">{t('nav.home')}</Link>}
               </LanguageContent>
-              <LanguageContent fallback={<Link href="/subscribe" className="text-gray-300 hover:text-yellow-400 transition-colors">Skrá fyrirtæki</Link>}>
-                {(t) => <Link href="/subscribe" className="text-gray-300 hover:text-yellow-400 transition-colors">{t('nav.subscribe')}</Link>}
+              <LanguageContent fallback={<Link href="/subscription" className="text-gray-300 hover:text-yellow-400 transition-colors">Skrá fyrirtæki</Link>}>
+                {(t) => <Link href="/subscription" className="text-gray-300 hover:text-yellow-400 transition-colors">{t('nav.subscribe')}</Link>}
               </LanguageContent>
             </div>
             <div className="flex items-center space-x-4">
@@ -490,6 +499,11 @@ export default function Admin() {
                       </LanguageContent>
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <LanguageContent fallback="Afhent">
+                        {(t) => t('admin.table.delivered')}
+                      </LanguageContent>
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       <LanguageContent fallback="Dagsetning">
                         {(t) => t('admin.table.date')}
                       </LanguageContent>
@@ -532,6 +546,18 @@ export default function Admin() {
                         <div className="text-xs text-gray-500 mt-1">
                           {submission.monthlyCost?.toLocaleString('is-IS') || '0'} ISK
                         </div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <button
+                          onClick={() => toggleDeliveredStatus(submission.id)}
+                          className={`inline-flex px-3 py-1 text-xs font-semibold rounded-full transition-colors duration-200 ${
+                            submission.delivered 
+                              ? 'bg-green-100 text-green-800 hover:bg-green-200' 
+                              : 'bg-gray-100 text-gray-800 hover:bg-gray-200'
+                          }`}
+                        >
+                          {submission.delivered ? 'Yes' : 'No'}
+                        </button>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                         {new Date(submission.dateCreated).toLocaleDateString()}

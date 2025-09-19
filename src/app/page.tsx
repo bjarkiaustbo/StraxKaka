@@ -185,20 +185,146 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Why StraxKaka Section */}
+      <section className="py-20 bg-white">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <LanguageContent fallback={
+              <>
+                <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                  Af hverju StraxKaka?
+                </h2>
+                <p className="text-xl text-gray-600">
+                  Lausn fyrir vandamálið sem allir þekkja
+                </p>
+              </>
+            }>
+              {(t) => (
+                <>
+                  <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                    {t('home.why.title')}
+                  </h2>
+                  <p className="text-xl text-gray-600">
+                    {t('home.why.subtitle')}
+                  </p>
+                </>
+              )}
+            </LanguageContent>
+          </div>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="text-center p-6">
+              <div className="bg-yellow-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg className="w-8 h-8 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-3">
+                <LanguageContent fallback="Áhyggjulaus starfsmannadeild">
+                  {(t) => t('home.why.stress_free.title')}
+                </LanguageContent>
+              </h3>
+              <p className="text-gray-600">
+                <LanguageContent fallback="Engin gleymdir afmæli">
+                  {(t) => t('home.why.stress_free.desc')}
+                </LanguageContent>
+              </p>
+            </div>
+            
+            <div className="text-center p-6">
+              <div className="bg-amber-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg className="w-8 h-8 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-3">
+                <LanguageContent fallback="Byggir upp stemningu og vinnustofukúltúr">
+                  {(t) => t('home.why.morale.title')}
+                </LanguageContent>
+              </h3>
+              <p className="text-gray-600">
+                <LanguageContent fallback="Fersk kaka á afmælisdaginn">
+                  {(t) => t('home.why.morale.desc')}
+                </LanguageContent>
+              </p>
+            </div>
+            
+            <div className="text-center p-6">
+              <div className="bg-orange-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg className="w-8 h-8 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-3">
+                <LanguageContent fallback="Áreiðanleg afhending frá staðbundnum bakaríum">
+                  {(t) => t('home.why.reliable.title')}
+                </LanguageContent>
+              </h3>
+              <p className="text-gray-600">
+                <LanguageContent fallback="Toppstig kökur á réttum tíma">
+                  {(t) => t('home.why.reliable.desc')}
+                </LanguageContent>
+              </p>
+            </div>
+            
+            <div className="text-center p-6">
+              <div className="bg-yellow-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg className="w-8 h-8 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-3">
+                <LanguageContent fallback="Sparar tíma og vinnu">
+                  {(t) => t('home.why.time_saving.title')}
+                </LanguageContent>
+              </h3>
+              <p className="text-gray-600">
+                <LanguageContent fallback="Við sjáum um allt ferlið">
+                  {(t) => t('home.why.time_saving.desc')}
+                </LanguageContent>
+              </p>
+            </div>
+            
+            <div className="text-center p-6">
+              <div className="bg-amber-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg className="w-8 h-8 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-3">
+                <LanguageContent fallback="Gæðavottun og sérsniðin þjónusta">
+                  {(t) => t('home.why.quality.title')}
+                </LanguageContent>
+              </h3>
+              <p className="text-gray-600">
+                <LanguageContent fallback="Hvert fyrirtæki fær einstaka þjónustu">
+                  {(t) => t('home.why.quality.desc')}
+                </LanguageContent>
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* CTA Section */}
       <section className="py-20 bg-yellow-500">
         <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
           <LanguageContent fallback={
             <>
               <h2 className="text-3xl md:text-4xl font-bold text-black mb-4">
-                Tilbúinn að byrja?
+                Tilbúin/n að byrja?
               </h2>
               <p className="text-xl text-gray-800 mb-8">
-                Hafðu samband við okkur í dag og fáðu ókeypis samráðstefnu um hvernig StraxKaka getur hjálpað fyrirtækinu þínu.
+                Tilbúin/n að gera afmælisdaga áhyggjulausa? Byrjaðu áskriftina þína í dag.
               </p>
-              <a href="/contact" className="bg-black text-yellow-500 px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-800 transition-colors">
-                Hafa samband
-              </a>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="/subscription" className="bg-black text-yellow-500 px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-800 transition-colors">
+                  Byrja áskrift
+                </a>
+                <a href="/contact" className="bg-white text-black px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-100 transition-colors">
+                  Hafa samband
+                </a>
+              </div>
             </>
           }>
             {(t) => (
@@ -209,9 +335,14 @@ export default function Home() {
                 <p className="text-xl text-gray-800 mb-8">
                   {t('home.cta.subtitle')}
                 </p>
-                <a href="/contact" className="bg-black text-yellow-500 px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-800 transition-colors">
-                  {t('nav.contact')}
-                </a>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  <a href="/subscription" className="bg-black text-yellow-500 px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-800 transition-colors">
+                    {t('contact.cta.subscribe')}
+                  </a>
+                  <a href="/contact" className="bg-white text-black px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-100 transition-colors">
+                    {t('nav.contact')}
+                  </a>
+                </div>
               </>
             )}
           </LanguageContent>

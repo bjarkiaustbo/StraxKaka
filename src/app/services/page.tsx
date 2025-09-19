@@ -163,25 +163,6 @@ export default function Services() {
 
 
 
-      {/* CTA Section */}
-      <section className="py-20 bg-yellow-500">
-        <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl md:text-4xl font-bold text-black mb-4">
-            {t('services.cta.title')}
-          </h2>
-          <p className="text-xl text-gray-800 mb-8">
-            {t('services.cta.subtitle')}
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="/subscription" className="bg-yellow-500 text-black px-8 py-4 rounded-full text-lg font-semibold hover:bg-yellow-400 transition-colors">
-              {t('services.cta.subscribe')}
-            </a>
-            <a href="/contact" className="bg-black text-yellow-500 px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-800 transition-colors">
-              {t('services.cta.contact')}
-            </a>
-          </div>
-        </div>
-      </section>
 
       {/* Footer */}
       <footer className="bg-black text-white py-12">
