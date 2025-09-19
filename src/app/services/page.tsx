@@ -330,10 +330,10 @@ export default function Services() {
         <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
           <LanguageContent fallback={
             <>
-              <h2 className="text-3xl md:text-4xl font-bold text-black mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-black mb-4">
                 Tilbúin/n að byrja?
-              </h2>
-              <p className="text-xl text-gray-800 mb-8">
+          </h2>
+          <p className="text-xl text-gray-800 mb-8">
                 Tilbúin/n að gera afmælisdaga áhyggjulausa? Byrjaðu áskriftina þína í dag.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -341,8 +341,8 @@ export default function Services() {
                   Subscribe
                 </a>
                 <a href="/contact" className="bg-white text-black px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-100 transition-colors">
-                  Hafa samband
-                </a>
+            Hafa samband
+          </a>
               </div>
             </>
           }>
@@ -395,7 +395,7 @@ export default function Services() {
                 <li><a href="/about" className="hover:text-yellow-400">{t('nav.about')}</a></li>
                 <li><a href="/contact" className="hover:text-yellow-400">{t('nav.contact')}</a></li>
                 <li><a href="/services" className="hover:text-yellow-400">{t('footer.company.pricing')}</a></li>
-                <li>{t('footer.company.blog')}</li>
+                <li><a href="/blog/workplace-celebrations" className="hover:text-yellow-400">{t('footer.company.blog')}</a></li>
               </ul>
             </div>
 

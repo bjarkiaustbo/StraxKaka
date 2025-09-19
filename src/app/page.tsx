@@ -541,7 +541,7 @@ export default function Home() {
                 <li><a href="/about" className="hover:text-yellow-400">{t('nav.about')}</a></li>
                 <li><a href="/contact" className="hover:text-yellow-400">{t('nav.contact')}</a></li>
                 <li><a href="/services" className="hover:text-yellow-400">{t('footer.company.pricing')}</a></li>
-                <li>{t('footer.company.blog')}</li>
+                <li><a href="/blog/workplace-celebrations" className="hover:text-yellow-400">{t('footer.company.blog')}</a></li>
               </ul>
             </div>
 

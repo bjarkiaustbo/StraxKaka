@@ -162,7 +162,7 @@ export default function Privacy() {
                 <li>Um okkur</li>
                 <li>Hafa samband</li>
                 <li>Verðskrá</li>
-                <li>Blogg</li>
+                <li><a href="/blog/workplace-celebrations" className="hover:text-yellow-400">Blogg</a></li>
               </ul>
             </div>
             
