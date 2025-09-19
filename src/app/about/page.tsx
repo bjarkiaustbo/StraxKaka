@@ -2,8 +2,6 @@
 
 import Link from 'next/link';
 import { useLanguage } from '@/contexts/LanguageContext';
-import LanguageSwitcher from '@/components/LanguageSwitcher';
-import LanguageContent from '@/components/LanguageContent';
 import Navigation from '@/components/Navigation';
 
 export default function About() {
