@@ -320,6 +320,46 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Blog Article Tease Section */}
+      <section className="py-20 bg-white">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="bg-gradient-to-r from-yellow-50 to-amber-50 rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-300">
+            <div className="flex flex-col md:flex-row items-center gap-8">
+              <div className="flex-shrink-0">
+                <img 
+                  src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" 
+                  alt="Birthday cake celebration" 
+                  className="w-48 h-32 object-cover rounded-lg shadow-md"
+                />
+              </div>
+              <div className="flex-1 text-center md:text-left">
+                <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
+                  <LanguageContent fallback="Mikilvægi afmælisfagnaðar á vinnustaðnum">
+                    {(t) => t('blog.article.title')}
+                  </LanguageContent>
+                </h2>
+                <p className="text-lg text-gray-600 mb-6">
+                  <LanguageContent fallback="Kynntu þér hvernig afmælisfagnaður getur bætt stemningu, aukið hamingju og sparað tíma fyrir HR deildina.">
+                    {(t) => t('blog.article.excerpt')}
+                  </LanguageContent>
+                </p>
+                <a 
+                  href="/blog/workplace-celebrations" 
+                  className="inline-flex items-center bg-yellow-500 text-black px-6 py-3 rounded-full font-semibold hover:bg-yellow-400 transition-colors"
+                >
+                  <LanguageContent fallback="Lesa grein">
+                    {(t) => t('blog.article.read_more')}
+                  </LanguageContent>
+                  <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Pricing Tease Section */}
       <section className="py-20 bg-gray-50">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -331,22 +371,28 @@ export default function Home() {
               <p className="text-xl text-gray-600 mb-8">
                 Greiðist fyrir hvern afmælisdag
               </p>
-              <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+              <div className="grid md:grid-cols-4 gap-6 max-w-6xl mx-auto">
+                <div className="bg-white rounded-lg p-6 shadow-md">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">Lítill</h3>
+                  <div className="text-2xl font-bold text-yellow-600 mb-2">Sérsniðið</div>
+                  <p className="text-sm text-gray-600 mb-2">Fyrir 50 starfsmenn</p>
+                  <p className="text-xs text-gray-500">Greiðist fyrir hvern afmælisdag</p>
+                </div>
                 <div className="bg-white rounded-lg p-6 shadow-md">
                   <h3 className="text-lg font-semibold text-gray-900 mb-2">Meðalstór</h3>
-                  <div className="text-2xl font-bold text-yellow-600 mb-2">60.000 ISK</div>
+                  <div className="text-2xl font-bold text-amber-600 mb-2">60.000 ISK</div>
                   <p className="text-sm text-gray-600 mb-2">50+ starfsmenn</p>
                   <p className="text-xs text-gray-500">Greiðist fyrir hvern afmælisdag (~12.600 ISK)</p>
                 </div>
                 <div className="bg-white rounded-lg p-6 shadow-md border-2 border-yellow-500">
                   <h3 className="text-lg font-semibold text-gray-900 mb-2">Stór</h3>
-                  <div className="text-2xl font-bold text-amber-600 mb-2">120.000 ISK</div>
+                  <div className="text-2xl font-bold text-orange-600 mb-2">120.000 ISK</div>
                   <p className="text-sm text-gray-600 mb-2">100+ starfsmenn</p>
                   <p className="text-xs text-gray-500">Greiðist fyrir hvern afmælisdag</p>
                 </div>
                 <div className="bg-white rounded-lg p-6 shadow-md">
                   <h3 className="text-lg font-semibold text-gray-900 mb-2">Fyrirtæki</h3>
-                  <div className="text-2xl font-bold text-orange-600 mb-2">Sérsniðið</div>
+                  <div className="text-2xl font-bold text-yellow-600 mb-2">Sérsniðið</div>
                   <p className="text-sm text-gray-600 mb-2">200+ starfsmenn</p>
                   <p className="text-xs text-gray-500">Greiðist fyrir hvern afmælisdag (~12.600 ISK)</p>
                 </div>
@@ -361,12 +407,26 @@ export default function Home() {
                 <p className="text-xl text-gray-600 mb-8">
                   {t('pricing.subtitle')}
                 </p>
-                <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+                <div className="grid md:grid-cols-4 gap-6 max-w-6xl mx-auto">
+                  <div className="bg-white rounded-lg p-6 shadow-md">
+                    <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                      {t('pricing.small.title')}
+                    </h3>
+                    <div className="text-2xl font-bold text-yellow-600 mb-2">
+                      {t('pricing.small.price')}
+                    </div>
+                    <p className="text-sm text-gray-600 mb-2">
+                      {t('pricing.small.description')}
+                    </p>
+                    <p className="text-xs text-gray-500">
+                      {t('pricing.small.billing')}
+                    </p>
+                  </div>
                   <div className="bg-white rounded-lg p-6 shadow-md">
                     <h3 className="text-lg font-semibold text-gray-900 mb-2">
                       {t('pricing.starter.title')}
                     </h3>
-                    <div className="text-2xl font-bold text-yellow-600 mb-2">
+                    <div className="text-2xl font-bold text-amber-600 mb-2">
                       {t('pricing.starter.price')}
                     </div>
                     <p className="text-sm text-gray-600 mb-2">
@@ -380,7 +440,7 @@ export default function Home() {
                     <h3 className="text-lg font-semibold text-gray-900 mb-2">
                       {t('pricing.professional.title')}
                     </h3>
-                    <div className="text-2xl font-bold text-amber-600 mb-2">
+                    <div className="text-2xl font-bold text-orange-600 mb-2">
                       {t('pricing.professional.price')}
                     </div>
                     <p className="text-sm text-gray-600 mb-2">
@@ -394,7 +454,7 @@ export default function Home() {
                     <h3 className="text-lg font-semibold text-gray-900 mb-2">
                       {t('pricing.business.title')}
                     </h3>
-                    <div className="text-2xl font-bold text-orange-600 mb-2">
+                    <div className="text-2xl font-bold text-yellow-600 mb-2">
                       {t('pricing.business.price')}
                     </div>
                     <p className="text-sm text-gray-600 mb-2">

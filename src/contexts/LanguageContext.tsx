@@ -327,6 +327,10 @@ const translations = {
     'pricing.tiers.enterprise.price': 'Sérsniðið',
     
     // Additional pricing for services page
+    'pricing.small.title': 'Lítill',
+    'pricing.small.price': 'Sérsniðið',
+    'pricing.small.description': 'Fyrir fyrir 50 starfsmenn',
+    'pricing.small.billing': 'Greiðist fyrir hvern afmælisdag',
     'pricing.starter.title': 'Meðalstór',
     'pricing.starter.price': '60.000 ISK',
     'pricing.starter.description': 'Fyrir 50+ starfsmenn',
@@ -411,6 +415,24 @@ const translations = {
     'contact.why.reliable.desc': 'Engin gleymdir afmæli með okkar kerfi',
     'contact.why.personal.title': 'Persónuleg þjónusta',
     'contact.why.personal.desc': 'Við þjónustum hvert fyrirtæki með sérstökum hætti',
+    
+    // Blog
+    'blog.article.title': 'Mikilvægi afmælisfagnaðar á vinnustaðnum',
+    'blog.article.excerpt': 'Kynntu þér hvernig afmælisfagnaður getur bætt stemningu, aukið hamingju og sparað tíma fyrir HR deildina.',
+    'blog.article.read_more': 'Lesa grein',
+    'blog.title': 'Blogg',
+    'blog.hero.title': 'Mikilvægi afmælisfagnaðar á vinnustaðnum',
+    'blog.hero.subtitle': 'Hvernig afmælisfagnaður getur bætt stemningu og sparað tíma',
+    'blog.content.intro': 'Afmælisfagnaður á vinnustaðnum er ekki bara góður fyrir starfsmenn - þeir eru líka mikilvægir fyrir fyrirtækið. Rannsóknir sýna að starfsmenn sem finna sig verðlaunaðir og virtir eru líklegri til að vera ánægðir með vinnuna og vera áfram hjá fyrirtækinu.',
+    'blog.content.morale.title': 'Bætir stemningu og hamingju',
+    'blog.content.morale.desc': 'Afmælisfagnaður sýnir starfsmönnum að þeir séu virtir og verðlaunaðir. Þetta skilar sér í aukinni hamingju, betri stemningu og meiri vinnufúsleika.',
+    'blog.content.recognition.title': 'Starfsmenn finna sig séðir',
+    'blog.content.recognition.desc': 'Þegar fyrirtæki minnist á afmælisdaga starfsmanna sýnir það að þeir séu ekki bara númer. Þetta byggir upp tengingu milli starfsmanna og fyrirtækis.',
+    'blog.content.motivation.title': 'Aukir hvatningu',
+    'blog.content.motivation.desc': 'Starfsmenn sem finna sig verðlaunaðir eru líklegri til að leggja sig fram meira og vera afkastamikilir. Afmælisfagnaður er einfaldur en áhrifaríkur leið til að sýna þakklæti.',
+    'blog.content.time_saving.title': 'Sparar tíma fyrir HR deildina',
+    'blog.content.time_saving.desc': 'Með StraxKaka þurfa HR starfsmenn ekki að hugsa um afmælisdaga. Kerfið sér um allt - frá skráningu til afhendingar. Þetta gefur HR deildinni tíma til að einbeita sér að öðrum mikilvægum verkefnum.',
+    'blog.content.conclusion': 'Afmælisfagnaður á vinnustaðnum er ekki lúxus - það er nauðsynlegt fyrir heilbrigða vinnustofukúltúr. Með StraxKaka getur fyrirtækið þitt auðveldlega byrjað að fagna afmælisdögum án þess að eyða tíma í skipulagningu.',
   },
   en: {
     // Navigation
@@ -703,6 +725,10 @@ const translations = {
     'pricing.tiers.enterprise.price': 'Custom',
     
     // Additional pricing for services page
+    'pricing.small.title': 'Small',
+    'pricing.small.price': 'Custom',
+    'pricing.small.description': 'For under 50 employees',
+    'pricing.small.billing': 'Billed per birthday',
     'pricing.starter.title': 'Medium',
     'pricing.starter.price': '60,000 ISK',
     'pricing.starter.description': 'For 50+ employees',
@@ -812,6 +838,24 @@ const translations = {
     'contact.why.reliable.desc': 'No forgotten birthdays with our system',
     'contact.why.personal.title': 'Personal Service',
     'contact.why.personal.desc': 'We serve each company in a unique way',
+    
+    // Blog
+    'blog.article.title': 'The Importance of Workplace Celebrations',
+    'blog.article.excerpt': 'Learn how workplace celebrations can boost morale, increase happiness, and save time for HR departments.',
+    'blog.article.read_more': 'Read Article',
+    'blog.title': 'Blog',
+    'blog.hero.title': 'The Importance of Workplace Celebrations',
+    'blog.hero.subtitle': 'How workplace celebrations can boost morale and save time',
+    'blog.content.intro': 'Workplace celebrations aren\'t just good for employees - they\'re also important for the company. Research shows that employees who feel valued and appreciated are more likely to be satisfied with their work and stay with the company.',
+    'blog.content.morale.title': 'Boosts Morale and Happiness',
+    'blog.content.morale.desc': 'Workplace celebrations show employees that they are valued and appreciated. This translates to increased happiness, better mood, and greater enthusiasm for work.',
+    'blog.content.recognition.title': 'Employees Feel Seen',
+    'blog.content.recognition.desc': 'When companies remember employee birthdays, it shows that they are not just numbers. This builds connection between employees and the company.',
+    'blog.content.motivation.title': 'Increases Motivation',
+    'blog.content.motivation.desc': 'Employees who feel appreciated are more likely to put in extra effort and be productive. Workplace celebrations are a simple but effective way to show appreciation.',
+    'blog.content.time_saving.title': 'Saves Time for HR Departments',
+    'blog.content.time_saving.desc': 'With StraxKaka, HR staff don\'t need to think about birthdays. The system handles everything - from registration to delivery. This gives HR departments time to focus on other important tasks.',
+    'blog.content.conclusion': 'Workplace celebrations aren\'t a luxury - they\'re essential for a healthy workplace culture. With StraxKaka, your company can easily start celebrating birthdays without spending time on planning.',
   }
 };
 
