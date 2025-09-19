@@ -266,41 +266,46 @@ export default function Home() {
                 </LanguageContent>
               </p>
             </div>
-            
-            <div className="text-center p-6">
-              <div className="bg-yellow-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
+          </div>
+          
+          {/* Bottom row with 2 centered icons */}
+          <div className="flex justify-center mt-8">
+            <div className="grid md:grid-cols-2 gap-8 max-w-4xl">
+              <div className="text-center p-6">
+                <div className="bg-yellow-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <svg className="w-8 h-8 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">
+                  <LanguageContent fallback="Sparar tíma og vinnu">
+                    {(t) => t('home.why.time_saving.title')}
+                  </LanguageContent>
+                </h3>
+                <p className="text-gray-600">
+                  <LanguageContent fallback="Við sjáum um allt ferlið">
+                    {(t) => t('home.why.time_saving.desc')}
+                  </LanguageContent>
+                </p>
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-3">
-                <LanguageContent fallback="Sparar tíma og vinnu">
-                  {(t) => t('home.why.time_saving.title')}
-                </LanguageContent>
-              </h3>
-              <p className="text-gray-600">
-                <LanguageContent fallback="Við sjáum um allt ferlið">
-                  {(t) => t('home.why.time_saving.desc')}
-                </LanguageContent>
-              </p>
-            </div>
-            
-            <div className="text-center p-6">
-              <div className="bg-amber-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                </svg>
+              
+              <div className="text-center p-6">
+                <div className="bg-amber-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <svg className="w-8 h-8 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">
+                  <LanguageContent fallback="Gæðavottun og sérsniðin þjónusta">
+                    {(t) => t('home.why.quality.title')}
+                  </LanguageContent>
+                </h3>
+                <p className="text-gray-600">
+                  <LanguageContent fallback="Hvert fyrirtæki fær einstaka þjónustu">
+                    {(t) => t('home.why.quality.desc')}
+                  </LanguageContent>
+                </p>
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-3">
-                <LanguageContent fallback="Gæðavottun og sérsniðin þjónusta">
-                  {(t) => t('home.why.quality.title')}
-                </LanguageContent>
-              </h3>
-              <p className="text-gray-600">
-                <LanguageContent fallback="Hvert fyrirtæki fær einstaka þjónustu">
-                  {(t) => t('home.why.quality.desc')}
-                </LanguageContent>
-              </p>
             </div>
           </div>
         </div>
@@ -319,7 +324,7 @@ export default function Home() {
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <a href="/subscription" className="bg-black text-yellow-500 px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-800 transition-colors">
-                  Byrja áskrift
+                  Subscribe
                 </a>
                 <a href="/contact" className="bg-white text-black px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-100 transition-colors">
                   Hafa samband
@@ -337,7 +342,7 @@ export default function Home() {
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <a href="/subscription" className="bg-black text-yellow-500 px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-800 transition-colors">
-                    {t('contact.cta.subscribe')}
+                    Subscribe
                   </a>
                   <a href="/contact" className="bg-white text-black px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-100 transition-colors">
                     {t('nav.contact')}
