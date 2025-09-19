@@ -16,6 +16,15 @@ export default function Contact() {
       {/* Hero Section */}
       <section className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto text-center">
+          {/* Logo */}
+          <div className="mb-8 flex justify-center">
+            <img 
+              src="/logo.svg" 
+              alt="StraxKaka Logo" 
+              className="h-12 w-auto"
+            />
+          </div>
+          
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
             {t('contact.hero.title')}
           </h1>

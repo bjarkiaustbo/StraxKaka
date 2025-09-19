@@ -15,6 +15,15 @@ export default function Services() {
       {/* Hero Section */}
       <section className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto text-center">
+          {/* Logo */}
+          <div className="mb-8 flex justify-center">
+            <img 
+              src="/logo.svg" 
+              alt="StraxKaka Logo" 
+              className="h-12 w-auto"
+            />
+          </div>
+          
           <LanguageContent fallback={
             <>
               <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
@@ -212,11 +221,6 @@ export default function Services() {
                     {(t) => t('pricing.starter.description')}
                   </LanguageContent>
                 </p>
-                <ul className="text-sm text-gray-600 space-y-2 mb-6">
-                  <li>• <LanguageContent fallback="Allir afmælisdagar munaðir">{(t) => t('pricing.starter.feature1')}</LanguageContent></li>
-                  <li>• <LanguageContent fallback="Sjálfvirk kökupöntun">{(t) => t('pricing.starter.feature2')}</LanguageContent></li>
-                  <li>• <LanguageContent fallback="Tilkynningar">{(t) => t('pricing.starter.feature3')}</LanguageContent></li>
-                </ul>
               </div>
             </div>
 
@@ -243,11 +247,6 @@ export default function Services() {
                     {(t) => t('pricing.professional.description')}
                   </LanguageContent>
                 </p>
-                <ul className="text-sm text-gray-600 space-y-2 mb-6">
-                  <li>• <LanguageContent fallback="Allt í Starter">{(t) => t('pricing.professional.feature1')}</LanguageContent></li>
-                  <li>• <LanguageContent fallback="Sérsniðin kökur">{(t) => t('pricing.professional.feature2')}</LanguageContent></li>
-                  <li>• <LanguageContent fallback="Aðgangur að admin">{(t) => t('pricing.professional.feature3')}</LanguageContent></li>
-                </ul>
               </div>
             </div>
 
@@ -274,11 +273,6 @@ export default function Services() {
                     {(t) => t('pricing.business.description')}
                   </LanguageContent>
                 </p>
-                <ul className="text-sm text-gray-600 space-y-2 mb-6">
-                  <li>• <LanguageContent fallback="Allt í Professional">{(t) => t('pricing.business.feature1')}</LanguageContent></li>
-                  <li>• <LanguageContent fallback="HR kerfi tenging">{(t) => t('pricing.business.feature2')}</LanguageContent></li>
-                  <li>• <LanguageContent fallback="24/7 stuðningur">{(t) => t('pricing.business.feature3')}</LanguageContent></li>
-                </ul>
               </div>
             </div>
 
@@ -305,11 +299,6 @@ export default function Services() {
                     {(t) => t('pricing.enterprise.description')}
                   </LanguageContent>
                 </p>
-                <ul className="text-sm text-gray-600 space-y-2 mb-6">
-                  <li>• <LanguageContent fallback="Allt í Business">{(t) => t('pricing.enterprise.feature1')}</LanguageContent></li>
-                  <li>• <LanguageContent fallback="Sérsniðin lausn">{(t) => t('pricing.enterprise.feature2')}</LanguageContent></li>
-                  <li>• <LanguageContent fallback="Dedicated manager">{(t) => t('pricing.enterprise.feature3')}</LanguageContent></li>
-                </ul>
               </div>
             </div>
           </div>

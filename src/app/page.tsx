@@ -46,6 +46,15 @@ export default function Home() {
       <section className="relative py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="text-center">
+            {/* Logo */}
+            <div className="mb-8 flex justify-center">
+              <img 
+                src="/logo.svg" 
+                alt="StraxKaka Logo" 
+                className="h-16 w-auto"
+              />
+            </div>
+            
             <LanguageContent fallback={
               <>
                 <h1 className="text-4xl md:text-6xl font-bold text-black mb-6">
@@ -308,6 +317,85 @@ export default function Home() {
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Pricing Tease Section */}
+      <section className="py-20 bg-gray-50">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <LanguageContent fallback={
+            <>
+              <h2 className="text-3xl font-bold text-gray-900 mb-6">
+                Einfalt verð fyrir alla stærðir fyrirtækja
+              </h2>
+              <p className="text-xl text-gray-600 mb-8">
+                Mánaðarleg áskrift frá 3.000 ISK + kökugjöld
+              </p>
+              <div className="grid md:grid-cols-3 gap-6 max-w-3xl mx-auto">
+                <div className="bg-white rounded-lg p-6 shadow-md">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">Lítill</h3>
+                  <div className="text-2xl font-bold text-yellow-600 mb-2">3.000 ISK</div>
+                  <p className="text-sm text-gray-600">1-10 starfsmenn</p>
+                </div>
+                <div className="bg-white rounded-lg p-6 shadow-md border-2 border-yellow-500">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">Meðalstór</h3>
+                  <div className="text-2xl font-bold text-amber-600 mb-2">5.000 ISK</div>
+                  <p className="text-sm text-gray-600">11-25 starfsmenn</p>
+                </div>
+                <div className="bg-white rounded-lg p-6 shadow-md">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">Stór</h3>
+                  <div className="text-2xl font-bold text-orange-600 mb-2">10.000 ISK</div>
+                  <p className="text-sm text-gray-600">26-50 starfsmenn</p>
+                </div>
+              </div>
+            </>
+          }>
+            {(t) => (
+              <>
+                <h2 className="text-3xl font-bold text-gray-900 mb-6">
+                  {t('pricing.title')}
+                </h2>
+                <p className="text-xl text-gray-600 mb-8">
+                  {t('pricing.subtitle')}
+                </p>
+                <div className="grid md:grid-cols-3 gap-6 max-w-3xl mx-auto">
+                  <div className="bg-white rounded-lg p-6 shadow-md">
+                    <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                      {t('pricing.starter.title')}
+                    </h3>
+                    <div className="text-2xl font-bold text-yellow-600 mb-2">
+                      {t('pricing.starter.price')}
+                    </div>
+                    <p className="text-sm text-gray-600">
+                      {t('pricing.starter.description')}
+                    </p>
+                  </div>
+                  <div className="bg-white rounded-lg p-6 shadow-md border-2 border-yellow-500">
+                    <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                      {t('pricing.professional.title')}
+                    </h3>
+                    <div className="text-2xl font-bold text-amber-600 mb-2">
+                      {t('pricing.professional.price')}
+                    </div>
+                    <p className="text-sm text-gray-600">
+                      {t('pricing.professional.description')}
+                    </p>
+                  </div>
+                  <div className="bg-white rounded-lg p-6 shadow-md">
+                    <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                      {t('pricing.business.title')}
+                    </h3>
+                    <div className="text-2xl font-bold text-orange-600 mb-2">
+                      {t('pricing.business.price')}
+                    </div>
+                    <p className="text-sm text-gray-600">
+                      {t('pricing.business.description')}
+                    </p>
+                  </div>
+                </div>
+              </>
+            )}
+          </LanguageContent>
         </div>
       </section>
 
