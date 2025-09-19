@@ -125,31 +125,6 @@ export default function Contact() {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-20 bg-yellow-500">
-        <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl md:text-4xl font-bold text-black mb-6">
-            {t('contact.cta.title')}
-          </h2>
-          <p className="text-xl text-black mb-8">
-            {t('contact.cta.subtitle')}
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link 
-              href="/subscription" 
-              className="bg-black text-yellow-500 px-8 py-4 rounded-full hover:bg-gray-800 transition-colors font-semibold text-lg"
-            >
-              {t('contact.cta.subscribe')}
-            </Link>
-            <Link 
-              href="/services" 
-              className="bg-white text-black px-8 py-4 rounded-full hover:bg-gray-100 transition-colors font-semibold text-lg"
-            >
-              {t('contact.cta.services')}
-            </Link>
-          </div>
-        </div>
-      </section>
 
       {/* Footer */}
       <footer className="bg-black text-white py-12">
@@ -202,7 +177,7 @@ export default function Contact() {
           </div>
           
           <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-            <p>&copy; 2025 StraxKaka. {t('footer.copyright')}</p>
+            <p>{t('footer.copyright')}</p>
           </div>
         </div>
       </footer>

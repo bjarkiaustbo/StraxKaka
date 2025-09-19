@@ -161,8 +161,203 @@ export default function Services() {
         </div>
       </section>
 
+      {/* Pricing Section */}
+      <section className="py-20 bg-gray-50">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <LanguageContent fallback={
+              <>
+                <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                  Verðskrá
+                </h2>
+                <p className="text-xl text-gray-600">
+                  Einfalt verð fyrir alla stærðir fyrirtækja
+                </p>
+              </>
+            }>
+              {(t) => (
+                <>
+                  <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                    {t('pricing.title')}
+                  </h2>
+                  <p className="text-xl text-gray-600">
+                    {t('pricing.subtitle')}
+                  </p>
+                </>
+              )}
+            </LanguageContent>
+          </div>
 
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {/* Starter Plan */}
+            <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-300">
+              <div className="text-center">
+                <div className="bg-yellow-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <svg className="w-8 h-8 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v2m0-6a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-2">
+                  <LanguageContent fallback="Starter">
+                    {(t) => t('pricing.starter.title')}
+                  </LanguageContent>
+                </h3>
+                <div className="text-3xl font-bold text-yellow-600 mb-4">
+                  <LanguageContent fallback="15.000 ISK">
+                    {(t) => t('pricing.starter.price')}
+                  </LanguageContent>
+                </div>
+                <p className="text-gray-600 mb-6">
+                  <LanguageContent fallback="Fyrir 1-10 starfsmenn">
+                    {(t) => t('pricing.starter.description')}
+                  </LanguageContent>
+                </p>
+                <ul className="text-sm text-gray-600 space-y-2 mb-6">
+                  <li>• <LanguageContent fallback="Allir afmælisdagar munaðir">{(t) => t('pricing.starter.feature1')}</LanguageContent></li>
+                  <li>• <LanguageContent fallback="Sjálfvirk kökupöntun">{(t) => t('pricing.starter.feature2')}</LanguageContent></li>
+                  <li>• <LanguageContent fallback="Tilkynningar">{(t) => t('pricing.starter.feature3')}</LanguageContent></li>
+                </ul>
+              </div>
+            </div>
 
+            {/* Professional Plan */}
+            <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-300 border-2 border-yellow-500">
+              <div className="text-center">
+                <div className="bg-amber-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <svg className="w-8 h-8 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-2">
+                  <LanguageContent fallback="Professional">
+                    {(t) => t('pricing.professional.title')}
+                  </LanguageContent>
+                </h3>
+                <div className="text-3xl font-bold text-amber-600 mb-4">
+                  <LanguageContent fallback="25.000 ISK">
+                    {(t) => t('pricing.professional.price')}
+                  </LanguageContent>
+                </div>
+                <p className="text-gray-600 mb-6">
+                  <LanguageContent fallback="Fyrir 11-25 starfsmenn">
+                    {(t) => t('pricing.professional.description')}
+                  </LanguageContent>
+                </p>
+                <ul className="text-sm text-gray-600 space-y-2 mb-6">
+                  <li>• <LanguageContent fallback="Allt í Starter">{(t) => t('pricing.professional.feature1')}</LanguageContent></li>
+                  <li>• <LanguageContent fallback="Sérsniðin kökur">{(t) => t('pricing.professional.feature2')}</LanguageContent></li>
+                  <li>• <LanguageContent fallback="Aðgangur að admin">{(t) => t('pricing.professional.feature3')}</LanguageContent></li>
+                </ul>
+              </div>
+            </div>
+
+            {/* Business Plan */}
+            <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-300">
+              <div className="text-center">
+                <div className="bg-orange-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <svg className="w-8 h-8 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-2">
+                  <LanguageContent fallback="Business">
+                    {(t) => t('pricing.business.title')}
+                  </LanguageContent>
+                </h3>
+                <div className="text-3xl font-bold text-orange-600 mb-4">
+                  <LanguageContent fallback="45.000 ISK">
+                    {(t) => t('pricing.business.price')}
+                  </LanguageContent>
+                </div>
+                <p className="text-gray-600 mb-6">
+                  <LanguageContent fallback="Fyrir 26-50 starfsmenn">
+                    {(t) => t('pricing.business.description')}
+                  </LanguageContent>
+                </p>
+                <ul className="text-sm text-gray-600 space-y-2 mb-6">
+                  <li>• <LanguageContent fallback="Allt í Professional">{(t) => t('pricing.business.feature1')}</LanguageContent></li>
+                  <li>• <LanguageContent fallback="HR kerfi tenging">{(t) => t('pricing.business.feature2')}</LanguageContent></li>
+                  <li>• <LanguageContent fallback="24/7 stuðningur">{(t) => t('pricing.business.feature3')}</LanguageContent></li>
+                </ul>
+              </div>
+            </div>
+
+            {/* Enterprise Plan */}
+            <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-300">
+              <div className="text-center">
+                <div className="bg-yellow-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <svg className="w-8 h-8 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-2">
+                  <LanguageContent fallback="Enterprise">
+                    {(t) => t('pricing.enterprise.title')}
+                  </LanguageContent>
+                </h3>
+                <div className="text-3xl font-bold text-yellow-600 mb-4">
+                  <LanguageContent fallback="Sérsniðið">
+                    {(t) => t('pricing.enterprise.price')}
+                  </LanguageContent>
+                </div>
+                <p className="text-gray-600 mb-6">
+                  <LanguageContent fallback="Fyrir 50+ starfsmenn">
+                    {(t) => t('pricing.enterprise.description')}
+                  </LanguageContent>
+                </p>
+                <ul className="text-sm text-gray-600 space-y-2 mb-6">
+                  <li>• <LanguageContent fallback="Allt í Business">{(t) => t('pricing.enterprise.feature1')}</LanguageContent></li>
+                  <li>• <LanguageContent fallback="Sérsniðin lausn">{(t) => t('pricing.enterprise.feature2')}</LanguageContent></li>
+                  <li>• <LanguageContent fallback="Dedicated manager">{(t) => t('pricing.enterprise.feature3')}</LanguageContent></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-20 bg-yellow-500">
+        <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
+          <LanguageContent fallback={
+            <>
+              <h2 className="text-3xl md:text-4xl font-bold text-black mb-4">
+                Tilbúin/n að byrja?
+              </h2>
+              <p className="text-xl text-gray-800 mb-8">
+                Tilbúin/n að gera afmælisdaga áhyggjulausa? Byrjaðu áskriftina þína í dag.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="/subscription" className="bg-black text-yellow-500 px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-800 transition-colors">
+                  Subscribe
+                </a>
+                <a href="/contact" className="bg-white text-black px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-100 transition-colors">
+                  Hafa samband
+                </a>
+              </div>
+            </>
+          }>
+            {(t) => (
+              <>
+                <h2 className="text-3xl md:text-4xl font-bold text-black mb-4">
+                  {t('home.cta.title')}
+                </h2>
+                <p className="text-xl text-gray-800 mb-8">
+                  {t('home.cta.subtitle')}
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  <a href="/subscription" className="bg-black text-yellow-500 px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-800 transition-colors">
+                    Subscribe
+                  </a>
+                  <a href="/contact" className="bg-white text-black px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-100 transition-colors">
+                    {t('nav.contact')}
+                  </a>
+                </div>
+              </>
+            )}
+          </LanguageContent>
+        </div>
+      </section>
 
       {/* Footer */}
       <footer className="bg-black text-white py-12">
@@ -215,7 +410,7 @@ export default function Services() {
           </div>
           
           <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-            <p>&copy; 2025 StraxKaka. {t('footer.copyright')}</p>
+            <p>{t('footer.copyright')}</p>
           </div>
         </div>
       </footer>
