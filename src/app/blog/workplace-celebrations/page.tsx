@@ -53,7 +53,7 @@ export default function BlogArticle() {
                   </LanguageContent>
                 </h2>
                 <p className="text-gray-700 leading-relaxed">
-                  <LanguageContent fallback="Það virðist smátt, en það að muna afmæli sendir sterkt skilaboð: „Þú skiptir máli hér." Regluleg fagnaðshátíð styrkir samstöðu og samstarf á milli starfsmanna og eykur tilfinningu um samhug. Þegar fólk finnur sig metið eykst áhugi, samvinna og framleiðni. Með öðrum orðum, smá gjörningur getur haft stór áhrif á vinnustaðinn.">
+                  <LanguageContent fallback="Það virðist smátt, en það að muna afmæli sendir sterkt skilaboð: 'Þú skiptir máli hér.' Regluleg fagnaðshátíð styrkir samstöðu og samstarf á milli starfsmanna og eykur tilfinningu um samhug. Þegar fólk finnur sig metið eykst áhugi, samvinna og framleiðni. Með öðrum orðum, smá gjörningur getur haft stór áhrif á vinnustaðinn.">
                     {(t) => t('blog.content.why_matter.desc')}
                   </LanguageContent>
                 </p>
