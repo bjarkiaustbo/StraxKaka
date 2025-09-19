@@ -26,7 +26,6 @@ export default function Navigation({
     { key: 'home', href: '/', label: 'nav.home' },
     { key: 'about', href: '/about', label: 'nav.about' },
     { key: 'services', href: '/services', label: 'nav.services' },
-    { key: 'blog', href: '/blog/workplace-celebrations', label: 'blog.title' },
     { key: 'contact', href: '/contact', label: 'nav.contact' },
     { key: 'subscription', href: '/subscription', label: 'nav.subscription' }
   ];

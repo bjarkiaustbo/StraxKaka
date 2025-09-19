@@ -21,8 +21,8 @@ const translations = {
     'nav.start_now': 'Byrja núna',
     
     // Homepage
-    'home.hero.title': 'Gleymdir afmælisdagur drepa stemningu',
-    'home.hero.subtitle': 'Með StraxKaka er hver afmælisdagur munaður, hver kaka kemur á réttum tíma, og menning verður sætari.',
+    'home.hero.title': 'Munaðir afmælisdagar gleðja alla',
+    'home.hero.subtitle': 'Með StraxKaka er hver afmælisdagur munaður, hver kaka komin á réttum tíma og vinnumenningin verður sætari.',
     'home.features.title': 'Hvað vinnur StraxKaka fyrir þig?',
     'home.features.subtitle': 'Við leysum vandamálið sem allir þekkja: gleymdir afmælisdagum sem skaða samstöðu og stemningu',
     'home.how_it_works.title': 'Svo einfalt er þetta',
