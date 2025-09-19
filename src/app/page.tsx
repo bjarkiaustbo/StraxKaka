@@ -329,23 +329,26 @@ export default function Home() {
                 Einfalt verð fyrir alla stærðir fyrirtækja
               </h2>
               <p className="text-xl text-gray-600 mb-8">
-                Mánaðarleg áskrift frá 3.000 ISK + kökugjöld
+                Greiðist fyrir hvern afmælisdag
               </p>
-              <div className="grid md:grid-cols-3 gap-6 max-w-3xl mx-auto">
+              <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
                 <div className="bg-white rounded-lg p-6 shadow-md">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">Lítill</h3>
-                  <div className="text-2xl font-bold text-yellow-600 mb-2">3.000 ISK</div>
-                  <p className="text-sm text-gray-600">1-10 starfsmenn</p>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">Meðalstór</h3>
+                  <div className="text-2xl font-bold text-yellow-600 mb-2">60.000 ISK</div>
+                  <p className="text-sm text-gray-600 mb-2">50+ starfsmenn</p>
+                  <p className="text-xs text-gray-500">Greiðist fyrir hvern afmælisdag (~12.600 ISK)</p>
                 </div>
                 <div className="bg-white rounded-lg p-6 shadow-md border-2 border-yellow-500">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">Meðalstór</h3>
-                  <div className="text-2xl font-bold text-amber-600 mb-2">5.000 ISK</div>
-                  <p className="text-sm text-gray-600">11-25 starfsmenn</p>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">Stór</h3>
+                  <div className="text-2xl font-bold text-amber-600 mb-2">120.000 ISK</div>
+                  <p className="text-sm text-gray-600 mb-2">100+ starfsmenn</p>
+                  <p className="text-xs text-gray-500">Greiðist fyrir hvern afmælisdag</p>
                 </div>
                 <div className="bg-white rounded-lg p-6 shadow-md">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">Stór</h3>
-                  <div className="text-2xl font-bold text-orange-600 mb-2">10.000 ISK</div>
-                  <p className="text-sm text-gray-600">26-50 starfsmenn</p>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">Fyrirtæki</h3>
+                  <div className="text-2xl font-bold text-orange-600 mb-2">Sérsniðið</div>
+                  <p className="text-sm text-gray-600 mb-2">200+ starfsmenn</p>
+                  <p className="text-xs text-gray-500">Greiðist fyrir hvern afmælisdag (~12.600 ISK)</p>
                 </div>
               </div>
             </>
@@ -358,7 +361,7 @@ export default function Home() {
                 <p className="text-xl text-gray-600 mb-8">
                   {t('pricing.subtitle')}
                 </p>
-                <div className="grid md:grid-cols-3 gap-6 max-w-3xl mx-auto">
+                <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
                   <div className="bg-white rounded-lg p-6 shadow-md">
                     <h3 className="text-lg font-semibold text-gray-900 mb-2">
                       {t('pricing.starter.title')}
@@ -366,8 +369,11 @@ export default function Home() {
                     <div className="text-2xl font-bold text-yellow-600 mb-2">
                       {t('pricing.starter.price')}
                     </div>
-                    <p className="text-sm text-gray-600">
+                    <p className="text-sm text-gray-600 mb-2">
                       {t('pricing.starter.description')}
+                    </p>
+                    <p className="text-xs text-gray-500">
+                      {t('pricing.starter.billing')}
                     </p>
                   </div>
                   <div className="bg-white rounded-lg p-6 shadow-md border-2 border-yellow-500">
@@ -377,8 +383,11 @@ export default function Home() {
                     <div className="text-2xl font-bold text-amber-600 mb-2">
                       {t('pricing.professional.price')}
                     </div>
-                    <p className="text-sm text-gray-600">
+                    <p className="text-sm text-gray-600 mb-2">
                       {t('pricing.professional.description')}
+                    </p>
+                    <p className="text-xs text-gray-500">
+                      {t('pricing.professional.billing')}
                     </p>
                   </div>
                   <div className="bg-white rounded-lg p-6 shadow-md">
@@ -388,8 +397,11 @@ export default function Home() {
                     <div className="text-2xl font-bold text-orange-600 mb-2">
                       {t('pricing.business.price')}
                     </div>
-                    <p className="text-sm text-gray-600">
+                    <p className="text-sm text-gray-600 mb-2">
                       {t('pricing.business.description')}
+                    </p>
+                    <p className="text-xs text-gray-500">
+                      {t('pricing.business.billing')}
                     </p>
                   </div>
                 </div>
