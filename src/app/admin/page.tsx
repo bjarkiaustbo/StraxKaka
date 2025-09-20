@@ -37,6 +37,9 @@ export default function Admin() {
   const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedSubmission, setSelectedSubmission] = useState<Submission | null>(null);
+  const [filterStatus, setFilterStatus] = useState<string>('all');
+  const [selectedCompanies, setSelectedCompanies] = useState<string[]>([]);
+  const [showBulkActions, setShowBulkActions] = useState(false);
 
   // Check if already authenticated
   useEffect(() => {
@@ -94,16 +97,108 @@ export default function Admin() {
     }
   };
 
-  // Filter submissions based on search
-  const filteredSubmissions = submissions.filter(submission => {
-    if (!searchTerm) return true;
-    const search = searchTerm.toLowerCase();
-    return (
-      submission.companyName?.toLowerCase().includes(search) ||
-      submission.contactPersonName?.toLowerCase().includes(search) ||
-      submission.contactEmail?.toLowerCase().includes(search) ||
-      submission.subscriptionTier?.toLowerCase().includes(search)
+  const markAsPaid = (companyId: string) => {
+    const updatedSubmissions = submissions.map((sub: Submission) => 
+      sub.id === companyId ? { ...sub, status: 'paid' } : sub
     );
+    setSubmissions(updatedSubmissions);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('straxkaka_subscriptions', JSON.stringify(updatedSubmissions));
+    }
+  };
+
+  const markAsPending = (companyId: string) => {
+    const updatedSubmissions = submissions.map((sub: Submission) => 
+      sub.id === companyId ? { ...sub, status: 'pending_payment' } : sub
+    );
+    setSubmissions(updatedSubmissions);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('straxkaka_subscriptions', JSON.stringify(updatedSubmissions));
+    }
+  };
+
+  const toggleCompanySelection = (companyId: string) => {
+    setSelectedCompanies(prev => 
+      prev.includes(companyId) 
+        ? prev.filter(id => id !== companyId)
+        : [...prev, companyId]
+    );
+  };
+
+  const selectAllCompanies = () => {
+    setSelectedCompanies(filteredSubmissions.map(sub => sub.id));
+  };
+
+  const clearSelection = () => {
+    setSelectedCompanies([]);
+  };
+
+  const bulkMarkAsPaid = () => {
+    if (selectedCompanies.length === 0) return;
+    const updatedSubmissions = submissions.map((sub: Submission) => 
+      selectedCompanies.includes(sub.id) ? { ...sub, status: 'paid' } : sub
+    );
+    setSubmissions(updatedSubmissions);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('straxkaka_subscriptions', JSON.stringify(updatedSubmissions));
+    }
+    setSelectedCompanies([]);
+    setShowBulkActions(false);
+  };
+
+  const bulkRemove = () => {
+    if (selectedCompanies.length === 0) return;
+    if (confirm(`Are you sure you want to remove ${selectedCompanies.length} companies?`)) {
+      const updatedSubmissions = submissions.filter((sub: Submission) => !selectedCompanies.includes(sub.id));
+      setSubmissions(updatedSubmissions);
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('straxkaka_subscriptions', JSON.stringify(updatedSubmissions));
+      }
+      setSelectedCompanies([]);
+      setShowBulkActions(false);
+    }
+  };
+
+  const exportToCSV = () => {
+    const csvContent = [
+      ['Company Name', 'Contact Person', 'Email', 'Phone', 'Subscription Tier', 'Status', 'Monthly Cost', 'Employees Count', 'Order ID'],
+      ...filteredSubmissions.map(sub => [
+        sub.companyName || '',
+        sub.contactPersonName || '',
+        sub.contactEmail || '',
+        sub.contactPhone || '',
+        sub.subscriptionTier || '',
+        sub.status || '',
+        (sub.monthlyCost || 0).toString(),
+        (sub.employees?.length || 0).toString(),
+        sub.orderId || ''
+      ])
+    ].map(row => row.map(field => `"${field}"`).join(',')).join('\n');
+
+    const blob = new Blob([csvContent], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `straxkaka-companies-${new Date().toISOString().split('T')[0]}.csv`;
+    a.click();
+    window.URL.revokeObjectURL(url);
+  };
+
+  // Filter submissions based on search and status
+  const filteredSubmissions = submissions.filter(submission => {
+    const matchesSearch = !searchTerm || (() => {
+      const search = searchTerm.toLowerCase();
+      return (
+        submission.companyName?.toLowerCase().includes(search) ||
+        submission.contactPersonName?.toLowerCase().includes(search) ||
+        submission.contactEmail?.toLowerCase().includes(search) ||
+        submission.subscriptionTier?.toLowerCase().includes(search)
+      );
+    })();
+    
+    const matchesStatus = filterStatus === 'all' || submission.status === filterStatus;
+    
+    return matchesSearch && matchesStatus;
   });
 
   // Calculate statistics
@@ -287,10 +382,10 @@ export default function Admin() {
           </div>
         </div>
 
-        {/* Search */}
+        {/* Search and Filters */}
         <div className="bg-white rounded-lg shadow p-6 mb-8">
-          <div className="flex items-center space-x-4">
-            <div className="flex-1">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div className="lg:col-span-2">
               <label className="block text-sm font-medium text-gray-700 mb-2">Search Companies</label>
               <input
                 type="text"
@@ -300,16 +395,78 @@ export default function Admin() {
                 placeholder="Search by company name, contact, email, or subscription tier..."
               />
             </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Filter by Status</label>
+              <select
+                value={filterStatus}
+                onChange={(e) => setFilterStatus(e.target.value)}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500"
+              >
+                <option value="all">All Statuses</option>
+                <option value="paid">Paid</option>
+                <option value="pending_payment">Pending Payment</option>
+                <option value="cancelled">Cancelled</option>
+              </select>
+            </div>
+          </div>
+          
+          <div className="flex items-center justify-between mt-4 pt-4 border-t border-gray-200">
             <div className="text-sm text-gray-500">
               Showing {filteredSubmissions.length} of {totalCompanies} companies
+              {selectedCompanies.length > 0 && ` • ${selectedCompanies.length} selected`}
+            </div>
+            <div className="flex items-center space-x-3">
+              {selectedCompanies.length > 0 && (
+                <div className="flex items-center space-x-2">
+                  <button
+                    onClick={clearSelection}
+                    className="text-sm text-gray-500 hover:text-gray-700"
+                  >
+                    Clear Selection
+                  </button>
+                  <button
+                    onClick={bulkMarkAsPaid}
+                    className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium hover:bg-green-200 transition-colors"
+                  >
+                    Mark Selected as Paid
+                  </button>
+                  <button
+                    onClick={bulkRemove}
+                    className="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm font-medium hover:bg-red-200 transition-colors"
+                  >
+                    Remove Selected
+                  </button>
+                </div>
+              )}
+              <button
+                onClick={exportToCSV}
+                className="px-4 py-2 bg-blue-100 text-blue-800 rounded-lg text-sm font-medium hover:bg-blue-200 transition-colors"
+              >
+                Export CSV
+              </button>
             </div>
           </div>
         </div>
 
         {/* Submissions Table */}
         <div className="bg-white rounded-lg shadow overflow-hidden">
-          <div className="px-6 py-4 border-b border-gray-200">
+          <div className="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
             <h2 className="text-lg font-semibold text-gray-900">Company Submissions</h2>
+            <div className="flex items-center space-x-2">
+              <button
+                onClick={selectAllCompanies}
+                className="text-sm text-gray-500 hover:text-gray-700"
+              >
+                Select All
+              </button>
+              <span className="text-gray-300">|</span>
+              <button
+                onClick={clearSelection}
+                className="text-sm text-gray-500 hover:text-gray-700"
+              >
+                Clear All
+              </button>
+            </div>
           </div>
           
           {filteredSubmissions.length === 0 ? (
@@ -323,6 +480,14 @@ export default function Admin() {
               <table className="min-w-full divide-y divide-gray-200">
                 <thead className="bg-gray-50">
                   <tr>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <input
+                        type="checkbox"
+                        checked={selectedCompanies.length === filteredSubmissions.length && filteredSubmissions.length > 0}
+                        onChange={selectedCompanies.length === filteredSubmissions.length ? clearSelection : selectAllCompanies}
+                        className="rounded border-gray-300 text-yellow-600 focus:ring-yellow-500"
+                      />
+                    </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Company</th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Contact</th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Employees</th>
@@ -334,7 +499,15 @@ export default function Admin() {
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
                   {filteredSubmissions.map((submission) => (
-                    <tr key={submission.id} className="hover:bg-gray-50">
+                    <tr key={submission.id} className={`hover:bg-gray-50 ${selectedCompanies.includes(submission.id) ? 'bg-yellow-50' : ''}`}>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <input
+                          type="checkbox"
+                          checked={selectedCompanies.includes(submission.id)}
+                          onChange={() => toggleCompanySelection(submission.id)}
+                          className="rounded border-gray-300 text-yellow-600 focus:ring-yellow-500"
+                        />
+                      </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="text-sm font-medium text-gray-900">{submission.companyName || 'N/A'}</div>
                         <div className="text-sm text-gray-500">{submission.subscriptionTier || 'N/A'}</div>
@@ -381,16 +554,32 @@ export default function Admin() {
                         <div className="text-xs text-gray-500">monthly</div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                        <div className="flex space-x-2">
+                        <div className="flex flex-wrap gap-1">
                           <button
                             onClick={() => setSelectedSubmission(submission)}
-                            className="text-blue-600 hover:text-blue-900 bg-blue-100 px-3 py-1 rounded-full text-xs font-medium hover:bg-blue-200 transition-colors"
+                            className="text-blue-600 hover:text-blue-900 bg-blue-100 px-2 py-1 rounded-full text-xs font-medium hover:bg-blue-200 transition-colors"
                           >
                             View
                           </button>
+                          {submission.status !== 'paid' && (
+                            <button
+                              onClick={() => markAsPaid(submission.id)}
+                              className="text-green-600 hover:text-green-900 bg-green-100 px-2 py-1 rounded-full text-xs font-medium hover:bg-green-200 transition-colors"
+                            >
+                              Mark Paid
+                            </button>
+                          )}
+                          {submission.status === 'paid' && (
+                            <button
+                              onClick={() => markAsPending(submission.id)}
+                              className="text-yellow-600 hover:text-yellow-900 bg-yellow-100 px-2 py-1 rounded-full text-xs font-medium hover:bg-yellow-200 transition-colors"
+                            >
+                              Mark Pending
+                            </button>
+                          )}
                           <button
                             onClick={() => removeCompany(submission.id)}
-                            className="text-red-600 hover:text-red-900 bg-red-100 px-3 py-1 rounded-full text-xs font-medium hover:bg-red-200 transition-colors"
+                            className="text-red-600 hover:text-red-900 bg-red-100 px-2 py-1 rounded-full text-xs font-medium hover:bg-red-200 transition-colors"
                           >
                             Remove
                           </button>

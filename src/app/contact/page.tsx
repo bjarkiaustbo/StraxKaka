@@ -242,46 +242,6 @@ export default function Contact() {
         </div>
       </section>
 
-      {/* FAQ Section */}
-      <section className="py-20 bg-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">
-              Frequently Asked Questions
-            </h2>
-            <p className="text-xl text-gray-600">
-              Quick answers to common questions about StraxKaka
-            </p>
-          </div>
-
-          <div className="space-y-6">
-            <div className="bg-gray-50 rounded-lg p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">How does StraxKaka work?</h3>
-              <p className="text-gray-600">Simply upload your employee list with birthdays, and we&apos;ll automatically order cakes from local bakeries on the right dates. No more forgotten birthdays!</p>
-            </div>
-
-            <div className="bg-gray-50 rounded-lg p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">What bakeries do you work with?</h3>
-              <p className="text-gray-600">We partner with the best local bakeries in Iceland to ensure fresh, delicious cakes delivered directly to your workplace.</p>
-            </div>
-
-            <div className="bg-gray-50 rounded-lg p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">Can I customize cake preferences?</h3>
-              <p className="text-gray-600">Yes! You can specify dietary restrictions, cake types, and celebration preferences for each employee in your system.</p>
-            </div>
-
-            <div className="bg-gray-50 rounded-lg p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">How much does it cost?</h3>
-              <p className="text-gray-600">Pricing starts at 60,000 ISK for medium companies (50+ employees) and scales based on your company size. Each cake costs approximately 12,600 ISK.</p>
-            </div>
-
-            <div className="bg-gray-50 rounded-lg p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">What if an employee leaves?</h3>
-              <p className="text-gray-600">You can easily remove employees from the system, and we&apos;ll stop ordering cakes for them immediately. No long-term commitments!</p>
-            </div>
-          </div>
-        </div>
-      </section>
 
 
       {/* Footer */}
