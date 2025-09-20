@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 interface BirthdayPickerProps {
   value: string;
@@ -16,7 +16,7 @@ export default function BirthdayPicker({ value, onChange, placeholder = "Select 
   const [selectedYear, setSelectedYear] = useState('');
 
   // Initialize from value if provided
-  useState(() => {
+  useEffect(() => {
     if (value) {
       const date = new Date(value);
       if (!isNaN(date.getTime())) {
@@ -25,7 +25,7 @@ export default function BirthdayPicker({ value, onChange, placeholder = "Select 
         setSelectedYear(date.getFullYear().toString());
       }
     }
-  });
+  }, [value]);
 
   const months = [
     { value: '01', label: 'January' },
