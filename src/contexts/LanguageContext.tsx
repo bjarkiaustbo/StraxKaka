@@ -311,6 +311,14 @@ const translations = {
     'subscription.payment.phone_number': 'Símanúmer',
     'subscription.navigation.processing': 'Greiði...',
     'subscription.navigation.pay_now': 'Greiða núna',
+    'subscription.hero.title': 'Byrjaðu áskrift á StraxKaka',
+    'subscription.hero.subtitle': 'Aldrei gleymdu afmæli aftur - við sjáum um það fyrir þig',
+    'subscription.features.automatic': 'Sjálfvirk áminning',
+    'subscription.features.automatic_desc': 'Við muna öll afmæli fyrir þig',
+    'subscription.features.delivery': 'Áfhending',
+    'subscription.features.delivery_desc': 'Kökur koma beint á vinnustaðinn',
+    'subscription.features.simple': 'Einfalt',
+    'subscription.features.simple_desc': 'Engin flækja - bara fínn þjónusta',
     
     // Pricing
     'pricing.title': 'Verðskrá',
@@ -724,6 +732,14 @@ const translations = {
     'subscription.payment.phone_number': 'Phone Number',
     'subscription.navigation.processing': 'Processing...',
     'subscription.navigation.pay_now': 'Pay Now',
+    'subscription.hero.title': 'Start Your StraxKaka Subscription',
+    'subscription.hero.subtitle': 'Never forget a birthday again - we take care of it for you',
+    'subscription.features.automatic': 'Automatic Reminders',
+    'subscription.features.automatic_desc': 'We remember all birthdays for you',
+    'subscription.features.delivery': 'Delivery',
+    'subscription.features.delivery_desc': 'Cakes delivered directly to your workplace',
+    'subscription.features.simple': 'Simple',
+    'subscription.features.simple_desc': 'No hassle - just great service',
     
     // Pricing
     'pricing.title': 'Pricing',

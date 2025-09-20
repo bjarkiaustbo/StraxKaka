@@ -400,20 +400,94 @@ export default function Subscription() {
       <Navigation currentPage="subscription" />
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Service Overview */}
+        <div className="bg-gradient-to-r from-yellow-50 to-amber-50 rounded-2xl p-8 mb-8 border border-yellow-200">
+          <div className="text-center">
+            <h1 className="text-4xl font-bold text-gray-900 mb-4">
+              <LanguageContent fallback="Byrjaðu áskrift á StraxKaka">
+                {(t) => t('subscription.hero.title')}
+              </LanguageContent>
+            </h1>
+            <p className="text-xl text-gray-600 mb-6">
+              <LanguageContent fallback="Aldrei gleymdu afmæli aftur - við sjáum um það fyrir þig">
+                {(t) => t('subscription.hero.subtitle')}
+              </LanguageContent>
+            </p>
+            <div className="grid md:grid-cols-3 gap-6 mt-8">
+              <div className="text-center">
+                <div className="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <svg className="w-8 h-8 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                </div>
+                <h3 className="font-semibold text-gray-900 mb-2">
+                  <LanguageContent fallback="Sjálfvirk áminning">
+                    {(t) => t('subscription.features.automatic')}
+                  </LanguageContent>
+                </h3>
+                <p className="text-sm text-gray-600">
+                  <LanguageContent fallback="Við muna öll afmæli fyrir þig">
+                    {(t) => t('subscription.features.automatic_desc')}
+                  </LanguageContent>
+                </p>
+              </div>
+              <div className="text-center">
+                <div className="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <svg className="w-8 h-8 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                  </svg>
+                </div>
+                <h3 className="font-semibold text-gray-900 mb-2">
+                  <LanguageContent fallback="Áfhending">
+                    {(t) => t('subscription.features.delivery')}
+                  </LanguageContent>
+                </h3>
+                <p className="text-sm text-gray-600">
+                  <LanguageContent fallback="Kökur koma beint á vinnustaðinn">
+                    {(t) => t('subscription.features.delivery_desc')}
+                  </LanguageContent>
+                </p>
+              </div>
+              <div className="text-center">
+                <div className="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <svg className="w-8 h-8 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <h3 className="font-semibold text-gray-900 mb-2">
+                  <LanguageContent fallback="Einfalt">
+                    {(t) => t('subscription.features.simple')}
+                  </LanguageContent>
+                </h3>
+                <p className="text-sm text-gray-600">
+                  <LanguageContent fallback="Engin flækja - bara fínn þjónusta">
+                    {(t) => t('subscription.features.simple_desc')}
+                  </LanguageContent>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Progress Indicator */}
         <div className="mb-8">
           <div className="flex items-center justify-center space-x-4">
-            {[1, 2, 3, 4].map((step) => (
+            {[
+              { step: 1, icon: '🏢', label: 'Fyrirtæki' },
+              { step: 2, icon: '👥', label: 'Starfsmenn' },
+              { step: 3, icon: '📋', label: 'Áskrift' },
+              { step: 4, icon: '💳', label: 'Greiðsla' }
+            ].map(({ step, icon, label }) => (
               <div key={step} className="flex items-center">
-                <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${
+                <div className={`w-12 h-12 rounded-full flex items-center justify-center text-lg font-medium transition-all duration-300 ${
                   currentStep >= step 
-                    ? 'bg-yellow-500 text-black' 
+                    ? 'bg-yellow-500 text-black shadow-lg' 
                     : 'bg-gray-300 text-gray-600'
                 }`}>
-                  {step}
+                  {currentStep >= step ? icon : step}
                 </div>
                 {step < 4 && (
-                  <div className={`w-16 h-1 mx-2 ${
+                  <div className={`w-16 h-1 mx-2 rounded-full transition-all duration-300 ${
                     currentStep > step ? 'bg-yellow-500' : 'bg-gray-300'
                   }`} />
                 )}
@@ -422,16 +496,16 @@ export default function Subscription() {
           </div>
           <div className="flex justify-center mt-4 space-x-16">
             <LanguageContent fallback="Fyrirtækisupplýsingar">
-              {(t) => <span className={`text-sm ${currentStep === 1 ? 'text-yellow-600 font-medium' : 'text-gray-500'}`}>{t('subscription.steps.company')}</span>}
+              {(t) => <span className={`text-sm font-medium ${currentStep === 1 ? 'text-yellow-600' : 'text-gray-500'}`}>{t('subscription.steps.company')}</span>}
             </LanguageContent>
             <LanguageContent fallback="Starfsmenn">
-              {(t) => <span className={`text-sm ${currentStep === 2 ? 'text-yellow-600 font-medium' : 'text-gray-500'}`}>{t('subscription.steps.employees')}</span>}
+              {(t) => <span className={`text-sm font-medium ${currentStep === 2 ? 'text-yellow-600' : 'text-gray-500'}`}>{t('subscription.steps.employees')}</span>}
             </LanguageContent>
             <LanguageContent fallback="Áskrift">
-              {(t) => <span className={`text-sm ${currentStep === 3 ? 'text-yellow-600 font-medium' : 'text-gray-500'}`}>{t('subscription.steps.subscription')}</span>}
+              {(t) => <span className={`text-sm font-medium ${currentStep === 3 ? 'text-yellow-600' : 'text-gray-500'}`}>{t('subscription.steps.subscription')}</span>}
             </LanguageContent>
             <LanguageContent fallback="Greiðsla">
-              {(t) => <span className={`text-sm ${currentStep === 4 ? 'text-yellow-600 font-medium' : 'text-gray-500'}`}>4. {t('subscription.steps.payment')}</span>}
+              {(t) => <span className={`text-sm font-medium ${currentStep === 4 ? 'text-yellow-600' : 'text-gray-500'}`}>{t('subscription.steps.payment')}</span>}
             </LanguageContent>
           </div>
         </div>
