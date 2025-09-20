@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import connectDB from '@/lib/mongodb';
 import Company from '@/models/Company';
 import Payment from '@/models/Payment';
+import PaymentLog from '@/models/PaymentLog';
 
 export async function POST(request) {
   try {

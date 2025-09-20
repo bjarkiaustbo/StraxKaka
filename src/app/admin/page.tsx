@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { useLanguage } from '@/contexts/LanguageContext';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
@@ -77,6 +77,7 @@ export default function Admin() {
   const [filterDeliveryStatus, setFilterDeliveryStatus] = useState('');
   const [filterPriority, setFilterPriority] = useState('');
   const [showOnlyActiveEmployees, setShowOnlyActiveEmployees] = useState(false);
+  const [isRefreshing, setIsRefreshing] = useState(false);
 
   // Check if already authenticated
   useEffect(() => {
@@ -88,22 +89,39 @@ export default function Admin() {
     }
   }, []);
 
-  useEffect(() => {
-    if (!isAuthenticated || typeof window === 'undefined') return;
+  const loadSubmissions = useCallback(() => {
+    if (typeof window === 'undefined') return;
     
-    // Load submissions from localStorage
-    const storedSubmissions = localStorage.getItem('straxkaka_submissions');
-    const storedSubscriptions = localStorage.getItem('straxkaka_subscriptions');
-    
-    if (storedSubscriptions) {
-      // Load from new subscription data
-      setSubmissions(JSON.parse(storedSubscriptions));
-    } else if (storedSubmissions) {
-      // Fallback to old data format
-      setSubmissions(JSON.parse(storedSubmissions));
+    try {
+      // Load submissions from localStorage
+      const storedSubmissions = localStorage.getItem('straxkaka_submissions');
+      const storedSubscriptions = localStorage.getItem('straxkaka_subscriptions');
+      
+      if (storedSubscriptions) {
+        // Load from new subscription data
+        setSubmissions(JSON.parse(storedSubscriptions));
+      } else if (storedSubmissions) {
+        // Fallback to old data format
+        setSubmissions(JSON.parse(storedSubmissions));
+      }
+    } catch (error) {
+      console.error('Error loading submissions:', error);
+      setSubmissions([]);
+    } finally {
+      setLoading(false);
+      setIsRefreshing(false);
     }
-    setLoading(false);
-  }, [isAuthenticated]);
+  }, []);
+
+  useEffect(() => {
+    if (!isAuthenticated) return;
+    loadSubmissions();
+  }, [isAuthenticated, loadSubmissions]);
+
+  const refreshData = () => {
+    setIsRefreshing(true);
+    loadSubmissions();
+  };
 
   const handlePasswordSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -383,20 +401,41 @@ export default function Admin() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
-        <div className="mb-8">
-          <LanguageContent fallback={
-            <>
-              <h1 className="text-3xl font-bold text-gray-900 mb-4">Stjórnendadashboard</h1>
-              <p className="text-gray-600">Skoða og stjórna skráningum fyrirtækja og starfsmanna</p>
-            </>
-          }>
-            {(t) => (
+        <div className="mb-8 flex justify-between items-center">
+          <div>
+            <LanguageContent fallback={
               <>
-                <h1 className="text-3xl font-bold text-gray-900 mb-4">{t('admin.title')}</h1>
-                <p className="text-gray-600">{t('admin.subtitle')}</p>
+                <h1 className="text-3xl font-bold text-gray-900 mb-4">Stjórnendadashboard</h1>
+                <p className="text-gray-600">Skoða og stjórna skráningum fyrirtækja og starfsmanna</p>
+              </>
+            }>
+              {(t) => (
+                <>
+                  <h1 className="text-3xl font-bold text-gray-900 mb-4">{t('admin.title')}</h1>
+                  <p className="text-gray-600">{t('admin.subtitle')}</p>
+                </>
+              )}
+            </LanguageContent>
+          </div>
+          <button
+            onClick={refreshData}
+            disabled={isRefreshing}
+            className="flex items-center px-4 py-2 bg-yellow-500 text-black rounded-lg hover:bg-yellow-400 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          >
+            {isRefreshing ? (
+              <>
+                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-black mr-2"></div>
+                Uppfæri...
+              </>
+            ) : (
+              <>
+                <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                </svg>
+                Uppfæra
               </>
             )}
-          </LanguageContent>
+          </button>
         </div>
 
         {/* Stats Cards */}

@@ -31,16 +31,31 @@ export default function BankTransfersPage() {
   const fetchTransfers = async () => {
     try {
       setLoading(true);
-      const response = await fetch('/api/admin/confirm-payment?status=pending');
+      setError('');
+      
+      const response = await fetch('/api/admin/confirm-payment?status=pending', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
       const result = await response.json();
       
       if (result.success) {
-        setTransfers(result.data);
+        setTransfers(result.data || []);
       } else {
         setError(result.error || 'Failed to fetch transfers');
+        setTransfers([]);
       }
     } catch (err) {
-      setError('Failed to fetch transfers');
+      const errorMessage = err instanceof Error ? err.message : 'Failed to fetch transfers';
+      setError(`Error: ${errorMessage}`);
+      setTransfers([]);
       console.error('Error fetching transfers:', err);
     } finally {
       setLoading(false);
@@ -120,7 +135,15 @@ export default function BankTransfersPage() {
         {/* Error Message */}
         {error && (
           <div className="mb-6 bg-red-50 border border-red-200 rounded-lg p-4">
-            <p className="text-red-800">{error}</p>
+            <div className="flex justify-between items-center">
+              <p className="text-red-800">{error}</p>
+              <button
+                onClick={fetchTransfers}
+                className="ml-4 px-3 py-1 bg-red-100 text-red-800 rounded hover:bg-red-200 transition-colors text-sm"
+              >
+                Retry
+              </button>
+            </div>
           </div>
         )}
 
