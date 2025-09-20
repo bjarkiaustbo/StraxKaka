@@ -9,6 +9,7 @@ import LanguageContent from '@/components/LanguageContent';
 import EnhancedFileUpload from '@/components/EnhancedFileUpload';
 import PricingTable from '@/components/PricingTable';
 import Navigation from '@/components/Navigation';
+import BirthdayPicker from '@/components/BirthdayPicker';
 
 interface Employee {
   name: string;
@@ -691,13 +692,11 @@ export default function Subscription() {
                     }>
                       {(t) => <label className="block text-sm font-medium text-gray-700 mb-2">{t('subscription.employees.birthday')} *</label>}
                     </LanguageContent>
-                    <input
-                      type="date"
-                      required
+                    <BirthdayPicker
                       value={employee.birthday}
-                      onChange={(e) => updateEmployee(index, 'birthday', e.target.value)}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent text-gray-700"
-                      style={{ colorScheme: 'light' }}
+                      onChange={(value) => updateEmployee(index, 'birthday', value)}
+                      placeholder="Veldu afmælisdag"
+                      className="text-gray-700"
                     />
                     <p className="text-xs text-gray-500 mt-1">
                       <LanguageContent fallback="Smelltu á reitinn til að velja dagsetningu">

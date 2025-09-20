@@ -80,14 +80,16 @@ export default function Admin() {
 
   // Check if already authenticated
   useEffect(() => {
-    const authStatus = localStorage.getItem('straxkaka_admin_auth');
-    if (authStatus === 'true') {
-      setIsAuthenticated(true);
+    if (typeof window !== 'undefined') {
+      const authStatus = localStorage.getItem('straxkaka_admin_auth');
+      if (authStatus === 'true') {
+        setIsAuthenticated(true);
+      }
     }
   }, []);
 
   useEffect(() => {
-    if (!isAuthenticated) return;
+    if (!isAuthenticated || typeof window === 'undefined') return;
     
     // Load submissions from localStorage
     const storedSubmissions = localStorage.getItem('straxkaka_submissions');
@@ -108,7 +110,9 @@ export default function Admin() {
     // Simple password check - you can change this password
     if (password === 'straxkaka2025') {
       setIsAuthenticated(true);
-      localStorage.setItem('straxkaka_admin_auth', 'true');
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('straxkaka_admin_auth', 'true');
+      }
       setPasswordError('');
     } else {
       setPasswordError('Incorrect password');
@@ -143,7 +147,11 @@ export default function Admin() {
     if (confirm('Are you sure you want to remove this company? This action cannot be undone.')) {
       const updatedSubmissions = submissions.filter(sub => sub.id !== companyId);
       setSubmissions(updatedSubmissions);
+      if (typeof window !== 'undefined') {
+        if (typeof window !== 'undefined') {
       localStorage.setItem('straxkaka_subscriptions', JSON.stringify(updatedSubmissions));
+    }
+      }
     }
   };
 
@@ -152,7 +160,11 @@ export default function Admin() {
       sub.id === companyId ? { ...sub, status: newStatus } : sub
     );
     setSubmissions(updatedSubmissions);
-    localStorage.setItem('straxkaka_subscriptions', JSON.stringify(updatedSubmissions));
+    if (typeof window !== 'undefined') {
+      if (typeof window !== 'undefined') {
+      localStorage.setItem('straxkaka_subscriptions', JSON.stringify(updatedSubmissions));
+    }
+    }
   };
 
   const toggleDeliveredStatus = (companyId: string) => {
@@ -160,7 +172,9 @@ export default function Admin() {
       sub.id === companyId ? { ...sub, delivered: !sub.delivered } : sub
     );
     setSubmissions(updatedSubmissions);
-    localStorage.setItem('straxkaka_subscriptions', JSON.stringify(updatedSubmissions));
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('straxkaka_subscriptions', JSON.stringify(updatedSubmissions));
+    }
   };
 
   const updateDeliveryStatus = (companyId: string, newStatus: 'scheduled' | 'in_transit' | 'delivered' | 'failed') => {
@@ -168,7 +182,9 @@ export default function Admin() {
       sub.id === companyId ? { ...sub, deliveryStatus: newStatus } : sub
     );
     setSubmissions(updatedSubmissions);
-    localStorage.setItem('straxkaka_subscriptions', JSON.stringify(updatedSubmissions));
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('straxkaka_subscriptions', JSON.stringify(updatedSubmissions));
+    }
   };
 
   const updateSubscriptionStatus = (companyId: string, newStatus: 'active' | 'paused' | 'cancelled' | 'suspended') => {
@@ -176,7 +192,9 @@ export default function Admin() {
       sub.id === companyId ? { ...sub, subscriptionStatus: newStatus } : sub
     );
     setSubmissions(updatedSubmissions);
-    localStorage.setItem('straxkaka_subscriptions', JSON.stringify(updatedSubmissions));
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('straxkaka_subscriptions', JSON.stringify(updatedSubmissions));
+    }
   };
 
   const updatePriorityLevel = (companyId: string, newPriority: 'low' | 'medium' | 'high') => {
@@ -184,7 +202,9 @@ export default function Admin() {
       sub.id === companyId ? { ...sub, priorityLevel: newPriority } : sub
     );
     setSubmissions(updatedSubmissions);
-    localStorage.setItem('straxkaka_subscriptions', JSON.stringify(updatedSubmissions));
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('straxkaka_subscriptions', JSON.stringify(updatedSubmissions));
+    }
   };
 
   const addCommunicationNote = (companyId: string, method: string, notes: string) => {
@@ -204,7 +224,9 @@ export default function Admin() {
       } : sub
     );
     setSubmissions(updatedSubmissions);
-    localStorage.setItem('straxkaka_subscriptions', JSON.stringify(updatedSubmissions));
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('straxkaka_subscriptions', JSON.stringify(updatedSubmissions));
+    }
   };
 
   const getUpcomingBirthdays = () => {
