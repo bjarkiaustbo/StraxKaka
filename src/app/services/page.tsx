@@ -48,9 +48,79 @@ export default function Services() {
         </div>
       </section>
 
-      {/* Main Services */}
+      {/* Process Flow */}
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <LanguageContent fallback={
+              <>
+                <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                  Hvernig virkar það?
+                </h2>
+                <p className="text-xl text-gray-600">
+                  Einfalt ferli í 4 skrefum
+                </p>
+              </>
+            }>
+              {(t) => (
+                <>
+                  <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                    {t('services.process.title')}
+                  </h2>
+                  <p className="text-xl text-gray-600">
+                    {t('services.process.subtitle')}
+                  </p>
+                </>
+              )}
+            </LanguageContent>
+          </div>
+
+          <div className="grid md:grid-cols-4 gap-8 mb-20">
+            {[
+              { step: 1, icon: '📋', title: 'Skráning', desc: 'Skráðu starfsmenn og afmælisdaga' },
+              { step: 2, icon: '🤖', title: 'AI Vinnsla', desc: 'AI panta kökur sjálfkrafa' },
+              { step: 3, icon: '🎂', title: 'Kökubúð', desc: 'Bestu kökubúðir búa til kökurnar' },
+              { step: 4, icon: '🚚', title: 'Afhending', desc: 'Kökur koma á vinnustaðinn' }
+            ].map(({ step, icon, title, desc }) => (
+              <div key={step} className="text-center">
+                <div className="w-20 h-20 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-3xl">{icon}</span>
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-2">{title}</h3>
+                <p className="text-gray-600">{desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Main Services */}
+      <section className="py-20 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <LanguageContent fallback={
+              <>
+                <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                  Þjónustan okkar
+                </h2>
+                <p className="text-xl text-gray-600">
+                  Allt sem þú þarft fyrir fullkomna afmælisdagastjórnun
+                </p>
+              </>
+            }>
+              {(t) => (
+                <>
+                  <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                    {t('services.detailed.title')}
+                  </h2>
+                  <p className="text-xl text-gray-600">
+                    {t('services.detailed.subtitle')}
+                  </p>
+                </>
+              )}
+            </LanguageContent>
+          </div>
+
           <div className="grid lg:grid-cols-3 gap-8">
             {/* Service 1 */}
             <div className="bg-gradient-to-br from-yellow-50 to-yellow-100 rounded-2xl p-8">
@@ -166,6 +236,52 @@ export default function Services() {
                 )}
               </LanguageContent>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Benefits Section */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <LanguageContent fallback={
+              <>
+                <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                  Kostir StraxKaka
+                </h2>
+                <p className="text-xl text-gray-600">
+                  Hvers vegna velja fyrirtæki StraxKaka?
+                </p>
+              </>
+            }>
+              {(t) => (
+                <>
+                  <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                    {t('services.benefits.title')}
+                  </h2>
+                  <p className="text-xl text-gray-600">
+                    {t('services.benefits.subtitle')}
+                  </p>
+                </>
+              )}
+            </LanguageContent>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {[
+              { icon: '⏰', title: 'Tímasparnaður', desc: 'Engin handvirk vinnubrögð fyrir HR' },
+              { icon: '😊', title: 'Hamingja', desc: 'Starfsmenn finna sig metna og verða hamingjusamari' },
+              { icon: '🎯', title: 'Nákvæmni', desc: 'Aldrei gleymist afmæli - 100% nákvæmni' },
+              { icon: '💰', desc: 'Kostnaðarsparnaður', title: 'Lægri kostnaður en að ráða sérstakan starfsmann' }
+            ].map(({ icon, title, desc }, index) => (
+              <div key={index} className="text-center">
+                <div className="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-2xl">{icon}</span>
+                </div>
+                <h3 className="text-lg font-bold text-gray-900 mb-2">{title}</h3>
+                <p className="text-gray-600 text-sm">{desc}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
