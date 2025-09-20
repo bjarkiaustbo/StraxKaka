@@ -27,7 +27,8 @@ export default function Navigation({
     { key: 'about', href: '/about', label: 'nav.about' },
     { key: 'services', href: '/services', label: 'nav.services' },
     { key: 'contact', href: '/contact', label: 'nav.contact' },
-    { key: 'subscription', href: '/subscription', label: 'nav.subscription' }
+    { key: 'subscription', href: '/subscription', label: 'nav.subscription' },
+    { key: 'dashboard', href: '/dashboard', label: 'nav.dashboard' }
   ];
 
   return (
@@ -49,7 +50,7 @@ export default function Navigation({
                     : "text-gray-300 hover:text-yellow-400 transition-colors"
                   }
                 >
-                  {t(item.label)}
+                  {item.label}
                 </Link>
               }>
                 {(t) => (
@@ -100,16 +101,29 @@ export default function Navigation({
           <div className="md:hidden bg-black border-t border-gray-800">
             <div className="px-2 pt-2 pb-3 space-y-1">
               {navItems.map((item) => (
-                <Link
-                  key={item.key}
-                  href={item.href}
-                  className={`block px-3 py-2 text-gray-300 hover:text-yellow-400 transition-colors ${
-                    currentPage === item.key ? 'text-yellow-500 font-semibold' : ''
-                  }`}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  {t(item.label)}
-                </Link>
+                <LanguageContent key={item.key} fallback={
+                  <Link
+                    href={item.href}
+                    className={`block px-3 py-2 text-gray-300 hover:text-yellow-400 transition-colors ${
+                      currentPage === item.key ? 'text-yellow-500 font-semibold' : ''
+                    }`}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    {item.label}
+                  </Link>
+                }>
+                  {(t) => (
+                    <Link
+                      href={item.href}
+                      className={`block px-3 py-2 text-gray-300 hover:text-yellow-400 transition-colors ${
+                        currentPage === item.key ? 'text-yellow-500 font-semibold' : ''
+                      }`}
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      {t(item.label)}
+                    </Link>
+                  )}
+                </LanguageContent>
               ))}
             </div>
           </div>

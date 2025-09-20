@@ -18,6 +18,8 @@ const translations = {
     'nav.about': 'Um okkur',
     'nav.services': 'Þjónusta',
     'nav.contact': 'Hafa samband',
+    'nav.subscription': 'Áskrift',
+    'nav.dashboard': 'Stjórnborð',
     'nav.start_now': 'Byrja núna',
     
     // Homepage
@@ -106,7 +108,6 @@ const translations = {
     'about.cta.contact': 'Hafa samband',
     
     // Subscribe page
-    'nav.subscription': 'Áskrift',
     'subscribe.hero.title': 'Skráðu starfsmenn fyrirtækisins þíns',
     'subscribe.hero.subtitle': 'Byrjaðu að nota StraxKaka í dag og gleymdu aldrei afmælisdögum starfsmanna',
     'subscribe.company.title': 'Upplýsingar um fyrirtækið',
@@ -463,6 +464,8 @@ const translations = {
     'nav.about': 'About Us',
     'nav.services': 'Services',
     'nav.contact': 'Contact',
+    'nav.subscription': 'Subscription',
+    'nav.dashboard': 'Dashboard',
     'nav.start_now': 'Get Started',
     
     // Homepage
@@ -527,7 +530,6 @@ const translations = {
     
     
     // Subscribe page
-    'nav.subscription': 'Subscription',
     'subscribe.hero.title': 'Register Your Company Employees',
     'subscribe.hero.subtitle': 'Start using StraxKaka today and never forget employee birthdays',
     'subscribe.company.title': 'Company Information',
