@@ -13,6 +13,13 @@ interface Employee {
   cakeSize: string;
   dietaryRestrictions: string;
   specialNotes: string;
+  // New essential fields
+  department?: string;
+  position?: string;
+  employmentStatus: 'active' | 'inactive' | 'terminated';
+  allergies?: string;
+  celebrationPreferences: 'private' | 'team' | 'company-wide';
+  lastUpdated: string;
 }
 
 interface CompanySubmission {
@@ -30,6 +37,29 @@ interface CompanySubmission {
   dateCreated: string;
   orderId: string;
   delivered: boolean;
+  // New essential fields
+  companySize: number;
+  billingAddress?: string;
+  preferredLanguage: 'is' | 'en';
+  accountManager?: string;
+  contractStartDate?: string;
+  contractEndDate?: string;
+  lastContactDate?: string;
+  lastContactMethod?: 'email' | 'phone' | 'in_person';
+  subscriptionStatus: 'active' | 'paused' | 'cancelled' | 'suspended';
+  deliveryStatus: 'scheduled' | 'in_transit' | 'delivered' | 'failed';
+  orderStatus: 'confirmed' | 'in_production' | 'ready' | 'delivered';
+  priorityLevel: 'low' | 'medium' | 'high';
+  lastActivityDate: string;
+  bakeryAssignment?: string;
+  deliveryInstructions?: string;
+  customerSatisfactionRating?: number;
+  communicationHistory: Array<{
+    date: string;
+    method: string;
+    notes: string;
+    user: string;
+  }>;
 }
 
 export default function Admin() {
@@ -43,6 +73,10 @@ export default function Admin() {
   const [searchTerm, setSearchTerm] = useState('');
   const [filterCompany, setFilterCompany] = useState('');
   const [filterStatus, setFilterStatus] = useState('');
+  const [filterSubscriptionStatus, setFilterSubscriptionStatus] = useState('');
+  const [filterDeliveryStatus, setFilterDeliveryStatus] = useState('');
+  const [filterPriority, setFilterPriority] = useState('');
+  const [showOnlyActiveEmployees, setShowOnlyActiveEmployees] = useState(false);
 
   // Check if already authenticated
   useEffect(() => {
@@ -85,12 +119,24 @@ export default function Admin() {
     const matchesSearch = searchTerm === '' || 
       submission.companyName.toLowerCase().includes(searchTerm.toLowerCase()) ||
       submission.contactPersonName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      submission.contactEmail.toLowerCase().includes(searchTerm.toLowerCase());
+      submission.contactEmail.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      submission.accountManager?.toLowerCase().includes(searchTerm.toLowerCase());
     
     const matchesCompany = filterCompany === '' || submission.companyName === filterCompany;
     const matchesStatus = filterStatus === '' || submission.status === filterStatus;
+    const matchesSubscriptionStatus = filterSubscriptionStatus === '' || submission.subscriptionStatus === filterSubscriptionStatus;
+    const matchesDeliveryStatus = filterDeliveryStatus === '' || submission.deliveryStatus === filterDeliveryStatus;
+    const matchesPriority = filterPriority === '' || submission.priorityLevel === filterPriority;
     
-    return matchesSearch && matchesCompany && matchesStatus;
+    // Filter employees if showOnlyActiveEmployees is true
+    const filteredEmployees = showOnlyActiveEmployees 
+      ? submission.employees.filter(emp => emp.employmentStatus === 'active')
+      : submission.employees;
+    
+    const hasActiveEmployees = showOnlyActiveEmployees ? filteredEmployees.length > 0 : true;
+    
+    return matchesSearch && matchesCompany && matchesStatus && 
+           matchesSubscriptionStatus && matchesDeliveryStatus && matchesPriority && hasActiveEmployees;
   });
 
   const removeCompany = (companyId: string) => {
@@ -117,6 +163,50 @@ export default function Admin() {
     localStorage.setItem('straxkaka_subscriptions', JSON.stringify(updatedSubmissions));
   };
 
+  const updateDeliveryStatus = (companyId: string, newStatus: 'scheduled' | 'in_transit' | 'delivered' | 'failed') => {
+    const updatedSubmissions = submissions.map(sub => 
+      sub.id === companyId ? { ...sub, deliveryStatus: newStatus } : sub
+    );
+    setSubmissions(updatedSubmissions);
+    localStorage.setItem('straxkaka_subscriptions', JSON.stringify(updatedSubmissions));
+  };
+
+  const updateSubscriptionStatus = (companyId: string, newStatus: 'active' | 'paused' | 'cancelled' | 'suspended') => {
+    const updatedSubmissions = submissions.map(sub => 
+      sub.id === companyId ? { ...sub, subscriptionStatus: newStatus } : sub
+    );
+    setSubmissions(updatedSubmissions);
+    localStorage.setItem('straxkaka_subscriptions', JSON.stringify(updatedSubmissions));
+  };
+
+  const updatePriorityLevel = (companyId: string, newPriority: 'low' | 'medium' | 'high') => {
+    const updatedSubmissions = submissions.map(sub => 
+      sub.id === companyId ? { ...sub, priorityLevel: newPriority } : sub
+    );
+    setSubmissions(updatedSubmissions);
+    localStorage.setItem('straxkaka_subscriptions', JSON.stringify(updatedSubmissions));
+  };
+
+  const addCommunicationNote = (companyId: string, method: string, notes: string) => {
+    const newNote = {
+      date: new Date().toISOString(),
+      method,
+      notes,
+      user: 'Admin'
+    };
+    
+    const updatedSubmissions = submissions.map(sub => 
+      sub.id === companyId ? { 
+        ...sub, 
+        communicationHistory: [...sub.communicationHistory, newNote],
+        lastContactDate: new Date().toISOString(),
+        lastContactMethod: method as 'email' | 'phone' | 'in_person'
+      } : sub
+    );
+    setSubmissions(updatedSubmissions);
+    localStorage.setItem('straxkaka_subscriptions', JSON.stringify(updatedSubmissions));
+  };
+
   const getUpcomingBirthdays = () => {
     const today = new Date();
     const next30Days = new Date(today.getTime() + 30 * 24 * 60 * 60 * 1000);
@@ -128,25 +218,27 @@ export default function Admin() {
     }> = [];
 
     submissions.forEach(submission => {
-      submission.employees.forEach(employee => {
-        const birthday = new Date(employee.birthday);
-        const thisYearBirthday = new Date(today.getFullYear(), birthday.getMonth(), birthday.getDate());
-        
-        // If birthday already passed this year, check next year
-        if (thisYearBirthday < today) {
-          thisYearBirthday.setFullYear(today.getFullYear() + 1);
-        }
-        
-        const daysUntil = Math.ceil((thisYearBirthday.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
-        
-        if (daysUntil <= 30) {
-          upcomingBirthdays.push({
-            employee,
-            company: submission.companyName,
-            daysUntil
-          });
-        }
-      });
+      submission.employees
+        .filter(employee => employee.employmentStatus === 'active') // Only active employees
+        .forEach(employee => {
+          const birthday = new Date(employee.birthday);
+          const thisYearBirthday = new Date(today.getFullYear(), birthday.getMonth(), birthday.getDate());
+          
+          // If birthday already passed this year, check next year
+          if (thisYearBirthday < today) {
+            thisYearBirthday.setFullYear(today.getFullYear() + 1);
+          }
+          
+          const daysUntil = Math.ceil((thisYearBirthday.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
+          
+          if (daysUntil <= 30) {
+            upcomingBirthdays.push({
+              employee,
+              company: submission.companyName,
+              daysUntil
+            });
+          }
+        });
     });
 
     return upcomingBirthdays.sort((a, b) => a.daysUntil - b.daysUntil);
@@ -286,11 +378,13 @@ export default function Admin() {
               </div>
               <div className="ml-4">
                 <p className="text-sm font-medium text-gray-600">
-                  <LanguageContent fallback="Fyrirtæki">
-                    {(t) => t('admin.stats.companies')}
+                  <LanguageContent fallback="Aktív fyrirtæki">
+                    {(t) => t('admin.stats.active_companies')}
                   </LanguageContent>
                 </p>
-                <p className="text-2xl font-bold text-gray-900">{submissions.length}</p>
+                <p className="text-2xl font-bold text-gray-900">
+                  {submissions.filter(sub => sub.subscriptionStatus === 'active').length}
+                </p>
               </div>
             </div>
           </div>
@@ -302,12 +396,14 @@ export default function Admin() {
               </div>
               <div className="ml-4">
                 <p className="text-sm font-medium text-gray-600">
-                  <LanguageContent fallback="Starfsmenn">
-                    {(t) => t('admin.stats.employees')}
+                  <LanguageContent fallback="Aktívir starfsmenn">
+                    {(t) => t('admin.stats.active_employees')}
                   </LanguageContent>
                 </p>
                 <p className="text-2xl font-bold text-gray-900">
-                  {submissions.reduce((total, sub) => total + sub.employees.length, 0)}
+                  {submissions.reduce((total, sub) => 
+                    total + sub.employees.filter(emp => emp.employmentStatus === 'active').length, 0
+                  )}
                 </p>
               </div>
             </div>
@@ -320,11 +416,13 @@ export default function Admin() {
               </div>
               <div className="ml-4">
                 <p className="text-sm font-medium text-gray-600">
-                  <LanguageContent fallback="Kemur afmæli næstu 30 daga">
-                    {(t) => t('admin.stats.upcoming')}
+                  <LanguageContent fallback="Kemur afmæli næstu 7 daga">
+                    {(t) => t('admin.stats.upcoming_week')}
                   </LanguageContent>
                 </p>
-                <p className="text-2xl font-bold text-gray-900">{getUpcomingBirthdays().length}</p>
+                <p className="text-2xl font-bold text-gray-900">
+                  {getUpcomingBirthdays().filter(b => b.daysUntil <= 7).length}
+                </p>
               </div>
             </div>
           </div>
@@ -336,12 +434,12 @@ export default function Admin() {
               </div>
               <div className="ml-4">
                 <p className="text-sm font-medium text-gray-600">
-                  <LanguageContent fallback="Meðaltal starfsmanna">
-                    {(t) => t('admin.stats.average')}
+                  <LanguageContent fallback="Afhendingar í dag">
+                    {(t) => t('admin.stats.deliveries_today')}
                   </LanguageContent>
                 </p>
                 <p className="text-2xl font-bold text-gray-900">
-                  {submissions.length > 0 ? Math.round(submissions.reduce((total, sub) => total + sub.employees.length, 0) / submissions.length) : 0}
+                  {submissions.filter(sub => sub.deliveryStatus === 'in_transit').length}
                 </p>
               </div>
             </div>
@@ -391,7 +489,7 @@ export default function Admin() {
 
         {/* Search and Filter */}
         <div className="bg-white rounded-lg shadow p-6 mb-8">
-          <div className="grid md:grid-cols-4 gap-4">
+          <div className="grid md:grid-cols-3 lg:grid-cols-6 gap-4 mb-4">
             <div>
               <LanguageContent fallback={
                 <label className="block text-sm font-medium text-gray-700 mb-2">Leita</label>
@@ -442,16 +540,71 @@ export default function Admin() {
                 <option value="cancelled">Cancelled</option>
               </select>
             </div>
-            <div className="flex items-end">
-              <button
-                onClick={exportToCSV}
-                className="w-full bg-yellow-500 text-black px-4 py-2 rounded-lg hover:bg-yellow-400 transition-colors font-medium"
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Subscription</label>
+              <select
+                value={filterSubscriptionStatus}
+                onChange={(e) => setFilterSubscriptionStatus(e.target.value)}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
               >
-                <LanguageContent fallback="Flytja út CSV">
-                  {(t) => t('admin.export')}
-                </LanguageContent>
-              </button>
+                <option value="">All Subscriptions</option>
+                <option value="active">Active</option>
+                <option value="paused">Paused</option>
+                <option value="cancelled">Cancelled</option>
+                <option value="suspended">Suspended</option>
+              </select>
             </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Delivery Status</label>
+              <select
+                value={filterDeliveryStatus}
+                onChange={(e) => setFilterDeliveryStatus(e.target.value)}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+              >
+                <option value="">All Deliveries</option>
+                <option value="scheduled">Scheduled</option>
+                <option value="in_transit">In Transit</option>
+                <option value="delivered">Delivered</option>
+                <option value="failed">Failed</option>
+              </select>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Priority</label>
+              <select
+                value={filterPriority}
+                onChange={(e) => setFilterPriority(e.target.value)}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+              >
+                <option value="">All Priorities</option>
+                <option value="high">High</option>
+                <option value="medium">Medium</option>
+                <option value="low">Low</option>
+              </select>
+            </div>
+          </div>
+          
+          <div className="flex items-center justify-between">
+            <div className="flex items-center">
+              <input
+                type="checkbox"
+                id="activeEmployees"
+                checked={showOnlyActiveEmployees}
+                onChange={(e) => setShowOnlyActiveEmployees(e.target.checked)}
+                className="h-4 w-4 text-yellow-600 focus:ring-yellow-500 border-gray-300 rounded"
+              />
+              <label htmlFor="activeEmployees" className="ml-2 block text-sm text-gray-700">
+                Show only active employees
+              </label>
+            </div>
+            
+            <button
+              onClick={exportToCSV}
+              className="bg-yellow-500 text-black px-4 py-2 rounded-lg hover:bg-yellow-400 transition-colors font-medium"
+            >
+              <LanguageContent fallback="Flytja út CSV">
+                {(t) => t('admin.export')}
+              </LanguageContent>
+            </button>
           </div>
         </div>
 
@@ -494,18 +647,18 @@ export default function Admin() {
                       </LanguageContent>
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      <LanguageContent fallback="Staða">
-                        {(t) => t('admin.table.status')}
+                      <LanguageContent fallback="Áskrift">
+                        {(t) => t('admin.table.subscription')}
                       </LanguageContent>
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      <LanguageContent fallback="Afhent">
-                        {(t) => t('admin.table.delivered')}
+                      <LanguageContent fallback="Afhending">
+                        {(t) => t('admin.table.delivery')}
                       </LanguageContent>
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      <LanguageContent fallback="Dagsetning">
-                        {(t) => t('admin.table.date')}
+                      <LanguageContent fallback="Forgangur">
+                        {(t) => t('admin.table.priority')}
                       </LanguageContent>
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -521,66 +674,102 @@ export default function Admin() {
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="text-sm font-medium text-gray-900">{submission.companyName}</div>
                         <div className="text-sm text-gray-500">{submission.contactEmail}</div>
+                        {submission.accountManager && (
+                          <div className="text-xs text-blue-600">Manager: {submission.accountManager}</div>
+                        )}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="text-sm text-gray-900">{submission.contactPersonName}</div>
                         <div className="text-sm text-gray-500">{submission.contactPhone}</div>
+                        {submission.lastContactDate && (
+                          <div className="text-xs text-gray-400">
+                            Last: {new Date(submission.lastContactDate).toLocaleDateString()}
+                          </div>
+                        )}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-gray-900">{submission.employees.length}</div>
+                        <div className="text-sm text-gray-900">
+                          {submission.employees.filter(emp => emp.employmentStatus === 'active').length} / {submission.employees.length}
+                        </div>
                         <div className="text-sm text-gray-500">
-                          <LanguageContent fallback="starfsmenn">
-                            {(t) => t('admin.table.employees_count')}
+                          <LanguageContent fallback="aktívir / allir">
+                            {(t) => t('admin.table.active_total')}
                           </LanguageContent>
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                          submission.status === 'paid' ? 'bg-green-100 text-green-800' :
-                          submission.status === 'pending_payment' ? 'bg-yellow-100 text-yellow-800' :
+                          submission.subscriptionStatus === 'active' ? 'bg-green-100 text-green-800' :
+                          submission.subscriptionStatus === 'paused' ? 'bg-yellow-100 text-yellow-800' :
+                          submission.subscriptionStatus === 'suspended' ? 'bg-orange-100 text-orange-800' :
                           'bg-red-100 text-red-800'
                         }`}>
-                          {submission.status === 'paid' ? 'Paid' :
-                           submission.status === 'pending_payment' ? 'Pending' : 'Cancelled'}
+                          {submission.subscriptionStatus.charAt(0).toUpperCase() + submission.subscriptionStatus.slice(1)}
                         </span>
                         <div className="text-xs text-gray-500 mt-1">
                           {submission.monthlyCost?.toLocaleString('is-IS') || '0'} ISK
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <button
-                          onClick={() => toggleDeliveredStatus(submission.id)}
-                          className={`inline-flex px-3 py-1 text-xs font-semibold rounded-full transition-colors duration-200 ${
-                            submission.delivered 
-                              ? 'bg-green-100 text-green-800 hover:bg-green-200' 
-                              : 'bg-gray-100 text-gray-800 hover:bg-gray-200'
-                          }`}
-                        >
-                          {submission.delivered ? 'Yes' : 'No'}
-                        </button>
+                        <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
+                          submission.deliveryStatus === 'delivered' ? 'bg-green-100 text-green-800' :
+                          submission.deliveryStatus === 'in_transit' ? 'bg-blue-100 text-blue-800' :
+                          submission.deliveryStatus === 'scheduled' ? 'bg-yellow-100 text-yellow-800' :
+                          'bg-red-100 text-red-800'
+                        }`}>
+                          {submission.deliveryStatus.charAt(0).toUpperCase() + submission.deliveryStatus.slice(1).replace('_', ' ')}
+                        </span>
+                        {submission.bakeryAssignment && (
+                          <div className="text-xs text-gray-500 mt-1">
+                            Bakery: {submission.bakeryAssignment}
+                          </div>
+                        )}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {new Date(submission.dateCreated).toLocaleDateString()}
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
+                          submission.priorityLevel === 'high' ? 'bg-red-100 text-red-800' :
+                          submission.priorityLevel === 'medium' ? 'bg-yellow-100 text-yellow-800' :
+                          'bg-gray-100 text-gray-800'
+                        }`}>
+                          {submission.priorityLevel.charAt(0).toUpperCase() + submission.priorityLevel.slice(1)}
+                        </span>
+                        {submission.customerSatisfactionRating && (
+                          <div className="text-xs text-gray-500 mt-1">
+                            Rating: {submission.customerSatisfactionRating}/5
+                          </div>
+                        )}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                        <div className="flex space-x-2">
+                        <div className="flex flex-wrap gap-1">
                           <button
                             onClick={() => setSelectedSubmission(submission)}
-                            className="bg-yellow-100 hover:bg-yellow-200 text-yellow-800 px-3 py-1.5 rounded-full text-xs font-medium transition-colors duration-200 shadow-sm hover:shadow-md"
+                            className="bg-yellow-100 hover:bg-yellow-200 text-yellow-800 px-2 py-1 rounded-full text-xs font-medium transition-colors duration-200 shadow-sm hover:shadow-md"
                           >
                             <LanguageContent fallback="Skoða">
                               {(t) => t('admin.table.view')}
                             </LanguageContent>
                           </button>
                           <button
-                            onClick={() => updatePaymentStatus(submission.id, 'paid')}
-                            className="bg-green-100 hover:bg-green-200 text-green-800 px-3 py-1.5 rounded-full text-xs font-medium transition-colors duration-200 shadow-sm hover:shadow-md"
+                            onClick={() => updateDeliveryStatus(submission.id, 'delivered')}
+                            className="bg-green-100 hover:bg-green-200 text-green-800 px-2 py-1 rounded-full text-xs font-medium transition-colors duration-200 shadow-sm hover:shadow-md"
                           >
-                            Mark Paid
+                            Delivered
+                          </button>
+                          <button
+                            onClick={() => updateSubscriptionStatus(submission.id, 'active')}
+                            className="bg-blue-100 hover:bg-blue-200 text-blue-800 px-2 py-1 rounded-full text-xs font-medium transition-colors duration-200 shadow-sm hover:shadow-md"
+                          >
+                            Activate
+                          </button>
+                          <button
+                            onClick={() => updatePriorityLevel(submission.id, 'high')}
+                            className="bg-red-100 hover:bg-red-200 text-red-800 px-2 py-1 rounded-full text-xs font-medium transition-colors duration-200 shadow-sm hover:shadow-md"
+                          >
+                            High Priority
                           </button>
                           <button
                             onClick={() => removeCompany(submission.id)}
-                            className="bg-red-100 hover:bg-red-200 text-red-800 px-3 py-1.5 rounded-full text-xs font-medium transition-colors duration-200 shadow-sm hover:shadow-md"
+                            className="bg-gray-100 hover:bg-gray-200 text-gray-800 px-2 py-1 rounded-full text-xs font-medium transition-colors duration-200 shadow-sm hover:shadow-md"
                           >
                             Remove
                           </button>
@@ -662,9 +851,27 @@ export default function Admin() {
                   <div className="mt-2 space-y-3">
                     {selectedSubmission.employees.map((employee, index) => (
                       <div key={index} className="border border-gray-200 rounded-lg p-4">
-                        <div className="grid md:grid-cols-2 gap-4">
+                        <div className="flex justify-between items-start mb-2">
                           <div>
                             <p className="font-medium text-gray-900">{employee.name}</p>
+                            {employee.position && (
+                              <p className="text-sm text-gray-600">{employee.position}</p>
+                            )}
+                            {employee.department && (
+                              <p className="text-sm text-gray-500">{employee.department}</p>
+                            )}
+                          </div>
+                          <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
+                            employee.employmentStatus === 'active' ? 'bg-green-100 text-green-800' :
+                            employee.employmentStatus === 'inactive' ? 'bg-yellow-100 text-yellow-800' :
+                            'bg-red-100 text-red-800'
+                          }`}>
+                            {employee.employmentStatus.charAt(0).toUpperCase() + employee.employmentStatus.slice(1)}
+                          </span>
+                        </div>
+                        
+                        <div className="grid md:grid-cols-2 gap-4">
+                          <div>
                             <p className="text-sm text-gray-600">
                               <LanguageContent fallback="Afmælisdagur">
                                 {(t) => t('admin.modal.birthday')}
@@ -675,6 +882,11 @@ export default function Admin() {
                                 {(t) => t('admin.modal.cake_type')}
                               </LanguageContent>: {employee.cakeType}
                             </p>
+                            <p className="text-sm text-gray-600">
+                              <LanguageContent fallback="Fagnaðarstíll">
+                                {(t) => t('admin.modal.celebration_style')}
+                              </LanguageContent>: {employee.celebrationPreferences}
+                            </p>
                           </div>
                           <div>
                             {employee.dietaryRestrictions && (
@@ -684,6 +896,13 @@ export default function Admin() {
                                 </LanguageContent>: {employee.dietaryRestrictions}
                               </p>
                             )}
+                            {employee.allergies && (
+                              <p className="text-sm text-red-600 font-medium">
+                                <LanguageContent fallback="Ofnæmi">
+                                  {(t) => t('admin.modal.allergies')}
+                                </LanguageContent>: {employee.allergies}
+                              </p>
+                            )}
                             {employee.specialNotes && (
                               <p className="text-sm text-gray-600">
                                 <LanguageContent fallback="Athugasemdir">
@@ -691,6 +910,11 @@ export default function Admin() {
                                 </LanguageContent>: {employee.specialNotes}
                               </p>
                             )}
+                            <p className="text-xs text-gray-400 mt-2">
+                              <LanguageContent fallback="Síðast uppfært">
+                                {(t) => t('admin.modal.last_updated')}
+                              </LanguageContent>: {new Date(employee.lastUpdated).toLocaleDateString()}
+                            </p>
                           </div>
                         </div>
                       </div>
