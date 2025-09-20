@@ -19,7 +19,6 @@ const translations = {
     'nav.services': 'Þjónusta',
     'nav.contact': 'Hafa samband',
     'nav.subscription': 'Áskrift',
-    'nav.dashboard': 'Stjórnborð',
     'nav.start_now': 'Byrja núna',
     
     // Homepage
@@ -471,7 +470,6 @@ const translations = {
     'nav.services': 'Services',
     'nav.contact': 'Contact',
     'nav.subscription': 'Subscription',
-    'nav.dashboard': 'Dashboard',
     'nav.start_now': 'Get Started',
     
     // Homepage

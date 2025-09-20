@@ -27,8 +27,7 @@ export default function Navigation({
     { key: 'about', href: '/about', label: 'nav.about' },
     { key: 'services', href: '/services', label: 'nav.services' },
     { key: 'contact', href: '/contact', label: 'nav.contact' },
-    { key: 'subscription', href: '/subscription', label: 'nav.subscription' },
-    { key: 'dashboard', href: '/dashboard', label: 'nav.dashboard' }
+    { key: 'subscription', href: '/subscription', label: 'nav.subscription' }
   ];
 
   return (

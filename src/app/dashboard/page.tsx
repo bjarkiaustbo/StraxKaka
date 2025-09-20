@@ -201,24 +201,23 @@ export default function Dashboard() {
               <Link href="/" className="text-2xl font-bold text-yellow-500">StraxKaka</Link>
             </div>
             <div className="hidden md:flex space-x-8">
-              <LanguageContent fallback={<Link href="/" className="text-gray-300 hover:text-yellow-400 transition-colors">Heim</Link>}>
-                {(t) => <Link href="/" className="text-gray-300 hover:text-yellow-400 transition-colors">{t('nav.home')}</Link>}
+              <LanguageContent fallback={<Link href="/dashboard" className="text-yellow-500 font-semibold">Stjórnborð</Link>}>
+                {(t) => <Link href="/dashboard" className="text-yellow-500 font-semibold">Stjórnborð</Link>}
               </LanguageContent>
-              <LanguageContent fallback={<Link href="/about" className="text-gray-300 hover:text-yellow-400 transition-colors">Um okkur</Link>}>
-                {(t) => <Link href="/about" className="text-gray-300 hover:text-yellow-400 transition-colors">{t('nav.about')}</Link>}
+              <LanguageContent fallback={<Link href="/admin" className="text-gray-300 hover:text-yellow-400 transition-colors">Stjórnun</Link>}>
+                {(t) => <Link href="/admin" className="text-gray-300 hover:text-yellow-400 transition-colors">Stjórnun</Link>}
               </LanguageContent>
-              <LanguageContent fallback={<Link href="/services" className="text-gray-300 hover:text-yellow-400 transition-colors">Þjónusta</Link>}>
-                {(t) => <Link href="/services" className="text-gray-300 hover:text-yellow-400 transition-colors">{t('nav.services')}</Link>}
-              </LanguageContent>
-              <LanguageContent fallback={<Link href="/contact" className="text-gray-300 hover:text-yellow-400 transition-colors">Hafa samband</Link>}>
-                {(t) => <Link href="/contact" className="text-gray-300 hover:text-yellow-400 transition-colors">{t('nav.contact')}</Link>}
-              </LanguageContent>
-              <LanguageContent fallback={<Link href="/subscription" className="text-gray-300 hover:text-yellow-400 transition-colors">Áskrift</Link>}>
-                {(t) => <Link href="/subscription" className="text-gray-300 hover:text-yellow-400 transition-colors">{t('nav.subscription')}</Link>}
+              <LanguageContent fallback={<Link href="/admin/bank-transfers" className="text-gray-300 hover:text-yellow-400 transition-colors">Bankagreiðslur</Link>}>
+                {(t) => <Link href="/admin/bank-transfers" className="text-gray-300 hover:text-yellow-400 transition-colors">Bankagreiðslur</Link>}
               </LanguageContent>
             </div>
             <div className="flex items-center space-x-4">
               <LanguageSwitcher />
+              <Link href="/" className="text-gray-300 hover:text-yellow-400 transition-colors text-sm">
+                <LanguageContent fallback="Til baka á heimasíðuna">
+                  {(t) => t('nav.home')}
+                </LanguageContent>
+              </Link>
             </div>
           </div>
         </div>
