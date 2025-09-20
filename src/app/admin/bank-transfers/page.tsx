@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
+import AdminNavigation from '@/components/AdminNavigation';
 
 interface BankTransfer {
   orderId: string;
@@ -33,15 +34,28 @@ export default function BankTransfersPage() {
       setLoading(true);
       setError('');
       
+      // Add timeout to prevent hanging
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+      
       const response = await fetch('/api/admin/confirm-payment?status=pending', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
         },
+        signal: controller.signal,
       });
       
+      clearTimeout(timeoutId);
+      
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        if (response.status === 500) {
+          throw new Error('Server error - please try again later');
+        } else if (response.status === 404) {
+          throw new Error('API endpoint not found');
+        } else {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
       }
       
       const result = await response.json();
@@ -53,8 +67,17 @@ export default function BankTransfersPage() {
         setTransfers([]);
       }
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Failed to fetch transfers';
-      setError(`Error: ${errorMessage}`);
+      let errorMessage = 'Failed to fetch transfers';
+      
+      if (err instanceof Error) {
+        if (err.name === 'AbortError') {
+          errorMessage = 'Request timed out - please try again';
+        } else {
+          errorMessage = err.message;
+        }
+      }
+      
+      setError(errorMessage);
       setTransfers([]);
       console.error('Error fetching transfers:', err);
     } finally {
@@ -124,8 +147,10 @@ export default function BankTransfersPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+      <AdminNavigation currentPage="bank-transfers" />
+      
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900">Bank Transfer Management</h1>
@@ -136,13 +161,26 @@ export default function BankTransfersPage() {
         {error && (
           <div className="mb-6 bg-red-50 border border-red-200 rounded-lg p-4">
             <div className="flex justify-between items-center">
-              <p className="text-red-800">{error}</p>
-              <button
-                onClick={fetchTransfers}
-                className="ml-4 px-3 py-1 bg-red-100 text-red-800 rounded hover:bg-red-200 transition-colors text-sm"
-              >
-                Retry
-              </button>
+              <div className="flex-1">
+                <p className="text-red-800 font-medium">{error}</p>
+                <p className="text-red-600 text-sm mt-1">
+                  If this problem persists, please contact support or try again later.
+                </p>
+              </div>
+              <div className="flex space-x-2 ml-4">
+                <button
+                  onClick={fetchTransfers}
+                  className="px-3 py-1 bg-red-100 text-red-800 rounded hover:bg-red-200 transition-colors text-sm"
+                >
+                  Retry
+                </button>
+                <button
+                  onClick={() => window.location.href = '/admin'}
+                  className="px-3 py-1 bg-gray-100 text-gray-800 rounded hover:bg-gray-200 transition-colors text-sm"
+                >
+                  Back to Admin
+                </button>
+              </div>
             </div>
           </div>
         )}
@@ -252,10 +290,13 @@ export default function BankTransfersPage() {
               </tbody>
             </table>
           </div>
-          {transfers.length === 0 && (
+          {transfers.length === 0 && !loading && (
             <div className="text-center py-12">
               <span className="text-4xl">📋</span>
               <p className="mt-4 text-gray-500">No pending bank transfers</p>
+              <p className="text-sm text-gray-400 mt-2">
+                New bank transfer payments will appear here once companies complete their subscription.
+              </p>
             </div>
           )}
         </div>

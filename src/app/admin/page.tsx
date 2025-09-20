@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useLanguage } from '@/contexts/LanguageContext';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
 import LanguageContent from '@/components/LanguageContent';
+import AdminNavigation from '@/components/AdminNavigation';
 
 interface Employee {
   name: string;
@@ -370,34 +371,7 @@ export default function Admin() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
       {/* Navigation */}
-      <nav className="bg-black shadow-lg">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-6">
-            <div className="flex items-center">
-              <Link href="/" className="text-2xl font-bold text-yellow-500">StraxKaka</Link>
-            </div>
-            <div className="hidden md:flex space-x-8">
-              <LanguageContent fallback={<Link href="/dashboard" className="text-yellow-500 font-semibold">Stjórnborð</Link>}>
-                {(t) => <Link href="/dashboard" className="text-yellow-500 font-semibold">Stjórnborð</Link>}
-              </LanguageContent>
-              <LanguageContent fallback={<Link href="/admin" className="text-gray-300 hover:text-yellow-400 transition-colors">Stjórnun</Link>}>
-                {(t) => <Link href="/admin" className="text-gray-300 hover:text-yellow-400 transition-colors">Stjórnun</Link>}
-              </LanguageContent>
-              <LanguageContent fallback={<Link href="/admin/bank-transfers" className="text-gray-300 hover:text-yellow-400 transition-colors">Bankagreiðslur</Link>}>
-                {(t) => <Link href="/admin/bank-transfers" className="text-gray-300 hover:text-yellow-400 transition-colors">Bankagreiðslur</Link>}
-              </LanguageContent>
-            </div>
-            <div className="flex items-center space-x-4">
-              <LanguageSwitcher />
-              <Link href="/" className="text-gray-300 hover:text-yellow-400 transition-colors text-sm">
-                <LanguageContent fallback="Til baka á heimasíðuna">
-                  {(t) => t('nav.home')}
-                </LanguageContent>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </nav>
+      <AdminNavigation currentPage="admin" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
