@@ -109,8 +109,6 @@ export default function Admin() {
   // Calculate statistics
   const totalCompanies = submissions.length;
   const activeCompanies = submissions.filter(sub => sub.subscriptionStatus === 'active').length;
-  const paidCompanies = submissions.filter(sub => sub.status === 'paid').length;
-  const totalEmployees = submissions.reduce((total, sub) => total + (sub.employees?.length || 0), 0);
   const activeEmployees = submissions.reduce((total, sub) => 
     total + (sub.employees?.filter(emp => emp.employmentStatus === 'active').length || 0), 0
   );
@@ -364,7 +362,7 @@ export default function Admin() {
                           submission.subscriptionStatus === 'cancelled' ? 'bg-red-100 text-red-800' :
                           'bg-gray-100 text-gray-800'
                         }`}>
-                          {submission.subscriptionStatus?.charAt(0).toUpperCase() + submission.subscriptionStatus?.slice(1) || 'Unknown'}
+                          {submission.subscriptionStatus ? submission.subscriptionStatus.charAt(0).toUpperCase() + submission.subscriptionStatus.slice(1) : 'Unknown'}
                         </span>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
@@ -373,7 +371,7 @@ export default function Admin() {
                           submission.status === 'pending_payment' ? 'bg-yellow-100 text-yellow-800' :
                           'bg-red-100 text-red-800'
                         }`}>
-                          {submission.status?.replace('_', ' ').charAt(0).toUpperCase() + submission.status?.replace('_', ' ').slice(1) || 'Unknown'}
+                          {submission.status ? submission.status.replace('_', ' ').charAt(0).toUpperCase() + submission.status.replace('_', ' ').slice(1) : 'Unknown'}
                         </span>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">

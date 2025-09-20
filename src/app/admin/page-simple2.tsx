@@ -1,12 +1,24 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
+
+interface Submission {
+  id: string;
+  companyName?: string;
+  contactPersonName?: string;
+  contactEmail?: string;
+  subscriptionTier?: string;
+  status?: string;
+  employees?: unknown[];
+  monthlyCost?: number;
+}
 
 export default function Admin() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [password, setPassword] = useState('');
   const [passwordError, setPasswordError] = useState('');
-  const [submissions, setSubmissions] = useState([]);
+  const [submissions, setSubmissions] = useState<Submission[]>([]);
   const [loading, setLoading] = useState(false);
 
   // Check if already authenticated
@@ -41,7 +53,7 @@ export default function Admin() {
     }
   };
 
-  const handlePasswordSubmit = (e) => {
+  const handlePasswordSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (password === 'straxkaka2025') {
       setIsAuthenticated(true);
@@ -55,7 +67,7 @@ export default function Admin() {
     }
   };
 
-  const removeCompany = (companyId) => {
+  const removeCompany = (companyId: string) => {
     if (confirm('Are you sure you want to remove this company?')) {
       const updatedSubmissions = submissions.filter(sub => sub.id !== companyId);
       setSubmissions(updatedSubmissions);
@@ -136,9 +148,9 @@ export default function Admin() {
               <span className="text-2xl font-bold text-yellow-500">Strax Admin</span>
             </div>
             <div className="flex items-center space-x-4">
-              <a href="/" className="text-gray-300 hover:text-yellow-400 transition-colors text-sm">
+              <Link href="/" className="text-gray-300 hover:text-yellow-400 transition-colors text-sm">
                 Back to Homepage
-              </a>
+              </Link>
             </div>
           </div>
         </div>
