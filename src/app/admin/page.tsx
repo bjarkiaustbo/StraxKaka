@@ -6,6 +6,7 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
 import LanguageContent from '@/components/LanguageContent';
 import AdminNavigation from '@/components/AdminNavigation';
+import AdminErrorBoundary from '@/components/AdminErrorBoundary';
 
 interface Employee {
   name: string;
@@ -369,27 +370,35 @@ export default function Admin() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
-      {/* Navigation */}
-      <AdminNavigation currentPage="admin" />
+    <AdminErrorBoundary>
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+        {/* Navigation */}
+        <AdminNavigation currentPage="admin" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="mb-8 flex justify-between items-center">
-          <div>
-            <LanguageContent fallback={
-              <>
-                <h1 className="text-3xl font-bold text-gray-900 mb-4">Stjórnendadashboard</h1>
-                <p className="text-gray-600">Skoða og stjórna skráningum fyrirtækja og starfsmanna</p>
-              </>
-            }>
-              {(t) => (
+          <div className="flex items-center space-x-4">
+            <img 
+              src="/logo.svg" 
+              alt="Strax Logo" 
+              className="h-12 w-auto"
+            />
+            <div>
+              <LanguageContent fallback={
                 <>
-                  <h1 className="text-3xl font-bold text-gray-900 mb-4">{t('admin.title')}</h1>
-                  <p className="text-gray-600">{t('admin.subtitle')}</p>
+                  <h1 className="text-3xl font-bold text-gray-900 mb-4">Stjórnendadashboard</h1>
+                  <p className="text-gray-600">Skoða og stjórna skráningum fyrirtækja og starfsmanna</p>
                 </>
-              )}
-            </LanguageContent>
+              }>
+                {(t) => (
+                  <>
+                    <h1 className="text-3xl font-bold text-gray-900 mb-4">{t('admin.title')}</h1>
+                    <p className="text-gray-600">{t('admin.subtitle')}</p>
+                  </>
+                )}
+              </LanguageContent>
+            </div>
           </div>
           <button
             onClick={refreshData}
@@ -1196,7 +1205,8 @@ export default function Admin() {
           </div>
         </div>
       )}
-    </div>
+      </div>
+    </AdminErrorBoundary>
   );
 }
 

@@ -1,17 +1,13 @@
 'use client';
 
 import Link from 'next/link';
-import { useLanguage } from '@/contexts/LanguageContext';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
-import LanguageContent from '@/components/LanguageContent';
 
 interface AdminNavigationProps {
   currentPage: 'dashboard' | 'admin' | 'bank-transfers';
 }
 
 export default function AdminNavigation({ currentPage }: AdminNavigationProps) {
-  const { t } = useLanguage();
-
   const navItems = [
     { key: 'dashboard', href: '/dashboard', label: 'Stjórnborð' },
     { key: 'admin', href: '/admin', label: 'Stjórnun' },
@@ -23,7 +19,14 @@ export default function AdminNavigation({ currentPage }: AdminNavigationProps) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-6">
           <div className="flex items-center">
-            <Link href="/" className="text-2xl font-bold text-yellow-500">StraxKaka</Link>
+            <Link href="/" className="flex items-center space-x-2">
+              <img 
+                src="/logo.svg" 
+                alt="Strax Logo" 
+                className="h-8 w-auto"
+              />
+              <span className="text-2xl font-bold text-yellow-500">Strax</span>
+            </Link>
           </div>
           
           {/* Desktop Navigation */}
@@ -48,9 +51,7 @@ export default function AdminNavigation({ currentPage }: AdminNavigationProps) {
             <div className="flex items-center space-x-4">
               <LanguageSwitcher />
               <Link href="/" className="text-gray-300 hover:text-yellow-400 transition-colors text-sm">
-                <LanguageContent fallback="Til baka á heimasíðuna">
-                  {(t) => t('nav.home')}
-                </LanguageContent>
+                Til baka á heimasíðuna
               </Link>
             </div>
           </div>
@@ -59,9 +60,7 @@ export default function AdminNavigation({ currentPage }: AdminNavigationProps) {
           <div className="hidden md:flex items-center space-x-4">
             <LanguageSwitcher />
             <Link href="/" className="text-gray-300 hover:text-yellow-400 transition-colors text-sm">
-              <LanguageContent fallback="Til baka á heimasíðuna">
-                {(t) => t('nav.home')}
-              </LanguageContent>
+              Til baka á heimasíðuna
             </Link>
           </div>
         </div>
