@@ -66,22 +66,6 @@ export default function StraxLife() {
           <p className="text-lg text-gray-400 mb-8 leading-relaxed">
             Experience the future of workplace celebrations with our innovative cake delivery service
           </p>
-          
-          {/* Additional Info */}
-          <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-8 text-sm text-gray-500">
-            <div className="flex items-center space-x-2">
-              <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-              <span>Always Fresh</span>
-            </div>
-            <div className="flex items-center space-x-2">
-              <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
-              <span>Never Miss a Birthday</span>
-            </div>
-            <div className="flex items-center space-x-2">
-              <div className="w-2 h-2 bg-purple-400 rounded-full animate-pulse"></div>
-              <span>Local Bakeries</span>
-            </div>
-          </div>
         </div>
 
         {/* Footer */}
