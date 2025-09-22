@@ -11,6 +11,9 @@ interface Employee {
   dietaryRestrictions?: string;
   specialNotes?: string;
   employmentStatus?: string;
+  deliveryStatus?: 'pending' | 'confirmed' | 'out_for_delivery' | 'delivered' | 'failed';
+  deliveryDate?: string;
+  deliveryNotes?: string;
 }
 
 interface Submission {
@@ -27,6 +30,9 @@ interface Submission {
   monthlyCost?: number;
   dateCreated?: string;
   orderId?: string;
+  lastPaymentDate?: string;
+  nextPaymentDate?: string;
+  paymentReminderSent?: boolean;
 }
 
 export default function Admin() {
@@ -39,7 +45,10 @@ export default function Admin() {
   const [selectedSubmission, setSelectedSubmission] = useState<Submission | null>(null);
   const [filterStatus, setFilterStatus] = useState<string>('all');
   const [selectedCompanies, setSelectedCompanies] = useState<string[]>([]);
-  const [showBulkActions, setShowBulkActions] = useState(false);
+  const [showCalendar, setShowCalendar] = useState(false);
+  const [editingEmployee, setEditingEmployee] = useState<{submissionId: string, employeeIndex: number} | null>(null);
+  const [showAddEmployee, setShowAddEmployee] = useState<{submissionId: string} | null>(null);
+  const [newEmployee, setNewEmployee] = useState<Partial<Employee>>({});
 
   // Check if already authenticated
   useEffect(() => {
@@ -143,7 +152,6 @@ export default function Admin() {
       localStorage.setItem('straxkaka_subscriptions', JSON.stringify(updatedSubmissions));
     }
     setSelectedCompanies([]);
-    setShowBulkActions(false);
   };
 
   const bulkRemove = () => {
@@ -155,7 +163,6 @@ export default function Admin() {
         localStorage.setItem('straxkaka_subscriptions', JSON.stringify(updatedSubmissions));
       }
       setSelectedCompanies([]);
-      setShowBulkActions(false);
     }
   };
 
@@ -182,6 +189,117 @@ export default function Admin() {
     a.download = `straxkaka-companies-${new Date().toISOString().split('T')[0]}.csv`;
     a.click();
     window.URL.revokeObjectURL(url);
+  };
+
+  // Phase 1: Delivery Status Management
+  const updateDeliveryStatus = (submissionId: string, employeeIndex: number, status: Employee['deliveryStatus']) => {
+    const updatedSubmissions = submissions.map(sub => {
+      if (sub.id === submissionId && sub.employees) {
+        const updatedEmployees = [...sub.employees];
+        updatedEmployees[employeeIndex] = {
+          ...updatedEmployees[employeeIndex],
+          deliveryStatus: status,
+          deliveryDate: status === 'delivered' ? new Date().toISOString() : updatedEmployees[employeeIndex].deliveryDate
+        };
+        return { ...sub, employees: updatedEmployees };
+      }
+      return sub;
+    });
+    setSubmissions(updatedSubmissions);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('straxkaka_subscriptions', JSON.stringify(updatedSubmissions));
+    }
+  };
+
+  // Phase 1: Employee Management
+  const updateEmployee = (submissionId: string, employeeIndex: number, updatedEmployee: Employee) => {
+    const updatedSubmissions = submissions.map(sub => {
+      if (sub.id === submissionId && sub.employees) {
+        const updatedEmployees = [...sub.employees];
+        updatedEmployees[employeeIndex] = updatedEmployee;
+        return { ...sub, employees: updatedEmployees };
+      }
+      return sub;
+    });
+    setSubmissions(updatedSubmissions);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('straxkaka_subscriptions', JSON.stringify(updatedSubmissions));
+    }
+    setEditingEmployee(null);
+  };
+
+  const addEmployee = (submissionId: string) => {
+    if (!newEmployee.name || !newEmployee.birthday || !newEmployee.cakeType) return;
+    
+    const employee: Employee = {
+      name: newEmployee.name,
+      birthday: newEmployee.birthday,
+      cakeType: newEmployee.cakeType,
+      cakeSize: newEmployee.cakeSize || 'Medium',
+      dietaryRestrictions: newEmployee.dietaryRestrictions || '',
+      specialNotes: newEmployee.specialNotes || '',
+      employmentStatus: 'active',
+      deliveryStatus: 'pending'
+    };
+
+    const updatedSubmissions = submissions.map(sub => {
+      if (sub.id === submissionId) {
+        return {
+          ...sub,
+          employees: [...(sub.employees || []), employee]
+        };
+      }
+      return sub;
+    });
+    setSubmissions(updatedSubmissions);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('straxkaka_subscriptions', JSON.stringify(updatedSubmissions));
+    }
+    setNewEmployee({});
+    setShowAddEmployee(null);
+  };
+
+  const removeEmployee = (submissionId: string, employeeIndex: number) => {
+    if (confirm('Are you sure you want to remove this employee?')) {
+      const updatedSubmissions = submissions.map(sub => {
+        if (sub.id === submissionId && sub.employees) {
+          const updatedEmployees = sub.employees.filter((_, index) => index !== employeeIndex);
+          return { ...sub, employees: updatedEmployees };
+        }
+        return sub;
+      });
+      setSubmissions(updatedSubmissions);
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('straxkaka_subscriptions', JSON.stringify(updatedSubmissions));
+      }
+    }
+  };
+
+  // Phase 1: Payment Reminders
+  const sendPaymentReminder = (submissionId: string) => {
+    const updatedSubmissions = submissions.map(sub => 
+      sub.id === submissionId ? { ...sub, paymentReminderSent: true } : sub
+    );
+    setSubmissions(updatedSubmissions);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('straxkaka_subscriptions', JSON.stringify(updatedSubmissions));
+    }
+    alert('Payment reminder sent! (This would normally send an email)');
+  };
+
+  // Phase 1: Pause/Resume Subscription
+  const toggleSubscriptionStatus = (submissionId: string) => {
+    const updatedSubmissions = submissions.map(sub => {
+      if (sub.id === submissionId) {
+        const newStatus = sub.subscriptionStatus === 'active' ? 'paused' : 'active';
+        return { ...sub, subscriptionStatus: newStatus };
+      }
+      return sub;
+    });
+    setSubmissions(updatedSubmissions);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('straxkaka_subscriptions', JSON.stringify(updatedSubmissions));
+    }
   };
 
   // Filter submissions based on search and status
@@ -222,6 +340,32 @@ export default function Admin() {
       return birthday >= today && birthday <= next30Days;
     }).length;
   }, 0);
+
+  // Get today's deliveries
+  const todaysDeliveries = submissions.reduce((total, sub) => {
+    if (!sub.employees) return total;
+    const today = new Date().toDateString();
+    
+    return total + sub.employees.filter(emp => {
+      if (emp.employmentStatus !== 'active') return false;
+      const birthday = new Date(emp.birthday);
+      birthday.setFullYear(new Date().getFullYear());
+      return birthday.toDateString() === today;
+    }).length;
+  }, 0);
+
+  // Get pending deliveries
+  const pendingDeliveries = submissions.reduce((total, sub) => {
+    if (!sub.employees) return total;
+    return total + sub.employees.filter(emp => 
+      emp.employmentStatus === 'active' && emp.deliveryStatus === 'pending'
+    ).length;
+  }, 0);
+
+  // Get overdue payments
+  const overduePayments = submissions.filter(sub => 
+    sub.status === 'pending_payment' && sub.subscriptionStatus === 'active'
+  ).length;
 
   if (!isAuthenticated) {
     return (
@@ -310,7 +454,7 @@ export default function Admin() {
         </div>
 
         {/* Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6 mb-8">
           <div className="bg-white rounded-lg shadow p-6">
             <div className="flex items-center">
               <div className="p-2 bg-yellow-100 rounded-lg">
@@ -361,8 +505,8 @@ export default function Admin() {
                 </svg>
               </div>
               <div className="ml-4">
-                <p className="text-2xl font-bold text-gray-900">{upcomingBirthdays}</p>
-                <p className="text-sm font-medium text-gray-600">Birthdays Next 30 Days</p>
+                <p className="text-2xl font-bold text-gray-900">{todaysDeliveries}</p>
+                <p className="text-sm font-medium text-gray-600">Today&apos;s Deliveries</p>
               </div>
             </div>
           </div>
@@ -371,16 +515,93 @@ export default function Admin() {
             <div className="flex items-center">
               <div className="p-2 bg-orange-100 rounded-lg">
                 <svg className="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
                 </svg>
               </div>
               <div className="ml-4">
-                <p className="text-2xl font-bold text-gray-900">{totalRevenue.toLocaleString()} ISK</p>
-                <p className="text-sm font-medium text-gray-600">Monthly Revenue</p>
-              </div>
+                <p className="text-2xl font-bold text-gray-900">{pendingDeliveries}</p>
+                <p className="text-sm font-medium text-gray-600">Pending Deliveries</p>
             </div>
           </div>
         </div>
+
+          <div className="bg-white rounded-lg shadow p-6">
+            <div className="flex items-center">
+              <div className="p-2 bg-red-100 rounded-lg">
+                <svg className="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
+                </svg>
+                    </div>
+              <div className="ml-4">
+                <p className="text-2xl font-bold text-gray-900">{overduePayments}</p>
+                <p className="text-sm font-medium text-gray-600">Overdue Payments</p>
+                    </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Phase 1: Quick Actions Bar */}
+        <div className="bg-white rounded-lg shadow p-6 mb-8">
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            <div className="flex items-center space-x-4">
+              <h3 className="text-lg font-semibold text-gray-900">Quick Actions</h3>
+              <button
+                onClick={() => setShowCalendar(!showCalendar)}
+                className="px-4 py-2 bg-purple-100 text-purple-800 rounded-lg text-sm font-medium hover:bg-purple-200 transition-colors"
+              >
+                {showCalendar ? 'Hide Calendar' : 'Show Calendar'}
+              </button>
+                    </div>
+            <div className="flex items-center space-x-2">
+              <span className="text-sm text-gray-500">Upcoming Birthdays: {upcomingBirthdays}</span>
+              <span className="text-gray-300">|</span>
+              <span className="text-sm text-gray-500">Monthly Revenue: {totalRevenue.toLocaleString()} ISK</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Phase 1: Calendar View */}
+        {showCalendar && (
+          <div className="bg-white rounded-lg shadow p-6 mb-8">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Upcoming Birthdays Calendar</h3>
+            <div className="grid grid-cols-7 gap-2">
+              {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
+                <div key={day} className="text-center text-sm font-medium text-gray-500 py-2">
+                  {day}
+                  </div>
+                ))}
+              {Array.from({ length: 30 }, (_, i) => {
+                const date = new Date();
+                date.setDate(date.getDate() + i);
+                const dayBirthdays = submissions.reduce((count, sub) => {
+                  if (!sub.employees) return count;
+                  return count + sub.employees.filter(emp => {
+                    if (emp.employmentStatus !== 'active') return false;
+                    const birthday = new Date(emp.birthday);
+                    birthday.setFullYear(date.getFullYear());
+                    return birthday.toDateString() === date.toDateString();
+                  }).length;
+                }, 0);
+                
+                return (
+                  <div
+                    key={i}
+                    className={`p-2 text-center text-sm rounded-lg ${
+                      i === 0 ? 'bg-yellow-100 text-yellow-800 font-semibold' :
+                      dayBirthdays > 0 ? 'bg-purple-100 text-purple-800' :
+                      'text-gray-600 hover:bg-gray-50'
+                    }`}
+                  >
+                    <div>{date.getDate()}</div>
+                    {dayBirthdays > 0 && (
+                      <div className="text-xs font-bold">{dayBirthdays}</div>
+                    )}
+              </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
 
         {/* Search and Filters */}
         <div className="bg-white rounded-lg shadow p-6 mb-8">
@@ -491,10 +712,11 @@ export default function Admin() {
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Company</th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Contact</th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Employees</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Delivery Status</th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Subscription</th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Payment</th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Revenue</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Quick Actions</th>
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
@@ -527,6 +749,33 @@ export default function Admin() {
                           {submission.employees?.filter(emp => emp.employmentStatus === 'active').length || 0} / {submission.employees?.length || 0}
                         </div>
                         <div className="text-sm text-gray-500">active / total</div>
+                        <button
+                          onClick={() => setShowAddEmployee({submissionId: submission.id})}
+                          className="text-xs text-blue-600 hover:text-blue-800 mt-1"
+                        >
+                          + Add Employee
+                        </button>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="space-y-1">
+                          {submission.employees?.slice(0, 2).map((emp, index) => (
+                            <div key={index} className="flex items-center space-x-2">
+                              <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
+                                emp.deliveryStatus === 'delivered' ? 'bg-green-100 text-green-800' :
+                                emp.deliveryStatus === 'out_for_delivery' ? 'bg-blue-100 text-blue-800' :
+                                emp.deliveryStatus === 'confirmed' ? 'bg-yellow-100 text-yellow-800' :
+                                emp.deliveryStatus === 'failed' ? 'bg-red-100 text-red-800' :
+                                'bg-gray-100 text-gray-800'
+                              }`}>
+                                {emp.deliveryStatus?.replace('_', ' ') || 'pending'}
+                              </span>
+                              <span className="text-xs text-gray-500">{emp.name}</span>
+                            </div>
+                          ))}
+                          {submission.employees && submission.employees.length > 2 && (
+                            <div className="text-xs text-gray-500">+{submission.employees.length - 2} more</div>
+                          )}
+                        </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
@@ -555,12 +804,12 @@ export default function Admin() {
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                         <div className="flex flex-wrap gap-1">
-                          <button
-                            onClick={() => setSelectedSubmission(submission)}
+                        <button
+                          onClick={() => setSelectedSubmission(submission)}
                             className="text-blue-600 hover:text-blue-900 bg-blue-100 px-2 py-1 rounded-full text-xs font-medium hover:bg-blue-200 transition-colors"
-                          >
+                        >
                             View
-                          </button>
+                        </button>
                           {submission.status !== 'paid' && (
                             <button
                               onClick={() => markAsPaid(submission.id)}
@@ -577,12 +826,30 @@ export default function Admin() {
                               Mark Pending
                             </button>
                           )}
+                          {submission.status === 'pending_payment' && !submission.paymentReminderSent && (
+                            <button
+                              onClick={() => sendPaymentReminder(submission.id)}
+                              className="text-orange-600 hover:text-orange-900 bg-orange-100 px-2 py-1 rounded-full text-xs font-medium hover:bg-orange-200 transition-colors"
+                            >
+                              Send Reminder
+                            </button>
+                          )}
+                          <button
+                            onClick={() => toggleSubscriptionStatus(submission.id)}
+                            className={`px-2 py-1 rounded-full text-xs font-medium transition-colors ${
+                              submission.subscriptionStatus === 'active' 
+                                ? 'text-yellow-600 hover:text-yellow-900 bg-yellow-100 hover:bg-yellow-200'
+                                : 'text-green-600 hover:text-green-900 bg-green-100 hover:bg-green-200'
+                            }`}
+                          >
+                            {submission.subscriptionStatus === 'active' ? 'Pause' : 'Resume'}
+                          </button>
                           <button
                             onClick={() => removeCompany(submission.id)}
                             className="text-red-600 hover:text-red-900 bg-red-100 px-2 py-1 rounded-full text-xs font-medium hover:bg-red-200 transition-colors"
                           >
                             Remove
-                          </button>
+                        </button>
                         </div>
                       </td>
                     </tr>
@@ -591,27 +858,27 @@ export default function Admin() {
               </table>
             </div>
           )}
-        </div>
+      </div>
 
         {/* Company Details Modal */}
-        {selectedSubmission && (
-          <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
-            <div className="relative top-20 mx-auto p-5 border w-11/12 md:w-3/4 lg:w-1/2 shadow-lg rounded-md bg-white">
-              <div className="mt-3">
-                <div className="flex justify-between items-center mb-4">
-                  <h3 className="text-lg font-medium text-gray-900">
-                    {selectedSubmission.companyName}
-                  </h3>
-                  <button
-                    onClick={() => setSelectedSubmission(null)}
-                    className="text-gray-400 hover:text-gray-600"
-                  >
-                    <span className="text-2xl">&times;</span>
-                  </button>
-                </div>
-                
-                <div className="space-y-4">
-                  <div>
+      {selectedSubmission && (
+        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+          <div className="relative top-20 mx-auto p-5 border w-11/12 md:w-3/4 lg:w-1/2 shadow-lg rounded-md bg-white">
+            <div className="mt-3">
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="text-lg font-medium text-gray-900">
+                  {selectedSubmission.companyName}
+                </h3>
+                <button
+                  onClick={() => setSelectedSubmission(null)}
+                  className="text-gray-400 hover:text-gray-600"
+                >
+                  <span className="text-2xl">&times;</span>
+                </button>
+              </div>
+              
+              <div className="space-y-4">
+                <div>
                     <h4 className="font-medium text-gray-900 mb-2">Company Information</h4>
                     <div className="text-sm text-gray-600 space-y-1">
                       <p><strong>Contact:</strong> {selectedSubmission.contactPersonName}</p>
@@ -622,52 +889,312 @@ export default function Admin() {
                       <p><strong>Status:</strong> {selectedSubmission.status}</p>
                       <p><strong>Monthly Cost:</strong> {(selectedSubmission.monthlyCost || 0).toLocaleString()} ISK</p>
                       <p><strong>Order ID:</strong> {selectedSubmission.orderId || 'N/A'}</p>
-                    </div>
                   </div>
-                  
+                </div>
+                
                   {selectedSubmission.employees && selectedSubmission.employees.length > 0 && (
-                    <div>
-                      <h4 className="font-medium text-gray-900 mb-2">Employees ({selectedSubmission.employees.length})</h4>
+                <div>
+                      <div className="flex justify-between items-center mb-2">
+                        <h4 className="font-medium text-gray-900">Employees ({selectedSubmission.employees.length})</h4>
+                        <button
+                          onClick={() => setShowAddEmployee({submissionId: selectedSubmission.id})}
+                          className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium hover:bg-blue-200 transition-colors"
+                        >
+                          + Add Employee
+                        </button>
+                      </div>
                       <div className="max-h-60 overflow-y-auto space-y-2">
-                        {selectedSubmission.employees.map((employee, index) => (
+                    {selectedSubmission.employees.map((employee, index) => (
                           <div key={index} className="border border-gray-200 rounded-lg p-3">
                             <div className="flex justify-between items-start">
-                              <div>
-                                <p className="font-medium text-gray-900">{employee.name}</p>
-                                <p className="text-sm text-gray-600">
+                              <div className="flex-1">
+                            <p className="font-medium text-gray-900">{employee.name}</p>
+                            <p className="text-sm text-gray-600">
                                   Birthday: {new Date(employee.birthday).toLocaleDateString()}
                                 </p>
                                 <p className="text-sm text-gray-600">Cake: {employee.cakeType}</p>
-                                {employee.dietaryRestrictions && (
+                            {employee.dietaryRestrictions && (
                                   <p className="text-sm text-red-600">
                                     Restrictions: {employee.dietaryRestrictions}
-                                  </p>
-                                )}
-                                {employee.specialNotes && (
+                              </p>
+                            )}
+                            {employee.specialNotes && (
                                   <p className="text-sm text-gray-500">
                                     Notes: {employee.specialNotes}
-                                  </p>
-                                )}
+                              </p>
+                            )}
+                                <div className="mt-2 flex items-center space-x-2">
+                                  <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
+                                    employee.deliveryStatus === 'delivered' ? 'bg-green-100 text-green-800' :
+                                    employee.deliveryStatus === 'out_for_delivery' ? 'bg-blue-100 text-blue-800' :
+                                    employee.deliveryStatus === 'confirmed' ? 'bg-yellow-100 text-yellow-800' :
+                                    employee.deliveryStatus === 'failed' ? 'bg-red-100 text-red-800' :
+                                    'bg-gray-100 text-gray-800'
+                                  }`}>
+                                    {employee.deliveryStatus?.replace('_', ' ') || 'pending'}
+                                  </span>
+                                  <select
+                                    value={employee.deliveryStatus || 'pending'}
+                                    onChange={(e) => updateDeliveryStatus(selectedSubmission.id, index, e.target.value as Employee['deliveryStatus'])}
+                                    className="text-xs border border-gray-300 rounded px-2 py-1"
+                                  >
+                                    <option value="pending">Pending</option>
+                                    <option value="confirmed">Confirmed</option>
+                                    <option value="out_for_delivery">Out for Delivery</option>
+                                    <option value="delivered">Delivered</option>
+                                    <option value="failed">Failed</option>
+                                  </select>
+                                </div>
                               </div>
-                              <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                                employee.employmentStatus === 'active' ? 'bg-green-100 text-green-800' :
-                                employee.employmentStatus === 'inactive' ? 'bg-yellow-100 text-yellow-800' :
-                                'bg-red-100 text-red-800'
-                              }`}>
-                                {employee.employmentStatus || 'Unknown'}
-                              </span>
-                            </div>
+                              <div className="flex flex-col space-y-1 ml-2">
+                                <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
+                                  employee.employmentStatus === 'active' ? 'bg-green-100 text-green-800' :
+                                  employee.employmentStatus === 'inactive' ? 'bg-yellow-100 text-yellow-800' :
+                                  'bg-red-100 text-red-800'
+                                }`}>
+                                  {employee.employmentStatus || 'Unknown'}
+                                </span>
+                                <button
+                                  onClick={() => setEditingEmployee({submissionId: selectedSubmission.id, employeeIndex: index})}
+                                  className="text-xs text-blue-600 hover:text-blue-800"
+                                >
+                                  Edit
+                                </button>
+                                <button
+                                  onClick={() => removeEmployee(selectedSubmission.id, index)}
+                                  className="text-xs text-red-600 hover:text-red-800"
+                                >
+                                  Remove
+                                </button>
                           </div>
-                        ))}
+                        </div>
                       </div>
-                    </div>
+                    ))}
+                  </div>
+                </div>
                   )}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+        {/* Add Employee Modal */}
+        {showAddEmployee && (
+          <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+            <div className="relative top-20 mx-auto p-5 border w-11/12 md:w-1/2 shadow-lg rounded-md bg-white">
+              <div className="mt-3">
+                <div className="flex justify-between items-center mb-4">
+                  <h3 className="text-lg font-medium text-gray-900">Add New Employee</h3>
+                  <button
+                    onClick={() => {
+                      setShowAddEmployee(null);
+                      setNewEmployee({});
+                    }}
+                    className="text-gray-400 hover:text-gray-600"
+                  >
+                    <span className="text-2xl">&times;</span>
+                  </button>
+                </div>
+                
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Name *</label>
+                    <input
+                      type="text"
+                      value={newEmployee.name || ''}
+                      onChange={(e) => setNewEmployee({...newEmployee, name: e.target.value})}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                      placeholder="Employee name"
+                    />
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Birthday *</label>
+                    <input
+                      type="date"
+                      value={newEmployee.birthday || ''}
+                      onChange={(e) => setNewEmployee({...newEmployee, birthday: e.target.value})}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                    />
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Cake Type *</label>
+                    <select
+                      value={newEmployee.cakeType || ''}
+                      onChange={(e) => setNewEmployee({...newEmployee, cakeType: e.target.value})}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                    >
+                      <option value="">Select cake type</option>
+                      <option value="Chocolate">Chocolate</option>
+                      <option value="Vanilla">Vanilla</option>
+                      <option value="Strawberry">Strawberry</option>
+                      <option value="Red Velvet">Red Velvet</option>
+                      <option value="Carrot">Carrot</option>
+                      <option value="Cheesecake">Cheesecake</option>
+                    </select>
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Cake Size</label>
+                    <select
+                      value={newEmployee.cakeSize || 'Medium'}
+                      onChange={(e) => setNewEmployee({...newEmployee, cakeSize: e.target.value})}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                    >
+                      <option value="Small">Small</option>
+                      <option value="Medium">Medium</option>
+                      <option value="Large">Large</option>
+                    </select>
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Dietary Restrictions</label>
+                    <input
+                      type="text"
+                      value={newEmployee.dietaryRestrictions || ''}
+                      onChange={(e) => setNewEmployee({...newEmployee, dietaryRestrictions: e.target.value})}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                      placeholder="e.g., Gluten-free, Vegan, Nut allergy"
+                    />
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Special Notes</label>
+                    <textarea
+                      value={newEmployee.specialNotes || ''}
+                      onChange={(e) => setNewEmployee({...newEmployee, specialNotes: e.target.value})}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                      rows={3}
+                      placeholder="Any special instructions or notes"
+                    />
+                  </div>
+                  
+                  <div className="flex justify-end space-x-3">
+                    <button
+                      onClick={() => {
+                        setShowAddEmployee(null);
+                        setNewEmployee({});
+                      }}
+                      className="px-4 py-2 text-gray-600 hover:text-gray-800"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      onClick={() => addEmployee(showAddEmployee.submissionId)}
+                      className="px-4 py-2 bg-yellow-500 text-black rounded-md hover:bg-yellow-400 transition-colors font-semibold"
+                    >
+                      Add Employee
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         )}
-      </div>
+
+        {/* Edit Employee Modal */}
+        {editingEmployee && (
+          <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+            <div className="relative top-20 mx-auto p-5 border w-11/12 md:w-1/2 shadow-lg rounded-md bg-white">
+              <div className="mt-3">
+                <div className="flex justify-between items-center mb-4">
+                  <h3 className="text-lg font-medium text-gray-900">Edit Employee</h3>
+                  <button
+                    onClick={() => setEditingEmployee(null)}
+                    className="text-gray-400 hover:text-gray-600"
+                  >
+                    <span className="text-2xl">&times;</span>
+                  </button>
+                </div>
+                
+                {(() => {
+                  const submission = submissions.find(sub => sub.id === editingEmployee.submissionId);
+                  const employee = submission?.employees?.[editingEmployee.employeeIndex];
+                  if (!employee) return null;
+                  
+                  return (
+                    <div className="space-y-4">
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">Name</label>
+                        <input
+                          type="text"
+                          defaultValue={employee.name}
+                          onChange={(e) => setNewEmployee({...newEmployee, name: e.target.value})}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                        />
+                      </div>
+                      
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">Birthday</label>
+                        <input
+                          type="date"
+                          defaultValue={employee.birthday}
+                          onChange={(e) => setNewEmployee({...newEmployee, birthday: e.target.value})}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                        />
+                      </div>
+                      
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">Cake Type</label>
+                        <select
+                          defaultValue={employee.cakeType}
+                          onChange={(e) => setNewEmployee({...newEmployee, cakeType: e.target.value})}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                        >
+                          <option value="Chocolate">Chocolate</option>
+                          <option value="Vanilla">Vanilla</option>
+                          <option value="Strawberry">Strawberry</option>
+                          <option value="Red Velvet">Red Velvet</option>
+                          <option value="Carrot">Carrot</option>
+                          <option value="Cheesecake">Cheesecake</option>
+                        </select>
+                      </div>
+                      
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">Employment Status</label>
+                        <select
+                          defaultValue={employee.employmentStatus || 'active'}
+                          onChange={(e) => setNewEmployee({...newEmployee, employmentStatus: e.target.value})}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                        >
+                          <option value="active">Active</option>
+                          <option value="inactive">Inactive</option>
+                        </select>
+                      </div>
+                      
+                      <div className="flex justify-end space-x-3">
+                        <button
+                          onClick={() => setEditingEmployee(null)}
+                          className="px-4 py-2 text-gray-600 hover:text-gray-800"
+                        >
+                          Cancel
+                        </button>
+                        <button
+                          onClick={() => {
+                            const updatedEmployee: Employee = {
+                              ...employee,
+                              name: newEmployee.name || employee.name,
+                              birthday: newEmployee.birthday || employee.birthday,
+                              cakeType: newEmployee.cakeType || employee.cakeType,
+                              employmentStatus: newEmployee.employmentStatus || employee.employmentStatus
+                            };
+                            updateEmployee(editingEmployee.submissionId, editingEmployee.employeeIndex, updatedEmployee);
+                          }}
+                          className="px-4 py-2 bg-yellow-500 text-black rounded-md hover:bg-yellow-400 transition-colors font-semibold"
+                        >
+                          Save Changes
+                        </button>
+                      </div>
+                    </div>
+                  );
+                })()}
+              </div>
+            </div>
+          </div>
+        )}
+        </div>
     </div>
   );
 }
