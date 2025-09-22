@@ -69,6 +69,12 @@ export default function Navigation({
           
           <div className="flex items-center space-x-4">
             <LanguageSwitcher />
+            <Link
+              href="/straxlife"
+              className="text-gray-300 hover:text-yellow-400 transition-colors text-sm font-medium"
+            >
+              StraxLife
+            </Link>
             {showCTA && (
               <LanguageContent fallback={
                 <Link href={ctaLink} className="bg-yellow-500 text-black px-6 py-2 rounded-full hover:bg-yellow-400 transition-colors font-semibold">
@@ -99,6 +105,13 @@ export default function Navigation({
         {isMobileMenuOpen && (
           <div className="md:hidden bg-black border-t border-gray-800">
             <div className="px-2 pt-2 pb-3 space-y-1">
+              <Link
+                href="/straxlife"
+                className="block px-3 py-2 text-gray-300 hover:text-yellow-400 transition-colors"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                StraxLife
+              </Link>
               {navItems.map((item) => (
                 <LanguageContent key={item.key} fallback={
                   <Link
