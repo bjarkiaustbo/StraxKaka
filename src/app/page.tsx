@@ -186,120 +186,115 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Why StraxKaka Section */}
+      {/* Blog Section */}
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              <LanguageContent fallback="Af hverju StraxKaka?">
-                {(t) => t('home.why.title')}
-              </LanguageContent>
+              Latest Insights
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              <LanguageContent fallback="Lausn fyrir vandamálið sem allir þekkja">
-                {(t) => t('home.why.subtitle')}
-              </LanguageContent>
+              Discover how workplace celebrations can transform your company culture
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="text-center p-6">
-              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
+          <div className="max-w-4xl mx-auto">
+            <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
+              <img 
+                src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" 
+                alt="Birthday cake celebration" 
+                className="w-full h-64 object-cover"
+              />
+              <div className="p-8">
+                <h3 className="text-2xl font-bold text-gray-900 mb-4">
+                  The Importance of Workplace Celebrations
+                </h3>
+                <p className="text-gray-600 mb-6 leading-relaxed">
+                  Workplace celebrations are more than just office parties – they&apos;re essential for building strong teams, 
+                  boosting morale, and creating a positive work environment. Learn how small gestures like remembering 
+                  birthdays can have a big impact on your company culture.
+                </p>
+                <Link 
+                  href="/blog/workplace-celebrations"
+                  className="inline-flex items-center bg-yellow-500 text-black px-6 py-3 rounded-lg font-semibold hover:bg-yellow-400 transition-colors"
+                >
+                  Read More
+                  <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </Link>
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                <LanguageContent fallback="Áhyggjulaus starfsmannadeild">
-                  {(t) => t('home.why.stress_free.title')}
-                </LanguageContent>
-              </h3>
-              <p className="text-gray-600">
-                <LanguageContent fallback="Engin gleymdir afmæli">
-                  {(t) => t('home.why.stress_free.desc')}
-                </LanguageContent>
-              </p>
-            </div>
-
-            <div className="text-center p-6">
-              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                <LanguageContent fallback="Byggir upp stemningu og vinnustofukúltúr">
-                  {(t) => t('home.why.morale.title')}
-                </LanguageContent>
-              </h3>
-              <p className="text-gray-600">
-                <LanguageContent fallback="Fersk kaka á afmælisdaginn">
-                  {(t) => t('home.why.morale.desc')}
-                </LanguageContent>
-              </p>
-            </div>
-
-            <div className="text-center p-6">
-              <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                <LanguageContent fallback="Áreiðanleg afhending frá staðbundnum bakaríum">
-                  {(t) => t('home.why.reliable.title')}
-                </LanguageContent>
-              </h3>
-              <p className="text-gray-600">
-                <LanguageContent fallback="Toppstig kökur á réttum tíma">
-                  {(t) => t('home.why.reliable.desc')}
-                </LanguageContent>
-              </p>
-            </div>
-
-            <div className="text-center p-6">
-              <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                <LanguageContent fallback="Sparar tíma og vinnu">
-                  {(t) => t('home.why.time_saving.title')}
-                </LanguageContent>
-              </h3>
-              <p className="text-gray-600">
-                <LanguageContent fallback="Við sjáum um allt ferlið">
-                  {(t) => t('home.why.time_saving.desc')}
-                </LanguageContent>
-              </p>
-            </div>
-
-            <div className="text-center p-6">
-              <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                <LanguageContent fallback="Gæðavottun og sérsniðin þjónusta">
-                  {(t) => t('home.why.quality.title')}
-                </LanguageContent>
-              </h3>
-              <p className="text-gray-600">
-                <LanguageContent fallback="Hvert fyrirtæki fær einstaka þjónustu">
-                  {(t) => t('home.why.quality.desc')}
-                </LanguageContent>
-              </p>
             </div>
           </div>
         </div>
       </section>
 
       {/* Pricing Section */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-20 bg-black">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <PricingTable employeeCount={employeeCount} />
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+              Simple Pricing
+            </h2>
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+              Choose the perfect plan for your company size
+            </p>
+          </div>
+          
+          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            {/* Little Company */}
+            <div className="bg-gradient-to-br from-yellow-500 to-amber-500 rounded-2xl p-8 text-black relative">
+              <div className="text-center">
+                <h3 className="text-2xl font-bold mb-4">Little Company</h3>
+                <div className="text-4xl font-bold mb-2">15,000 ISK</div>
+                <div className="text-lg mb-6">per month + cake costs</div>
+                <div className="text-sm mb-8">Perfect for 1-25 employees</div>
+                <Link 
+                  href="/subscription"
+                  className="w-full bg-black text-yellow-500 px-6 py-3 rounded-lg font-semibold hover:bg-gray-900 transition-colors inline-block"
+                >
+                  Get Started
+                </Link>
+              </div>
+            </div>
+
+            {/* Medium Company */}
+            <div className="bg-gray-800 rounded-2xl p-8 text-white relative border-2 border-yellow-500">
+              <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
+                <span className="bg-yellow-500 text-black px-4 py-1 rounded-full text-sm font-medium">
+                  Most Popular
+                </span>
+              </div>
+              <div className="text-center">
+                <h3 className="text-2xl font-bold mb-4">Medium Company</h3>
+                <div className="text-4xl font-bold mb-2 text-yellow-500">Contact Us</div>
+                <div className="text-lg mb-6">for pricing</div>
+                <div className="text-sm mb-8">Perfect for 26-50 employees</div>
+                <Link 
+                  href="/contact"
+                  className="w-full bg-yellow-500 text-black px-6 py-3 rounded-lg font-semibold hover:bg-yellow-400 transition-colors inline-block"
+                >
+                  Contact Us
+                </Link>
+              </div>
+            </div>
+
+            {/* Large Company */}
+            <div className="bg-gray-800 rounded-2xl p-8 text-white">
+              <div className="text-center">
+                <h3 className="text-2xl font-bold mb-4">Large Company</h3>
+                <div className="text-4xl font-bold mb-2 text-yellow-500">Contact Us</div>
+                <div className="text-lg mb-6">for pricing</div>
+                <div className="text-sm mb-8">Perfect for 51+ employees</div>
+                <Link 
+                  href="/contact"
+                  className="w-full bg-yellow-500 text-black px-6 py-3 rounded-lg font-semibold hover:bg-yellow-400 transition-colors inline-block"
+                >
+                  Contact Us
+                </Link>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 

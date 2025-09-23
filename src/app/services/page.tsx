@@ -197,154 +197,68 @@ export default function Services() {
 
 
       {/* Pricing Section */}
-      <section className="py-20 bg-gray-50">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-20 bg-black">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <LanguageContent fallback={
-              <>
-                <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-                  Verðskrá
-                </h2>
-                <p className="text-xl text-gray-600">
-                  Einfalt verð fyrir alla stærðir fyrirtækja
-                </p>
-              </>
-            }>
-              {(t) => (
-                <>
-                  <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-                    {t('pricing.title')}
-                  </h2>
-                  <p className="text-xl text-gray-600">
-                    {t('pricing.subtitle')}
-                  </p>
-                </>
-              )}
-            </LanguageContent>
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+              Simple Pricing
+            </h2>
+            <p className="text-xl text-gray-300">
+              Choose the perfect plan for your company size
+            </p>
           </div>
 
-          <div className="grid md:grid-cols-4 gap-6">
-            {/* Small Plan */}
-            <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-300">
+          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            {/* Little Company */}
+            <div className="bg-gradient-to-br from-yellow-500 to-amber-500 rounded-2xl p-8 text-black relative">
               <div className="text-center">
-                <div className="bg-yellow-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <svg className="w-8 h-8 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v2m0-6a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4" />
-                  </svg>
-                </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2">
-                  <LanguageContent fallback="Lítill">
-                    {(t) => t('pricing.small.title')}
-                  </LanguageContent>
-                </h3>
-                <div className="text-3xl font-bold text-yellow-600 mb-4">
-                  <LanguageContent fallback="Sérsniðið">
-                    {(t) => t('pricing.small.price')}
-                  </LanguageContent>
-                </div>
-                <p className="text-gray-600 mb-2">
-                  <LanguageContent fallback="Fyrir fyrir 50 starfsmenn">
-                    {(t) => t('pricing.small.description')}
-                  </LanguageContent>
-                </p>
-                <p className="text-sm text-gray-500">
-                  <LanguageContent fallback="Greiðist fyrir hvern afmælisdag">
-                    {(t) => t('pricing.small.billing')}
-                  </LanguageContent>
-                </p>
+                <h3 className="text-2xl font-bold mb-4">Little Company</h3>
+                <div className="text-4xl font-bold mb-2">15,000 ISK</div>
+                <div className="text-lg mb-6">per month + cake costs</div>
+                <div className="text-sm mb-8">Perfect for 1-25 employees</div>
+                <a 
+                  href="/subscription"
+                  className="w-full bg-black text-yellow-500 px-6 py-3 rounded-lg font-semibold hover:bg-gray-900 transition-colors inline-block"
+                >
+                  Get Started
+                </a>
               </div>
             </div>
 
-            {/* Medium Plan */}
-            <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-300">
+            {/* Medium Company */}
+            <div className="bg-gray-800 rounded-2xl p-8 text-white relative border-2 border-yellow-500">
+              <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
+                <span className="bg-yellow-500 text-black px-4 py-1 rounded-full text-sm font-medium">
+                  Most Popular
+                </span>
+              </div>
               <div className="text-center">
-                <div className="bg-amber-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <svg className="w-8 h-8 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                  </svg>
-                </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2">
-                  <LanguageContent fallback="Meðalstór">
-                    {(t) => t('pricing.starter.title')}
-                  </LanguageContent>
-                </h3>
-                <div className="text-3xl font-bold text-amber-600 mb-4">
-                  <LanguageContent fallback="60.000 ISK">
-                    {(t) => t('pricing.starter.price')}
-                  </LanguageContent>
-                </div>
-                <p className="text-gray-600 mb-2">
-                  <LanguageContent fallback="Fyrir 50+ starfsmenn">
-                    {(t) => t('pricing.starter.description')}
-                  </LanguageContent>
-                </p>
-                <p className="text-sm text-gray-500">
-                  <LanguageContent fallback="Greiðist fyrir hvern afmælisdag (~12.600 ISK)">
-                    {(t) => t('pricing.starter.billing')}
-                  </LanguageContent>
-                </p>
+                <h3 className="text-2xl font-bold mb-4">Medium Company</h3>
+                <div className="text-4xl font-bold mb-2 text-yellow-500">Contact Us</div>
+                <div className="text-lg mb-6">for pricing</div>
+                <div className="text-sm mb-8">Perfect for 26-50 employees</div>
+                <a 
+                  href="/contact"
+                  className="w-full bg-yellow-500 text-black px-6 py-3 rounded-lg font-semibold hover:bg-yellow-400 transition-colors inline-block"
+                >
+                  Contact Us
+                </a>
               </div>
             </div>
 
-            {/* Large Plan */}
-            <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-300 border-2 border-yellow-500">
+            {/* Large Company */}
+            <div className="bg-gray-800 rounded-2xl p-8 text-white">
               <div className="text-center">
-                <div className="bg-orange-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <svg className="w-8 h-8 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                  </svg>
-                </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2">
-                  <LanguageContent fallback="Stór">
-                    {(t) => t('pricing.professional.title')}
-                  </LanguageContent>
-                </h3>
-                <div className="text-3xl font-bold text-orange-600 mb-4">
-                  <LanguageContent fallback="120.000 ISK">
-                    {(t) => t('pricing.professional.price')}
-                  </LanguageContent>
-                </div>
-                <p className="text-gray-600 mb-2">
-                  <LanguageContent fallback="Fyrir 100+ starfsmenn">
-                    {(t) => t('pricing.professional.description')}
-                  </LanguageContent>
-                </p>
-                <p className="text-sm text-gray-500">
-                  <LanguageContent fallback="Greiðist fyrir hvern afmælisdag">
-                    {(t) => t('pricing.professional.billing')}
-                  </LanguageContent>
-                </p>
-              </div>
-            </div>
-
-            {/* Enterprise Plan */}
-            <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-300">
-              <div className="text-center">
-                <div className="bg-yellow-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <svg className="w-8 h-8 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                  </svg>
-                </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2">
-                  <LanguageContent fallback="Fyrirtæki">
-                    {(t) => t('pricing.business.title')}
-                  </LanguageContent>
-                </h3>
-                <div className="text-3xl font-bold text-yellow-600 mb-4">
-                  <LanguageContent fallback="Sérsniðið">
-                    {(t) => t('pricing.business.price')}
-                  </LanguageContent>
-                </div>
-                <p className="text-gray-600 mb-2">
-                  <LanguageContent fallback="Fyrir 200+ starfsmenn">
-                    {(t) => t('pricing.business.description')}
-                  </LanguageContent>
-                </p>
-                <p className="text-sm text-gray-500">
-                  <LanguageContent fallback="Greiðist fyrir hvern afmælisdag (~12.600 ISK)">
-                    {(t) => t('pricing.business.billing')}
-                  </LanguageContent>
-                </p>
+                <h3 className="text-2xl font-bold mb-4">Large Company</h3>
+                <div className="text-4xl font-bold mb-2 text-yellow-500">Contact Us</div>
+                <div className="text-lg mb-6">for pricing</div>
+                <div className="text-sm mb-8">Perfect for 51+ employees</div>
+                <a 
+                  href="/contact"
+                  className="w-full bg-yellow-500 text-black px-6 py-3 rounded-lg font-semibold hover:bg-yellow-400 transition-colors inline-block"
+                >
+                  Contact Us
+                </a>
               </div>
             </div>
           </div>
