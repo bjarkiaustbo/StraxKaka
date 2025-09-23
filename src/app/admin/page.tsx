@@ -779,8 +779,12 @@ export default function Admin() {
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
                   {filteredSubmissions.map((submission) => (
-                    <tr key={submission.id} className={`hover:bg-gray-50 ${selectedCompanies.includes(submission.id) ? 'bg-yellow-50' : ''}`}>
-                      <td className="px-6 py-4 whitespace-nowrap">
+                    <tr 
+                      key={submission.id} 
+                      className={`hover:bg-gray-50 cursor-pointer transition-colors ${selectedCompanies.includes(submission.id) ? 'bg-yellow-50' : ''}`}
+                      onClick={() => setSelectedSubmission(submission)}
+                    >
+                      <td className="px-6 py-4 whitespace-nowrap" onClick={(e) => e.stopPropagation()}>
                         <input
                           type="checkbox"
                           checked={selectedCompanies.includes(submission.id)}
@@ -876,7 +880,7 @@ export default function Admin() {
                           )}
                         </div>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium" onClick={(e) => e.stopPropagation()}>
                         <div className="flex flex-wrap gap-1">
                         <button
                           onClick={() => setSelectedSubmission(submission)}
