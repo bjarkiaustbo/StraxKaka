@@ -35,6 +35,7 @@ interface Submission {
   lastPaymentDate?: string;
   nextPaymentDate?: string;
   paymentReminderSent?: boolean;
+  notes?: string;
 }
 
 export default function Admin() {
@@ -52,6 +53,8 @@ export default function Admin() {
   const [editingEmployee, setEditingEmployee] = useState<{submissionId: string, employeeIndex: number} | null>(null);
   const [showAddEmployee, setShowAddEmployee] = useState<{submissionId: string} | null>(null);
   const [newEmployee, setNewEmployee] = useState<Partial<Employee>>({});
+  const [editingNotes, setEditingNotes] = useState<{submissionId: string} | null>(null);
+  const [notesText, setNotesText] = useState('');
 
   // Check if already authenticated
   useEffect(() => {
@@ -303,6 +306,22 @@ export default function Admin() {
     if (typeof window !== 'undefined') {
       localStorage.setItem('straxkaka_subscriptions', JSON.stringify(updatedSubmissions));
     }
+  };
+
+  // Notes Management
+  const updateNotes = (submissionId: string) => {
+    const updatedSubmissions = submissions.map(sub => {
+      if (sub.id === submissionId) {
+        return { ...sub, notes: notesText };
+      }
+      return sub;
+    });
+    setSubmissions(updatedSubmissions);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('straxkaka_subscriptions', JSON.stringify(updatedSubmissions));
+    }
+    setEditingNotes(null);
+    setNotesText('');
   };
 
   // Make Integration Functions
@@ -774,6 +793,7 @@ export default function Admin() {
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Subscription</th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Payment</th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Revenue</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Notes</th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Quick Actions</th>
                   </tr>
                 </thead>
@@ -879,6 +899,27 @@ export default function Admin() {
                             </div>
                           )}
                         </div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="text-sm text-gray-900 max-w-xs">
+                          {submission.notes ? (
+                            <div className="truncate" title={submission.notes}>
+                              {submission.notes}
+                            </div>
+                          ) : (
+                            <span className="text-gray-400 italic">No notes</span>
+                          )}
+                        </div>
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setEditingNotes({submissionId: submission.id});
+                            setNotesText(submission.notes || '');
+                          }}
+                          className="text-xs text-blue-600 hover:text-blue-800 mt-1"
+                        >
+                          {submission.notes ? 'Edit Notes' : 'Add Notes'}
+                        </button>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium" onClick={(e) => e.stopPropagation()}>
                         <div className="flex flex-wrap gap-1">
@@ -1290,6 +1331,59 @@ export default function Admin() {
                     </div>
                   );
                 })()}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Edit Notes Modal */}
+        {editingNotes && (
+          <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+            <div className="relative top-20 mx-auto p-5 border w-11/12 md:w-1/2 shadow-lg rounded-md bg-white">
+              <div className="mt-3">
+                <div className="flex justify-between items-center mb-4">
+                  <h3 className="text-lg font-medium text-gray-900">Edit Company Notes</h3>
+                  <button
+                    onClick={() => {
+                      setEditingNotes(null);
+                      setNotesText('');
+                    }}
+                    className="text-gray-400 hover:text-gray-600"
+                  >
+                    <span className="text-2xl">&times;</span>
+                  </button>
+                </div>
+                
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Notes</label>
+                    <textarea
+                      value={notesText}
+                      onChange={(e) => setNotesText(e.target.value)}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                      rows={6}
+                      placeholder="Add notes about this company (e.g., special requirements, contact preferences, etc.)"
+                    />
+                  </div>
+                  
+                  <div className="flex justify-end space-x-3">
+                    <button
+                      onClick={() => {
+                        setEditingNotes(null);
+                        setNotesText('');
+                      }}
+                      className="px-4 py-2 text-gray-600 hover:text-gray-800"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      onClick={() => updateNotes(editingNotes.submissionId)}
+                      className="px-4 py-2 bg-yellow-500 text-black rounded-md hover:bg-yellow-400 transition-colors font-semibold"
+                    >
+                      Save Notes
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
