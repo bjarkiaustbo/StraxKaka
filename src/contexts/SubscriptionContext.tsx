@@ -10,6 +10,7 @@ export interface Employee {
   cakeSize: string;
   dietaryRestrictions: string;
   specialNotes: string;
+  cakePrice?: number;
 }
 
 export interface Company {
@@ -31,6 +32,26 @@ export interface Company {
 export type SubscriptionTier = 'small' | 'medium' | 'large' | 'enterprise';
 export type SubscriptionStatus = 'pending_payment' | 'active' | 'expired';
 
+export interface CakeType {
+  id: string;
+  nameIcelandic: string;
+  nameEnglish: string;
+  price: number;
+}
+
+export const CAKE_TYPES: CakeType[] = [
+  { id: 'rosakaka_ljos_sukkuladi', nameIcelandic: 'Rósakaka ljóst sukkulaði', nameEnglish: 'Rose cake light chocolate', price: 6490 },
+  { id: 'rosakaka_dokkt_sukkuladi', nameIcelandic: 'Rósakaka dökkt súkkulaði', nameEnglish: 'Rose cake dark chocolate', price: 6490 },
+  { id: 'skuffukaka_bakka', nameIcelandic: 'Skúffukaka á bakka', nameEnglish: 'Sheet cake', price: 7249 },
+  { id: 'jardaberja', nameIcelandic: 'Jarðaberja', nameEnglish: 'Strawberry', price: 8414 },
+  { id: 'sitronuost', nameIcelandic: 'Sitronuost', nameEnglish: 'Lemon cheese', price: 8414 },
+  { id: 'biscoff', nameIcelandic: 'Biscoff', nameEnglish: 'Biscoff', price: 8414 },
+  { id: 'daim', nameIcelandic: 'Daim', nameEnglish: 'Daim', price: 8414 },
+  { id: 'tiramisu', nameIcelandic: 'Tiramisu', nameEnglish: 'Tiramisu', price: 8414 },
+  { id: 'sukkuladi_karamellukremi', nameIcelandic: 'Súkkulaði með karamellukremi', nameEnglish: 'Chocolate with caramel cream', price: 8414 },
+  { id: 'sukkuladi_sukkuladikremi', nameIcelandic: 'Súkkulaði með súkkulaðikremi', nameEnglish: 'Chocolate with chocolate cream', price: 8414 }
+];
+
 export interface SubscriptionPricing {
   tier: SubscriptionTier;
   name: string;
@@ -44,39 +65,39 @@ export interface SubscriptionPricing {
 export const SUBSCRIPTION_PRICING: SubscriptionPricing[] = [
   {
     tier: 'small',
-    name: 'Small',
+    name: 'Little Company',
     minEmployees: 1,
-    maxEmployees: 5,
-    basePrice: 3000,
+    maxEmployees: 25,
+    basePrice: 15000,
     pricePerEmployee: 0,
-    description: 'Perfect for small teams'
+    description: 'Perfect for small teams - includes cake costs'
   },
   {
     tier: 'medium',
-    name: 'Medium',
-    minEmployees: 6,
-    maxEmployees: 10,
-    basePrice: 5000,
+    name: 'Medium Company',
+    minEmployees: 26,
+    maxEmployees: 50,
+    basePrice: 0,
     pricePerEmployee: 0,
-    description: 'Ideal for growing companies'
+    description: 'Contact for pricing'
   },
   {
     tier: 'large',
-    name: 'Large',
-    minEmployees: 11,
-    maxEmployees: 20,
-    basePrice: 10000,
+    name: 'Large Company',
+    minEmployees: 51,
+    maxEmployees: 100,
+    basePrice: 0,
     pricePerEmployee: 0,
-    description: 'Great for established businesses'
+    description: 'Contact for pricing'
   },
   {
     tier: 'enterprise',
     name: 'Enterprise',
-    minEmployees: 21,
+    minEmployees: 101,
     maxEmployees: 999,
     basePrice: 0,
     pricePerEmployee: 0,
-    description: 'Custom pricing for large organizations'
+    description: 'Contact for pricing'
   }
 ];
 
@@ -238,6 +259,16 @@ export function SubscriptionProvider({ children }: { children: ReactNode }) {
     </SubscriptionContext.Provider>
   );
 }
+
+export function useSubscription() {
+  const context = useContext(SubscriptionContext);
+  if (context === undefined) {
+    throw new Error('useSubscription must be used within a SubscriptionProvider');
+  }
+  return context;
+}
+
+
 
 export function useSubscription() {
   const context = useContext(SubscriptionContext);

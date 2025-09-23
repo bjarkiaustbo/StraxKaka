@@ -51,7 +51,7 @@ export default function PricingTable({
       <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
         {SUBSCRIPTION_PRICING.map((pricing) => {
           const isSelected = selectedTier === pricing.tier;
-          const isRecommended = pricing.tier === 'medium';
+          const isRecommended = pricing.tier === 'small';
           const isEnterprise = pricing.tier === 'enterprise';
           const isApplicable = employeeCount >= pricing.minEmployees && employeeCount <= pricing.maxEmployees;
 
@@ -93,16 +93,11 @@ export default function PricingTable({
                 </h3>
                 
                 <div className="mb-4">
-                  {isEnterprise ? (
+                  {pricing.basePrice === 0 ? (
                     <div>
-                      <div className="text-3xl font-bold text-gray-900">
-                        <LanguageContent fallback="Sérsniðið">
-                          {(t) => t('pricing.tiers.enterprise.price')}
-                        </LanguageContent>
-                      </div>
-                      <div className="text-sm text-gray-600">
-                        <LanguageContent fallback="á mánuði">
-                          {(t) => t('pricing.per_month')}
+                      <div className="text-2xl font-bold text-gray-900">
+                        <LanguageContent fallback="Hafa samband fyrir verð">
+                          {(t) => t('pricing.contact_for_pricing')}
                         </LanguageContent>
                       </div>
                     </div>
@@ -112,8 +107,8 @@ export default function PricingTable({
                         {formatPrice(pricing.basePrice)}
                       </div>
                       <div className="text-sm text-gray-600">
-                        <LanguageContent fallback="á mánuði">
-                          {(t) => t('pricing.per_month')}
+                        <LanguageContent fallback="á mánuði + kökugjöld">
+                          {(t) => t('pricing.per_month')} + cake costs
                         </LanguageContent>
                       </div>
                     </div>

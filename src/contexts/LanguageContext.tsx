@@ -283,6 +283,18 @@ const translations = {
     'subscription.errors.tier_required': 'Vinsamlegast veldu áskriftarstig',
     'subscription.errors.submission_failed': 'Villa við skráningu. Vinsamlegast reyndu aftur.',
     
+    // Cake Types
+    'cake.rosakaka_ljos_sukkuladi': 'Rósakaka ljóst sukkulaði',
+    'cake.rosakaka_dokkt_sukkuladi': 'Rósakaka dökkt súkkulaði',
+    'cake.skuffukaka_bakka': 'Skúffukaka á bakka',
+    'cake.jardaberja': 'Jarðaberja',
+    'cake.sitronuost': 'Sitronuost',
+    'cake.biscoff': 'Biscoff',
+    'cake.daim': 'Daim',
+    'cake.tiramisu': 'Tiramisu',
+    'cake.sukkuladi_karamellukremi': 'Súkkulaði með karamellukremi',
+    'cake.sukkuladi_sukkuladikremi': 'Súkkulaði með súkkulaðikremi',
+    
     // Payment step
     'subscription.payment.title': 'Greiðsla',
     'subscription.payment.summary': 'Pöntunaryfirlit',
@@ -323,6 +335,9 @@ const translations = {
     // Pricing
     'pricing.title': 'Verðskrá',
     'pricing.subtitle': 'Mánaðarleg áskrift + kökugjöld',
+    'pricing.little_company': 'Lítil fyrirtæki (1-25 starfsmenn)',
+    'pricing.little_company_price': '15.000 ISK á mánuði + kökugjöld',
+    'pricing.contact_for_pricing': 'Hafa samband fyrir verð',
     'pricing.recommended': 'Mælt með',
     'pricing.per_month': 'á mánuði',
     'pricing.employees': 'starfsmenn',
@@ -710,6 +725,18 @@ const translations = {
     'subscription.errors.tier_required': 'Please select a subscription tier',
     'subscription.errors.submission_failed': 'Submission failed. Please try again.',
     
+    // Cake Types
+    'cake.rosakaka_ljos_sukkuladi': 'Rose cake light chocolate',
+    'cake.rosakaka_dokkt_sukkuladi': 'Rose cake dark chocolate',
+    'cake.skuffukaka_bakka': 'Sheet cake',
+    'cake.jardaberja': 'Strawberry',
+    'cake.sitronuost': 'Lemon cheese',
+    'cake.biscoff': 'Biscoff',
+    'cake.daim': 'Daim',
+    'cake.tiramisu': 'Tiramisu',
+    'cake.sukkuladi_karamellukremi': 'Chocolate with caramel cream',
+    'cake.sukkuladi_sukkuladikremi': 'Chocolate with chocolate cream',
+    
     // Payment step
     'subscription.payment.title': 'Payment',
     'subscription.payment.summary': 'Order Summary',
@@ -750,6 +777,9 @@ const translations = {
     // Pricing
     'pricing.title': 'Pricing',
     'pricing.subtitle': 'Monthly subscription + cake costs',
+    'pricing.little_company': 'Little Company (1-25 employees)',
+    'pricing.little_company_price': '15,000 ISK per month + cake costs',
+    'pricing.contact_for_pricing': 'Contact for pricing',
     'pricing.recommended': 'Recommended',
     'pricing.per_month': 'per month',
     'pricing.employees': 'employees',

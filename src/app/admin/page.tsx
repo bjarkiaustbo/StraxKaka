@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { CAKE_TYPES } from '@/contexts/SubscriptionContext';
 
 interface Employee {
   name: string;
@@ -36,6 +38,7 @@ interface Submission {
 }
 
 export default function Admin() {
+  const { language } = useLanguage();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [password, setPassword] = useState('');
   const [passwordError, setPasswordError] = useState('');
@@ -299,6 +302,61 @@ export default function Admin() {
     setSubmissions(updatedSubmissions);
     if (typeof window !== 'undefined') {
       localStorage.setItem('straxkaka_subscriptions', JSON.stringify(updatedSubmissions));
+    }
+  };
+
+  // Make Integration Functions
+  const triggerMakeWebhook = async (eventType: string, data: any) => {
+    try {
+      await fetch('/api/make/webhook', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          event: eventType,
+          timestamp: new Date().toISOString(),
+          data: data
+        })
+      });
+    } catch (error) {
+      console.error('Failed to trigger Make webhook:', error);
+    }
+  };
+
+  // Enhanced functions with Make integration
+  const markAsPaidWithWebhook = (companyId: string) => {
+    const submission = submissions.find(sub => sub.id === companyId);
+    if (submission) {
+      markAsPaid(companyId);
+      
+      // Trigger Make webhook
+      triggerMakeWebhook('payment_received', {
+        companyName: submission.companyName,
+        contactEmail: submission.contactEmail,
+        amount: submission.monthlyCost,
+        orderId: submission.orderId,
+        subscriptionTier: submission.subscriptionTier
+      });
+    }
+  };
+
+  const updateDeliveryStatusWithWebhook = (submissionId: string, employeeIndex: number, status: Employee['deliveryStatus']) => {
+    const submission = submissions.find(sub => sub.id === submissionId);
+    const employee = submission?.employees?.[employeeIndex];
+    
+    updateDeliveryStatus(submissionId, employeeIndex, status);
+    
+    if (submission && employee) {
+      // Trigger Make webhook
+      triggerMakeWebhook('delivery_status_updated', {
+        companyName: submission.companyName,
+        employeeName: employee.name,
+        deliveryStatus: status,
+        deliveryDate: new Date().toISOString(),
+        contactEmail: submission.contactEmail,
+        cakeType: employee.cakeType
+      });
     }
   };
 
@@ -812,7 +870,7 @@ export default function Admin() {
                         </button>
                           {submission.status !== 'paid' && (
                             <button
-                              onClick={() => markAsPaid(submission.id)}
+                              onClick={() => markAsPaidWithWebhook(submission.id)}
                               className="text-green-600 hover:text-green-900 bg-green-100 px-2 py-1 rounded-full text-xs font-medium hover:bg-green-200 transition-colors"
                             >
                               Mark Paid
@@ -935,7 +993,7 @@ export default function Admin() {
                                   </span>
                                   <select
                                     value={employee.deliveryStatus || 'pending'}
-                                    onChange={(e) => updateDeliveryStatus(selectedSubmission.id, index, e.target.value as Employee['deliveryStatus'])}
+                                    onChange={(e) => updateDeliveryStatusWithWebhook(selectedSubmission.id, index, e.target.value as Employee['deliveryStatus'])}
                                     className="text-xs border border-gray-300 rounded px-2 py-1"
                                   >
                                     <option value="pending">Pending</option>
@@ -1027,12 +1085,11 @@ export default function Admin() {
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500"
                     >
                       <option value="">Select cake type</option>
-                      <option value="Chocolate">Chocolate</option>
-                      <option value="Vanilla">Vanilla</option>
-                      <option value="Strawberry">Strawberry</option>
-                      <option value="Red Velvet">Red Velvet</option>
-                      <option value="Carrot">Carrot</option>
-                      <option value="Cheesecake">Cheesecake</option>
+                      {CAKE_TYPES.map((cake) => (
+                        <option key={cake.id} value={cake.id}>
+                          {language === 'is' ? cake.nameIcelandic : cake.nameEnglish} - {cake.price.toLocaleString('is-IS')} ISK
+                        </option>
+                      ))}
                     </select>
                   </div>
                   
@@ -1143,12 +1200,11 @@ export default function Admin() {
                           onChange={(e) => setNewEmployee({...newEmployee, cakeType: e.target.value})}
                           className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500"
                         >
-                          <option value="Chocolate">Chocolate</option>
-                          <option value="Vanilla">Vanilla</option>
-                          <option value="Strawberry">Strawberry</option>
-                          <option value="Red Velvet">Red Velvet</option>
-                          <option value="Carrot">Carrot</option>
-                          <option value="Cheesecake">Cheesecake</option>
+                          {CAKE_TYPES.map((cake) => (
+                            <option key={cake.id} value={cake.id}>
+                              {language === 'is' ? cake.nameIcelandic : cake.nameEnglish} - {cake.price.toLocaleString('is-IS')} ISK
+                            </option>
+                          ))}
                         </select>
                       </div>
                       

@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { useSubscription, SubscriptionTier, SubscriptionStatus } from '@/contexts/SubscriptionContext';
+import { useSubscription, SubscriptionTier, SubscriptionStatus, CAKE_TYPES } from '@/contexts/SubscriptionContext';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
 import LanguageContent from '@/components/LanguageContent';
 import EnhancedFileUpload from '@/components/EnhancedFileUpload';
@@ -29,7 +29,7 @@ interface CompanyData {
 }
 
 export default function Subscription() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const { 
     addCompany, 
     addEmployees, 
@@ -711,14 +711,19 @@ export default function Subscription() {
                     }>
                       {(t) => <label className="block text-sm font-medium text-gray-700 mb-2">{t('subscription.employees.cake_type')} *</label>}
                     </LanguageContent>
-                    <input
-                      type="text"
+                    <select
                       required
                       value={employee.cakeType}
                       onChange={(e) => updateEmployee(index, 'cakeType', e.target.value)}
-                      placeholder="T.d. súkkulaði, vanillu, jarðaberja..."
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
-                    />
+                    >
+                      <option value="">Veldu kökutegund</option>
+                      {CAKE_TYPES.map((cake) => (
+                        <option key={cake.id} value={cake.id}>
+                          {language === 'is' ? cake.nameIcelandic : cake.nameEnglish} - {cake.price.toLocaleString('is-IS')} ISK
+                        </option>
+                      ))}
+                    </select>
                   </div>
 
                   <div>
@@ -984,6 +989,40 @@ export default function Subscription() {
             <LanguageContent fallback="Til baka">
               {(t) => t('subscription.navigation.back')}
             </LanguageContent>
+          </button>
+          
+          {currentStep < 4 ? (
+            <button
+              onClick={handleNext}
+              className="bg-yellow-500 text-black px-6 py-3 rounded-lg hover:bg-yellow-400 transition-colors font-medium"
+            >
+              <LanguageContent fallback="Áfram">
+                {(t) => t('subscription.navigation.next')}
+              </LanguageContent>
+            </button>
+          ) : (
+            <button
+              onClick={handleSubmit}
+              disabled={isSubmitting}
+              className="bg-green-500 text-white px-6 py-3 rounded-lg hover:bg-green-400 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {isSubmitting ? (
+                <LanguageContent fallback="Greiði...">
+                  {(t) => t('subscription.navigation.processing')}
+                </LanguageContent>
+              ) : (
+                <LanguageContent fallback="Greiða núna">
+                  {(t) => t('subscription.navigation.pay_now')}
+                </LanguageContent>
+              )}
+            </button>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
           </button>
           
           {currentStep < 4 ? (

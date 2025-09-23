@@ -479,3 +479,37 @@ export default function EnhancedFileUpload({ onEmployeesAdded, onError }: Enhanc
     </div>
   );
 }
+
+                    <td className="px-4 py-2 text-sm text-gray-900">{row.data[2] || '-'}</td>
+                    <td className="px-4 py-2 text-sm">
+                      {row.isValid ? (
+                        <span className="text-green-600 font-medium">
+                          <LanguageContent fallback="Gildir">
+                            {(t) => t('file.preview.valid')}
+                          </LanguageContent>
+                        </span>
+                      ) : (
+                        <div className="text-red-600">
+                          <span className="font-medium">
+                            <LanguageContent fallback="Ógildir">
+                              {(t) => t('file.preview.invalid')}
+                            </LanguageContent>
+                          </span>
+                          <div className="text-xs mt-1">
+                            {row.errors.map((error, errorIndex) => (
+                              <div key={errorIndex}>{error}</div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
