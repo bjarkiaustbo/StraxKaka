@@ -98,4 +98,4 @@ All content is in Icelandic and can be updated in the respective page files:
 
 ## License
 
-© 2024 StraxKaka. All rights reserved.
+© 2024 StraxKaka. All rights reserved.# Force deployment Tue Sep 23 13:20:10 GMT 2025
