@@ -118,83 +118,20 @@ export default function Home() {
         </div>
       </section>
 
-      {/* How It Works Section */}
-      <section className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-                <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              <LanguageContent fallback="Svo einfalt er þetta">
-                {(t) => t('home.how_it_works.title')}
-              </LanguageContent>
-                </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              <LanguageContent fallback="Þú skráir, við sérum um allt annað">
-                {(t) => t('home.how_it_works.subtitle')}
-              </LanguageContent>
-            </p>
-          </div>
-          
-            <div className="grid md:grid-cols-3 gap-8">
-              <div className="text-center">
-              <div className="w-20 h-20 bg-yellow-500 text-black rounded-full flex items-center justify-center mx-auto mb-6 text-2xl font-bold">
-                  1
-                </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-4">
-                <LanguageContent fallback="Skrá starfsmenn">
-                  {(t) => t('how_it_works.step1.title')}
-                </LanguageContent>
-              </h3>
-                <p className="text-gray-600">
-                <LanguageContent fallback="Hlaða inn nöfn og afmælisdaga starfsmanna. Einn skjall og þú ert komin/n.">
-                  {(t) => t('how_it_works.step1.desc')}
-                </LanguageContent>
-                </p>
-              </div>
-              
-              <div className="text-center">
-              <div className="w-20 h-20 bg-yellow-500 text-black rounded-full flex items-center justify-center mx-auto mb-6 text-2xl font-bold">
-                  2
-                </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-4">
-                <LanguageContent fallback="Við muna fyrir þig">
-                  {(t) => t('how_it_works.step2.title')}
-                </LanguageContent>
-              </h3>
-                <p className="text-gray-600">
-                <LanguageContent fallback="Kerfið muna allt og panta kökur sjálfkrafa. Engin að gleyma neitt.">
-                  {(t) => t('how_it_works.step2.desc')}
-                </LanguageContent>
-                </p>
-              </div>
-              
-              <div className="text-center">
-              <div className="w-20 h-20 bg-yellow-500 text-black rounded-full flex items-center justify-center mx-auto mb-6 text-2xl font-bold">
-                  3
-                </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-4">
-                <LanguageContent fallback="Kökurnar birtast">
-                  {(t) => t('how_it_works.step3.title')}
-                </LanguageContent>
-              </h3>
-                <p className="text-gray-600">
-                <LanguageContent fallback="Á afmælisdaginn birtast kökurnar á vinnustaðnum. Starfsmenn fagna og stemningin batnar.">
-                  {(t) => t('how_it_works.step3.desc')}
-                </LanguageContent>
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* Blog Section */}
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Latest Insights
+              <LanguageContent fallback="Article in english, Grein">
+                {(t) => t('blog.section.title')}
+              </LanguageContent>
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Discover how workplace celebrations can transform your company culture
+              <LanguageContent fallback="Hvernig fögnuður innan vinnustaðs getur breytt stemninguni">
+                {(t) => t('blog.section.subtitle')}
+              </LanguageContent>
             </p>
           </div>
 
@@ -207,18 +144,22 @@ export default function Home() {
               />
               <div className="p-8">
                 <h3 className="text-2xl font-bold text-gray-900 mb-4">
-                  The Importance of Workplace Celebrations
+                  <LanguageContent fallback="Sætt leyndarmál að hamingjusamari vinnustað: Aldrei gleyma afmælum aftur">
+                    {(t) => t('blog.article.title')}
+                  </LanguageContent>
                 </h3>
                 <p className="text-gray-600 mb-6 leading-relaxed">
-                  Workplace celebrations are more than just office parties – they&apos;re essential for building strong teams, 
-                  boosting morale, and creating a positive work environment. Learn how small gestures like remembering 
-                  birthdays can have a big impact on your company culture.
+                  <LanguageContent fallback="Vinnustaðir eru meira en skrifstofur þar sem verkefni eru unnin – þeir eru samfélög þar sem fólk eyðir stórum hluta lífs síns. Í þessum rýmum skiptir máli að fólk líði vel, finni sig metið og upplifi þakklæti. Ein af einföldustu en áhrifaríkustu leiðunum til að skapa þessa menningu? Að fagna afmælum.">
+                    {(t) => t('blog.article.excerpt')}
+                  </LanguageContent>
                 </p>
                 <Link 
                   href="/blog/workplace-celebrations"
                   className="inline-flex items-center bg-yellow-500 text-black px-6 py-3 rounded-lg font-semibold hover:bg-yellow-400 transition-colors"
                 >
-                  Read More
+                  <LanguageContent fallback="Lesa grein">
+                    {(t) => t('blog.article.read_more')}
+                  </LanguageContent>
                   <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                   </svg>
@@ -234,10 +175,14 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-              Simple Pricing
+              <LanguageContent fallback="Einfalt verð">
+                {(t) => t('pricing.simple.title')}
+              </LanguageContent>
             </h2>
             <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-              Choose the perfect plan for your company size
+              <LanguageContent fallback="Veldu réttan áætlun fyrir stærð fyrirtækisins þíns">
+                {(t) => t('pricing.simple.subtitle')}
+              </LanguageContent>
             </p>
           </div>
           
@@ -245,15 +190,33 @@ export default function Home() {
             {/* Little Company */}
             <div className="bg-gradient-to-br from-yellow-500 to-amber-500 rounded-2xl p-8 text-black relative">
               <div className="text-center">
-                <h3 className="text-2xl font-bold mb-4">Little Company</h3>
-                <div className="text-4xl font-bold mb-2">15,000 ISK</div>
-                <div className="text-lg mb-6">per month + cake costs</div>
-                <div className="text-sm mb-8">Perfect for 1-25 employees</div>
+                <h3 className="text-2xl font-bold mb-4">
+                  <LanguageContent fallback="Lítil fyrirtæki">
+                    {(t) => t('pricing.little.title')}
+                  </LanguageContent>
+                </h3>
+                <div className="text-4xl font-bold mb-2">
+                  <LanguageContent fallback="15.000 ISK">
+                    {(t) => t('pricing.little.price')}
+                  </LanguageContent>
+                </div>
+                <div className="text-lg mb-6">
+                  <LanguageContent fallback="á mánuði + kökugjöld">
+                    {(t) => t('pricing.little.billing')}
+                  </LanguageContent>
+                </div>
+                <div className="text-sm mb-8">
+                  <LanguageContent fallback="Hentar fyrir 1-25 starfsmenn">
+                    {(t) => t('pricing.little.description')}
+                  </LanguageContent>
+                </div>
                 <Link 
                   href="/subscription"
                   className="w-full bg-black text-yellow-500 px-6 py-3 rounded-lg font-semibold hover:bg-gray-900 transition-colors inline-block"
                 >
-                  Get Started
+                  <LanguageContent fallback="Byrja núna">
+                    {(t) => t('nav.start_now')}
+                  </LanguageContent>
                 </Link>
               </div>
             </div>
@@ -262,19 +225,39 @@ export default function Home() {
             <div className="bg-gray-800 rounded-2xl p-8 text-white relative border-2 border-yellow-500">
               <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
                 <span className="bg-yellow-500 text-black px-4 py-1 rounded-full text-sm font-medium">
-                  Most Popular
+                  <LanguageContent fallback="Mælt með">
+                    {(t) => t('pricing.recommended')}
+                  </LanguageContent>
                 </span>
               </div>
               <div className="text-center">
-                <h3 className="text-2xl font-bold mb-4">Medium Company</h3>
-                <div className="text-4xl font-bold mb-2 text-yellow-500">Contact Us</div>
-                <div className="text-lg mb-6">for pricing</div>
-                <div className="text-sm mb-8">Perfect for 26-50 employees</div>
+                <h3 className="text-2xl font-bold mb-4">
+                  <LanguageContent fallback="Meðalstór fyrirtæki">
+                    {(t) => t('pricing.medium.title')}
+                  </LanguageContent>
+                </h3>
+                <div className="text-4xl font-bold mb-2 text-yellow-500">
+                  <LanguageContent fallback="Hafa samband">
+                    {(t) => t('pricing.contact_for_pricing')}
+                  </LanguageContent>
+                </div>
+                <div className="text-lg mb-6">
+                  <LanguageContent fallback="fyrir verð">
+                    {(t) => t('pricing.for_pricing')}
+                  </LanguageContent>
+                </div>
+                <div className="text-sm mb-8">
+                  <LanguageContent fallback="Hentar fyrir 26-50 starfsmenn">
+                    {(t) => t('pricing.medium.description')}
+                  </LanguageContent>
+                </div>
                 <Link 
                   href="/contact"
                   className="w-full bg-yellow-500 text-black px-6 py-3 rounded-lg font-semibold hover:bg-yellow-400 transition-colors inline-block"
                 >
-                  Contact Us
+                  <LanguageContent fallback="Hafa samband">
+                    {(t) => t('nav.contact')}
+                  </LanguageContent>
                 </Link>
               </div>
             </div>
@@ -282,15 +265,33 @@ export default function Home() {
             {/* Large Company */}
             <div className="bg-gray-800 rounded-2xl p-8 text-white">
               <div className="text-center">
-                <h3 className="text-2xl font-bold mb-4">Large Company</h3>
-                <div className="text-4xl font-bold mb-2 text-yellow-500">Contact Us</div>
-                <div className="text-lg mb-6">for pricing</div>
-                <div className="text-sm mb-8">Perfect for 51+ employees</div>
+                <h3 className="text-2xl font-bold mb-4">
+                  <LanguageContent fallback="Stór fyrirtæki">
+                    {(t) => t('pricing.large.title')}
+                  </LanguageContent>
+                </h3>
+                <div className="text-4xl font-bold mb-2 text-yellow-500">
+                  <LanguageContent fallback="Hafa samband">
+                    {(t) => t('pricing.contact_for_pricing')}
+                  </LanguageContent>
+                </div>
+                <div className="text-lg mb-6">
+                  <LanguageContent fallback="fyrir verð">
+                    {(t) => t('pricing.for_pricing')}
+                  </LanguageContent>
+                </div>
+                <div className="text-sm mb-8">
+                  <LanguageContent fallback="Hentar fyrir 51+ starfsmenn">
+                    {(t) => t('pricing.large.description')}
+                  </LanguageContent>
+                </div>
                 <Link 
                   href="/contact"
                   className="w-full bg-yellow-500 text-black px-6 py-3 rounded-lg font-semibold hover:bg-yellow-400 transition-colors inline-block"
                 >
-                  Contact Us
+                  <LanguageContent fallback="Hafa samband">
+                    {(t) => t('nav.contact')}
+                  </LanguageContent>
                 </Link>
               </div>
             </div>

@@ -760,15 +760,149 @@ export default function Subscription() {
           </div>
         )}
 
-        {/* Step 3: Subscription */}
+        {/* Step 3: Subscription - Same as Home Page */}
         {currentStep === 3 && (
           <div className="space-y-8">
-            <PricingTable 
-              selectedTier={selectedTier}
-              onTierSelect={setSelectedTier}
-              employeeCount={employees.length}
-              showSelection={true}
-            />
+            {/* Pricing Section - Same as Home Page */}
+            <section className="py-20 bg-black rounded-2xl">
+              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="text-center mb-16">
+                  <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+                    <LanguageContent fallback="Einfalt verð">
+                      {(t) => t('pricing.simple.title')}
+                    </LanguageContent>
+                  </h2>
+                  <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+                    <LanguageContent fallback="Veldu réttan áætlun fyrir stærð fyrirtækisins þíns">
+                      {(t) => t('pricing.simple.subtitle')}
+                    </LanguageContent>
+                  </p>
+                </div>
+                
+                <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                  {/* Little Company */}
+                  <div 
+                    className={`bg-gradient-to-br from-yellow-500 to-amber-500 rounded-2xl p-8 text-black relative cursor-pointer transition-all duration-300 ${
+                      selectedTier === 'small' ? 'ring-4 ring-yellow-300 shadow-2xl' : 'hover:shadow-xl'
+                    }`}
+                    onClick={() => setSelectedTier('small')}
+                  >
+                    <div className="text-center">
+                      <h3 className="text-2xl font-bold mb-4">
+                        <LanguageContent fallback="Lítil fyrirtæki">
+                          {(t) => t('pricing.little.title')}
+                        </LanguageContent>
+                      </h3>
+                      <div className="text-4xl font-bold mb-2">
+                        <LanguageContent fallback="15.000 ISK">
+                          {(t) => t('pricing.little.price')}
+                        </LanguageContent>
+                      </div>
+                      <div className="text-lg mb-6">
+                        <LanguageContent fallback="á mánuði + kökugjöld">
+                          {(t) => t('pricing.little.billing')}
+                        </LanguageContent>
+                      </div>
+                      <div className="text-sm mb-8">
+                        <LanguageContent fallback="Hentar fyrir 1-25 starfsmenn">
+                          {(t) => t('pricing.little.description')}
+                        </LanguageContent>
+                      </div>
+                      {selectedTier === 'small' && (
+                        <div className="text-lg font-bold text-black">
+                          <LanguageContent fallback="Valið">
+                            {(t) => t('pricing.selected')}
+                          </LanguageContent>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Medium Company */}
+                  <div 
+                    className={`bg-gray-800 rounded-2xl p-8 text-white relative border-2 border-yellow-500 cursor-pointer transition-all duration-300 ${
+                      selectedTier === 'medium' ? 'ring-4 ring-yellow-300 shadow-2xl' : 'hover:shadow-xl'
+                    }`}
+                    onClick={() => setSelectedTier('medium')}
+                  >
+                    <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
+                      <span className="bg-yellow-500 text-black px-4 py-1 rounded-full text-sm font-medium">
+                        <LanguageContent fallback="Mælt með">
+                          {(t) => t('pricing.recommended')}
+                        </LanguageContent>
+                      </span>
+                    </div>
+                    <div className="text-center">
+                      <h3 className="text-2xl font-bold mb-4">
+                        <LanguageContent fallback="Meðalstór fyrirtæki">
+                          {(t) => t('pricing.medium.title')}
+                        </LanguageContent>
+                      </h3>
+                      <div className="text-4xl font-bold mb-2 text-yellow-500">
+                        <LanguageContent fallback="Hafa samband">
+                          {(t) => t('pricing.contact_for_pricing')}
+                        </LanguageContent>
+                      </div>
+                      <div className="text-lg mb-6">
+                        <LanguageContent fallback="fyrir verð">
+                          {(t) => t('pricing.for_pricing')}
+                        </LanguageContent>
+                      </div>
+                      <div className="text-sm mb-8">
+                        <LanguageContent fallback="Hentar fyrir 26-50 starfsmenn">
+                          {(t) => t('pricing.medium.description')}
+                        </LanguageContent>
+                      </div>
+                      {selectedTier === 'medium' && (
+                        <div className="text-lg font-bold text-yellow-500">
+                          <LanguageContent fallback="Valið">
+                            {(t) => t('pricing.selected')}
+                          </LanguageContent>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Large Company */}
+                  <div 
+                    className={`bg-gray-800 rounded-2xl p-8 text-white cursor-pointer transition-all duration-300 ${
+                      selectedTier === 'large' ? 'ring-4 ring-yellow-300 shadow-2xl' : 'hover:shadow-xl'
+                    }`}
+                    onClick={() => setSelectedTier('large')}
+                  >
+                    <div className="text-center">
+                      <h3 className="text-2xl font-bold mb-4">
+                        <LanguageContent fallback="Stór fyrirtæki">
+                          {(t) => t('pricing.large.title')}
+                        </LanguageContent>
+                      </h3>
+                      <div className="text-4xl font-bold mb-2 text-yellow-500">
+                        <LanguageContent fallback="Hafa samband">
+                          {(t) => t('pricing.contact_for_pricing')}
+                        </LanguageContent>
+                      </div>
+                      <div className="text-lg mb-6">
+                        <LanguageContent fallback="fyrir verð">
+                          {(t) => t('pricing.for_pricing')}
+                        </LanguageContent>
+                      </div>
+                      <div className="text-sm mb-8">
+                        <LanguageContent fallback="Hentar fyrir 51+ starfsmenn">
+                          {(t) => t('pricing.large.description')}
+                        </LanguageContent>
+                      </div>
+                      {selectedTier === 'large' && (
+                        <div className="text-lg font-bold text-yellow-500">
+                          <LanguageContent fallback="Valið">
+                            {(t) => t('pricing.selected')}
+                          </LanguageContent>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
           </div>
         )}
 
