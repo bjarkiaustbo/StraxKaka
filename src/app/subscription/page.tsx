@@ -15,7 +15,6 @@ interface Employee {
   name: string;
   birthday: string;
   cakeType: string;
-  cakeSize: string;
   dietaryRestrictions: string;
   specialNotes: string;
 }
@@ -81,11 +80,10 @@ export default function Subscription() {
   };
 
   const addEmployee = () => {
-    setEmployees(prev => [...prev, {
+    setEmployees(prev => [...prev,     {
       name: '',
       birthday: '',
       cakeType: '',
-      cakeSize: 'medium',
       dietaryRestrictions: '',
       specialNotes: ''
     }]);
@@ -726,24 +724,6 @@ export default function Subscription() {
                     </select>
                   </div>
 
-                  <div>
-                    <LanguageContent fallback={
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Stærð köku *</label>
-                    }>
-                      {(t) => <label className="block text-sm font-medium text-gray-700 mb-2">{t('subscription.employees.cake_size')} *</label>}
-                    </LanguageContent>
-                    <select
-                      required
-                      value={employee.cakeSize}
-                      onChange={(e) => updateEmployee(index, 'cakeSize', e.target.value)}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
-                    >
-                      <option value="small">Lítil (6-8 manns)</option>
-                      <option value="medium">Meðalstór (8-12 manns)</option>
-                      <option value="large">Stór (12-16 manns)</option>
-                      <option value="extra-large">Mjög stór (16+ manns)</option>
-                    </select>
-                  </div>
 
                   <div>
                     <LanguageContent fallback={
