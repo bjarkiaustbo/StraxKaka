@@ -163,18 +163,3 @@ export async function POST(request) {
   }
 }
 
-
-  } catch (error) {
-    console.error('Subscription creation error:', error);
-    
-    return NextResponse.json(
-      { 
-        success: false, 
-        error: 'Internal server error. Please try again later.',
-        details: process.env.NODE_ENV === 'development' ? error.message : undefined
-      },
-      { status: 500 }
-    );
-  }
-}
-

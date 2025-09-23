@@ -345,6 +345,3 @@ export default function CSVUpload({ onEmployeesAdded, onError }: CSVUploadProps)
     </div>
   );
 }
-
-  );
-}

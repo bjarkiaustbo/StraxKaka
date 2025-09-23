@@ -423,4 +423,3 @@ export default function BankTransfersPage() {
     </div>
   );
 }
-
