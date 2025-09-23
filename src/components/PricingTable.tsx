@@ -108,7 +108,7 @@ export default function PricingTable({
                       </div>
                       <div className="text-sm text-gray-600">
                         <LanguageContent fallback="á mánuði + kökugjöld">
-                          {(t) => t('pricing.per_month')} + cake costs
+                          {(t) => `${t('pricing.per_month')} + cake costs`}
                         </LanguageContent>
                       </div>
                     </div>
