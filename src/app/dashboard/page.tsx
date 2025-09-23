@@ -3,180 +3,125 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useLanguage } from '@/contexts/LanguageContext';
-import LanguageSwitcher from '@/components/LanguageSwitcher';
 import LanguageContent from '@/components/LanguageContent';
 import AdminNavigation from '@/components/AdminNavigation';
 
-interface UpcomingBirthday {
+interface Birthday {
   id: string;
   employeeName: string;
   companyName: string;
-  birthday: string;
   daysUntil: number;
   cakeType: string;
   dietaryRestrictions: string;
-  deliveryAddress: string;
   celebrationStyle: string;
-}
-
-interface TodayDelivery {
-  id: string;
-  employeeName: string;
-  companyName: string;
-  cakeType: string;
-  deliveryTime: string;
   deliveryAddress: string;
-  status: 'scheduled' | 'in_transit' | 'delivered' | 'failed';
-  bakery: string;
 }
 
-interface RecentOrder {
+interface Delivery {
+  id: string;
+  employeeName: string;
+  companyName: string;
+  scheduledTime: string;
+  status: 'pending' | 'confirmed' | 'out_for_delivery' | 'delivered' | 'failed';
+  cakeType: string;
+}
+
+interface Order {
   id: string;
   companyName: string;
-  employeeName: string;
-  cakeType: string;
-  orderDate: string;
-  deliveryDate: string;
-  status: 'confirmed' | 'in_production' | 'ready' | 'delivered';
   amount: number;
+  status: 'pending' | 'confirmed' | 'delivered' | 'cancelled';
+  date: string;
 }
 
 export default function Dashboard() {
   const { t } = useLanguage();
-  const [upcomingBirthdays, setUpcomingBirthdays] = useState<UpcomingBirthday[]>([]);
-  const [todayDeliveries, setTodayDeliveries] = useState<TodayDelivery[]>([]);
-  const [recentOrders, setRecentOrders] = useState<RecentOrder[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
+  const [error, setError] = useState<string | null>(null);
+  const [upcomingBirthdays, setUpcomingBirthdays] = useState<Birthday[]>([]);
+  const [todayDeliveries, setTodayDeliveries] = useState<Delivery[]>([]);
+  const [recentOrders, setRecentOrders] = useState<Order[]>([]);
 
   useEffect(() => {
-    fetchDashboardData();
+    // Simulate loading data
+    setTimeout(() => {
+      setUpcomingBirthdays([
+        {
+          id: '1',
+          employeeName: 'Anna Jónsdóttir',
+          companyName: 'TechCorp',
+          daysUntil: 2,
+          cakeType: 'Chocolate Cake',
+          dietaryRestrictions: 'None',
+          celebrationStyle: 'Office Party',
+          deliveryAddress: 'Reykjavík'
+        },
+        {
+          id: '2',
+          employeeName: 'Bjarni Sigurðsson',
+          companyName: 'DesignStudio',
+          daysUntil: 5,
+          cakeType: 'Vanilla Cake',
+          dietaryRestrictions: 'Gluten-free',
+          celebrationStyle: 'Small Gathering',
+          deliveryAddress: 'Akureyri'
+        }
+      ]);
+
+      setTodayDeliveries([
+        {
+          id: '1',
+          employeeName: 'Anna Jónsdóttir',
+          companyName: 'TechCorp',
+          scheduledTime: '10:00',
+          status: 'out_for_delivery',
+          cakeType: 'Chocolate Cake'
+        },
+        {
+          id: '2',
+          employeeName: 'Bjarni Sigurðsson',
+          companyName: 'DesignStudio',
+          scheduledTime: '14:00',
+          status: 'delivered',
+          cakeType: 'Vanilla Cake'
+        }
+      ]);
+
+      setRecentOrders([
+        {
+          id: '1',
+          companyName: 'TechCorp',
+          amount: 15000,
+          status: 'delivered',
+          date: '2025-01-23'
+        },
+        {
+          id: '2',
+          companyName: 'DesignStudio',
+          amount: 12000,
+          status: 'delivered',
+          date: '2025-01-23'
+        }
+      ]);
+
+      setLoading(false);
+    }, 1000);
   }, []);
 
-  const fetchDashboardData = async () => {
-    try {
-      setLoading(true);
-      
-      // Mock data for cake delivery service dashboard
-      const mockData = {
-        upcomingBirthdays: [
-          {
-            id: '1',
-            employeeName: 'Anna Jónsdóttir',
-            companyName: 'TechCorp Iceland',
-            birthday: '2024-01-20',
-            daysUntil: 2,
-            cakeType: 'Chocolate Cake',
-            dietaryRestrictions: 'Gluten-free',
-            deliveryAddress: 'Reykjavík, Iceland',
-            celebrationStyle: 'Team celebration'
-          },
-          {
-            id: '2',
-            employeeName: 'Bjarni Sigurðsson',
-            companyName: 'Finance Solutions',
-            birthday: '2024-01-22',
-            daysUntil: 4,
-            cakeType: 'Vanilla Cake',
-            dietaryRestrictions: 'None',
-            deliveryAddress: 'Kópavogur, Iceland',
-            celebrationStyle: 'Private celebration'
-          },
-          {
-            id: '3',
-            employeeName: 'Guðrún Einarsdóttir',
-            companyName: 'Marketing Pro',
-            birthday: '2024-01-25',
-            daysUntil: 7,
-            cakeType: 'Red Velvet Cake',
-            dietaryRestrictions: 'Dairy-free',
-            deliveryAddress: 'Hafnarfjörður, Iceland',
-            celebrationStyle: 'Company-wide celebration'
-          }
-        ],
-        todayDeliveries: [
-          {
-            id: '1',
-            employeeName: 'Eiríkur Magnússon',
-            companyName: 'Design Studio',
-            cakeType: 'Birthday Cake',
-            deliveryTime: '10:00 AM',
-            deliveryAddress: 'Reykjavík, Iceland',
-            status: 'in_transit' as const,
-            bakery: 'Sweet Dreams Bakery'
-          },
-          {
-            id: '2',
-            employeeName: 'Helga Pétursdóttir',
-            companyName: 'Consulting Group',
-            cakeType: 'Chocolate Cake',
-            deliveryTime: '2:00 PM',
-            deliveryAddress: 'Garðabær, Iceland',
-            status: 'scheduled' as const,
-            bakery: 'Cake Masters'
-          }
-        ],
-        recentOrders: [
-          {
-            id: '1',
-            companyName: 'TechCorp Iceland',
-            employeeName: 'Anna Jónsdóttir',
-            cakeType: 'Chocolate Cake',
-            orderDate: '2024-01-18',
-            deliveryDate: '2024-01-20',
-            status: 'confirmed' as const,
-            amount: 12500
-          },
-          {
-            id: '2',
-            companyName: 'Finance Solutions',
-            employeeName: 'Bjarni Sigurðsson',
-            cakeType: 'Vanilla Cake',
-            orderDate: '2024-01-19',
-            deliveryDate: '2024-01-22',
-            status: 'in_production' as const,
-            amount: 12000
-          }
-        ]
-      };
-
-      setUpcomingBirthdays(mockData.upcomingBirthdays);
-      setTodayDeliveries(mockData.todayDeliveries);
-      setRecentOrders(mockData.recentOrders);
-      
-    } catch (err) {
-      setError('Failed to load dashboard data');
-      console.error('Dashboard error:', err);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const getDeliveryStatusColor = (status: string) => {
-    switch (status) {
-      case 'delivered': return 'text-green-600 bg-green-100';
-      case 'in_transit': return 'text-blue-600 bg-blue-100';
-      case 'scheduled': return 'text-yellow-600 bg-yellow-100';
-      case 'failed': return 'text-red-600 bg-red-100';
-      default: return 'text-gray-600 bg-gray-100';
-    }
-  };
-
-  const getOrderStatusColor = (status: string) => {
-    switch (status) {
-      case 'delivered': return 'text-green-600 bg-green-100';
-      case 'ready': return 'text-blue-600 bg-blue-100';
-      case 'in_production': return 'text-yellow-600 bg-yellow-100';
-      case 'confirmed': return 'text-purple-600 bg-purple-100';
-      default: return 'text-gray-600 bg-gray-100';
-    }
-  };
-
   const getDaysUntilColor = (days: number) => {
-    if (days === 0) return 'text-red-600 bg-red-100';
-    if (days <= 2) return 'text-orange-600 bg-orange-100';
-    if (days <= 7) return 'text-yellow-600 bg-yellow-100';
-    return 'text-green-600 bg-green-100';
+    if (days === 0) return 'bg-red-100 text-red-800';
+    if (days <= 2) return 'bg-yellow-100 text-yellow-800';
+    return 'bg-green-100 text-green-800';
+  };
+
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'delivered': return 'bg-green-100 text-green-800';
+      case 'out_for_delivery': return 'bg-blue-100 text-blue-800';
+      case 'pending': return 'bg-yellow-100 text-yellow-800';
+      case 'failed': return 'bg-red-100 text-red-800';
+      default: return 'bg-gray-100 text-gray-800';
+    }
   };
 
   if (loading) {
@@ -185,7 +130,7 @@ export default function Dashboard() {
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-yellow-500 mx-auto mb-4"></div>
           <LanguageContent fallback="Hleð gögnum...">
-            {(t) => <p className="text-gray-600">{t('dashboard.loading')}</p>}
+            {(t) => t('common.loading')}
           </LanguageContent>
         </div>
       </div>
@@ -194,7 +139,6 @@ export default function Dashboard() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
-      {/* Navigation */}
       <AdminNavigation currentPage="dashboard" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -227,7 +171,7 @@ export default function Dashboard() {
               <div className="ml-4">
                 <p className="text-sm font-medium text-gray-600">
                   <LanguageContent fallback="Kemur afmæli næstu 7 daga">
-                    {(t) => t('dashboard.stats.upcoming')}
+                    {(t) => t('dashboard.stats.upcoming_birthdays')}
                   </LanguageContent>
                 </p>
                 <p className="text-2xl font-bold text-gray-900">{upcomingBirthdays.length}</p>
@@ -297,7 +241,7 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* Upcoming Birthdays */}
+        {/* Upcoming Birthdays Table */}
         <div className="bg-white rounded-lg shadow mb-8">
           <div className="px-6 py-4 border-b border-gray-200">
             <LanguageContent fallback={
@@ -306,7 +250,7 @@ export default function Dashboard() {
               {(t) => <h2 className="text-lg font-semibold text-gray-900">{t('dashboard.upcoming.title')}</h2>}
             </LanguageContent>
           </div>
-          
+
           <div className="overflow-x-auto">
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-gray-50">
@@ -374,9 +318,8 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* Today's Deliveries and Recent Orders */}
+        {/* Today's Deliveries */}
         <div className="grid md:grid-cols-2 gap-6">
-          {/* Today's Deliveries */}
           <div className="bg-white rounded-lg shadow">
             <div className="px-6 py-4 border-b border-gray-200">
               <LanguageContent fallback={
@@ -385,7 +328,7 @@ export default function Dashboard() {
                 {(t) => <h2 className="text-lg font-semibold text-gray-900">{t('dashboard.deliveries.title')}</h2>}
               </LanguageContent>
             </div>
-            
+
             <div className="overflow-x-auto">
               <table className="min-w-full divide-y divide-gray-200">
                 <thead className="bg-gray-50">
@@ -405,11 +348,6 @@ export default function Dashboard() {
                         {(t) => t('dashboard.deliveries.status')}
                       </LanguageContent>
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      <LanguageContent fallback="Bakarí">
-                        {(t) => t('dashboard.deliveries.bakery')}
-                      </LanguageContent>
-                    </th>
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
@@ -418,18 +356,14 @@ export default function Dashboard() {
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="text-sm font-medium text-gray-900">{delivery.employeeName}</div>
                         <div className="text-sm text-gray-500">{delivery.companyName}</div>
-                        <div className="text-xs text-gray-400">{delivery.deliveryAddress}</div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                        {delivery.deliveryTime}
+                        {delivery.scheduledTime}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${getDeliveryStatusColor(delivery.status)}`}>
-                          {delivery.status.charAt(0).toUpperCase() + delivery.status.slice(1).replace('_', ' ')}
+                        <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${getStatusColor(delivery.status)}`}>
+                          {delivery.status.replace('_', ' ').charAt(0).toUpperCase() + delivery.status.replace('_', ' ').slice(1)}
                         </span>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {delivery.bakery}
                       </td>
                     </tr>
                   ))}
@@ -438,7 +372,6 @@ export default function Dashboard() {
             </div>
           </div>
 
-          {/* Recent Orders */}
           <div className="bg-white rounded-lg shadow">
             <div className="px-6 py-4 border-b border-gray-200">
               <LanguageContent fallback={
@@ -447,19 +380,14 @@ export default function Dashboard() {
                 {(t) => <h2 className="text-lg font-semibold text-gray-900">{t('dashboard.orders.title')}</h2>}
               </LanguageContent>
             </div>
-            
+
             <div className="overflow-x-auto">
               <table className="min-w-full divide-y divide-gray-200">
                 <thead className="bg-gray-50">
                   <tr>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      <LanguageContent fallback="Pöntun">
-                        {(t) => t('dashboard.orders.order')}
-                      </LanguageContent>
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      <LanguageContent fallback="Staða">
-                        {(t) => t('dashboard.orders.status')}
+                      <LanguageContent fallback="Fyrirtæki">
+                        {(t) => t('dashboard.orders.company')}
                       </LanguageContent>
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -468,8 +396,8 @@ export default function Dashboard() {
                       </LanguageContent>
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      <LanguageContent fallback="Afhending">
-                        {(t) => t('dashboard.orders.delivery')}
+                      <LanguageContent fallback="Staða">
+                        {(t) => t('dashboard.orders.status')}
                       </LanguageContent>
                     </th>
                   </tr>
@@ -477,21 +405,16 @@ export default function Dashboard() {
                 <tbody className="bg-white divide-y divide-gray-200">
                   {recentOrders.map((order) => (
                     <tr key={order.id} className="hover:bg-gray-50">
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm font-medium text-gray-900">{order.employeeName}</div>
-                        <div className="text-sm text-gray-500">{order.companyName}</div>
-                        <div className="text-xs text-gray-400">{order.cakeType}</div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${getOrderStatusColor(order.status)}`}>
-                          {order.status.charAt(0).toUpperCase() + order.status.slice(1).replace('_', ' ')}
-                        </span>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                        {order.companyName}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                         {order.amount.toLocaleString('is-IS')} ISK
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {new Date(order.deliveryDate).toLocaleDateString('is-IS')}
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${getStatusColor(order.status)}`}>
+                          {order.status.charAt(0).toUpperCase() + order.status.slice(1)}
+                        </span>
                       </td>
                     </tr>
                   ))}

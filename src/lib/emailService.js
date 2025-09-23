@@ -142,3 +142,5 @@ Time: ${new Date().toLocaleString('is-IS', { timeZone: 'Atlantic/Reykjavik' })}
 };
 
 // Create reusable transporter object using SMTP transport
+
+

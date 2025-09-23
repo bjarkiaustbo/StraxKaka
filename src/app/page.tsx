@@ -13,9 +13,9 @@ export default function Home() {
   const [employeeCount, setEmployeeCount] = useState(0);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
       <Navigation currentPage="home" />
-      
+
       {/* Hero Section */}
       <section className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
@@ -24,7 +24,7 @@ export default function Home() {
               <LanguageContent fallback="Munaðir afmælisdagar gleðja alla">
                 {(t) => t('home.hero.title')}
               </LanguageContent>
-            </h1>
+                </h1>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
               <LanguageContent fallback="Með StraxKaka er hver afmælisdagur munaður, hver kaka komin á réttum tíma og vinnumenningin verður sætari.">
                 {(t) => t('home.hero.subtitle')}
@@ -39,7 +39,7 @@ export default function Home() {
                   {(t) => t('nav.start_now')}
                 </LanguageContent>
               </Link>
-            </div>
+                  </div>
           </div>
         </div>
       </section>
@@ -48,20 +48,20 @@ export default function Home() {
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
               <LanguageContent fallback="Hvað vinnur StraxKaka fyrir þig?">
                 {(t) => t('home.features.title')}
               </LanguageContent>
-            </h2>
+                </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               <LanguageContent fallback="Við leysum vandamálið sem allir þekkja: gleymdir afmælisdagum sem skaða samstöðu og stemningu">
                 {(t) => t('home.features.subtitle')}
               </LanguageContent>
             </p>
           </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="text-center p-6">
+          
+            <div className="grid md:grid-cols-3 gap-8">
+              <div className="text-center p-6">
               <div className="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <svg className="w-8 h-8 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -72,14 +72,14 @@ export default function Home() {
                   {(t) => t('features.registration.title')}
                 </LanguageContent>
               </h3>
-              <p className="text-gray-600">
+                <p className="text-gray-600">
                 <LanguageContent fallback="Hlaða inn Excel skrá eða tengja við HR kerfið. Engin flókin uppsetning, bara skrá og gleyma.">
                   {(t) => t('features.registration.desc')}
                 </LanguageContent>
-              </p>
-            </div>
-
-            <div className="text-center p-6">
+                </p>
+              </div>
+              
+              <div className="text-center p-6">
               <div className="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <svg className="w-8 h-8 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
@@ -90,31 +90,31 @@ export default function Home() {
                   {(t) => t('features.ai.title')}
                 </LanguageContent>
               </h3>
-              <p className="text-gray-600">
+                  <p className="text-gray-600">
                 <LanguageContent fallback="Kökurnar koma með engum áhyggjum á sérstakan daginn, með tilkynningum og öllu.">
                   {(t) => t('features.ai.desc')}
                 </LanguageContent>
-              </p>
-            </div>
-
-            <div className="text-center p-6">
+                  </p>
+                </div>
+                
+                <div className="text-center p-6">
               <div className="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <svg className="w-8 h-8 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
                 </svg>
-              </div>
+                  </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-2">
                 <LanguageContent fallback="Við vinnum með frábærum bakaríum">
                   {(t) => t('features.delivery.title')}
                 </LanguageContent>
               </h3>
-              <p className="text-gray-600">
+                  <p className="text-gray-600">
                 <LanguageContent fallback="Sem bjóða upp á toppstig kökur og tryggja afhendingu á réttum tíma, með fjölbreytilegum valkostum.">
                   {(t) => t('features.delivery.desc')}
                 </LanguageContent>
-              </p>
-            </div>
-          </div>
+                  </p>
+                </div>
+              </div>
         </div>
       </section>
 
@@ -122,61 +122,61 @@ export default function Home() {
       <section className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
               <LanguageContent fallback="Svo einfalt er þetta">
                 {(t) => t('home.how_it_works.title')}
               </LanguageContent>
-            </h2>
+                </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               <LanguageContent fallback="Þú skráir, við sérum um allt annað">
                 {(t) => t('home.how_it_works.subtitle')}
               </LanguageContent>
             </p>
           </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="text-center">
+          
+            <div className="grid md:grid-cols-3 gap-8">
+              <div className="text-center">
               <div className="w-20 h-20 bg-yellow-500 text-black rounded-full flex items-center justify-center mx-auto mb-6 text-2xl font-bold">
-                1
-              </div>
+                  1
+                </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-4">
                 <LanguageContent fallback="Skrá starfsmenn">
                   {(t) => t('how_it_works.step1.title')}
                 </LanguageContent>
               </h3>
-              <p className="text-gray-600">
+                <p className="text-gray-600">
                 <LanguageContent fallback="Hlaða inn nöfn og afmælisdaga starfsmanna. Einn skjall og þú ert komin/n.">
                   {(t) => t('how_it_works.step1.desc')}
                 </LanguageContent>
-              </p>
-            </div>
-
-            <div className="text-center">
-              <div className="w-20 h-20 bg-yellow-500 text-black rounded-full flex items-center justify-center mx-auto mb-6 text-2xl font-bold">
-                2
+                </p>
               </div>
+              
+              <div className="text-center">
+              <div className="w-20 h-20 bg-yellow-500 text-black rounded-full flex items-center justify-center mx-auto mb-6 text-2xl font-bold">
+                  2
+                </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-4">
                 <LanguageContent fallback="Við muna fyrir þig">
                   {(t) => t('how_it_works.step2.title')}
                 </LanguageContent>
               </h3>
-              <p className="text-gray-600">
+                <p className="text-gray-600">
                 <LanguageContent fallback="Kerfið muna allt og panta kökur sjálfkrafa. Engin að gleyma neitt.">
                   {(t) => t('how_it_works.step2.desc')}
                 </LanguageContent>
-              </p>
-            </div>
-
-            <div className="text-center">
-              <div className="w-20 h-20 bg-yellow-500 text-black rounded-full flex items-center justify-center mx-auto mb-6 text-2xl font-bold">
-                3
+                </p>
               </div>
+              
+              <div className="text-center">
+              <div className="w-20 h-20 bg-yellow-500 text-black rounded-full flex items-center justify-center mx-auto mb-6 text-2xl font-bold">
+                  3
+                </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-4">
                 <LanguageContent fallback="Kökurnar birtast">
                   {(t) => t('how_it_works.step3.title')}
                 </LanguageContent>
               </h3>
-              <p className="text-gray-600">
+                <p className="text-gray-600">
                 <LanguageContent fallback="Á afmælisdaginn birtast kökurnar á vinnustaðnum. Starfsmenn fagna og stemningin batnar.">
                   {(t) => t('how_it_works.step3.desc')}
                 </LanguageContent>
@@ -301,11 +301,11 @@ export default function Home() {
       {/* CTA Section */}
       <section className="py-20 bg-gradient-to-r from-yellow-500 to-amber-500">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-black mb-4">
+              <h2 className="text-3xl md:text-4xl font-bold text-black mb-4">
             <LanguageContent fallback="Tilbúin/n að byrja?">
               {(t) => t('home.cta.title')}
             </LanguageContent>
-          </h2>
+              </h2>
           <p className="text-xl text-black mb-8 max-w-3xl mx-auto">
             <LanguageContent fallback="Tilbúin/n að gera afmælisdaga áhyggjulausa? Byrjaðu áskriftina þína í dag.">
               {(t) => t('home.cta.subtitle')}
@@ -317,7 +317,7 @@ export default function Home() {
           >
             <LanguageContent fallback="Byrja núna">
               {(t) => t('nav.start_now')}
-            </LanguageContent>
+          </LanguageContent>
           </Link>
         </div>
       </section>
@@ -426,7 +426,7 @@ export default function Home() {
                 </li>
               </ul>
             </div>
-
+            
             <div>
               <h4 className="text-lg font-semibold mb-4 text-yellow-500">
                 <LanguageContent fallback="Hafa samband">

@@ -773,8 +773,7 @@ export default function Admin() {
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Delivery Status</th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Subscription</th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Payment</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Monthly Fee</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">This Month Cakes</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Revenue</th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Quick Actions</th>
                   </tr>
                 </thead>
@@ -856,34 +855,25 @@ export default function Admin() {
                         </span>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-gray-900 font-semibold">
-                          {submission.subscriptionTier === 'small' ? '15,000' : 'Contact'} ISK
-                        </div>
-                        <div className="text-xs text-gray-500">monthly subscription</div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
                         <div className="text-sm text-gray-900">
-                          {(() => {
-                            const thisMonthCakes = submission.employees?.filter(emp => {
-                              if (emp.employmentStatus !== 'active') return false;
-                              const birthday = new Date(emp.birthday);
-                              const now = new Date();
-                              return birthday.getMonth() === now.getMonth() && birthday.getFullYear() === now.getFullYear();
-                            }) || [];
-                            const totalCakeCost = thisMonthCakes.reduce((sum, emp) => {
-                              const cakeType = CAKE_TYPES.find(c => c.id === emp.cakeType);
-                              return sum + (cakeType?.price || 0);
-                            }, 0);
-                            return totalCakeCost > 0 ? `${totalCakeCost.toLocaleString()} ISK` : 'No birthdays';
-                          })()}
-                        </div>
-                        <div className="text-xs text-gray-500">
-                          {submission.employees?.filter(emp => {
-                            if (emp.employmentStatus !== 'active') return false;
-                            const birthday = new Date(emp.birthday);
-                            const now = new Date();
-                            return birthday.getMonth() === now.getMonth() && birthday.getFullYear() === now.getFullYear();
-                          }).length || 0} birthdays this month
+                          <div className="font-semibold">{(submission.monthlyCost || 0).toLocaleString()} ISK</div>
+                          <div className="text-xs text-gray-500">monthly subscription</div>
+                          {submission.employees && submission.employees.length > 0 && (
+                            <div className="mt-1">
+                              <div className="text-xs text-blue-600 font-medium">Cake Preferences:</div>
+                              {submission.employees.slice(0, 2).map((emp, idx) => {
+                                const cakeType = CAKE_TYPES.find(cake => cake.id === emp.cakeType);
+                                return (
+                                  <div key={idx} className="text-xs text-gray-600">
+                                    {emp.name}: {language === 'is' ? cakeType?.nameIcelandic : cakeType?.nameEnglish} ({cakeType?.price.toLocaleString()} ISK)
+                                  </div>
+                                );
+                              })}
+                              {submission.employees.length > 2 && (
+                                <div className="text-xs text-gray-500">+{submission.employees.length - 2} more</div>
+                              )}
+                            </div>
+                          )}
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
@@ -971,20 +961,31 @@ export default function Admin() {
                       <p><strong>Address:</strong> {selectedSubmission.deliveryAddress || 'N/A'}</p>
                       <p><strong>Subscription:</strong> {selectedSubmission.subscriptionTier}</p>
                       <p><strong>Status:</strong> {selectedSubmission.status}</p>
-                      <p><strong>Monthly Subscription:</strong> {selectedSubmission.subscriptionTier === 'small' ? '15,000' : 'Contact for pricing'} ISK</p>
-                      <p><strong>This Month Cake Costs:</strong> {(() => {
-                        const thisMonthCakes = selectedSubmission.employees?.filter(emp => {
-                          if (emp.employmentStatus !== 'active') return false;
-                          const birthday = new Date(emp.birthday);
-                          const now = new Date();
-                          return birthday.getMonth() === now.getMonth() && birthday.getFullYear() === now.getFullYear();
-                        }) || [];
-                        const totalCakeCost = thisMonthCakes.reduce((sum, emp) => {
-                          const cakeType = CAKE_TYPES.find(c => c.id === emp.cakeType);
-                          return sum + (cakeType?.price || 0);
-                        }, 0);
-                        return totalCakeCost > 0 ? `${totalCakeCost.toLocaleString()} ISK` : 'No birthdays this month';
-                      })()}</p>
+                      <p><strong>Monthly Subscription:</strong> {(selectedSubmission.monthlyCost || 0).toLocaleString()} ISK</p>
+                      {selectedSubmission.employees && selectedSubmission.employees.length > 0 && (
+                        <div className="mt-4">
+                          <p><strong>Cake Preferences & Costs:</strong></p>
+                          <div className="mt-2 space-y-2">
+                            {selectedSubmission.employees.map((emp, idx) => {
+                              const cakeType = CAKE_TYPES.find(cake => cake.id === emp.cakeType);
+                              return (
+                                <div key={idx} className="bg-gray-50 p-3 rounded-lg">
+                                  <div className="font-medium">{emp.name}</div>
+                                  <div className="text-sm text-gray-600">
+                                    Cake: {language === 'is' ? cakeType?.nameIcelandic : cakeType?.nameEnglish}
+                                  </div>
+                                  <div className="text-sm font-semibold text-blue-600">
+                                    Cost: {cakeType?.price.toLocaleString()} ISK
+                                  </div>
+                                  <div className="text-xs text-gray-500">
+                                    Birthday: {new Date(emp.birthday).toLocaleDateString()}
+                                  </div>
+                                </div>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      )}
                       <p><strong>Order ID:</strong> {selectedSubmission.orderId || 'N/A'}</p>
                   </div>
                 </div>

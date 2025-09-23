@@ -3,6 +3,7 @@
 import { useLanguage } from '@/contexts/LanguageContext';
 import LanguageContent from '@/components/LanguageContent';
 import Navigation from '@/components/Navigation';
+import Link from 'next/link';
 
 export default function About() {
   const { t } = useLanguage();
@@ -135,18 +136,44 @@ export default function About() {
       </section>
 
       {/* Promise Section */}
+      <section className="py-20 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-4xl mx-auto text-center">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
+              <LanguageContent fallback="Okkar loforð">
+                {(t) => t('about.promise.title')}
+              </LanguageContent>
+            </h2>
+            <p className="text-lg text-gray-700 leading-relaxed mb-8">
+              <LanguageContent fallback="Við vinnum með traustum bakaríum sem nota hágæða hráefni. Kökurnar eru bakaðar af alúð og afhentar á réttum tíma – alltaf tilbúnar til að gleðja.">
+                {(t) => t('about.promise.desc')}
+              </LanguageContent>
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
       <section className="py-20 bg-gradient-to-r from-yellow-500 to-amber-500">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-black mb-8">
-            <LanguageContent fallback="Okkar loforð">
-              {(t) => t('about.promise.title')}
+          <h2 className="text-3xl md:text-4xl font-bold text-black mb-4">
+            <LanguageContent fallback="Tilbúin/n að byrja?">
+              {(t) => t('home.cta.title')}
             </LanguageContent>
           </h2>
-          <p className="text-xl text-black max-w-4xl mx-auto leading-relaxed">
-            <LanguageContent fallback="Við vinnum með traustum bakaríum sem nota hágæða hráefni. Kökurnar eru bakaðar af alúð og afhentar á réttum tíma – alltaf tilbúnar til að gleðja.">
-              {(t) => t('about.promise.desc')}
+          <p className="text-xl text-black mb-8 max-w-3xl mx-auto">
+            <LanguageContent fallback="Tilbúin/n að gera afmælisdaga áhyggjulausa? Byrjaðu áskriftina þína í dag.">
+              {(t) => t('home.cta.subtitle')}
             </LanguageContent>
           </p>
+          <Link 
+            href="/subscription"
+            className="inline-flex items-center bg-black text-yellow-500 px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-900 transition-colors"
+          >
+            <LanguageContent fallback="Byrja núna">
+              {(t) => t('nav.start_now')}
+            </LanguageContent>
+          </Link>
         </div>
       </section>
 

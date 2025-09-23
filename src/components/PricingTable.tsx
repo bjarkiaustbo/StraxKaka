@@ -34,17 +34,17 @@ export default function PricingTable({
   };
 
   return (
-    <div className="bg-white rounded-2xl shadow-lg p-8">
+    <div className="bg-black rounded-2xl shadow-lg p-8">
       <div className="text-center mb-8">
         <LanguageContent fallback={
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">Verðskrá</h2>
+          <h2 className="text-3xl font-bold text-white mb-4">Verðskrá</h2>
         }>
-          {(t) => <h2 className="text-3xl font-bold text-gray-900 mb-4">{t('pricing.title')}</h2>}
+          {(t) => <h2 className="text-3xl font-bold text-white mb-4">{t('pricing.title')}</h2>}
         </LanguageContent>
         <LanguageContent fallback={
-          <p className="text-gray-600">Veldu þá áskriftarstig sem hentar fyrirtækinu þínu</p>
+          <p className="text-gray-300">Veldu þá áskriftarstig sem hentar fyrirtækinu þínu</p>
         }>
-          {(t) => <p className="text-gray-600">{t('pricing.subtitle')}</p>}
+          {(t) => <p className="text-gray-300">{t('pricing.subtitle')}</p>}
         </LanguageContent>
       </div>
 
@@ -60,16 +60,16 @@ export default function PricingTable({
               key={pricing.tier}
               className={`relative rounded-xl border-2 p-6 transition-all duration-200 ${
                 isSelected 
-                  ? 'border-yellow-500 bg-yellow-50' 
+                  ? 'border-yellow-500 bg-yellow-500 text-black' 
                   : isRecommended 
-                    ? 'border-blue-500 bg-blue-50' 
-                    : 'border-gray-200 hover:border-gray-300'
+                    ? 'border-yellow-500 bg-gray-800 text-white' 
+                    : 'border-gray-600 bg-gray-800 text-white hover:border-gray-500'
               } ${showSelection ? 'cursor-pointer' : ''}`}
               onClick={() => showSelection && onTierSelect?.(pricing.tier)}
             >
               {isRecommended && (
                 <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                  <span className="bg-blue-500 text-white px-3 py-1 rounded-full text-sm font-medium">
+                  <span className="bg-yellow-500 text-black px-3 py-1 rounded-full text-sm font-medium">
                     <LanguageContent fallback="Mælt með">
                       {(t) => t('pricing.recommended')}
                     </LanguageContent>
@@ -86,7 +86,7 @@ export default function PricingTable({
               )}
 
               <div className="text-center">
-                <h3 className="text-xl font-bold text-gray-900 mb-2">
+                <h3 className={`text-xl font-bold mb-2 ${isSelected ? 'text-black' : 'text-white'}`}>
                   <LanguageContent fallback={pricing.name}>
                     {(t) => t(`pricing.tiers.${pricing.tier}.name`)}
                   </LanguageContent>
@@ -95,7 +95,7 @@ export default function PricingTable({
                 <div className="mb-4">
                   {pricing.basePrice === 0 ? (
                     <div>
-                      <div className="text-2xl font-bold text-gray-900">
+                      <div className={`text-2xl font-bold ${isSelected ? 'text-black' : 'text-white'}`}>
                         <LanguageContent fallback="Hafa samband fyrir verð">
                           {(t) => t('pricing.contact_for_pricing')}
                         </LanguageContent>
@@ -103,10 +103,10 @@ export default function PricingTable({
                     </div>
                   ) : (
                     <div>
-                      <div className="text-3xl font-bold text-gray-900">
+                      <div className={`text-3xl font-bold ${isSelected ? 'text-black' : 'text-white'}`}>
                         {formatPrice(pricing.basePrice)}
                       </div>
-                      <div className="text-sm text-gray-600">
+                      <div className={`text-sm ${isSelected ? 'text-gray-700' : 'text-gray-300'}`}>
                         <LanguageContent fallback="á mánuði + kökugjöld">
                           {(t) => `${t('pricing.per_month')} + cake costs`}
                         </LanguageContent>
@@ -115,13 +115,13 @@ export default function PricingTable({
                   )}
                 </div>
 
-                <div className="text-sm text-gray-600 mb-4">
+                <div className={`text-sm mb-4 ${isSelected ? 'text-gray-700' : 'text-gray-300'}`}>
                   <LanguageContent fallback={`${pricing.minEmployees}-${pricing.maxEmployees === 999 ? '∞' : pricing.maxEmployees} starfsmenn`}>
                     {(t) => `${pricing.minEmployees}-${pricing.maxEmployees === 999 ? '∞' : pricing.maxEmployees} ${t('pricing.employees')}`}
                   </LanguageContent>
                 </div>
 
-                <p className="text-sm text-gray-600 mb-4">
+                <p className={`text-sm mb-4 ${isSelected ? 'text-gray-700' : 'text-gray-300'}`}>
                   <LanguageContent fallback={pricing.description}>
                     {(t) => t(`pricing.tiers.${pricing.tier}.description`)}
                   </LanguageContent>
