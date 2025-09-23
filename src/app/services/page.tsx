@@ -51,30 +51,6 @@ export default function Services() {
       {/* 3-Step Process */}
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <LanguageContent fallback={
-              <>
-                <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-                  Hvernig virkar það?
-                </h2>
-                <p className="text-xl text-gray-600">
-                  Einfalt ferli í 3 skrefum
-                </p>
-              </>
-            }>
-              {(t) => (
-                <>
-                  <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-                    {t('services.process.title')}
-                  </h2>
-                  <p className="text-xl text-gray-600">
-                    {t('services.process.subtitle')}
-                  </p>
-                </>
-              )}
-            </LanguageContent>
-          </div>
-
           <div className="grid md:grid-cols-3 gap-8">
             {/* Step 1 */}
             <div className="text-center">

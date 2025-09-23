@@ -416,7 +416,7 @@ const translations = {
     'dashboard.payment_status.pending': 'Bíður',
     
     // Services page
-    'services.hero.title': 'Hvað vinnur StraxKaka fyrir þig?',
+    'services.hero.title': 'Þjónustan okkar',
     'services.hero.subtitle': 'Við leysum vandamálið sem allir þekkja: gleymdir afmælisdagum sem skaða samstöðu og stemningu',
     'services.process.title': 'Hvernig virkar það?',
     'services.process.subtitle': 'Einfalt ferli í 4 skrefum',
