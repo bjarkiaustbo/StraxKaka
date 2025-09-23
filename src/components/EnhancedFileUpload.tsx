@@ -133,9 +133,7 @@ export default function EnhancedFileUpload({ onEmployeesAdded, onError }: Enhanc
     setFileName(file.name);
 
     try {
-      let parsedData: FileRow[];
-      
-      parsedData = await parseCSVFile(file);
+      const parsedData: FileRow[] = await parseCSVFile(file);
       
       setFileData(parsedData);
       setShowPreview(true);

@@ -482,7 +482,7 @@ export default function Admin() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
       {/* Simple Navigation */}
       <nav className="bg-black shadow-lg">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -507,110 +507,105 @@ export default function Admin() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="mb-8">
-          <div className="bg-white bg-opacity-80 backdrop-blur-sm rounded-2xl shadow-lg border border-white border-opacity-20 p-6">
-            <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent mb-2">
-              Admin Dashboard
-            </h1>
-            <p className="text-slate-600 text-lg">Manage company subscriptions and employees with professional tools</p>
-          </div>
+          <h1 className="text-3xl font-bold text-gray-900 mb-4">Admin Dashboard</h1>
+          <p className="text-gray-600">Manage company subscriptions and employees</p>
         </div>
 
         {/* Stats */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6 mb-8">
-          <div className="bg-white bg-opacity-80 backdrop-blur-sm rounded-2xl shadow-lg border border-white border-opacity-20 p-6 hover:shadow-xl transition-all duration-300">
+          <div className="bg-white rounded-lg shadow p-6">
             <div className="flex items-center">
-              <div className="p-3 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl shadow-lg">
-                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="p-2 bg-yellow-100 rounded-lg">
+                <svg className="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                 </svg>
               </div>
               <div className="ml-4">
-                <p className="text-2xl font-bold text-slate-900">{totalCompanies}</p>
-                <p className="text-sm font-medium text-slate-600">Total Companies</p>
+                <p className="text-2xl font-bold text-gray-900">{totalCompanies}</p>
+                <p className="text-sm font-medium text-gray-600">Total Companies</p>
               </div>
             </div>
           </div>
 
-          <div className="bg-white bg-opacity-80 backdrop-blur-sm rounded-2xl shadow-lg border border-white border-opacity-20 p-6 hover:shadow-xl transition-all duration-300">
+          <div className="bg-white rounded-lg shadow p-6">
             <div className="flex items-center">
-              <div className="p-3 bg-gradient-to-br from-green-500 to-green-600 rounded-xl shadow-lg">
-                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="p-2 bg-green-100 rounded-lg">
+                <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               </div>
               <div className="ml-4">
-                <p className="text-2xl font-bold text-slate-900">{activeCompanies}</p>
-                <p className="text-sm font-medium text-slate-600">Active Companies</p>
+                <p className="text-2xl font-bold text-gray-900">{activeCompanies}</p>
+                <p className="text-sm font-medium text-gray-600">Active Companies</p>
               </div>
             </div>
           </div>
 
-          <div className="bg-white bg-opacity-80 backdrop-blur-sm rounded-2xl shadow-lg border border-white border-opacity-20 p-6 hover:shadow-xl transition-all duration-300">
+          <div className="bg-white rounded-lg shadow p-6">
             <div className="flex items-center">
-              <div className="p-3 bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-xl shadow-lg">
-                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="p-2 bg-blue-100 rounded-lg">
+                <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" />
                 </svg>
               </div>
               <div className="ml-4">
-                <p className="text-2xl font-bold text-slate-900">{activeEmployees}</p>
-                <p className="text-sm font-medium text-slate-600">Active Employees</p>
+                <p className="text-2xl font-bold text-gray-900">{activeEmployees}</p>
+                <p className="text-sm font-medium text-gray-600">Active Employees</p>
               </div>
             </div>
           </div>
 
-          <div className="bg-white bg-opacity-80 backdrop-blur-sm rounded-2xl shadow-lg border border-white border-opacity-20 p-6 hover:shadow-xl transition-all duration-300">
+          <div className="bg-white rounded-lg shadow p-6">
             <div className="flex items-center">
-              <div className="p-3 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl shadow-lg">
-                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="p-2 bg-purple-100 rounded-lg">
+                <svg className="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>
               </div>
               <div className="ml-4">
-                <p className="text-2xl font-bold text-slate-900">{todaysDeliveries}</p>
-                <p className="text-sm font-medium text-slate-600">Today&apos;s Deliveries</p>
+                <p className="text-2xl font-bold text-gray-900">{todaysDeliveries}</p>
+                <p className="text-sm font-medium text-gray-600">Today&apos;s Deliveries</p>
               </div>
             </div>
           </div>
 
-          <div className="bg-white bg-opacity-80 backdrop-blur-sm rounded-2xl shadow-lg border border-white border-opacity-20 p-6 hover:shadow-xl transition-all duration-300">
+          <div className="bg-white rounded-lg shadow p-6">
             <div className="flex items-center">
-              <div className="p-3 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl shadow-lg">
-                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="p-2 bg-orange-100 rounded-lg">
+                <svg className="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
                 </svg>
               </div>
               <div className="ml-4">
-                <p className="text-2xl font-bold text-slate-900">{pendingDeliveries}</p>
-                <p className="text-sm font-medium text-slate-600">Pending Deliveries</p>
-              </div>
+                <p className="text-2xl font-bold text-gray-900">{pendingDeliveries}</p>
+                <p className="text-sm font-medium text-gray-600">Pending Deliveries</p>
             </div>
           </div>
         </div>
 
-          <div className="bg-white bg-opacity-80 backdrop-blur-sm rounded-2xl shadow-lg border border-white border-opacity-20 p-6 hover:shadow-xl transition-all duration-300">
+          <div className="bg-white rounded-lg shadow p-6">
             <div className="flex items-center">
-              <div className="p-3 bg-gradient-to-br from-red-500 to-red-600 rounded-xl shadow-lg">
-                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="p-2 bg-red-100 rounded-lg">
+                <svg className="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
                 </svg>
-              </div>
+                    </div>
               <div className="ml-4">
-                <p className="text-2xl font-bold text-slate-900">{overduePayments}</p>
-                <p className="text-sm font-medium text-slate-600">Overdue Payments</p>
-              </div>
+                <p className="text-2xl font-bold text-gray-900">{overduePayments}</p>
+                <p className="text-sm font-medium text-gray-600">Overdue Payments</p>
+                    </div>
             </div>
           </div>
         </div>
 
         {/* Phase 1: Quick Actions Bar */}
-        <div className="bg-white bg-opacity-80 backdrop-blur-sm rounded-2xl shadow-lg border border-white border-opacity-20 p-6 mb-8">
+        <div className="bg-white rounded-lg shadow p-6 mb-8">
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div className="flex items-center space-x-4">
               <h3 className="text-lg font-semibold text-gray-900">Quick Actions</h3>
               <button
                 onClick={() => setShowCalendar(!showCalendar)}
-                className="px-6 py-3 bg-gradient-to-r from-purple-500 to-purple-600 text-white rounded-xl text-sm font-medium hover:from-purple-600 hover:to-purple-700 transition-all duration-300 shadow-lg hover:shadow-xl"
+                className="px-4 py-2 bg-purple-100 text-purple-800 rounded-lg text-sm font-medium hover:bg-purple-200 transition-colors"
               >
                 {showCalendar ? 'Hide Calendar' : 'Show Calendar'}
               </button>
@@ -625,8 +620,8 @@ export default function Admin() {
 
         {/* Phase 1: Calendar View */}
         {showCalendar && (
-          <div className="bg-white bg-opacity-80 backdrop-blur-sm rounded-2xl shadow-lg border border-white border-opacity-20 p-6 mb-8">
-            <h3 className="text-xl font-semibold text-slate-900 mb-6">Upcoming Birthdays Calendar</h3>
+          <div className="bg-white rounded-lg shadow p-6 mb-8">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Upcoming Birthdays Calendar</h3>
             <div className="grid grid-cols-7 gap-2">
               {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
                 <div key={day} className="text-center text-sm font-medium text-gray-500 py-2">
@@ -667,7 +662,7 @@ export default function Admin() {
         )}
 
         {/* Search and Filters */}
-        <div className="bg-white bg-opacity-80 backdrop-blur-sm rounded-2xl shadow-lg border border-white border-opacity-20 p-6 mb-8">
+        <div className="bg-white rounded-lg shadow p-6 mb-8">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div className="lg:col-span-2">
               <label className="block text-sm font-medium text-gray-700 mb-2">Search Companies</label>
@@ -675,7 +670,7 @@ export default function Admin() {
                 type="text"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white bg-opacity-50 backdrop-blur-sm transition-all duration-300"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500"
                 placeholder="Search by company name, contact, email, or subscription tier..."
               />
             </div>
@@ -684,7 +679,7 @@ export default function Admin() {
               <select
                 value={filterStatus}
                 onChange={(e) => setFilterStatus(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white bg-opacity-50 backdrop-blur-sm transition-all duration-300"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500"
               >
                 <option value="all">All Statuses</option>
                 <option value="paid">Paid</option>
@@ -710,13 +705,13 @@ export default function Admin() {
                   </button>
                   <button
                     onClick={bulkMarkAsPaid}
-                    className="px-4 py-2 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-xl text-sm font-medium hover:from-green-600 hover:to-green-700 transition-all duration-300 shadow-lg hover:shadow-xl"
+                    className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium hover:bg-green-200 transition-colors"
                   >
                     Mark Selected as Paid
                   </button>
                   <button
                     onClick={bulkRemove}
-                    className="px-4 py-2 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-xl text-sm font-medium hover:from-red-600 hover:to-red-700 transition-all duration-300 shadow-lg hover:shadow-xl"
+                    className="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm font-medium hover:bg-red-200 transition-colors"
                   >
                     Remove Selected
                   </button>
@@ -724,7 +719,7 @@ export default function Admin() {
               )}
               <button
                 onClick={exportToCSV}
-                className="px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-xl text-sm font-medium hover:from-blue-600 hover:to-blue-700 transition-all duration-300 shadow-lg hover:shadow-xl"
+                className="px-4 py-2 bg-blue-100 text-blue-800 rounded-lg text-sm font-medium hover:bg-blue-200 transition-colors"
               >
                 Export CSV
               </button>
@@ -733,20 +728,20 @@ export default function Admin() {
         </div>
 
         {/* Submissions Table */}
-        <div className="bg-white bg-opacity-80 backdrop-blur-sm rounded-2xl shadow-lg border border-white border-opacity-20 overflow-hidden">
-          <div className="px-6 py-6 border-b border-gray-200 border-opacity-50 flex justify-between items-center">
-            <h2 className="text-xl font-semibold text-slate-900">Company Submissions</h2>
+        <div className="bg-white rounded-lg shadow overflow-hidden">
+          <div className="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+            <h2 className="text-lg font-semibold text-gray-900">Company Submissions</h2>
             <div className="flex items-center space-x-2">
               <button
                 onClick={selectAllCompanies}
-                className="px-4 py-2 text-sm text-slate-600 hover:text-slate-800 hover:bg-slate-100 rounded-lg transition-colors duration-200"
+                className="text-sm text-gray-500 hover:text-gray-700"
               >
                 Select All
               </button>
               <span className="text-gray-300">|</span>
               <button
                 onClick={clearSelection}
-                className="px-4 py-2 text-sm text-slate-600 hover:text-slate-800 hover:bg-slate-100 rounded-lg transition-colors duration-200"
+                className="text-sm text-gray-500 hover:text-gray-700"
               >
                 Clear All
               </button>
@@ -761,10 +756,10 @@ export default function Admin() {
             </div>
           ) : (
             <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-gray-200/50">
-                <thead className="bg-gradient-to-r from-slate-50 to-slate-100">
+              <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-gray-50">
                   <tr>
-                    <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       <input
                         type="checkbox"
                         checked={selectedCompanies.length === filteredSubmissions.length && filteredSubmissions.length > 0}
@@ -772,19 +767,19 @@ export default function Admin() {
                         className="rounded border-gray-300 text-yellow-600 focus:ring-yellow-500"
                       />
                     </th>
-                    <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">Company</th>
-                    <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">Contact</th>
-                    <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">Employees</th>
-                    <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">Delivery Status</th>
-                    <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">Subscription</th>
-                    <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">Payment</th>
-                    <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">Revenue</th>
-                    <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">Quick Actions</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Company</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Contact</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Employees</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Delivery Status</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Subscription</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Payment</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Revenue</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Quick Actions</th>
                   </tr>
                 </thead>
-                <tbody className="bg-white/50 divide-y divide-gray-200/50">
+                <tbody className="bg-white divide-y divide-gray-200">
                   {filteredSubmissions.map((submission) => (
-                    <tr key={submission.id} className={`hover:bg-slate-50 bg-opacity-80 transition-colors duration-200 ${selectedCompanies.includes(submission.id) ? 'bg-blue-50 bg-opacity-80' : ''}`}>
+                    <tr key={submission.id} className={`hover:bg-gray-50 ${selectedCompanies.includes(submission.id) ? 'bg-yellow-50' : ''}`}>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <input
                           type="checkbox"
@@ -885,14 +880,14 @@ export default function Admin() {
                         <div className="flex flex-wrap gap-1">
                         <button
                           onClick={() => setSelectedSubmission(submission)}
-                            className="text-white bg-gradient-to-r from-blue-500 to-blue-600 px-3 py-2 rounded-xl text-xs font-medium hover:from-blue-600 hover:to-blue-700 transition-all duration-300 shadow-md hover:shadow-lg"
+                            className="text-blue-600 hover:text-blue-900 bg-blue-100 px-2 py-1 rounded-full text-xs font-medium hover:bg-blue-200 transition-colors"
                         >
                             View
                         </button>
                           {submission.status !== 'paid' && (
                             <button
                               onClick={() => markAsPaidWithWebhook(submission.id)}
-                              className="text-white bg-gradient-to-r from-green-500 to-green-600 px-3 py-2 rounded-xl text-xs font-medium hover:from-green-600 hover:to-green-700 transition-all duration-300 shadow-md hover:shadow-lg"
+                              className="text-green-600 hover:text-green-900 bg-green-100 px-2 py-1 rounded-full text-xs font-medium hover:bg-green-200 transition-colors"
                             >
                               Mark Paid
                             </button>
@@ -908,24 +903,24 @@ export default function Admin() {
                           {submission.status === 'pending_payment' && !submission.paymentReminderSent && (
                             <button
                               onClick={() => sendPaymentReminder(submission.id)}
-                              className="text-white bg-gradient-to-r from-orange-500 to-orange-600 px-3 py-2 rounded-xl text-xs font-medium hover:from-orange-600 hover:to-orange-700 transition-all duration-300 shadow-md hover:shadow-lg"
+                              className="text-orange-600 hover:text-orange-900 bg-orange-100 px-2 py-1 rounded-full text-xs font-medium hover:bg-orange-200 transition-colors"
                             >
                               Send Reminder
                             </button>
                           )}
                           <button
                             onClick={() => toggleSubscriptionStatus(submission.id)}
-                            className={`px-3 py-2 rounded-xl text-xs font-medium transition-all duration-300 shadow-md hover:shadow-lg ${
+                            className={`px-2 py-1 rounded-full text-xs font-medium transition-colors ${
                               submission.subscriptionStatus === 'active' 
-                                ? 'text-white bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700'
-                                : 'text-white bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700'
+                                ? 'text-yellow-600 hover:text-yellow-900 bg-yellow-100 hover:bg-yellow-200'
+                                : 'text-green-600 hover:text-green-900 bg-green-100 hover:bg-green-200'
                             }`}
                           >
                             {submission.subscriptionStatus === 'active' ? 'Pause' : 'Resume'}
                           </button>
                           <button
                             onClick={() => removeCompany(submission.id)}
-                            className="text-white bg-gradient-to-r from-red-500 to-red-600 px-3 py-2 rounded-xl text-xs font-medium hover:from-red-600 hover:to-red-700 transition-all duration-300 shadow-md hover:shadow-lg"
+                            className="text-red-600 hover:text-red-900 bg-red-100 px-2 py-1 rounded-full text-xs font-medium hover:bg-red-200 transition-colors"
                           >
                             Remove
                         </button>
@@ -941,8 +936,8 @@ export default function Admin() {
 
         {/* Company Details Modal */}
       {selectedSubmission && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm overflow-y-auto h-full w-full z-50">
-          <div className="relative top-20 mx-auto p-6 border w-11/12 md:w-3/4 lg:w-1/2 shadow-2xl rounded-2xl bg-white bg-opacity-95 backdrop-blur-sm">
+        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+          <div className="relative top-20 mx-auto p-5 border w-11/12 md:w-3/4 lg:w-1/2 shadow-lg rounded-md bg-white">
             <div className="mt-3">
               <div className="flex justify-between items-center mb-4">
                 <h3 className="text-lg font-medium text-gray-900">
@@ -950,16 +945,16 @@ export default function Admin() {
                 </h3>
                 <button
                   onClick={() => setSelectedSubmission(null)}
-                  className="text-gray-400 hover:text-gray-600 p-2 hover:bg-gray-100 rounded-lg transition-colors duration-200"
+                  className="text-gray-400 hover:text-gray-600"
                 >
                   <span className="text-2xl">&times;</span>
                 </button>
               </div>
               
-              <div className="space-y-6">
-                <div className="bg-slate-50 bg-opacity-50 p-4 rounded-xl">
-                    <h4 className="font-semibold text-slate-900 mb-4">Company Information</h4>
-                    <div className="text-sm text-slate-600 space-y-2">
+              <div className="space-y-4">
+                <div>
+                    <h4 className="font-medium text-gray-900 mb-2">Company Information</h4>
+                    <div className="text-sm text-gray-600 space-y-1">
                       <p><strong>Contact:</strong> {selectedSubmission.contactPersonName}</p>
                       <p><strong>Email:</strong> {selectedSubmission.contactEmail}</p>
                       <p><strong>Phone:</strong> {selectedSubmission.contactPhone || 'N/A'}</p>
@@ -970,11 +965,11 @@ export default function Admin() {
                       {selectedSubmission.employees && selectedSubmission.employees.length > 0 && (
                         <div className="mt-4">
                           <p><strong>Cake Preferences & Costs:</strong></p>
-                          <div className="mt-3 space-y-3">
+                          <div className="mt-2 space-y-2">
                             {selectedSubmission.employees.map((emp, idx) => {
                               const cakeType = CAKE_TYPES.find(cake => cake.id === emp.cakeType);
                               return (
-                                <div key={idx} className="bg-white bg-opacity-80 p-4 rounded-xl border border-slate-200 shadow-sm">
+                                <div key={idx} className="bg-gray-50 p-3 rounded-lg">
                                   <div className="font-medium">{emp.name}</div>
                                   <div className="text-sm text-gray-600">
                                     Cake: {language === 'is' ? cakeType?.nameIcelandic : cakeType?.nameEnglish}
@@ -1295,7 +1290,7 @@ export default function Admin() {
             </div>
           </div>
         )}
-      </div>
+        </div>
     </div>
   );
 }
