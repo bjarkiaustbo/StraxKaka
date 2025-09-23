@@ -36,6 +36,8 @@ interface Submission {
   nextPaymentDate?: string;
   paymentReminderSent?: boolean;
   notes?: string;
+  lastContactDate?: string;
+  lastContactNotes?: string;
 }
 
 export default function Admin() {
@@ -55,6 +57,9 @@ export default function Admin() {
   const [newEmployee, setNewEmployee] = useState<Partial<Employee>>({});
   const [editingNotes, setEditingNotes] = useState<{submissionId: string} | null>(null);
   const [notesText, setNotesText] = useState('');
+  const [editingLastContact, setEditingLastContact] = useState<{submissionId: string} | null>(null);
+  const [lastContactDate, setLastContactDate] = useState('');
+  const [lastContactNotes, setLastContactNotes] = useState('');
 
   // Check if already authenticated
   useEffect(() => {
@@ -324,6 +329,27 @@ export default function Admin() {
     setNotesText('');
   };
 
+  // Last Contact Management
+  const updateLastContact = (submissionId: string) => {
+    const updatedSubmissions = submissions.map(sub => {
+      if (sub.id === submissionId) {
+        return { 
+          ...sub, 
+          lastContactDate: lastContactDate,
+          lastContactNotes: lastContactNotes
+        };
+      }
+      return sub;
+    });
+    setSubmissions(updatedSubmissions);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('straxkaka_subscriptions', JSON.stringify(updatedSubmissions));
+    }
+    setEditingLastContact(null);
+    setLastContactDate('');
+    setLastContactNotes('');
+  };
+
   // Make Integration Functions
   const triggerMakeWebhook = async (eventType: string, data: Record<string, unknown>) => {
     try {
@@ -501,21 +527,21 @@ export default function Admin() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
-      {/* Simple Navigation */}
-      <nav className="bg-black shadow-lg">
+    <div className="min-h-screen bg-black">
+      {/* Enhanced Navigation */}
+      <nav className="bg-black shadow-2xl border-b border-yellow-500/20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-6">
             <div className="flex items-center">
               <img 
                 src="/logo.svg" 
                 alt="Strax Logo" 
-                className="h-8 w-auto mr-2"
+                className="h-10 w-auto mr-3"
               />
-              <span className="text-2xl font-bold text-yellow-500">Strax Admin</span>
+              <span className="text-3xl font-bold text-yellow-500">Strax Admin</span>
             </div>
-            <div className="flex items-center space-x-4">
-              <Link href="/" className="text-gray-300 hover:text-yellow-400 transition-colors text-sm">
+            <div className="flex items-center space-x-6">
+              <Link href="/" className="text-gray-300 hover:text-yellow-400 transition-colors text-sm font-medium px-3 py-2 rounded-lg hover:bg-yellow-500/10">
                 Back to Homepage
               </Link>
             </div>
@@ -526,124 +552,124 @@ export default function Admin() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-4">Admin Dashboard</h1>
-          <p className="text-gray-600">Manage company subscriptions and employees</p>
+          <h1 className="text-4xl font-bold text-yellow-500 mb-4">Admin Dashboard</h1>
+          <p className="text-gray-300 text-lg">Manage company subscriptions and employees</p>
         </div>
 
         {/* Stats */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6 mb-8">
-          <div className="bg-white rounded-lg shadow p-6">
+          <div className="bg-gray-900 rounded-xl shadow-2xl p-6 border border-yellow-500/20">
             <div className="flex items-center">
-              <div className="p-2 bg-yellow-100 rounded-lg">
-                <svg className="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="p-3 bg-yellow-500/20 rounded-xl">
+                <svg className="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                 </svg>
               </div>
               <div className="ml-4">
-                <p className="text-2xl font-bold text-gray-900">{totalCompanies}</p>
-                <p className="text-sm font-medium text-gray-600">Total Companies</p>
+                <p className="text-2xl font-bold text-yellow-500">{totalCompanies}</p>
+                <p className="text-sm font-medium text-gray-300">Total Companies</p>
               </div>
             </div>
           </div>
 
-          <div className="bg-white rounded-lg shadow p-6">
+          <div className="bg-gray-900 rounded-xl shadow-2xl p-6 border border-yellow-500/20">
             <div className="flex items-center">
-              <div className="p-2 bg-green-100 rounded-lg">
-                <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="p-3 bg-green-500/20 rounded-xl">
+                <svg className="w-6 h-6 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               </div>
               <div className="ml-4">
-                <p className="text-2xl font-bold text-gray-900">{activeCompanies}</p>
-                <p className="text-sm font-medium text-gray-600">Active Companies</p>
+                <p className="text-2xl font-bold text-green-500">{activeCompanies}</p>
+                <p className="text-sm font-medium text-gray-300">Active Companies</p>
               </div>
             </div>
           </div>
 
-          <div className="bg-white rounded-lg shadow p-6">
+          <div className="bg-gray-900 rounded-xl shadow-2xl p-6 border border-yellow-500/20">
             <div className="flex items-center">
-              <div className="p-2 bg-blue-100 rounded-lg">
-                <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="p-3 bg-blue-500/20 rounded-xl">
+                <svg className="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" />
                 </svg>
               </div>
               <div className="ml-4">
-                <p className="text-2xl font-bold text-gray-900">{activeEmployees}</p>
-                <p className="text-sm font-medium text-gray-600">Active Employees</p>
+                <p className="text-2xl font-bold text-blue-500">{activeEmployees}</p>
+                <p className="text-sm font-medium text-gray-300">Active Employees</p>
               </div>
             </div>
           </div>
 
-          <div className="bg-white rounded-lg shadow p-6">
+          <div className="bg-gray-900 rounded-xl shadow-2xl p-6 border border-yellow-500/20">
             <div className="flex items-center">
-              <div className="p-2 bg-purple-100 rounded-lg">
-                <svg className="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="p-3 bg-purple-500/20 rounded-xl">
+                <svg className="w-6 h-6 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>
               </div>
               <div className="ml-4">
-                <p className="text-2xl font-bold text-gray-900">{todaysDeliveries}</p>
-                <p className="text-sm font-medium text-gray-600">Today&apos;s Deliveries</p>
+                <p className="text-2xl font-bold text-purple-500">{todaysDeliveries}</p>
+                <p className="text-sm font-medium text-gray-300">Today&apos;s Deliveries</p>
               </div>
             </div>
           </div>
 
-          <div className="bg-white rounded-lg shadow p-6">
+          <div className="bg-gray-900 rounded-xl shadow-2xl p-6 border border-yellow-500/20">
             <div className="flex items-center">
-              <div className="p-2 bg-orange-100 rounded-lg">
-                <svg className="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="p-3 bg-orange-500/20 rounded-xl">
+                <svg className="w-6 h-6 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
                 </svg>
               </div>
               <div className="ml-4">
-                <p className="text-2xl font-bold text-gray-900">{pendingDeliveries}</p>
-                <p className="text-sm font-medium text-gray-600">Pending Deliveries</p>
+                <p className="text-2xl font-bold text-orange-500">{pendingDeliveries}</p>
+                <p className="text-sm font-medium text-gray-300">Pending Deliveries</p>
+              </div>
             </div>
           </div>
-        </div>
 
-          <div className="bg-white rounded-lg shadow p-6">
+          <div className="bg-gray-900 rounded-xl shadow-2xl p-6 border border-yellow-500/20">
             <div className="flex items-center">
-              <div className="p-2 bg-red-100 rounded-lg">
-                <svg className="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="p-3 bg-red-500/20 rounded-xl">
+                <svg className="w-6 h-6 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
                 </svg>
-                    </div>
+              </div>
               <div className="ml-4">
-                <p className="text-2xl font-bold text-gray-900">{overduePayments}</p>
-                <p className="text-sm font-medium text-gray-600">Overdue Payments</p>
-                    </div>
+                <p className="text-2xl font-bold text-red-500">{overduePayments}</p>
+                <p className="text-sm font-medium text-gray-300">Overdue Payments</p>
+              </div>
             </div>
           </div>
         </div>
 
         {/* Phase 1: Quick Actions Bar */}
-        <div className="bg-white rounded-lg shadow p-6 mb-8">
+        <div className="bg-gray-900 rounded-xl shadow-2xl p-6 mb-8 border border-yellow-500/20">
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div className="flex items-center space-x-4">
-              <h3 className="text-lg font-semibold text-gray-900">Quick Actions</h3>
+              <h3 className="text-lg font-semibold text-yellow-500">Quick Actions</h3>
               <button
                 onClick={() => setShowCalendar(!showCalendar)}
-                className="px-4 py-2 bg-purple-100 text-purple-800 rounded-lg text-sm font-medium hover:bg-purple-200 transition-colors"
+                className="px-4 py-2 bg-yellow-500/20 text-yellow-500 rounded-lg text-sm font-medium hover:bg-yellow-500/30 transition-colors border border-yellow-500/30"
               >
                 {showCalendar ? 'Hide Calendar' : 'Show Calendar'}
               </button>
-                    </div>
-            <div className="flex items-center space-x-2">
-              <span className="text-sm text-gray-500">Upcoming Birthdays: {upcomingBirthdays}</span>
-              <span className="text-gray-300">|</span>
-              <span className="text-sm text-gray-500">Monthly Revenue: {totalRevenue.toLocaleString()} ISK</span>
+            </div>
+            <div className="flex items-center space-x-4">
+              <span className="text-sm text-gray-300">Upcoming Birthdays: <span className="text-yellow-500 font-semibold">{upcomingBirthdays}</span></span>
+              <span className="text-gray-500">|</span>
+              <span className="text-sm text-gray-300">Monthly Revenue: <span className="text-yellow-500 font-semibold">{totalRevenue.toLocaleString()} ISK</span></span>
             </div>
           </div>
         </div>
 
         {/* Phase 1: Calendar View */}
         {showCalendar && (
-          <div className="bg-white rounded-lg shadow p-6 mb-8">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">Upcoming Birthdays Calendar</h3>
+          <div className="bg-gray-900 rounded-xl shadow-2xl p-6 mb-8 border border-yellow-500/20">
+            <h3 className="text-lg font-semibold text-yellow-500 mb-4">Upcoming Birthdays Calendar</h3>
             <div className="grid grid-cols-7 gap-2">
               {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
-                <div key={day} className="text-center text-sm font-medium text-gray-500 py-2">
+                <div key={day} className="text-center text-sm font-medium text-gray-300 py-2">
                   {day}
                   </div>
                 ))}
@@ -664,9 +690,9 @@ export default function Admin() {
                   <div
                     key={i}
                     className={`p-2 text-center text-sm rounded-lg ${
-                      i === 0 ? 'bg-yellow-100 text-yellow-800 font-semibold' :
-                      dayBirthdays > 0 ? 'bg-purple-100 text-purple-800' :
-                      'text-gray-600 hover:bg-gray-50'
+                      i === 0 ? 'bg-yellow-500/20 text-yellow-500 font-semibold border border-yellow-500/30' :
+                      dayBirthdays > 0 ? 'bg-purple-500/20 text-purple-400 border border-purple-500/30' :
+                      'text-gray-400 hover:bg-gray-800 hover:text-gray-200'
                     }`}
                   >
                     <div>{date.getDate()}</div>
@@ -681,24 +707,24 @@ export default function Admin() {
         )}
 
         {/* Search and Filters */}
-        <div className="bg-white rounded-lg shadow p-6 mb-8">
+        <div className="bg-gray-900 rounded-xl shadow-2xl p-6 mb-8 border border-yellow-500/20">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div className="lg:col-span-2">
-              <label className="block text-sm font-medium text-gray-700 mb-2">Search Companies</label>
+              <label className="block text-sm font-medium text-gray-300 mb-2">Search Companies</label>
               <input
                 type="text"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                className="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 text-gray-200 placeholder-gray-400"
                 placeholder="Search by company name, contact, email, or subscription tier..."
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Filter by Status</label>
+              <label className="block text-sm font-medium text-gray-300 mb-2">Filter by Status</label>
               <select
                 value={filterStatus}
                 onChange={(e) => setFilterStatus(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                className="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 text-gray-200"
               >
                 <option value="all">All Statuses</option>
                 <option value="paid">Paid</option>
@@ -708,9 +734,9 @@ export default function Admin() {
             </div>
           </div>
           
-          <div className="flex items-center justify-between mt-4 pt-4 border-t border-gray-200">
-            <div className="text-sm text-gray-500">
-              Showing {filteredSubmissions.length} of {totalCompanies} companies
+          <div className="flex items-center justify-between mt-4 pt-4 border-t border-gray-600">
+            <div className="text-sm text-gray-300">
+              Showing <span className="text-yellow-500 font-semibold">{filteredSubmissions.length}</span> of <span className="text-yellow-500 font-semibold">{totalCompanies}</span> companies
               {selectedCompanies.length > 0 && ` • ${selectedCompanies.length} selected`}
             </div>
             <div className="flex items-center space-x-3">
@@ -718,19 +744,19 @@ export default function Admin() {
                 <div className="flex items-center space-x-2">
                   <button
                     onClick={clearSelection}
-                    className="text-sm text-gray-500 hover:text-gray-700"
+                    className="text-sm text-gray-400 hover:text-gray-200 transition-colors"
                   >
                     Clear Selection
                   </button>
                   <button
                     onClick={bulkMarkAsPaid}
-                    className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium hover:bg-green-200 transition-colors"
+                    className="px-3 py-1 bg-green-500/20 text-green-400 rounded-full text-sm font-medium hover:bg-green-500/30 transition-colors border border-green-500/30"
                   >
                     Mark Selected as Paid
                   </button>
                   <button
                     onClick={bulkRemove}
-                    className="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm font-medium hover:bg-red-200 transition-colors"
+                    className="px-3 py-1 bg-red-500/20 text-red-400 rounded-full text-sm font-medium hover:bg-red-500/30 transition-colors border border-red-500/30"
                   >
                     Remove Selected
                   </button>
@@ -738,7 +764,7 @@ export default function Admin() {
               )}
               <button
                 onClick={exportToCSV}
-                className="px-4 py-2 bg-blue-100 text-blue-800 rounded-lg text-sm font-medium hover:bg-blue-200 transition-colors"
+                className="px-4 py-2 bg-yellow-500/20 text-yellow-500 rounded-lg text-sm font-medium hover:bg-yellow-500/30 transition-colors border border-yellow-500/30"
               >
                 Export CSV
               </button>
@@ -747,20 +773,20 @@ export default function Admin() {
         </div>
 
         {/* Submissions Table */}
-        <div className="bg-white rounded-lg shadow overflow-hidden">
-          <div className="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
-            <h2 className="text-lg font-semibold text-gray-900">Company Submissions</h2>
+        <div className="bg-gray-900 rounded-xl shadow-2xl overflow-hidden border border-yellow-500/20">
+          <div className="px-6 py-4 border-b border-gray-600 flex justify-between items-center">
+            <h2 className="text-lg font-semibold text-yellow-500">Company Submissions</h2>
             <div className="flex items-center space-x-2">
               <button
                 onClick={selectAllCompanies}
-                className="text-sm text-gray-500 hover:text-gray-700"
+                className="text-sm text-gray-400 hover:text-gray-200 transition-colors"
               >
                 Select All
               </button>
-              <span className="text-gray-300">|</span>
+              <span className="text-gray-500">|</span>
               <button
                 onClick={clearSelection}
-                className="text-sm text-gray-500 hover:text-gray-700"
+                className="text-sm text-gray-400 hover:text-gray-200 transition-colors"
               >
                 Clear All
               </button>
@@ -776,32 +802,33 @@ export default function Admin() {
           ) : (
             <div className="overflow-x-auto">
               <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-50">
+                <thead className="bg-gray-800">
                   <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
                       <input
                         type="checkbox"
                         checked={selectedCompanies.length === filteredSubmissions.length && filteredSubmissions.length > 0}
                         onChange={selectedCompanies.length === filteredSubmissions.length ? clearSelection : selectAllCompanies}
-                        className="rounded border-gray-300 text-yellow-600 focus:ring-yellow-500"
+                        className="rounded border-gray-600 bg-gray-700 text-yellow-500 focus:ring-yellow-500"
                       />
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Company</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Contact</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Employees</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Delivery Status</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Subscription</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Payment</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Revenue</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Notes</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Quick Actions</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Company</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Contact</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Employees</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Delivery Status</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Subscription</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Payment</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Revenue</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Notes</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Last Contact</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Quick Actions</th>
                   </tr>
                 </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
+                <tbody className="bg-gray-900 divide-y divide-gray-700">
                   {filteredSubmissions.map((submission) => (
                     <tr 
                       key={submission.id} 
-                      className={`hover:bg-gray-50 cursor-pointer transition-colors ${selectedCompanies.includes(submission.id) ? 'bg-yellow-50' : ''}`}
+                      className={`hover:bg-gray-800 cursor-pointer transition-colors ${selectedCompanies.includes(submission.id) ? 'bg-yellow-500/10' : ''}`}
                       onClick={() => setSelectedSubmission(submission)}
                     >
                       <td className="px-6 py-4 whitespace-nowrap" onClick={(e) => e.stopPropagation()}>
@@ -919,6 +946,35 @@ export default function Admin() {
                           className="text-xs text-blue-600 hover:text-blue-800 mt-1"
                         >
                           {submission.notes ? 'Edit Notes' : 'Add Notes'}
+                        </button>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="text-sm text-gray-300 max-w-xs">
+                          {submission.lastContactDate ? (
+                            <div>
+                              <div className="text-yellow-500 font-medium">
+                                {new Date(submission.lastContactDate).toLocaleDateString()}
+                              </div>
+                              {submission.lastContactNotes && (
+                                <div className="text-xs text-gray-400 truncate" title={submission.lastContactNotes}>
+                                  {submission.lastContactNotes}
+                                </div>
+                              )}
+                            </div>
+                          ) : (
+                            <span className="text-gray-500 italic">No contact</span>
+                          )}
+                        </div>
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setEditingLastContact({submissionId: submission.id});
+                            setLastContactDate(submission.lastContactDate || '');
+                            setLastContactNotes(submission.lastContactNotes || '');
+                          }}
+                          className="text-xs text-blue-400 hover:text-blue-300 mt-1"
+                        >
+                          {submission.lastContactDate ? 'Edit Contact' : 'Add Contact'}
                         </button>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium" onClick={(e) => e.stopPropagation()}>
@@ -1331,6 +1387,71 @@ export default function Admin() {
                     </div>
                   );
                 })()}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Edit Last Contact Modal */}
+        {editingLastContact && (
+          <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+            <div className="relative top-20 mx-auto p-5 border w-11/12 md:w-1/2 shadow-lg rounded-md bg-white">
+              <div className="mt-3">
+                <div className="flex justify-between items-center mb-4">
+                  <h3 className="text-lg font-medium text-gray-900">Edit Last Contact</h3>
+                  <button
+                    onClick={() => {
+                      setEditingLastContact(null);
+                      setLastContactDate('');
+                      setLastContactNotes('');
+                    }}
+                    className="text-gray-400 hover:text-gray-600"
+                  >
+                    <span className="text-2xl">&times;</span>
+                  </button>
+                </div>
+                
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Contact Date</label>
+                    <input
+                      type="date"
+                      value={lastContactDate}
+                      onChange={(e) => setLastContactDate(e.target.value)}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                    />
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Contact Notes</label>
+                    <textarea
+                      value={lastContactNotes}
+                      onChange={(e) => setLastContactNotes(e.target.value)}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                      rows={4}
+                      placeholder="Add notes about the contact (e.g., phone call, email, meeting, etc.)"
+                    />
+                  </div>
+                  
+                  <div className="flex justify-end space-x-3">
+                    <button
+                      onClick={() => {
+                        setEditingLastContact(null);
+                        setLastContactDate('');
+                        setLastContactNotes('');
+                      }}
+                      className="px-4 py-2 text-gray-600 hover:text-gray-800"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      onClick={() => updateLastContact(editingLastContact.submissionId)}
+                      className="px-4 py-2 bg-yellow-500 text-black rounded-md hover:bg-yellow-400 transition-colors font-semibold"
+                    >
+                      Save Contact
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

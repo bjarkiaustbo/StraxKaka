@@ -48,6 +48,108 @@ export default function Services() {
         </div>
       </section>
 
+      {/* 3-Step Process */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <LanguageContent fallback={
+              <>
+                <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                  Hvernig virkar það?
+                </h2>
+                <p className="text-xl text-gray-600">
+                  Einfalt ferli í 3 skrefum
+                </p>
+              </>
+            }>
+              {(t) => (
+                <>
+                  <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                    {t('services.process.title')}
+                  </h2>
+                  <p className="text-xl text-gray-600">
+                    {t('services.process.subtitle')}
+                  </p>
+                </>
+              )}
+            </LanguageContent>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {/* Step 1 */}
+            <div className="text-center">
+              <div className="w-20 h-20 bg-yellow-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                <span className="text-2xl font-bold text-black">1</span>
+              </div>
+              <LanguageContent fallback={
+                <>
+                  <h3 className="text-xl font-bold text-gray-900 mb-4">Skráning fer í gegnum öruggt kerfi</h3>
+                  <p className="text-gray-600">
+                    Hlaða inn Excel skrá eða tengja við HR kerfið. Engin flókin uppsetning, bara skrá og gleyma.
+                  </p>
+                </>
+              }>
+                {(t) => (
+                  <>
+                    <h3 className="text-xl font-bold text-gray-900 mb-4">{t('features.registration.title')}</h3>
+                    <p className="text-gray-600">
+                      {t('features.registration.desc')}
+                    </p>
+                  </>
+                )}
+              </LanguageContent>
+            </div>
+
+            {/* Step 2 */}
+            <div className="text-center">
+              <div className="w-20 h-20 bg-yellow-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                <span className="text-2xl font-bold text-black">2</span>
+              </div>
+              <LanguageContent fallback={
+                <>
+                  <h3 className="text-xl font-bold text-gray-900 mb-4">Við pöntum kökur fyrir þig</h3>
+                  <p className="text-gray-600">
+                    Við vinnum í samstarfi við frábær bakarí, og bjóðum upp á gómsætar og fjölbreyttar kökur.
+                  </p>
+                </>
+              }>
+                {(t) => (
+                  <>
+                    <h3 className="text-xl font-bold text-gray-900 mb-4">{t('features.ai.title')}</h3>
+                    <p className="text-gray-600">
+                      {t('features.ai.desc')}
+                    </p>
+                  </>
+                )}
+              </LanguageContent>
+            </div>
+
+            {/* Step 3 */}
+            <div className="text-center">
+              <div className="w-20 h-20 bg-yellow-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                <span className="text-2xl font-bold text-black">3</span>
+              </div>
+              <LanguageContent fallback={
+                <>
+                  <h3 className="text-xl font-bold text-gray-900 mb-4">Kökur koma á réttum degi</h3>
+                  <p className="text-gray-600">
+                    Afhending á sér stað á réttum tíma og degi, til þess að tryggja að kakan sé kominn í hadeginu.
+                  </p>
+                </>
+              }>
+                {(t) => (
+                  <>
+                    <h3 className="text-xl font-bold text-gray-900 mb-4">{t('features.delivery.title')}</h3>
+                    <p className="text-gray-600">
+                      {t('features.delivery.desc')}
+                    </p>
+                  </>
+                )}
+              </LanguageContent>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* Main Services */}
       <section className="py-20 bg-gray-50">
