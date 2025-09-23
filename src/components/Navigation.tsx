@@ -144,29 +144,3 @@ export default function Navigation({
     </nav>
   );
 }
-
-
-                  >
-                    {item.label}
-                  </Link>
-                }>
-                  {(t) => (
-                    <Link
-                      href={item.href}
-                      className={`block px-3 py-2 text-gray-300 hover:text-yellow-400 transition-colors ${
-                        currentPage === item.key ? 'text-yellow-500 font-semibold' : ''
-                      }`}
-                      onClick={() => setIsMobileMenuOpen(false)}
-                    >
-                      {t(item.label)}
-                    </Link>
-                  )}
-                </LanguageContent>
-              ))}
-            </div>
-          </div>
-        )}
-      </div>
-    </nav>
-  );
-}

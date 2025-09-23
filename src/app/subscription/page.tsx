@@ -1022,37 +1022,3 @@ export default function Subscription() {
     </div>
   );
 }
-
-          </button>
-          
-          {currentStep < 4 ? (
-            <button
-              onClick={handleNext}
-              className="bg-yellow-500 text-black px-6 py-3 rounded-lg hover:bg-yellow-400 transition-colors font-medium"
-            >
-              <LanguageContent fallback="Áfram">
-                {(t) => t('subscription.navigation.next')}
-              </LanguageContent>
-            </button>
-          ) : (
-            <button
-              onClick={handleSubmit}
-              disabled={isSubmitting}
-              className="bg-green-500 text-white px-6 py-3 rounded-lg hover:bg-green-400 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              {isSubmitting ? (
-                <LanguageContent fallback="Greiði...">
-                  {(t) => t('subscription.navigation.processing')}
-                </LanguageContent>
-              ) : (
-                <LanguageContent fallback="Greiða núna">
-                  {(t) => t('subscription.navigation.pay_now')}
-                </LanguageContent>
-              )}
-            </button>
-          )}
-        </div>
-      </div>
-    </div>
-  );
-}

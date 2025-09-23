@@ -268,13 +268,3 @@ export function useSubscription() {
   return context;
 }
 
-
-
-export function useSubscription() {
-  const context = useContext(SubscriptionContext);
-  if (context === undefined) {
-    throw new Error('useSubscription must be used within a SubscriptionProvider');
-  }
-  return context;
-}
-

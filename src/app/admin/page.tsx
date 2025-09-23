@@ -306,7 +306,7 @@ export default function Admin() {
   };
 
   // Make Integration Functions
-  const triggerMakeWebhook = async (eventType: string, data: any) => {
+  const triggerMakeWebhook = async (eventType: string, data: Record<string, unknown>) => {
     try {
       await fetch('/api/make/webhook', {
         method: 'POST',
