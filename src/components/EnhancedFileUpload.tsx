@@ -79,21 +79,17 @@ export default function EnhancedFileUpload({ onEmployeesAdded, onError }: Enhanc
     };
   };
 
-  const parseExcelFile = async (file: File): Promise<FileRow[]> => {
+  const parseCSVFile = async (file: File): Promise<FileRow[]> => {
     try {
-      // Dynamically import XLSX to prevent automatic loading
-      const XLSX = await import('xlsx');
-      
+      // Parse CSV file
       return new Promise((resolve, reject) => {
         const reader = new FileReader();
         
         reader.onload = (e) => {
           try {
-            const data = new Uint8Array(e.target?.result as ArrayBuffer);
-            const workbook = XLSX.read(data, { type: 'array' });
-            const sheetName = workbook.SheetNames[0];
-            const worksheet = workbook.Sheets[sheetName];
-            const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, defval: '' });
+            const text = e.target?.result as string;
+            const lines = text.split('\n').filter(line => line.trim());
+            const jsonData = lines.map(line => line.split(',').map(cell => cell.trim().replace(/^"|"$/g, '')));
             
             const rows: FileRow[] = [];
             
@@ -120,41 +116,6 @@ export default function EnhancedFileUpload({ onEmployeesAdded, onError }: Enhanc
     }
   };
 
-  const parseCSVFile = (file: File): Promise<FileRow[]> => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      
-      reader.onload = (e) => {
-        try {
-          const csvText = e.target?.result as string;
-          const lines = csvText.split('\n').filter(line => line.trim() !== '');
-          const rows: FileRow[] = [];
-
-          lines.forEach((line, index) => {
-            // Skip header row
-            if (index === 0) return;
-
-            // Simple CSV parsing (handles quoted fields)
-            const row = line.split(',').map(field => 
-              field.trim().replace(/^"(.*)"$/, '$1')
-            );
-
-            rows.push(validateRow(row, index + 1));
-          });
-
-          resolve(rows);
-        } catch (error) {
-          reject(new Error(t('file.errors.csv_parse_error')));
-        }
-      };
-      
-      reader.onerror = () => {
-        reject(new Error(t('file.errors.read_error')));
-      };
-      
-      reader.readAsText(file);
-    });
-  };
 
   const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -174,11 +135,7 @@ export default function EnhancedFileUpload({ onEmployeesAdded, onError }: Enhanc
     try {
       let parsedData: FileRow[];
       
-      if (fileExtension === 'csv') {
-        parsedData = await parseCSVFile(file);
-      } else {
-        parsedData = await parseExcelFile(file);
-      }
+      parsedData = await parseCSVFile(file);
       
       setFileData(parsedData);
       setShowPreview(true);
@@ -251,12 +208,15 @@ export default function EnhancedFileUpload({ onEmployeesAdded, onError }: Enhanc
         document.body.removeChild(a);
         window.URL.revokeObjectURL(url);
       } else {
-        // Dynamically import XLSX only when needed
-        const XLSX = await import('xlsx');
-        const worksheet = XLSX.utils.aoa_to_sheet(templateData);
-        const workbook = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(workbook, worksheet, 'Employees');
-        XLSX.writeFile(workbook, 'straxkaka_employee_template.xlsx');
+        // Generate CSV template
+        const csvContent = templateData.map(row => row.join(',')).join('\n');
+        const blob = new Blob([csvContent], { type: 'text/csv' });
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'straxkaka_employee_template.csv';
+        link.click();
+        window.URL.revokeObjectURL(url);
       }
     } catch (error) {
       console.error('Error downloading template:', error);
@@ -290,7 +250,7 @@ export default function EnhancedFileUpload({ onEmployeesAdded, onError }: Enhanc
               </LanguageContent>
             </h3>
             <p className="text-gray-600 mb-4">
-              <LanguageContent fallback="Stuðningur við CSV, Excel (.xlsx) og Google Sheets">
+              <LanguageContent fallback="Stuðningur við CSV og Google Sheets">
                 {(t) => t('file.upload.subtitle')}
               </LanguageContent>
             </p>
@@ -306,10 +266,10 @@ export default function EnhancedFileUpload({ onEmployeesAdded, onError }: Enhanc
                 </LanguageContent>
               </button>
               <button
-                onClick={() => downloadTemplate('xlsx')}
+                onClick={() => downloadTemplate('csv')}
                 className="text-yellow-600 hover:text-yellow-700 font-medium text-sm px-3 py-1 border border-yellow-300 rounded hover:bg-yellow-50"
               >
-                <LanguageContent fallback="Sækja Excel sniðmát">
+                <LanguageContent fallback="Sækja CSV sniðmát">
                   {(t) => t('file.upload.download_excel')}
                 </LanguageContent>
               </button>
@@ -327,7 +287,7 @@ export default function EnhancedFileUpload({ onEmployeesAdded, onError }: Enhanc
             <input
               ref={fileInputRef}
               type="file"
-              accept=".csv,.xlsx,.xls"
+              accept=".csv"
               onChange={handleFileUpload}
               className="hidden"
             />
@@ -347,7 +307,7 @@ export default function EnhancedFileUpload({ onEmployeesAdded, onError }: Enhanc
               )}
             </button>
             <p className="text-xs text-gray-500 mt-2">
-              <LanguageContent fallback="CSV, Excel (.xlsx, .xls)">
+              <LanguageContent fallback="CSV skrár">
                 {(t) => t('file.upload.supported_formats')}
               </LanguageContent>
             </p>
