@@ -63,6 +63,7 @@ export default function Admin() {
   const [showQuickActions, setShowQuickActions] = useState<{submissionId: string} | null>(null);
   const [showAnalytics, setShowAnalytics] = useState(false);
   const [showBulkActions, setShowBulkActions] = useState(false);
+  const [selectedEmployee, setSelectedEmployee] = useState<{employee: any, companyName: string} | null>(null);
 
   // Check if already authenticated
   useEffect(() => {
@@ -182,18 +183,31 @@ export default function Admin() {
 
   const exportToCSV = () => {
     const csvContent = [
-      ['Company Name', 'Contact Person', 'Email', 'Phone', 'Subscription Tier', 'Status', 'Monthly Cost', 'Employees Count', 'Order ID'],
-      ...filteredSubmissions.map(sub => [
-        sub.companyName || '',
-        sub.contactPersonName || '',
-        sub.contactEmail || '',
-        sub.contactPhone || '',
-        sub.subscriptionTier || '',
-        sub.status || '',
-        (sub.monthlyCost || 0).toString(),
-        (sub.employees?.length || 0).toString(),
-        sub.orderId || ''
-      ])
+      ['Company Name', 'Contact Person', 'Email', 'Phone', 'Subscription Tier', 'Status', 'Monthly Cost', 'Employees Count', 'Order ID', 'Employee Birthdays', 'Cake Preferences'],
+      ...filteredSubmissions.map(sub => {
+        const employeeBirthdays = sub.employees?.map(emp => 
+          new Date(emp.birthday).toLocaleDateString('en-CA')
+        ).join('; ') || '';
+        
+        const cakePreferences = sub.employees?.map(emp => {
+          const cakeType = CAKE_TYPES.find(cake => cake.id === emp.cakeType);
+          return `${emp.name}: ${cakeType?.nameEnglish || emp.cakeType || 'Not selected'}`;
+        }).join('; ') || '';
+
+        return [
+          sub.companyName || '',
+          sub.contactPersonName || '',
+          sub.contactEmail || '',
+          sub.contactPhone || '',
+          sub.subscriptionTier || '',
+          sub.status || '',
+          (sub.monthlyCost || 0).toString(),
+          (sub.employees?.length || 0).toString(),
+          sub.orderId || '',
+          employeeBirthdays,
+          cakePreferences
+        ];
+      })
     ].map(row => row.map(field => `"${field}"`).join(',')).join('\n');
 
     const blob = new Blob([csvContent], { type: 'text/csv' });
@@ -925,6 +939,7 @@ export default function Admin() {
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">Revenue</th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">Notes</th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">Last Contact</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">Actions</th>
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
@@ -981,7 +996,15 @@ export default function Admin() {
                               }`}>
                                 {emp.deliveryStatus?.replace('_', ' ') || 'pending'}
                               </span>
-                              <span className="text-xs text-gray-500">{emp.name}</span>
+                              <button
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  setSelectedEmployee({employee: emp, companyName: submission.companyName || 'Unknown'});
+                                }}
+                                className="text-xs text-blue-600 hover:text-blue-800 hover:underline cursor-pointer"
+                              >
+                                {emp.name}
+                              </button>
                             </div>
                           ))}
                           {submission.employees && submission.employees.length > 2 && (
@@ -1079,6 +1102,40 @@ export default function Admin() {
                         >
                           {submission.lastContactDate ? 'Edit Contact' : 'Add Contact'}
                         </button>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium" onClick={(e) => e.stopPropagation()}>
+                        <div className="flex flex-col space-y-1">
+                          {submission.status !== 'paid' ? (
+                            <button
+                              onClick={() => markAsPaidWithWebhook(submission.id)}
+                              className="px-3 py-1 bg-green-500 text-white rounded text-xs font-medium hover:bg-green-600 transition-colors"
+                            >
+                              Mark Paid
+                            </button>
+                          ) : (
+                            <button
+                              onClick={() => markAsPending(submission.id)}
+                              className="px-3 py-1 bg-yellow-500 text-black rounded text-xs font-medium hover:bg-yellow-600 transition-colors"
+                            >
+                              Mark Pending
+                            </button>
+                          )}
+                          <button
+                            onClick={() => setSelectedSubmission(submission)}
+                            className="px-3 py-1 bg-blue-500 text-white rounded text-xs font-medium hover:bg-blue-600 transition-colors"
+                          >
+                            View Details
+                          </button>
+                          <button
+                            onClick={() => {
+                              const newStatus = submission.subscriptionStatus === 'active' ? 'paused' : 'active';
+                              toggleSubscriptionStatus(submission.id);
+                            }}
+                            className="px-3 py-1 bg-purple-500 text-white rounded text-xs font-medium hover:bg-purple-600 transition-colors"
+                          >
+                            {submission.subscriptionStatus === 'active' ? 'Pause' : 'Resume'}
+                          </button>
+                        </div>
                       </td>
                     </tr>
                   ))}
@@ -1571,6 +1628,176 @@ export default function Admin() {
             </div>
           </div>
         )}
+
+        {/* Employee Details Modal */}
+        {selectedEmployee && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 overflow-y-auto h-full w-full z-50">
+            <div className="relative top-10 mx-auto p-0 border-0 w-11/12 md:w-2/3 lg:w-1/2 xl:w-2/5 shadow-2xl rounded-xl bg-white">
+              <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 rounded-t-xl">
+                <div className="flex justify-between items-center">
+                  <div>
+                    <h3 className="text-2xl font-bold text-gray-900">
+                      {selectedEmployee.employee.name}
+                    </h3>
+                    <p className="text-sm text-gray-600 mt-1">
+                      {selectedEmployee.companyName}
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => setSelectedEmployee(null)}
+                    className="text-gray-400 hover:text-gray-600 transition-colors p-2 hover:bg-gray-100 rounded-full"
+                  >
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <div className="p-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {/* Basic Info */}
+                  <div className="space-y-4">
+                    <div>
+                      <h4 className="font-semibold text-gray-900 mb-2">Basic Information</h4>
+                      <div className="space-y-2">
+                        <div className="flex justify-between">
+                          <span className="text-sm text-gray-600">Name:</span>
+                          <span className="text-sm font-medium text-gray-900">{selectedEmployee.employee.name}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-sm text-gray-600">Birthday:</span>
+                          <span className="text-sm font-medium text-gray-900">
+                            {new Date(selectedEmployee.employee.birthday).toLocaleDateString('en-CA')}
+                          </span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-sm text-gray-600">Employment Status:</span>
+                          <span className={`text-sm font-medium px-2 py-1 rounded-full ${
+                            selectedEmployee.employee.employmentStatus === 'active' 
+                              ? 'bg-green-100 text-green-800' 
+                              : 'bg-gray-100 text-gray-800'
+                          }`}>
+                            {selectedEmployee.employee.employmentStatus || 'active'}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Cake Information */}
+                    <div>
+                      <h4 className="font-semibold text-gray-900 mb-2">Cake Information</h4>
+                      <div className="space-y-2">
+                        <div className="flex justify-between">
+                          <span className="text-sm text-gray-600">Cake Type:</span>
+                          <span className="text-sm font-medium text-gray-900">
+                            {selectedEmployee.employee.cakeType || 'Not selected'}
+                          </span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-sm text-gray-600">Cake Cost:</span>
+                          <span className="text-sm font-medium text-gray-900">
+                            {selectedEmployee.employee.cakeType ? 
+                              CAKE_TYPES.find(cake => cake.id === selectedEmployee.employee.cakeType)?.price.toLocaleString() + ' ISK' 
+                              : 'N/A'
+                            }
+                          </span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-sm text-gray-600">Delivery Status:</span>
+                          <span className={`text-sm font-medium px-2 py-1 rounded-full ${
+                            selectedEmployee.employee.deliveryStatus === 'delivered' ? 'bg-green-100 text-green-800' :
+                            selectedEmployee.employee.deliveryStatus === 'out_for_delivery' ? 'bg-blue-100 text-blue-800' :
+                            selectedEmployee.employee.deliveryStatus === 'confirmed' ? 'bg-yellow-100 text-yellow-800' :
+                            selectedEmployee.employee.deliveryStatus === 'failed' ? 'bg-red-100 text-red-800' :
+                            'bg-gray-100 text-gray-800'
+                          }`}>
+                            {selectedEmployee.employee.deliveryStatus?.replace('_', ' ') || 'pending'}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Dietary Restrictions & Notes */}
+                  <div className="space-y-4">
+                    <div>
+                      <h4 className="font-semibold text-gray-900 mb-2">Dietary Restrictions</h4>
+                      <div className="bg-gray-50 rounded-lg p-3">
+                        <p className="text-sm text-gray-600">
+                          {selectedEmployee.employee.dietaryRestrictions || 'No dietary restrictions noted'}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div>
+                      <h4 className="font-semibold text-gray-900 mb-2">Special Notes</h4>
+                      <div className="bg-gray-50 rounded-lg p-3">
+                        <p className="text-sm text-gray-600">
+                          {selectedEmployee.employee.notes || 'No special notes'}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div>
+                      <h4 className="font-semibold text-gray-900 mb-2">Delivery Information</h4>
+                      <div className="space-y-2">
+                        <div className="flex justify-between">
+                          <span className="text-sm text-gray-600">Delivery Date:</span>
+                          <span className="text-sm font-medium text-gray-900">
+                            {selectedEmployee.employee.deliveryDate ? 
+                              new Date(selectedEmployee.employee.deliveryDate).toLocaleDateString() 
+                              : 'Not scheduled'
+                            }
+                          </span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-sm text-gray-600">Last Updated:</span>
+                          <span className="text-sm font-medium text-gray-900">
+                            {selectedEmployee.employee.updatedAt ? 
+                              new Date(selectedEmployee.employee.updatedAt).toLocaleDateString() 
+                              : 'Unknown'
+                            }
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Action Buttons */}
+                <div className="mt-6 pt-6 border-t border-gray-200">
+                  <div className="flex space-x-3">
+                    <button
+                      onClick={() => {
+                        // Update delivery status
+                        const newStatus = selectedEmployee.employee.deliveryStatus === 'delivered' ? 'pending' : 'delivered';
+                        // Find the submission and employee index
+                        const submission = submissions.find(sub => 
+                          sub.employees?.some(emp => emp.name === selectedEmployee.employee.name)
+                        );
+                        if (submission) {
+                          const employeeIndex = submission.employees?.findIndex(emp => emp.name === selectedEmployee.employee.name) || 0;
+                          updateDeliveryStatus(submission.id, employeeIndex, newStatus as Employee['deliveryStatus']);
+                        }
+                        setSelectedEmployee(null);
+                      }}
+                      className="px-4 py-2 bg-green-500 text-white rounded-lg text-sm font-medium hover:bg-green-600 transition-colors"
+                    >
+                      {selectedEmployee.employee.deliveryStatus === 'delivered' ? 'Mark as Pending' : 'Mark as Delivered'}
+                    </button>
+                    <button
+                      onClick={() => setSelectedEmployee(null)}
+                      className="px-4 py-2 bg-gray-500 text-white rounded-lg text-sm font-medium hover:bg-gray-600 transition-colors"
+                    >
+                      Close
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
         </div>
     </div>
   );
