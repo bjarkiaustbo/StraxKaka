@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
 
 interface AdminNavigationProps {
@@ -20,11 +21,12 @@ export default function AdminNavigation({ currentPage }: AdminNavigationProps) {
         <div className="flex justify-between items-center py-6">
           <div className="flex items-center">
             <Link href="/" className="flex items-center space-x-2">
-              <img 
-                src="/logo.svg" 
-                alt="Strax Logo" 
-                className="h-8 w-auto"
-              />
+        <Image 
+          src="/logo.svg" 
+          alt="Strax Logo" 
+          width={32}
+          height={32}
+        />
               <span className="text-2xl font-bold text-yellow-500">Strax</span>
             </Link>
           </div>
@@ -87,6 +89,7 @@ export default function AdminNavigation({ currentPage }: AdminNavigationProps) {
     </nav>
   );
 }
+
 
 
 

@@ -225,3 +225,4 @@ For Aur merchant support:
 - **Email**: merchant@aurapp.is
 - **Phone**: +354 800 1234
 
+

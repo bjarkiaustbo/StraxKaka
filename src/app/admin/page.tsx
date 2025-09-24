@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { CAKE_TYPES } from '@/contexts/SubscriptionContext';
 
@@ -60,10 +61,8 @@ export default function Admin() {
   const [editingLastContact, setEditingLastContact] = useState<{submissionId: string} | null>(null);
   const [lastContactDate, setLastContactDate] = useState('');
   const [lastContactNotes, setLastContactNotes] = useState('');
-  const [showQuickActions, setShowQuickActions] = useState<{submissionId: string} | null>(null);
   const [showAnalytics, setShowAnalytics] = useState(false);
-  const [showBulkActions, setShowBulkActions] = useState(false);
-  const [selectedEmployee, setSelectedEmployee] = useState<{employee: any, companyName: string} | null>(null);
+  const [selectedEmployee, setSelectedEmployee] = useState<{employee: Employee, companyName: string} | null>(null);
 
   // Check if already authenticated
   useEffect(() => {
@@ -111,15 +110,6 @@ export default function Admin() {
     }
   };
 
-  const removeCompany = (companyId: string) => {
-    if (confirm('Are you sure you want to remove this company?')) {
-      const updatedSubmissions = submissions.filter((sub: Submission) => sub.id !== companyId);
-      setSubmissions(updatedSubmissions);
-      if (typeof window !== 'undefined') {
-        localStorage.setItem('straxkaka_subscriptions', JSON.stringify(updatedSubmissions));
-      }
-    }
-  };
 
   const markAsPaid = (companyId: string) => {
     const updatedSubmissions = submissions.map((sub: Submission) => 
@@ -303,17 +293,6 @@ export default function Admin() {
     }
   };
 
-  // Phase 1: Payment Reminders
-  const sendPaymentReminder = (submissionId: string) => {
-    const updatedSubmissions = submissions.map(sub => 
-      sub.id === submissionId ? { ...sub, paymentReminderSent: true } : sub
-    );
-    setSubmissions(updatedSubmissions);
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('straxkaka_subscriptions', JSON.stringify(updatedSubmissions));
-    }
-    alert('Payment reminder sent! (This would normally send an email)');
-  };
 
   // Phase 1: Pause/Resume Subscription
   const toggleSubscriptionStatus = (submissionId: string) => {
@@ -492,10 +471,12 @@ export default function Admin() {
       <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center">
         <div className="bg-white rounded-lg shadow-lg p-8 w-full max-w-md">
           <div className="text-center mb-8">
-            <img 
+            <Image 
               src="/logo.svg" 
               alt="Strax Logo" 
-              className="h-12 w-auto mx-auto mb-4"
+              width={48}
+              height={48}
+              className="mx-auto mb-4"
             />
             <h1 className="text-2xl font-bold text-gray-900">Admin Login</h1>
             <p className="text-gray-600">Enter password to access admin panel</p>
@@ -550,10 +531,12 @@ export default function Admin() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-6">
             <div className="flex items-center">
-              <img 
+              <Image 
                 src="/logo.svg" 
                 alt="Strax Logo" 
-                className="h-10 w-auto mr-3"
+                width={40}
+                height={40}
+                className="mr-3"
               />
               <span className="text-3xl font-bold text-black">Strax Admin</span>
             </div>
@@ -766,7 +749,7 @@ export default function Admin() {
                   .filter(sub => sub.subscriptionStatus === 'active')
                   .sort((a, b) => (b.employees?.length || 0) - (a.employees?.length || 0))
                   .slice(0, 5)
-                  .map((sub, index) => (
+                  .map((sub) => (
                     <div key={sub.id} className="flex justify-between items-center py-2 px-3 bg-gray-50 rounded-lg">
                       <span className="text-sm font-medium text-black">{sub.companyName}</span>
                       <span className="text-sm text-gray-600">{sub.employees?.length || 0} employees</span>
@@ -1127,10 +1110,9 @@ export default function Admin() {
                             View Details
                           </button>
                           <button
-                            onClick={() => {
-                              const newStatus = submission.subscriptionStatus === 'active' ? 'paused' : 'active';
-                              toggleSubscriptionStatus(submission.id);
-                            }}
+                          onClick={() => {
+                            toggleSubscriptionStatus(submission.id);
+                          }}
                             className="px-3 py-1 bg-purple-500 text-white rounded text-xs font-medium hover:bg-purple-600 transition-colors"
                           >
                             {submission.subscriptionStatus === 'active' ? 'Pause' : 'Resume'}
@@ -1733,7 +1715,7 @@ export default function Admin() {
                       <h4 className="font-semibold text-gray-900 mb-2">Special Notes</h4>
                       <div className="bg-gray-50 rounded-lg p-3">
                         <p className="text-sm text-gray-600">
-                          {selectedEmployee.employee.notes || 'No special notes'}
+                          {selectedEmployee.employee.specialNotes || 'No special notes'}
                         </p>
                       </div>
                     </div>
@@ -1753,10 +1735,7 @@ export default function Admin() {
                         <div className="flex justify-between">
                           <span className="text-sm text-gray-600">Last Updated:</span>
                           <span className="text-sm font-medium text-gray-900">
-                            {selectedEmployee.employee.updatedAt ? 
-                              new Date(selectedEmployee.employee.updatedAt).toLocaleDateString() 
-                              : 'Unknown'
-                            }
+                            Unknown
                           </span>
                         </div>
                       </div>

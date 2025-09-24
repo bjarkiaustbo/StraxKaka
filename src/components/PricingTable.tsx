@@ -52,7 +52,6 @@ export default function PricingTable({
         {SUBSCRIPTION_PRICING.map((pricing) => {
           const isSelected = selectedTier === pricing.tier;
           const isRecommended = pricing.tier === 'small';
-          const isEnterprise = pricing.tier === 'enterprise';
           const isApplicable = employeeCount >= pricing.minEmployees && employeeCount <= pricing.maxEmployees;
 
           return (

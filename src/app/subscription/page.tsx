@@ -30,8 +30,6 @@ interface CompanyData {
 export default function Subscription() {
   const { t, language } = useLanguage();
   const { 
-    addCompany, 
-    addEmployees, 
     calculateSubscriptionCost, 
     isHydrated 
   } = useSubscription();
@@ -476,7 +474,7 @@ export default function Subscription() {
               { step: 2, icon: '👥', label: 'Starfsmenn' },
               { step: 3, icon: '📋', label: 'Áskrift' },
               { step: 4, icon: '💳', label: 'Greiðsla' }
-            ].map(({ step, icon, label }) => (
+            ].map(({ step, icon }) => (
               <div key={step} className="flex items-center">
                 <div className={`w-12 h-12 rounded-full flex items-center justify-center text-lg font-medium transition-all duration-300 ${
                   currentStep >= step 

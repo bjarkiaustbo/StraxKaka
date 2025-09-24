@@ -100,7 +100,7 @@ export default function EnhancedFileUpload({ onEmployeesAdded, onError }: Enhanc
             });
             
             resolve(rows);
-          } catch (error) {
+          } catch {
             reject(new Error(t('file.errors.excel_parse_error')));
           }
         };
@@ -111,7 +111,7 @@ export default function EnhancedFileUpload({ onEmployeesAdded, onError }: Enhanc
         
         reader.readAsArrayBuffer(file);
       });
-    } catch (error) {
+    } catch {
       throw new Error(t('file.errors.excel_import_error'));
     }
   };

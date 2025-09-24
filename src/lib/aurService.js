@@ -242,4 +242,5 @@ class AurService {
 }
 
 // Export singleton instance
-export default new AurService();
+const aurService = new AurService();
+export default aurService;

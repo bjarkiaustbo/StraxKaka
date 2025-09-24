@@ -108,7 +108,7 @@ export default function CSVUpload({ onEmployeesAdded, onError }: CSVUploadProps)
         const parsedData = parseCSV(csvText);
         setCsvData(parsedData);
         setShowPreview(true);
-      } catch (error) {
+      } catch {
         onError(t('csv.errors.parse_error'));
       } finally {
         setIsProcessing(false);
