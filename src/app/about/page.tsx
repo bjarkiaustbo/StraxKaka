@@ -145,7 +145,7 @@ export default function About() {
             <div className="mb-8">
               <div className="relative w-48 h-48 mx-auto mb-6">
                 <Image
-                  src="/founder.jpg"
+                  src="/IMG_7625.png"
                   alt="Founder of StraxKaka"
                   width={192}
                   height={192}

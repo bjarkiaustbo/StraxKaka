@@ -324,11 +324,11 @@ const translations = {
     'subscription.hero.title': 'Byrjaðu áskrift á StraxKaka',
     'subscription.hero.subtitle': 'Aldrei gleymdu afmæli aftur - við sjáum um það fyrir þig',
     'subscription.features.automatic': 'Sjálfvirk áminning',
-    'subscription.features.automatic_desc': 'Við muna öll afmæli fyrir þig',
+    'subscription.features.automatic_desc': 'Við munum öll afmæli fyrir þig',
     'subscription.features.delivery': 'Áfhending',
     'subscription.features.delivery_desc': 'Kökur koma beint á vinnustaðinn',
     'subscription.features.simple': 'Einfalt',
-    'subscription.features.simple_desc': 'Engin flækja - bara fínn þjónusta',
+    'subscription.features.simple_desc': 'Ekkert stress - við reddum því',
     
     // Pricing
     'pricing.title': 'Verðskrá',
@@ -447,7 +447,7 @@ const translations = {
     'services.delivery.feature3': 'Fjölbreytilegir valkostir',
     'services.delivery.feature4': 'Áreiðanleg afhending',
     'services.cakes.title': 'Kökur sem við bjóðum upp á',
-    'services.cakes.subtitle': 'Flestir kökur eru af sömu stærð - fullkominn fyrir afmælisdaga',
+    'services.cakes.subtitle': 'Flestar kökur eru af sömu stærð - fullkominn fyrir afmælisdaga',
     'services.cakes.delivery_included': 'Afhending innifalin',
     'services.cakes.rose_light': 'Rósakaka ljóst sukkulaði',
     'services.cakes.rose_dark': 'Rósakaka dökkt súkkulaði',

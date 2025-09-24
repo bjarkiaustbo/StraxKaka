@@ -63,6 +63,7 @@ export default function Admin() {
   const [lastContactNotes, setLastContactNotes] = useState('');
   const [showAnalytics, setShowAnalytics] = useState(false);
   const [selectedEmployee, setSelectedEmployee] = useState<{employee: Employee, companyName: string} | null>(null);
+  const [showQuickStats, setShowQuickStats] = useState(false);
 
   // Check if already authenticated
   useEffect(() => {
@@ -206,6 +207,63 @@ export default function Admin() {
     a.download = `straxkaka-employees-${new Date().toISOString().split('T')[0]}.csv`;
     a.click();
     window.URL.revokeObjectURL(url);
+  };
+
+  const exportToGoogleSheets = async () => {
+    try {
+      // Prepare data for Google Sheets
+      const data = [
+        ['Employee Name', 'Birthday', 'Cake Type', 'Cake Cost', 'Delivery Status', 'Company Name', 'Contact Person', 'Email', 'Phone', 'Delivery Address', 'Subscription Tier', 'Payment Status', 'Monthly Cost', 'Order ID', 'Dietary Restrictions', 'Special Notes'],
+        ...filteredSubmissions.flatMap(sub => 
+          (sub.employees || []).map(emp => {
+            const cakeType = CAKE_TYPES.find(cake => cake.id === emp.cakeType);
+            return [
+              emp.name || '',
+              new Date(emp.birthday).toLocaleDateString('en-CA'),
+              language === 'is' ? (cakeType?.nameIcelandic || emp.cakeType || 'Not selected') : (cakeType?.nameEnglish || emp.cakeType || 'Not selected'),
+              cakeType?.price?.toString() || '0',
+              emp.deliveryStatus?.replace('_', ' ') || 'pending',
+              sub.companyName || '',
+              sub.contactPersonName || '',
+              sub.contactEmail || '',
+              sub.contactPhone || '',
+              sub.deliveryAddress || '',
+              sub.subscriptionTier || '',
+              sub.status || '',
+              (sub.monthlyCost || 0).toString(),
+              sub.orderId || '',
+              emp.dietaryRestrictions || '',
+              emp.specialNotes || ''
+            ];
+          })
+        )
+      ];
+
+      // Convert data to CSV format
+      const csvContent = data.map(row => row.map(field => `"${field}"`).join(',')).join('\n');
+      
+      // Create a Google Sheets URL with the data
+      const encodedData = encodeURIComponent(csvContent);
+      const googleSheetsUrl = `https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit?usp=sharing&gid=0&single=true&output=csv&data=${encodedData}`;
+      
+      // Open in new tab
+      window.open(googleSheetsUrl, '_blank');
+      
+      // Also provide a direct download option
+      const blob = new Blob([csvContent], { type: 'text/csv' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `straxkaka-employees-${new Date().toISOString().split('T')[0]}.csv`;
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+      
+    } catch (error) {
+      console.error('Error exporting to Google Sheets:', error);
+      alert('Error exporting to Google Sheets. Please try again.');
+    }
   };
 
   // Phase 1: Delivery Status Management
@@ -659,6 +717,12 @@ export default function Admin() {
               >
                 {showAnalytics ? 'Hide Analytics' : 'Show Analytics'}
               </button>
+              <button
+                onClick={() => setShowQuickStats(!showQuickStats)}
+                className="px-4 py-2 bg-purple-500 text-white rounded-lg text-sm font-medium hover:bg-purple-600 transition-colors"
+              >
+                {showQuickStats ? 'Hide Quick Stats' : 'Show Quick Stats'}
+              </button>
             </div>
             <div className="flex items-center space-x-4">
               <span className="text-sm text-gray-600">Upcoming Birthdays: <span className="text-black font-semibold">{upcomingBirthdays}</span></span>
@@ -754,6 +818,146 @@ export default function Admin() {
                       <span className="text-sm text-gray-600">{sub.employees?.length || 0} employees</span>
                     </div>
                   ))}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Quick Stats Dashboard */}
+        {showQuickStats && (
+          <div className="bg-white rounded-xl shadow-lg p-6 mb-8 border border-gray-200">
+            <h3 className="text-lg font-semibold text-black mb-6">Quick Stats Dashboard</h3>
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {/* Today's Deliveries */}
+              <div className="bg-blue-50 rounded-lg p-4">
+                <div className="flex items-center">
+                  <div className="p-2 bg-blue-500 rounded-lg">
+                    <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                  </div>
+                  <div className="ml-4">
+                    <p className="text-sm text-gray-600">Today&apos;s Deliveries</p>
+                    <p className="text-2xl font-bold text-blue-600">
+                      {submissions.flatMap(sub => sub.employees || [])
+                        .filter(emp => {
+                          const today = new Date().toDateString();
+                          const birthday = new Date(emp.birthday).toDateString();
+                          return today === birthday;
+                        }).length}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* This Week's Deliveries */}
+              <div className="bg-green-50 rounded-lg p-4">
+                <div className="flex items-center">
+                  <div className="p-2 bg-green-500 rounded-lg">
+                    <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                    </svg>
+                  </div>
+                  <div className="ml-4">
+                    <p className="text-sm text-gray-600">This Week</p>
+                    <p className="text-2xl font-bold text-green-600">
+                      {submissions.flatMap(sub => sub.employees || [])
+                        .filter(emp => {
+                          const today = new Date();
+                          const birthday = new Date(emp.birthday);
+                          const diffTime = birthday.getTime() - today.getTime();
+                          const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                          return diffDays >= 0 && diffDays <= 7;
+                        }).length}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Pending Deliveries */}
+              <div className="bg-yellow-50 rounded-lg p-4">
+                <div className="flex items-center">
+                  <div className="p-2 bg-yellow-500 rounded-lg">
+                    <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </div>
+                  <div className="ml-4">
+                    <p className="text-sm text-gray-600">Pending</p>
+                    <p className="text-2xl font-bold text-yellow-600">
+                      {submissions.flatMap(sub => sub.employees || [])
+                        .filter(emp => emp.deliveryStatus === 'pending').length}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Completed Deliveries */}
+              <div className="bg-purple-50 rounded-lg p-4">
+                <div className="flex items-center">
+                  <div className="p-2 bg-purple-500 rounded-lg">
+                    <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </div>
+                  <div className="ml-4">
+                    <p className="text-sm text-gray-600">Completed</p>
+                    <p className="text-2xl font-bold text-purple-600">
+                      {submissions.flatMap(sub => sub.employees || [])
+                        .filter(emp => emp.deliveryStatus === 'delivered').length}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Additional Stats Row */}
+            <div className="grid md:grid-cols-3 gap-6 mt-6">
+              <div className="bg-gray-50 rounded-lg p-4">
+                <h4 className="text-sm font-medium text-gray-600 mb-2">Most Popular Cake</h4>
+                <p className="text-lg font-bold text-gray-900">
+                  {(() => {
+                    const cakeCounts: {[key: string]: number} = {};
+                    submissions.flatMap(sub => sub.employees || []).forEach(emp => {
+                      if (emp.cakeType) {
+                        cakeCounts[emp.cakeType] = (cakeCounts[emp.cakeType] || 0) + 1;
+                      }
+                    });
+                    const mostPopular = Object.entries(cakeCounts).sort(([,a], [,b]) => b - a)[0];
+                    if (mostPopular) {
+                      const cakeType = CAKE_TYPES.find(cake => cake.id === mostPopular[0]);
+                      return language === 'is' ? cakeType?.nameIcelandic : cakeType?.nameEnglish;
+                    }
+                    return 'None selected';
+                  })()}
+                </p>
+              </div>
+
+              <div className="bg-gray-50 rounded-lg p-4">
+                <h4 className="text-sm font-medium text-gray-600 mb-2">Average Cake Cost</h4>
+                <p className="text-lg font-bold text-gray-900">
+                  {(() => {
+                    const totalCost = submissions.flatMap(sub => sub.employees || [])
+                      .reduce((sum, emp) => {
+                        const cakeType = CAKE_TYPES.find(cake => cake.id === emp.cakeType);
+                        return sum + (cakeType?.price || 0);
+                      }, 0);
+                    const count = submissions.flatMap(sub => sub.employees || []).length;
+                    return count > 0 ? Math.round(totalCost / count).toLocaleString() + ' ISK' : '0 ISK';
+                  })()}
+                </p>
+              </div>
+
+              <div className="bg-gray-50 rounded-lg p-4">
+                <h4 className="text-sm font-medium text-gray-600 mb-2">Success Rate</h4>
+                <p className="text-lg font-bold text-gray-900">
+                  {(() => {
+                    const total = submissions.flatMap(sub => sub.employees || []).length;
+                    const completed = submissions.flatMap(sub => sub.employees || [])
+                      .filter(emp => emp.deliveryStatus === 'delivered').length;
+                    return total > 0 ? Math.round((completed / total) * 100) + '%' : '0%';
+                  })()}
+                </p>
               </div>
             </div>
           </div>
@@ -867,6 +1071,12 @@ export default function Admin() {
                 className="px-4 py-2 bg-yellow-500/20 text-yellow-500 rounded-lg text-sm font-medium hover:bg-yellow-500/30 transition-colors border border-yellow-500/30"
               >
                 Export CSV
+              </button>
+              <button
+                onClick={exportToGoogleSheets}
+                className="px-4 py-2 bg-green-500/20 text-green-500 rounded-lg text-sm font-medium hover:bg-green-500/30 transition-colors border border-green-500/30"
+              >
+                Export to Google Sheets
               </button>
             </div>
           </div>
