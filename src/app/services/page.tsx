@@ -5,9 +5,103 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
 import LanguageContent from '@/components/LanguageContent';
 import Navigation from '@/components/Navigation';
+import { useState } from 'react';
+import Image from 'next/image';
 
 export default function Services() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
+  const [currentCakeIndex, setCurrentCakeIndex] = useState(0);
+
+  const cakes = [
+    {
+      id: 'rose_light',
+      nameIcelandic: 'Rósakaka ljóst sukkulaði',
+      nameEnglish: 'Rose Cake Light Chocolate',
+      price: 12454,
+      image: '/cakes/rose-light.jpg',
+      dietary: 'Contains dairy, eggs, gluten'
+    },
+    {
+      id: 'rose_dark',
+      nameIcelandic: 'Rósakaka dökkt súkkulaði',
+      nameEnglish: 'Rose Cake Dark Chocolate',
+      price: 12454,
+      image: '/cakes/rose-dark.jpg',
+      dietary: 'Contains dairy, eggs, gluten'
+    },
+    {
+      id: 'skuffu',
+      nameIcelandic: 'Skúffukaka á bakka',
+      nameEnglish: 'Skúffukaka on Tray',
+      price: 13326,
+      image: '/cakes/skuffu.jpg',
+      dietary: 'Contains dairy, eggs, gluten'
+    },
+    {
+      id: 'strawberry',
+      nameIcelandic: 'Jarðaberja',
+      nameEnglish: 'Strawberry',
+      price: 14666,
+      image: '/cakes/strawberry.jpg',
+      dietary: 'Contains dairy, eggs, gluten'
+    },
+    {
+      id: 'lemon_cheese',
+      nameIcelandic: 'Sitronuost',
+      nameEnglish: 'Lemon Cheese',
+      price: 14666,
+      image: '/cakes/lemon-cheese.jpg',
+      dietary: 'Contains dairy, eggs, gluten'
+    },
+    {
+      id: 'biscoff',
+      nameIcelandic: 'Biscoff',
+      nameEnglish: 'Biscoff',
+      price: 14666,
+      image: '/cakes/biscoff.jpg',
+      dietary: 'Contains dairy, eggs, gluten'
+    },
+    {
+      id: 'daim',
+      nameIcelandic: 'Daim',
+      nameEnglish: 'Daim',
+      price: 14666,
+      image: '/cakes/daim.jpg',
+      dietary: 'Contains dairy, eggs, gluten'
+    },
+    {
+      id: 'tiramisu',
+      nameIcelandic: 'Tiramisu',
+      nameEnglish: 'Tiramisu',
+      price: 14666,
+      image: '/cakes/tiramisu.jpg',
+      dietary: 'Contains dairy, eggs, gluten'
+    },
+    {
+      id: 'chocolate_caramel',
+      nameIcelandic: 'Súkkulaði með karamellukremi',
+      nameEnglish: 'Chocolate with Caramel Cream',
+      price: 14666,
+      image: '/cakes/chocolate-caramel.jpg',
+      dietary: 'Contains dairy, eggs, gluten'
+    },
+    {
+      id: 'chocolate_cream',
+      nameIcelandic: 'Súkkulaði með súkkulaðikremi',
+      nameEnglish: 'Chocolate with Chocolate Cream',
+      price: 14666,
+      image: '/cakes/chocolate-cream.jpg',
+      dietary: 'Contains dairy, eggs, gluten'
+    }
+  ];
+
+  const nextCake = () => {
+    setCurrentCakeIndex((prev) => (prev + 1) % cakes.length);
+  };
+
+  const prevCake = () => {
+    setCurrentCakeIndex((prev) => (prev - 1 + cakes.length) % cakes.length);
+  };
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
       <Navigation currentPage="services" />
@@ -151,7 +245,7 @@ export default function Services() {
         </div>
       </section>
 
-      {/* Cake List */}
+      {/* Cake Carousel */}
       <section className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
@@ -178,250 +272,85 @@ export default function Services() {
             </LanguageContent>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {/* Rósakaka ljóst sukkulaði */}
-            <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-200">
-              <div className="flex items-center mb-4">
-                <div className="w-12 h-12 bg-yellow-500 rounded-full flex items-center justify-center mr-4">
-                  <svg className="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+          {/* Cake Carousel */}
+          <div className="relative max-w-4xl mx-auto">
+            <div className="bg-white rounded-2xl shadow-2xl overflow-hidden">
+              <div className="relative h-96 md:h-[500px]">
+                <Image
+                  src={cakes[currentCakeIndex].image}
+                  alt={language === 'is' ? cakes[currentCakeIndex].nameIcelandic : cakes[currentCakeIndex].nameEnglish}
+                  fill
+                  className="object-cover"
+                />
+                <div className="absolute inset-0 bg-black bg-opacity-30"></div>
+                
+                {/* Navigation Arrows */}
+                <button
+                  onClick={prevCake}
+                  className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-90 hover:bg-opacity-100 text-gray-800 p-3 rounded-full shadow-lg transition-all duration-200"
+                >
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                   </svg>
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-gray-900">
-                    <LanguageContent fallback="Rósakaka ljóst sukkulaði">
-                      {(t) => t('services.cakes.rose_light')}
-                    </LanguageContent>
-                  </h3>
-                  <p className="text-2xl font-bold text-yellow-600">12.454 ISK</p>
+                </button>
+                <button
+                  onClick={nextCake}
+                  className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-90 hover:bg-opacity-100 text-gray-800 p-3 rounded-full shadow-lg transition-all duration-200"
+                >
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </button>
+
+                {/* Cake Info Overlay */}
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-8">
+                  <div className="text-white">
+                    <h3 className="text-3xl md:text-4xl font-bold mb-2">
+                      {language === 'is' ? cakes[currentCakeIndex].nameIcelandic : cakes[currentCakeIndex].nameEnglish}
+                    </h3>
+                    <p className="text-xl text-gray-200 mb-4">
+                      {cakes[currentCakeIndex].price.toLocaleString()} ISK
+                    </p>
+                    <p className="text-sm text-gray-300 mb-2">
+                      <LanguageContent fallback="Afhending innifalin">
+                        {(t) => t('services.cakes.delivery_included')}
+                      </LanguageContent>
+                    </p>
+                    <p className="text-xs text-gray-400">
+                      {cakes[currentCakeIndex].dietary}
+                    </p>
+                  </div>
                 </div>
               </div>
-              <p className="text-sm text-gray-600 mb-2">
-                <LanguageContent fallback="Afhending innifalin">
-                  {(t) => t('services.cakes.delivery_included')}
-                </LanguageContent>
-              </p>
             </div>
 
-            {/* Rósakaka dökkt súkkulaði */}
-            <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-200">
-              <div className="flex items-center mb-4">
-                <div className="w-12 h-12 bg-yellow-500 rounded-full flex items-center justify-center mr-4">
-                  <svg className="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                  </svg>
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-gray-900">
-                    <LanguageContent fallback="Rósakaka dökkt súkkulaði">
-                      {(t) => t('services.cakes.rose_dark')}
-                    </LanguageContent>
-                  </h3>
-                  <p className="text-2xl font-bold text-yellow-600">12.454 ISK</p>
-                </div>
-              </div>
-              <p className="text-sm text-gray-600 mb-2">
-                <LanguageContent fallback="Afhending innifalin">
-                  {(t) => t('services.cakes.delivery_included')}
-                </LanguageContent>
-              </p>
+            {/* Dots Indicator */}
+            <div className="flex justify-center mt-6 space-x-2">
+              {cakes.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentCakeIndex(index)}
+                  className={`w-3 h-3 rounded-full transition-all duration-200 ${
+                    index === currentCakeIndex 
+                      ? 'bg-yellow-500 scale-125' 
+                      : 'bg-gray-300 hover:bg-gray-400'
+                  }`}
+                />
+              ))}
             </div>
 
-            {/* Skúffukaka á bakka */}
-            <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-200">
-              <div className="flex items-center mb-4">
-                <div className="w-12 h-12 bg-yellow-500 rounded-full flex items-center justify-center mr-4">
-                  <svg className="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                  </svg>
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-gray-900">
-                    <LanguageContent fallback="Skúffukaka á bakka">
-                      {(t) => t('services.cakes.skuffu')}
-                    </LanguageContent>
-                  </h3>
-                  <p className="text-2xl font-bold text-yellow-600">13.326 ISK</p>
-                </div>
-              </div>
-              <p className="text-sm text-gray-600 mb-2">
-                <LanguageContent fallback="Afhending innifalin">
-                  {(t) => t('services.cakes.delivery_included')}
-                </LanguageContent>
-              </p>
-            </div>
-
-            {/* Jarðaberja */}
-            <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-200">
-              <div className="flex items-center mb-4">
-                <div className="w-12 h-12 bg-yellow-500 rounded-full flex items-center justify-center mr-4">
-                  <svg className="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                  </svg>
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-gray-900">
-                    <LanguageContent fallback="Jarðaberja">
-                      {(t) => t('services.cakes.strawberry')}
-                    </LanguageContent>
-                  </h3>
-                  <p className="text-2xl font-bold text-yellow-600">14.666 ISK</p>
-                </div>
-              </div>
-              <p className="text-sm text-gray-600 mb-2">
-                <LanguageContent fallback="Afhending innifalin">
-                  {(t) => t('services.cakes.delivery_included')}
-                </LanguageContent>
-              </p>
-            </div>
-
-            {/* Sitronuost */}
-            <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-200">
-              <div className="flex items-center mb-4">
-                <div className="w-12 h-12 bg-yellow-500 rounded-full flex items-center justify-center mr-4">
-                  <svg className="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                  </svg>
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-gray-900">
-                    <LanguageContent fallback="Sitronuost">
-                      {(t) => t('services.cakes.lemon_cheese')}
-                    </LanguageContent>
-                  </h3>
-                  <p className="text-2xl font-bold text-yellow-600">14.666 ISK</p>
-                </div>
-              </div>
-              <p className="text-sm text-gray-600 mb-2">
-                <LanguageContent fallback="Afhending innifalin">
-                  {(t) => t('services.cakes.delivery_included')}
-                </LanguageContent>
-              </p>
-            </div>
-
-            {/* Biscoff */}
-            <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-200">
-              <div className="flex items-center mb-4">
-                <div className="w-12 h-12 bg-yellow-500 rounded-full flex items-center justify-center mr-4">
-                  <svg className="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                  </svg>
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-gray-900">
-                    <LanguageContent fallback="Biscoff">
-                      {(t) => t('services.cakes.biscoff')}
-                    </LanguageContent>
-                  </h3>
-                  <p className="text-2xl font-bold text-yellow-600">14.666 ISK</p>
-                </div>
-              </div>
-              <p className="text-sm text-gray-600 mb-2">
-                <LanguageContent fallback="Afhending innifalin">
-                  {(t) => t('services.cakes.delivery_included')}
-                </LanguageContent>
-              </p>
-            </div>
-
-            {/* Daim */}
-            <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-200">
-              <div className="flex items-center mb-4">
-                <div className="w-12 h-12 bg-yellow-500 rounded-full flex items-center justify-center mr-4">
-                  <svg className="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                  </svg>
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-gray-900">
-                    <LanguageContent fallback="Daim">
-                      {(t) => t('services.cakes.daim')}
-                    </LanguageContent>
-                  </h3>
-                  <p className="text-2xl font-bold text-yellow-600">14.666 ISK</p>
-                </div>
-              </div>
-              <p className="text-sm text-gray-600 mb-2">
-                <LanguageContent fallback="Afhending innifalin">
-                  {(t) => t('services.cakes.delivery_included')}
-                </LanguageContent>
-              </p>
-            </div>
-
-            {/* Tiramisu */}
-            <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-200">
-              <div className="flex items-center mb-4">
-                <div className="w-12 h-12 bg-yellow-500 rounded-full flex items-center justify-center mr-4">
-                  <svg className="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                  </svg>
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-gray-900">
-                    <LanguageContent fallback="Tiramisu">
-                      {(t) => t('services.cakes.tiramisu')}
-                    </LanguageContent>
-                  </h3>
-                  <p className="text-2xl font-bold text-yellow-600">14.666 ISK</p>
-                </div>
-              </div>
-              <p className="text-sm text-gray-600 mb-2">
-                <LanguageContent fallback="Afhending innifalin">
-                  {(t) => t('services.cakes.delivery_included')}
-                </LanguageContent>
-              </p>
-            </div>
-
-            {/* Súkkulaði með karamellukremi */}
-            <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-200">
-              <div className="flex items-center mb-4">
-                <div className="w-12 h-12 bg-yellow-500 rounded-full flex items-center justify-center mr-4">
-                  <svg className="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                  </svg>
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-gray-900">
-                    <LanguageContent fallback="Súkkulaði með karamellukremi">
-                      {(t) => t('services.cakes.chocolate_caramel')}
-                    </LanguageContent>
-                  </h3>
-                  <p className="text-2xl font-bold text-yellow-600">14.666 ISK</p>
-                </div>
-              </div>
-              <p className="text-sm text-gray-600 mb-2">
-                <LanguageContent fallback="Afhending innifalin">
-                  {(t) => t('services.cakes.delivery_included')}
-                </LanguageContent>
-              </p>
-            </div>
-
-            {/* Súkkulaði með súkkulaðikremi */}
-            <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-200">
-              <div className="flex items-center mb-4">
-                <div className="w-12 h-12 bg-yellow-500 rounded-full flex items-center justify-center mr-4">
-                  <svg className="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                  </svg>
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-gray-900">
-                    <LanguageContent fallback="Súkkulaði með súkkulaðikremi">
-                      {(t) => t('services.cakes.chocolate_cream')}
-                    </LanguageContent>
-                  </h3>
-                  <p className="text-2xl font-bold text-yellow-600">14.666 ISK</p>
-                </div>
-              </div>
-              <p className="text-sm text-gray-600 mb-2">
-                <LanguageContent fallback="Afhending innifalin">
-                  {(t) => t('services.cakes.delivery_included')}
+            {/* Cake Counter */}
+            <div className="text-center mt-4">
+              <p className="text-gray-600">
+                {currentCakeIndex + 1} / {cakes.length} 
+                <LanguageContent fallback=" kökur">
+                  {(t) => ' ' + t('services.cakes.cakes')}
                 </LanguageContent>
               </p>
             </div>
           </div>
         </div>
       </section>
-
 
       {/* Pricing Section - Same as Home Page */}
       <section className="py-20 bg-black">

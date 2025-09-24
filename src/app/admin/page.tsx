@@ -173,38 +173,37 @@ export default function Admin() {
 
   const exportToCSV = () => {
     const csvContent = [
-      ['Company Name', 'Contact Person', 'Email', 'Phone', 'Subscription Tier', 'Status', 'Monthly Cost', 'Employees Count', 'Order ID', 'Employee Birthdays', 'Cake Preferences'],
-      ...filteredSubmissions.map(sub => {
-        const employeeBirthdays = sub.employees?.map(emp => 
-          new Date(emp.birthday).toLocaleDateString('en-CA')
-        ).join('; ') || '';
-        
-        const cakePreferences = sub.employees?.map(emp => {
+      ['Employee Name', 'Birthday', 'Cake Type', 'Cake Cost', 'Delivery Status', 'Company Name', 'Contact Person', 'Email', 'Phone', 'Delivery Address', 'Subscription Tier', 'Payment Status', 'Monthly Cost', 'Order ID', 'Dietary Restrictions', 'Special Notes'],
+      ...filteredSubmissions.flatMap(sub => 
+        (sub.employees || []).map(emp => {
           const cakeType = CAKE_TYPES.find(cake => cake.id === emp.cakeType);
-          return `${emp.name}: ${cakeType?.nameEnglish || emp.cakeType || 'Not selected'}`;
-        }).join('; ') || '';
-
-        return [
-          sub.companyName || '',
-          sub.contactPersonName || '',
-          sub.contactEmail || '',
-          sub.contactPhone || '',
-          sub.subscriptionTier || '',
-          sub.status || '',
-          (sub.monthlyCost || 0).toString(),
-          (sub.employees?.length || 0).toString(),
-          sub.orderId || '',
-          employeeBirthdays,
-          cakePreferences
-        ];
-      })
+          return [
+            emp.name || '',
+            new Date(emp.birthday).toLocaleDateString('en-CA'),
+            language === 'is' ? (cakeType?.nameIcelandic || emp.cakeType || 'Not selected') : (cakeType?.nameEnglish || emp.cakeType || 'Not selected'),
+            cakeType?.price?.toString() || '0',
+            emp.deliveryStatus?.replace('_', ' ') || 'pending',
+            sub.companyName || '',
+            sub.contactPersonName || '',
+            sub.contactEmail || '',
+            sub.contactPhone || '',
+            sub.deliveryAddress || '',
+            sub.subscriptionTier || '',
+            sub.status || '',
+            (sub.monthlyCost || 0).toString(),
+            sub.orderId || '',
+            emp.dietaryRestrictions || '',
+            emp.specialNotes || ''
+          ];
+        })
+      )
     ].map(row => row.map(field => `"${field}"`).join(',')).join('\n');
 
     const blob = new Blob([csvContent], { type: 'text/csv' });
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `straxkaka-companies-${new Date().toISOString().split('T')[0]}.csv`;
+    a.download = `straxkaka-employees-${new Date().toISOString().split('T')[0]}.csv`;
     a.click();
     window.URL.revokeObjectURL(url);
   };

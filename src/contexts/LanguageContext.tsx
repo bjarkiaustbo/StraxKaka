@@ -459,6 +459,7 @@ const translations = {
     'services.cakes.tiramisu': 'Tiramisu',
     'services.cakes.chocolate_caramel': 'Súkkulaði með karamellukremi',
     'services.cakes.chocolate_cream': 'Súkkulaði með súkkulaðikremi',
+    'services.cakes.cakes': 'kökur',
     
     // Contact page
     'contact.hero.title': 'Hafðu samband',
@@ -956,6 +957,7 @@ const translations = {
     'services.cakes.tiramisu': 'Tiramisu',
     'services.cakes.chocolate_caramel': 'Chocolate with Caramel Cream',
     'services.cakes.chocolate_cream': 'Chocolate with Chocolate Cream',
+    'services.cakes.cakes': 'cakes',
     
     // Contact page
     'contact.hero.title': 'Contact Us',
