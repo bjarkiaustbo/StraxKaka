@@ -62,6 +62,7 @@ export default function Admin() {
   const [lastContactNotes, setLastContactNotes] = useState('');
   const [showQuickActions, setShowQuickActions] = useState<{submissionId: string} | null>(null);
   const [showAnalytics, setShowAnalytics] = useState(false);
+  const [showBulkActions, setShowBulkActions] = useState(false);
 
   // Check if already authenticated
   useEffect(() => {
@@ -762,25 +763,72 @@ export default function Admin() {
           </div>
         )}
 
+        {/* Bulk Actions */}
+        {selectedCompanies.length > 0 && (
+          <div className="bg-white rounded-xl shadow-lg p-6 mb-8 border border-gray-200">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-4">
+                <h3 className="text-lg font-semibold text-black">Bulk Actions</h3>
+                <span className="text-sm text-gray-600">{selectedCompanies.length} companies selected</span>
+              </div>
+              <div className="flex items-center space-x-3">
+                <button
+                  onClick={() => {
+                    selectedCompanies.forEach(id => markAsPaidWithWebhook(id));
+                    setSelectedCompanies([]);
+                  }}
+                  className="px-4 py-2 bg-green-500 text-white rounded-lg text-sm font-medium hover:bg-green-600 transition-colors"
+                >
+                  Mark All as Paid
+                </button>
+                <button
+                  onClick={() => {
+                    selectedCompanies.forEach(id => markAsPending(id));
+                    setSelectedCompanies([]);
+                  }}
+                  className="px-4 py-2 bg-yellow-500 text-black rounded-lg text-sm font-medium hover:bg-yellow-600 transition-colors"
+                >
+                  Mark All as Pending
+                </button>
+                <button
+                  onClick={() => {
+                    selectedCompanies.forEach(id => toggleSubscriptionStatus(id));
+                    setSelectedCompanies([]);
+                  }}
+                  className="px-4 py-2 bg-blue-500 text-white rounded-lg text-sm font-medium hover:bg-blue-600 transition-colors"
+                >
+                  Toggle Subscriptions
+                </button>
+                <button
+                  onClick={() => setSelectedCompanies([])}
+                  className="px-4 py-2 bg-gray-500 text-white rounded-lg text-sm font-medium hover:bg-gray-600 transition-colors"
+                >
+                  Clear Selection
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Search and Filters */}
-        <div className="bg-gray-900 rounded-xl shadow-2xl p-6 mb-8 border border-yellow-500/20">
+        <div className="bg-white rounded-xl shadow-lg p-6 mb-8 border border-gray-200">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div className="lg:col-span-2">
-              <label className="block text-sm font-medium text-gray-300 mb-2">Search Companies</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Search Companies</label>
               <input
                 type="text"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 text-gray-200 placeholder-gray-400"
+                className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 text-gray-900 placeholder-gray-500"
                 placeholder="Search by company name, contact, email, or subscription tier..."
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">Filter by Status</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Filter by Status</label>
               <select
                 value={filterStatus}
                 onChange={(e) => setFilterStatus(e.target.value)}
-                className="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 text-gray-200"
+                className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 text-gray-900"
               >
                 <option value="all">All Statuses</option>
                 <option value="paid">Paid</option>
@@ -791,8 +839,8 @@ export default function Admin() {
           </div>
           
           <div className="flex items-center justify-between mt-4 pt-4 border-t border-gray-600">
-            <div className="text-sm text-gray-300">
-              Showing <span className="text-yellow-500 font-semibold">{filteredSubmissions.length}</span> of <span className="text-yellow-500 font-semibold">{totalCompanies}</span> companies
+            <div className="text-sm text-gray-600">
+              Showing <span className="text-black font-semibold">{filteredSubmissions.length}</span> of <span className="text-black font-semibold">{totalCompanies}</span> companies
               {selectedCompanies.length > 0 && ` • ${selectedCompanies.length} selected`}
             </div>
             <div className="flex items-center space-x-3">
@@ -829,9 +877,9 @@ export default function Admin() {
         </div>
 
         {/* Submissions Table */}
-        <div className="bg-gray-900 rounded-xl shadow-2xl overflow-hidden border border-yellow-500/20">
-          <div className="px-6 py-4 border-b border-gray-600 flex justify-between items-center">
-            <h2 className="text-lg font-semibold text-yellow-500">Company Submissions</h2>
+        <div className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
+          <div className="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+            <h2 className="text-lg font-semibold text-black">Company Submissions</h2>
             <div className="flex items-center space-x-2">
               <button
                 onClick={selectAllCompanies}
@@ -858,33 +906,32 @@ export default function Admin() {
           ) : (
             <div className="overflow-x-auto">
               <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-800">
+                <thead className="bg-gray-50">
                   <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
                       <input
                         type="checkbox"
                         checked={selectedCompanies.length === filteredSubmissions.length && filteredSubmissions.length > 0}
                         onChange={selectedCompanies.length === filteredSubmissions.length ? clearSelection : selectAllCompanies}
-                        className="rounded border-gray-600 bg-gray-700 text-yellow-500 focus:ring-yellow-500"
+                        className="rounded border-gray-300 bg-white text-yellow-500 focus:ring-yellow-500"
                       />
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Company</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Contact</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Employees</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Delivery Status</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Subscription</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Payment</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Revenue</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Notes</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Last Contact</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Quick Actions</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">Company</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">Contact</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">Employees</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">Delivery Status</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">Subscription</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">Payment</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">Revenue</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">Notes</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">Last Contact</th>
                   </tr>
                 </thead>
-                <tbody className="bg-gray-900 divide-y divide-gray-700">
+                <tbody className="bg-white divide-y divide-gray-200">
                   {filteredSubmissions.map((submission) => (
                     <tr 
                       key={submission.id} 
-                      className={`hover:bg-gray-800 cursor-pointer transition-colors ${selectedCompanies.includes(submission.id) ? 'bg-yellow-500/10' : ''}`}
+                      className={`hover:bg-gray-50 cursor-pointer transition-colors ${selectedCompanies.includes(submission.id) ? 'bg-yellow-50' : ''}`}
                       onClick={() => setSelectedSubmission(submission)}
                     >
                       <td className="px-6 py-4 whitespace-nowrap" onClick={(e) => e.stopPropagation()}>
@@ -1033,108 +1080,6 @@ export default function Admin() {
                           {submission.lastContactDate ? 'Edit Contact' : 'Add Contact'}
                         </button>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium" onClick={(e) => e.stopPropagation()}>
-                        <div className="relative">
-                          <button
-                            onClick={() => setShowQuickActions(showQuickActions?.submissionId === submission.id ? null : {submissionId: submission.id})}
-                            className="text-white bg-yellow-500 hover:bg-yellow-600 px-4 py-2 rounded-lg text-xs font-bold transition-colors shadow-lg flex items-center gap-1"
-                          >
-                            Quick Actions
-                            <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                            </svg>
-                          </button>
-                          
-                          {showQuickActions?.submissionId === submission.id && (
-                            <div className="absolute right-0 mt-2 w-48 bg-gray-800 rounded-lg shadow-xl border border-yellow-500/30 z-10">
-                              <div className="py-2">
-                                <button
-                                  onClick={() => {
-                                    setSelectedSubmission(submission);
-                                    setShowQuickActions(null);
-                                  }}
-                                  className="w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-white transition-colors"
-                                >
-                                  📋 View Details
-                                </button>
-                                {submission.status !== 'paid' && (
-                                  <button
-                                    onClick={() => {
-                                      markAsPaidWithWebhook(submission.id);
-                                      setShowQuickActions(null);
-                                    }}
-                                    className="w-full text-left px-4 py-2 text-sm text-green-400 hover:bg-gray-700 hover:text-green-300 transition-colors"
-                                  >
-                                    ✅ Mark as Paid
-                                  </button>
-                                )}
-                                {submission.status === 'paid' && (
-                                  <button
-                                    onClick={() => {
-                                      markAsPending(submission.id);
-                                      setShowQuickActions(null);
-                                    }}
-                                    className="w-full text-left px-4 py-2 text-sm text-yellow-400 hover:bg-gray-700 hover:text-yellow-300 transition-colors"
-                                  >
-                                    ⏳ Mark as Pending
-                                  </button>
-                                )}
-                                {submission.status === 'pending_payment' && !submission.paymentReminderSent && (
-                                  <button
-                                    onClick={() => {
-                                      sendPaymentReminder(submission.id);
-                                      setShowQuickActions(null);
-                                    }}
-                                    className="w-full text-left px-4 py-2 text-sm text-orange-400 hover:bg-gray-700 hover:text-orange-300 transition-colors"
-                                  >
-                                    📧 Send Reminder
-                                  </button>
-                                )}
-                                <button
-                                  onClick={() => {
-                                    toggleSubscriptionStatus(submission.id);
-                                    setShowQuickActions(null);
-                                  }}
-                                  className="w-full text-left px-4 py-2 text-sm text-blue-400 hover:bg-gray-700 hover:text-blue-300 transition-colors"
-                                >
-                                  {submission.subscriptionStatus === 'active' ? '⏸️ Pause Subscription' : '▶️ Resume Subscription'}
-                                </button>
-                                <button
-                                  onClick={() => {
-                                    setEditingNotes({submissionId: submission.id});
-                                    setNotesText(submission.notes || '');
-                                    setShowQuickActions(null);
-                                  }}
-                                  className="w-full text-left px-4 py-2 text-sm text-purple-400 hover:bg-gray-700 hover:text-purple-300 transition-colors"
-                                >
-                                  📝 Edit Notes
-                                </button>
-                                <button
-                                  onClick={() => {
-                                    setEditingLastContact({submissionId: submission.id});
-                                    setLastContactDate(submission.lastContactDate || '');
-                                    setLastContactNotes(submission.lastContactNotes || '');
-                                    setShowQuickActions(null);
-                                  }}
-                                  className="w-full text-left px-4 py-2 text-sm text-cyan-400 hover:bg-gray-700 hover:text-cyan-300 transition-colors"
-                                >
-                                  📞 Edit Contact
-                                </button>
-                                <div className="border-t border-gray-600 my-1"></div>
-                                <button
-                                  onClick={() => {
-                                    removeCompany(submission.id);
-                                    setShowQuickActions(null);
-                                  }}
-                                  className="w-full text-left px-4 py-2 text-sm text-red-400 hover:bg-gray-700 hover:text-red-300 transition-colors"
-                                >
-                                  🗑️ Remove Company
-                                </button>
-                              </div>
-                            </div>
-                          )}
-                        </div>
-                      </td>
                     </tr>
                   ))}
                 </tbody>
@@ -1145,20 +1090,29 @@ export default function Admin() {
 
         {/* Company Details Modal */}
       {selectedSubmission && (
-        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
-          <div className="relative top-20 mx-auto p-5 border w-11/12 md:w-3/4 lg:w-1/2 shadow-lg rounded-md bg-white">
-            <div className="mt-3">
-              <div className="flex justify-between items-center mb-4">
-                <h3 className="text-lg font-medium text-gray-900">
-                  {selectedSubmission.companyName}
-                </h3>
+        <div className="fixed inset-0 bg-black bg-opacity-50 overflow-y-auto h-full w-full z-50">
+          <div key={selectedSubmission.id} className="relative top-10 mx-auto p-0 border-0 w-11/12 md:w-4/5 lg:w-3/4 xl:w-2/3 shadow-2xl rounded-xl bg-white">
+            <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 rounded-t-xl">
+              <div className="flex justify-between items-center">
+                <div>
+                  <h3 className="text-2xl font-bold text-gray-900">
+                    {selectedSubmission.companyName}
+                  </h3>
+                  <p className="text-sm text-gray-600 mt-1">
+                    {selectedSubmission.contactPersonName} • {selectedSubmission.contactEmail}
+                  </p>
+                </div>
                 <button
                   onClick={() => setSelectedSubmission(null)}
-                  className="text-gray-400 hover:text-gray-600"
+                  className="text-gray-400 hover:text-gray-600 transition-colors p-2 hover:bg-gray-100 rounded-full"
                 >
-                  <span className="text-2xl">&times;</span>
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
                 </button>
               </div>
+            </div>
+            <div className="p-6">
               
               <div className="space-y-4">
                 <div>

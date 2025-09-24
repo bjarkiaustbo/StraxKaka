@@ -447,6 +447,16 @@ const translations = {
     'services.cakes.title': 'Kökur sem við bjóðum upp á',
     'services.cakes.subtitle': 'Flestir kökur eru af sömu stærð - fullkominn fyrir afmælisdaga',
     'services.cakes.delivery_included': 'Afhending innifalin',
+    'services.cakes.rose_light': 'Rósakaka ljóst sukkulaði',
+    'services.cakes.rose_dark': 'Rósakaka dökkt súkkulaði',
+    'services.cakes.skuffu': 'Skúffukaka á bakka',
+    'services.cakes.strawberry': 'Jarðaberja',
+    'services.cakes.lemon_cheese': 'Sitronuost',
+    'services.cakes.biscoff': 'Biscoff',
+    'services.cakes.daim': 'Daim',
+    'services.cakes.tiramisu': 'Tiramisu',
+    'services.cakes.chocolate_caramel': 'Súkkulaði með karamellukremi',
+    'services.cakes.chocolate_cream': 'Súkkulaði með súkkulaðikremi',
     
     // Contact page
     'contact.hero.title': 'Hafðu samband',
@@ -932,6 +942,16 @@ const translations = {
     'services.cakes.title': 'Cakes We Offer',
     'services.cakes.subtitle': 'Most cakes are the same size - perfect for birthdays',
     'services.cakes.delivery_included': 'Delivery included',
+    'services.cakes.rose_light': 'Rose Cake Light Chocolate',
+    'services.cakes.rose_dark': 'Rose Cake Dark Chocolate',
+    'services.cakes.skuffu': 'Skúffukaka on Tray',
+    'services.cakes.strawberry': 'Strawberry',
+    'services.cakes.lemon_cheese': 'Lemon Cheese',
+    'services.cakes.biscoff': 'Biscoff',
+    'services.cakes.daim': 'Daim',
+    'services.cakes.tiramisu': 'Tiramisu',
+    'services.cakes.chocolate_caramel': 'Chocolate with Caramel Cream',
+    'services.cakes.chocolate_cream': 'Chocolate with Chocolate Cream',
     
     // Contact page
     'contact.hero.title': 'Contact Us',
