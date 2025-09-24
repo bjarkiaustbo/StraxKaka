@@ -913,25 +913,26 @@ export default function Admin() {
                         className="rounded border-gray-300 bg-white text-yellow-500 focus:ring-yellow-500"
                       />
                     </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">Employee</th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">Company</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">Contact</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">Employees</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">Contact Person</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">Delivery Address</th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">Delivery Status</th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">Subscription</th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">Payment</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">Revenue</th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">Notes</th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">Last Contact</th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">Actions</th>
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
-                  {filteredSubmissions.map((submission) => (
-                    <tr 
-                      key={submission.id} 
-                      className={`hover:bg-gray-50 cursor-pointer transition-colors ${selectedCompanies.includes(submission.id) ? 'bg-yellow-50' : ''}`}
-                      onClick={() => setSelectedSubmission(submission)}
-                    >
+                  {filteredSubmissions.flatMap((submission) => 
+                    (submission.employees || []).map((employee, empIndex) => (
+                      <tr 
+                        key={`${submission.id}-${empIndex}`} 
+                        className={`hover:bg-gray-50 cursor-pointer transition-colors ${selectedCompanies.includes(submission.id) ? 'bg-yellow-50' : ''}`}
+                        onClick={() => setSelectedEmployee({employee, companyName: submission.companyName || 'Unknown'})}
+                      >
                       <td className="px-6 py-4 whitespace-nowrap" onClick={(e) => e.stopPropagation()}>
                         <input
                           type="checkbox"
@@ -940,61 +941,48 @@ export default function Admin() {
                           className="rounded border-gray-300 text-yellow-600 focus:ring-yellow-500"
                         />
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm font-medium text-gray-900">{submission.companyName || 'N/A'}</div>
-                        <div className="text-sm text-gray-500">{submission.subscriptionTier || 'N/A'}</div>
-                        {submission.orderId && (
-                          <div className="text-xs text-gray-400">ID: {submission.orderId}</div>
-                        )}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-gray-900">{submission.contactPersonName || 'N/A'}</div>
-                        <div className="text-sm text-gray-500">{submission.contactEmail || 'N/A'}</div>
-                        {submission.contactPhone && (
-                          <div className="text-xs text-gray-400">{submission.contactPhone}</div>
-                        )}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-gray-900">
-                          {submission.employees?.filter(emp => emp.employmentStatus === 'active').length || 0} / {submission.employees?.length || 0}
-                        </div>
-                        <div className="text-sm text-gray-500">active / total</div>
-                        <button
-                          onClick={() => setShowAddEmployee({submissionId: submission.id})}
-                          className="text-xs text-blue-600 hover:text-blue-800 mt-1"
-                        >
-                          + Add Employee
-                        </button>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="space-y-1">
-                          {submission.employees?.slice(0, 2).map((emp, index) => (
-                            <div key={index} className="flex items-center space-x-2">
-                              <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                                emp.deliveryStatus === 'delivered' ? 'bg-green-100 text-green-800' :
-                                emp.deliveryStatus === 'out_for_delivery' ? 'bg-blue-100 text-blue-800' :
-                                emp.deliveryStatus === 'confirmed' ? 'bg-yellow-100 text-yellow-800' :
-                                emp.deliveryStatus === 'failed' ? 'bg-red-100 text-red-800' :
-                                'bg-gray-100 text-gray-800'
-                              }`}>
-                                {emp.deliveryStatus?.replace('_', ' ') || 'pending'}
-                              </span>
-                              <button
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  setSelectedEmployee({employee: emp, companyName: submission.companyName || 'Unknown'});
-                                }}
-                                className="text-xs text-blue-600 hover:text-blue-800 hover:underline cursor-pointer"
-                              >
-                                {emp.name}
-                              </button>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="text-sm font-medium text-gray-900">{employee.name}</div>
+                          <div className="text-sm text-gray-500">
+                            Birthday: {new Date(employee.birthday).toLocaleDateString()}
+                          </div>
+                          {employee.cakeType && (
+                            <div className="text-xs text-blue-600">
+                              {(() => {
+                                const cakeType = CAKE_TYPES.find(cake => cake.id === employee.cakeType);
+                                return language === 'is' ? cakeType?.nameIcelandic : cakeType?.nameEnglish;
+                              })()}
                             </div>
-                          ))}
-                          {submission.employees && submission.employees.length > 2 && (
-                            <div className="text-xs text-gray-500">+{submission.employees.length - 2} more</div>
                           )}
-                        </div>
-                      </td>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="text-sm font-medium text-gray-900">{submission.companyName || 'N/A'}</div>
+                          <div className="text-sm text-gray-500">{submission.subscriptionTier || 'N/A'}</div>
+                          {submission.orderId && (
+                            <div className="text-xs text-gray-400">ID: {submission.orderId}</div>
+                          )}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="text-sm text-gray-900">{submission.contactPersonName || 'N/A'}</div>
+                          <div className="text-sm text-gray-500">{submission.contactEmail || 'N/A'}</div>
+                          {submission.contactPhone && (
+                            <div className="text-xs text-gray-400">{submission.contactPhone}</div>
+                          )}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="text-sm text-gray-900">{submission.deliveryAddress || 'N/A'}</div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
+                            employee.deliveryStatus === 'delivered' ? 'bg-green-100 text-green-800' :
+                            employee.deliveryStatus === 'out_for_delivery' ? 'bg-blue-100 text-blue-800' :
+                            employee.deliveryStatus === 'confirmed' ? 'bg-yellow-100 text-yellow-800' :
+                            employee.deliveryStatus === 'failed' ? 'bg-red-100 text-red-800' :
+                            'bg-gray-100 text-gray-800'
+                          }`}>
+                            {employee.deliveryStatus?.replace('_', ' ') || 'pending'}
+                          </span>
+                        </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
                           submission.subscriptionStatus === 'active' ? 'bg-green-100 text-green-800' :
@@ -1014,28 +1002,12 @@ export default function Admin() {
                           {submission.status ? submission.status.replace('_', ' ').charAt(0).toUpperCase() + submission.status.replace('_', ' ').slice(1) : 'Unknown'}
                         </span>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-gray-900">
-                          <div className="font-semibold">{(submission.monthlyCost || 0).toLocaleString()} ISK</div>
-                          <div className="text-xs text-gray-500">monthly subscription</div>
-                          {submission.employees && submission.employees.length > 0 && (
-                            <div className="mt-1">
-                              <div className="text-xs text-blue-600 font-medium">Cake Preferences:</div>
-                              {submission.employees.slice(0, 2).map((emp, idx) => {
-                                const cakeType = CAKE_TYPES.find(cake => cake.id === emp.cakeType);
-                                return (
-                                  <div key={idx} className="text-xs text-gray-600">
-                                    {emp.name}: {language === 'is' ? cakeType?.nameIcelandic : cakeType?.nameEnglish} ({cakeType?.price.toLocaleString()} ISK)
-                                  </div>
-                                );
-                              })}
-                              {submission.employees.length > 2 && (
-                                <div className="text-xs text-gray-500">+{submission.employees.length - 2} more</div>
-                              )}
-                            </div>
-                          )}
-                        </div>
-                      </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="text-sm text-gray-900">
+                            <div className="font-semibold">{(submission.monthlyCost || 0).toLocaleString()} ISK</div>
+                            <div className="text-xs text-gray-500">monthly subscription</div>
+                          </div>
+                        </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="text-sm text-gray-900 max-w-xs">
                           {submission.notes ? (
@@ -1119,8 +1091,9 @@ export default function Admin() {
                           </button>
                         </div>
                       </td>
-                    </tr>
-                  ))}
+                      </tr>
+                    ))
+                  )}
                 </tbody>
               </table>
             </div>

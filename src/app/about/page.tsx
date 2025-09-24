@@ -4,6 +4,7 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import LanguageContent from '@/components/LanguageContent';
 import Navigation from '@/components/Navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function About() {
   const { t } = useLanguage();
@@ -26,6 +27,35 @@ export default function About() {
                 {(t) => t('about.hero.subtitle')}
               </LanguageContent>
             </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Founder Section */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-4xl mx-auto text-center">
+            <div className="mb-8">
+              <div className="relative w-48 h-48 mx-auto mb-6">
+                <Image
+                  src="/founder.jpg"
+                  alt="Founder of StraxKaka"
+                  width={192}
+                  height={192}
+                  className="rounded-full object-cover shadow-lg"
+                />
+              </div>
+              <h3 className="text-2xl font-bold text-gray-900 mb-2">
+                <LanguageContent fallback="Stofnandi StraxKaka">
+                  {(t) => t('about.founder.title')}
+                </LanguageContent>
+              </h3>
+              <p className="text-lg text-gray-600">
+                <LanguageContent fallback="Founder of StraxKaka">
+                  {(t) => t('about.founder.caption')}
+                </LanguageContent>
+              </p>
+            </div>
           </div>
         </div>
       </section>
