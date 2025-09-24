@@ -340,7 +340,6 @@ export default function Subscribe() {
                   {(t) => (
                     <>
                       <p><strong>{t('subscribe.form.format')}:</strong> {t('subscribe.form.format_example')}</p>
-                      <p><strong>{t('subscribe.form.sizes')}:</strong> small, medium, large, extra-large</p>
                       <p><strong>{t('subscribe.form.date_format')}:</strong> YYYY-MM-DD</p>
                     </>
                   )}

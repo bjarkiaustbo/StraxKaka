@@ -61,6 +61,7 @@ export default function Admin() {
   const [lastContactDate, setLastContactDate] = useState('');
   const [lastContactNotes, setLastContactNotes] = useState('');
   const [showQuickActions, setShowQuickActions] = useState<{submissionId: string} | null>(null);
+  const [showAnalytics, setShowAnalytics] = useState(false);
 
   // Check if already authenticated
   useEffect(() => {
@@ -528,9 +529,9 @@ export default function Admin() {
   }
 
   return (
-    <div className="min-h-screen bg-black">
-      {/* Enhanced Navigation */}
-      <nav className="bg-black shadow-2xl border-b border-yellow-500/20">
+    <div className="min-h-screen bg-white">
+      {/* Clean Navigation */}
+      <nav className="bg-white shadow-lg border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-6">
             <div className="flex items-center">
@@ -539,10 +540,10 @@ export default function Admin() {
                 alt="Strax Logo" 
                 className="h-10 w-auto mr-3"
               />
-              <span className="text-3xl font-bold text-yellow-500">Strax Admin</span>
+              <span className="text-3xl font-bold text-black">Strax Admin</span>
             </div>
             <div className="flex items-center space-x-6">
-              <Link href="/" className="text-gray-300 hover:text-yellow-400 transition-colors text-sm font-medium px-3 py-2 rounded-lg hover:bg-yellow-500/10">
+              <Link href="/" className="text-gray-600 hover:text-black transition-colors text-sm font-medium px-3 py-2 rounded-lg hover:bg-gray-100">
                 Back to Homepage
               </Link>
             </div>
@@ -553,113 +554,119 @@ export default function Admin() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-yellow-500 mb-4">Admin Dashboard</h1>
-          <p className="text-gray-300 text-lg">Manage company subscriptions and employees</p>
+          <h1 className="text-4xl font-bold text-black mb-4">Admin Dashboard</h1>
+          <p className="text-gray-600 text-lg">Manage company subscriptions and employees</p>
         </div>
 
         {/* Stats */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6 mb-8">
-          <div className="bg-gray-900 rounded-xl shadow-2xl p-6 border border-yellow-500/20">
+          <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
             <div className="flex items-center">
-              <div className="p-3 bg-yellow-500/20 rounded-xl">
-                <svg className="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="p-3 bg-yellow-500 rounded-xl">
+                <svg className="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                 </svg>
               </div>
               <div className="ml-4">
-                <p className="text-2xl font-bold text-yellow-500">{totalCompanies}</p>
-                <p className="text-sm font-medium text-gray-300">Total Companies</p>
+                <p className="text-2xl font-bold text-black">{totalCompanies}</p>
+                <p className="text-sm font-medium text-gray-600">Total Companies</p>
               </div>
             </div>
           </div>
 
-          <div className="bg-gray-900 rounded-xl shadow-2xl p-6 border border-yellow-500/20">
+          <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
             <div className="flex items-center">
-              <div className="p-3 bg-green-500/20 rounded-xl">
-                <svg className="w-6 h-6 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="p-3 bg-yellow-500 rounded-xl">
+                <svg className="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               </div>
               <div className="ml-4">
-                <p className="text-2xl font-bold text-green-500">{activeCompanies}</p>
-                <p className="text-sm font-medium text-gray-300">Active Companies</p>
+                <p className="text-2xl font-bold text-black">{activeCompanies}</p>
+                <p className="text-sm font-medium text-gray-600">Active Companies</p>
               </div>
             </div>
           </div>
 
-          <div className="bg-gray-900 rounded-xl shadow-2xl p-6 border border-yellow-500/20">
+          <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
             <div className="flex items-center">
-              <div className="p-3 bg-blue-500/20 rounded-xl">
-                <svg className="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="p-3 bg-yellow-500 rounded-xl">
+                <svg className="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" />
                 </svg>
               </div>
               <div className="ml-4">
-                <p className="text-2xl font-bold text-blue-500">{activeEmployees}</p>
-                <p className="text-sm font-medium text-gray-300">Active Employees</p>
+                <p className="text-2xl font-bold text-black">{activeEmployees}</p>
+                <p className="text-sm font-medium text-gray-600">Active Employees</p>
               </div>
             </div>
           </div>
 
-          <div className="bg-gray-900 rounded-xl shadow-2xl p-6 border border-yellow-500/20">
+          <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
             <div className="flex items-center">
-              <div className="p-3 bg-purple-500/20 rounded-xl">
-                <svg className="w-6 h-6 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="p-3 bg-yellow-500 rounded-xl">
+                <svg className="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>
               </div>
               <div className="ml-4">
-                <p className="text-2xl font-bold text-purple-500">{todaysDeliveries}</p>
-                <p className="text-sm font-medium text-gray-300">Today&apos;s Deliveries</p>
+                <p className="text-2xl font-bold text-black">{todaysDeliveries}</p>
+                <p className="text-sm font-medium text-gray-600">Today&apos;s Deliveries</p>
               </div>
             </div>
           </div>
 
-          <div className="bg-gray-900 rounded-xl shadow-2xl p-6 border border-yellow-500/20">
+          <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
             <div className="flex items-center">
-              <div className="p-3 bg-orange-500/20 rounded-xl">
-                <svg className="w-6 h-6 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="p-3 bg-yellow-500 rounded-xl">
+                <svg className="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
                 </svg>
               </div>
               <div className="ml-4">
-                <p className="text-2xl font-bold text-orange-500">{pendingDeliveries}</p>
-                <p className="text-sm font-medium text-gray-300">Pending Deliveries</p>
+                <p className="text-2xl font-bold text-black">{pendingDeliveries}</p>
+                <p className="text-sm font-medium text-gray-600">Pending Deliveries</p>
               </div>
             </div>
           </div>
 
-          <div className="bg-gray-900 rounded-xl shadow-2xl p-6 border border-yellow-500/20">
+          <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
             <div className="flex items-center">
-              <div className="p-3 bg-red-500/20 rounded-xl">
-                <svg className="w-6 h-6 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="p-3 bg-yellow-500 rounded-xl">
+                <svg className="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
                 </svg>
               </div>
               <div className="ml-4">
-                <p className="text-2xl font-bold text-red-500">{overduePayments}</p>
-                <p className="text-sm font-medium text-gray-300">Overdue Payments</p>
+                <p className="text-2xl font-bold text-black">{overduePayments}</p>
+                <p className="text-sm font-medium text-gray-600">Overdue Payments</p>
               </div>
             </div>
           </div>
         </div>
 
         {/* Phase 1: Quick Actions Bar */}
-        <div className="bg-gray-900 rounded-xl shadow-2xl p-6 mb-8 border border-yellow-500/20">
+        <div className="bg-white rounded-xl shadow-lg p-6 mb-8 border border-gray-200">
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div className="flex items-center space-x-4">
-              <h3 className="text-lg font-semibold text-yellow-500">Quick Actions</h3>
+              <h3 className="text-lg font-semibold text-black">Quick Actions</h3>
               <button
                 onClick={() => setShowCalendar(!showCalendar)}
-                className="px-4 py-2 bg-yellow-500/20 text-yellow-500 rounded-lg text-sm font-medium hover:bg-yellow-500/30 transition-colors border border-yellow-500/30"
+                className="px-4 py-2 bg-yellow-500 text-black rounded-lg text-sm font-medium hover:bg-yellow-600 transition-colors"
               >
                 {showCalendar ? 'Hide Calendar' : 'Show Calendar'}
               </button>
+              <button
+                onClick={() => setShowAnalytics(!showAnalytics)}
+                className="px-4 py-2 bg-black text-white rounded-lg text-sm font-medium hover:bg-gray-800 transition-colors"
+              >
+                {showAnalytics ? 'Hide Analytics' : 'Show Analytics'}
+              </button>
             </div>
             <div className="flex items-center space-x-4">
-              <span className="text-sm text-gray-300">Upcoming Birthdays: <span className="text-yellow-500 font-semibold">{upcomingBirthdays}</span></span>
-              <span className="text-gray-500">|</span>
-              <span className="text-sm text-gray-300">Monthly Revenue: <span className="text-yellow-500 font-semibold">{totalRevenue.toLocaleString()} ISK</span></span>
+              <span className="text-sm text-gray-600">Upcoming Birthdays: <span className="text-black font-semibold">{upcomingBirthdays}</span></span>
+              <span className="text-gray-400">|</span>
+              <span className="text-sm text-gray-600">Monthly Revenue: <span className="text-black font-semibold">{totalRevenue.toLocaleString()} ISK</span></span>
             </div>
           </div>
         </div>
@@ -703,6 +710,54 @@ export default function Admin() {
               </div>
                 );
               })}
+            </div>
+          </div>
+        )}
+
+        {/* Analytics Section */}
+        {showAnalytics && (
+          <div className="bg-white rounded-xl shadow-lg p-6 mb-8 border border-gray-200">
+            <h3 className="text-lg font-semibold text-black mb-6">Company Analytics</h3>
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+              <div className="text-center">
+                <div className="text-3xl font-bold text-black mb-2">
+                  {Math.round((activeCompanies / totalCompanies) * 100)}%
+                </div>
+                <p className="text-sm text-gray-600">Active Rate</p>
+              </div>
+              <div className="text-center">
+                <div className="text-3xl font-bold text-black mb-2">
+                  {Math.round(activeEmployees / activeCompanies)}
+                </div>
+                <p className="text-sm text-gray-600">Avg Employees/Company</p>
+              </div>
+              <div className="text-center">
+                <div className="text-3xl font-bold text-black mb-2">
+                  {Math.round(totalRevenue / activeCompanies)}
+                </div>
+                <p className="text-sm text-gray-600">Avg Revenue/Company</p>
+              </div>
+              <div className="text-center">
+                <div className="text-3xl font-bold text-black mb-2">
+                  {Math.round((overduePayments / totalCompanies) * 100)}%
+                </div>
+                <p className="text-sm text-gray-600">Overdue Rate</p>
+              </div>
+            </div>
+            <div className="mt-6 pt-6 border-t border-gray-200">
+              <h4 className="text-md font-semibold text-black mb-4">Top Performing Companies</h4>
+              <div className="space-y-2">
+                {submissions
+                  .filter(sub => sub.subscriptionStatus === 'active')
+                  .sort((a, b) => (b.employees?.length || 0) - (a.employees?.length || 0))
+                  .slice(0, 5)
+                  .map((sub, index) => (
+                    <div key={sub.id} className="flex justify-between items-center py-2 px-3 bg-gray-50 rounded-lg">
+                      <span className="text-sm font-medium text-black">{sub.companyName}</span>
+                      <span className="text-sm text-gray-600">{sub.employees?.length || 0} employees</span>
+                    </div>
+                  ))}
+              </div>
             </div>
           </div>
         )}

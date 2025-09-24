@@ -444,6 +444,9 @@ const translations = {
     'services.delivery.feature2': 'Toppstig kökur',
     'services.delivery.feature3': 'Fjölbreytilegir valkostir',
     'services.delivery.feature4': 'Áreiðanleg afhending',
+    'services.cakes.title': 'Kökur sem við bjóðum upp á',
+    'services.cakes.subtitle': 'Flestir kökur eru af sömu stærð - fullkominn fyrir afmælisdaga',
+    'services.cakes.delivery_included': 'Afhending innifalin',
     
     // Contact page
     'contact.hero.title': 'Hafðu samband',
@@ -926,6 +929,9 @@ const translations = {
     'services.delivery.feature2': 'Reliable delivery',
     'services.delivery.feature3': 'Multiple options',
     'services.delivery.feature4': 'Quality assurance',
+    'services.cakes.title': 'Cakes We Offer',
+    'services.cakes.subtitle': 'Most cakes are the same size - perfect for birthdays',
+    'services.cakes.delivery_included': 'Delivery included',
     
     // Contact page
     'contact.hero.title': 'Contact Us',
