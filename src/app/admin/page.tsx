@@ -242,15 +242,8 @@ export default function Admin() {
       // Convert data to CSV format
       const csvContent = data.map(row => row.map(field => `"${field}"`).join(',')).join('\n');
       
-      // Create a Google Sheets URL with the data
-      const encodedData = encodeURIComponent(csvContent);
-      const googleSheetsUrl = `https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit?usp=sharing&gid=0&single=true&output=csv&data=${encodedData}`;
-      
-      // Open in new tab
-      window.open(googleSheetsUrl, '_blank');
-      
-      // Also provide a direct download option
-      const blob = new Blob([csvContent], { type: 'text/csv' });
+      // Create a downloadable CSV file that can be imported to Google Sheets
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
@@ -259,6 +252,9 @@ export default function Admin() {
       a.click();
       window.URL.revokeObjectURL(url);
       document.body.removeChild(a);
+      
+      // Show instructions for importing to Google Sheets
+      alert('CSV file downloaded! To import to Google Sheets:\n1. Go to sheets.google.com\n2. Click "Blank" to create a new sheet\n3. Go to File > Import\n4. Upload the downloaded CSV file\n5. Choose "Replace current sheet" and click "Import data"');
       
     } catch (error) {
       console.error('Error exporting to Google Sheets:', error);
@@ -1387,70 +1383,64 @@ export default function Admin() {
                       </div>
                       <div className="max-h-60 overflow-y-auto space-y-2">
                     {selectedSubmission.employees.map((employee, index) => (
-                          <div key={index} className="border border-gray-200 rounded-lg p-3">
-                            <div className="flex justify-between items-start">
-                              <div className="flex-1">
-                            <p className="font-medium text-gray-900">{employee.name}</p>
-                            <p className="text-sm text-gray-600">
-                                  Birthday: {new Date(employee.birthday).toLocaleDateString()}
-                                </p>
-                                <p className="text-sm text-gray-600">Cake: {employee.cakeType}</p>
-                            {employee.dietaryRestrictions && (
-                                  <p className="text-sm text-red-600">
-                                    Restrictions: {employee.dietaryRestrictions}
-                              </p>
-                            )}
-                            {employee.specialNotes && (
-                                  <p className="text-sm text-gray-500">
-                                    Notes: {employee.specialNotes}
-                              </p>
-                            )}
-                                <div className="mt-2 flex items-center space-x-2">
-                                  <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                                    employee.deliveryStatus === 'delivered' ? 'bg-green-100 text-green-800' :
-                                    employee.deliveryStatus === 'out_for_delivery' ? 'bg-blue-100 text-blue-800' :
-                                    employee.deliveryStatus === 'confirmed' ? 'bg-yellow-100 text-yellow-800' :
-                                    employee.deliveryStatus === 'failed' ? 'bg-red-100 text-red-800' :
-                                    'bg-gray-100 text-gray-800'
-                                  }`}>
-                                    {employee.deliveryStatus?.replace('_', ' ') || 'pending'}
-                                  </span>
-                                  <select
-                                    value={employee.deliveryStatus || 'pending'}
-                                    onChange={(e) => updateDeliveryStatusWithWebhook(selectedSubmission.id, index, e.target.value as Employee['deliveryStatus'])}
-                                    className="text-xs border border-gray-300 rounded px-2 py-1"
-                                  >
-                                    <option value="pending">Pending</option>
-                                    <option value="confirmed">Confirmed</option>
-                                    <option value="out_for_delivery">Out for Delivery</option>
-                                    <option value="delivered">Delivered</option>
-                                    <option value="failed">Failed</option>
-                                  </select>
+                          <div key={index} className="border border-gray-200 rounded-lg p-3 hover:bg-gray-50 transition-colors">
+                            <div className="flex justify-between items-center">
+                              <div className="flex-1 min-w-0">
+                                <div className="flex items-center space-x-3">
+                                  <div className="flex-1 min-w-0">
+                                    <p className="font-medium text-gray-900 truncate">{employee.name}</p>
+                                    <div className="flex items-center space-x-4 text-xs text-gray-600 mt-1">
+                                      <span>🎂 {new Date(employee.birthday).toLocaleDateString()}</span>
+                                      <span>🍰 {employee.cakeType || 'No cake selected'}</span>
+                                      <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+                                        employee.employmentStatus === 'active' ? 'bg-green-100 text-green-800' :
+                                        employee.employmentStatus === 'inactive' ? 'bg-yellow-100 text-yellow-800' :
+                                        'bg-red-100 text-red-800'
+                                      }`}>
+                                        {employee.employmentStatus || 'Unknown'}
+                                      </span>
+                                    </div>
+                                    {(employee.dietaryRestrictions || employee.specialNotes) && (
+                                      <div className="mt-1 text-xs text-gray-500">
+                                        {employee.dietaryRestrictions && (
+                                          <span className="text-red-600">⚠️ {employee.dietaryRestrictions}</span>
+                                        )}
+                                        {employee.dietaryRestrictions && employee.specialNotes && <span> • </span>}
+                                        {employee.specialNotes && (
+                                          <span>📝 {employee.specialNotes}</span>
+                                        )}
+                                      </div>
+                                    )}
+                                  </div>
+                                  <div className="flex items-center space-x-2">
+                                    <select
+                                      value={employee.deliveryStatus || 'pending'}
+                                      onChange={(e) => updateDeliveryStatusWithWebhook(selectedSubmission.id, index, e.target.value as Employee['deliveryStatus'])}
+                                      className="text-xs border border-gray-300 rounded px-2 py-1 bg-white"
+                                    >
+                                      <option value="pending">Pending</option>
+                                      <option value="confirmed">Confirmed</option>
+                                      <option value="out_for_delivery">Out for Delivery</option>
+                                      <option value="delivered">Delivered</option>
+                                      <option value="failed">Failed</option>
+                                    </select>
+                                    <button
+                                      onClick={() => setEditingEmployee({submissionId: selectedSubmission.id, employeeIndex: index})}
+                                      className="px-2 py-1 text-xs bg-blue-100 text-blue-800 rounded hover:bg-blue-200 transition-colors"
+                                    >
+                                      ✏️ Edit
+                                    </button>
+                                    <button
+                                      onClick={() => removeEmployee(selectedSubmission.id, index)}
+                                      className="px-2 py-1 text-xs bg-red-100 text-red-800 rounded hover:bg-red-200 transition-colors"
+                                    >
+                                      🗑️ Remove
+                                    </button>
+                                  </div>
                                 </div>
                               </div>
-                              <div className="flex flex-col space-y-1 ml-2">
-                                <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                                  employee.employmentStatus === 'active' ? 'bg-green-100 text-green-800' :
-                                  employee.employmentStatus === 'inactive' ? 'bg-yellow-100 text-yellow-800' :
-                                  'bg-red-100 text-red-800'
-                                }`}>
-                                  {employee.employmentStatus || 'Unknown'}
-                                </span>
-                                <button
-                                  onClick={() => setEditingEmployee({submissionId: selectedSubmission.id, employeeIndex: index})}
-                                  className="text-xs text-blue-600 hover:text-blue-800"
-                                >
-                                  Edit
-                                </button>
-                                <button
-                                  onClick={() => removeEmployee(selectedSubmission.id, index)}
-                                  className="text-xs text-red-600 hover:text-red-800"
-                                >
-                                  Remove
-                                </button>
+                            </div>
                           </div>
-                        </div>
-                      </div>
                     ))}
                   </div>
                 </div>
