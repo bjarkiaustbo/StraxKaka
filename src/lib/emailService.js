@@ -141,6 +141,105 @@ Time: ${new Date().toLocaleString('is-IS', { timeZone: 'Atlantic/Reykjavik' })}
   }
 };
 
-// Create reusable transporter object using SMTP transport
+// Send detailed subscription notification with employee data
+export const sendDetailedSubscriptionNotification = async (subscriptionData) => {
+  const { 
+    companyName, 
+    contactPersonName, 
+    contactEmail, 
+    contactPhone, 
+    deliveryAddress, 
+    subscriptionTier, 
+    monthlyCost, 
+    employees = [] 
+  } = subscriptionData;
+  
+  try {
+    const transporter = createTransporter();
+    
+    // Format employees data
+    const employeesList = employees.map((emp, index) => `
+      Employee ${index + 1}:
+      - Name: ${emp.name}
+      - Birthday: ${new Date(emp.birthday).toLocaleDateString('is-IS')}
+      - Cake Type: ${emp.cakeType || 'Not selected'}
+      - Dietary Restrictions: ${emp.dietaryRestrictions || 'None'}
+      - Special Notes: ${emp.specialNotes || 'None'}
+    `).join('\n');
+    
+    const emailContent = `
+New Detailed Subscription Request from StraxKaka Website
+
+COMPANY INFORMATION:
+Company: ${companyName}
+Contact Person: ${contactPersonName}
+Contact Email: ${contactEmail}
+Contact Phone: ${contactPhone}
+Delivery Address: ${deliveryAddress}
+Subscription Tier: ${subscriptionTier}
+Monthly Cost: ${monthlyCost} ISK
+
+EMPLOYEES (${employees.length} total):
+${employeesList}
+
+---
+Sent from StraxKaka Subscription System
+Time: ${new Date().toLocaleString('is-IS', { timeZone: 'Atlantic/Reykjavik' })}
+    `.trim();
+
+    const htmlContent = `
+      <div style="font-family: Arial, sans-serif; max-width: 700px; margin: 0 auto;">
+        <h2 style="color: #f59e0b; border-bottom: 2px solid #f59e0b; padding-bottom: 10px;">
+          🎂 New Detailed Subscription Request from StraxKaka Website
+        </h2>
+        
+        <div style="background-color: #f9fafb; padding: 20px; border-radius: 8px; margin: 20px 0;">
+          <h3 style="color: #374151; margin-top: 0;">Company Information</h3>
+          <p><strong>Company:</strong> ${companyName}</p>
+          <p><strong>Contact Person:</strong> ${contactPersonName}</p>
+          <p><strong>Contact Email:</strong> <a href="mailto:${contactEmail}">${contactEmail}</a></p>
+          <p><strong>Contact Phone:</strong> <a href="tel:${contactPhone}">${contactPhone}</a></p>
+          <p><strong>Delivery Address:</strong> ${deliveryAddress}</p>
+          <p><strong>Subscription Tier:</strong> ${subscriptionTier}</p>
+          <p><strong>Monthly Cost:</strong> ${monthlyCost} ISK</p>
+        </div>
+        
+        <div style="background-color: #ffffff; padding: 20px; border: 1px solid #e5e7eb; border-radius: 8px; margin: 20px 0;">
+          <h3 style="color: #374151; margin-top: 0;">Employees (${employees.length} total)</h3>
+          ${employees.map((emp, index) => `
+            <div style="background-color: #f8fafc; padding: 15px; border-radius: 6px; margin: 10px 0; border-left: 4px solid #f59e0b;">
+              <h4 style="margin: 0 0 10px 0; color: #1f2937;">Employee ${index + 1}: ${emp.name}</h4>
+              <p style="margin: 5px 0;"><strong>🎂 Birthday:</strong> ${new Date(emp.birthday).toLocaleDateString('is-IS')}</p>
+              <p style="margin: 5px 0;"><strong>🍰 Cake Type:</strong> ${emp.cakeType || 'Not selected'}</p>
+              <p style="margin: 5px 0;"><strong>⚠️ Dietary Restrictions:</strong> ${emp.dietaryRestrictions || 'None'}</p>
+              <p style="margin: 5px 0;"><strong>📝 Special Notes:</strong> ${emp.specialNotes || 'None'}</p>
+            </div>
+          `).join('')}
+        </div>
+        
+        <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e5e7eb; color: #6b7280; font-size: 14px;">
+          <p>Sent from StraxKaka Subscription System</p>
+          <p>Time: ${new Date().toLocaleString('is-IS', { timeZone: 'Atlantic/Reykjavik' })}</p>
+        </div>
+      </div>
+    `;
+
+    const info = await transporter.sendMail({
+      from: process.env.SMTP_FROM || process.env.SMTP_USER,
+      to: 'orders.straxkaka@outlook.com',
+      subject: `🎂 New Subscription: ${companyName} (${employees.length} employees)`,
+      text: emailContent,
+      html: htmlContent,
+      replyTo: contactEmail,
+    });
+
+    console.log('Detailed subscription email sent successfully:', info.messageId);
+    return { success: true, messageId: info.messageId };
+    
+  } catch (error) {
+    console.error('Detailed subscription email sending failed:', error);
+    return { success: false, error: error.message };
+  }
+};
 
 

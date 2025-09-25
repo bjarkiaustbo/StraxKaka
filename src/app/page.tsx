@@ -6,6 +6,7 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
 import LanguageContent from '@/components/LanguageContent';
 import Navigation from '@/components/Navigation';
+import MobileBottomNav from '@/components/MobileBottomNav';
 import PricingTable from '@/components/PricingTable';
 
 export default function Home() {
@@ -458,6 +459,9 @@ export default function Home() {
           </div>
         </div>
       </footer>
+      
+      {/* Mobile Bottom Navigation */}
+      <MobileBottomNav currentPage="home" />
     </div>
   );
 }

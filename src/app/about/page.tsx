@@ -3,6 +3,7 @@
 import { useLanguage } from '@/contexts/LanguageContext';
 import LanguageContent from '@/components/LanguageContent';
 import Navigation from '@/components/Navigation';
+import MobileBottomNav from '@/components/MobileBottomNav';
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -10,7 +11,7 @@ export default function About() {
   const { t } = useLanguage();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 pb-20 md:pb-0">
       <Navigation currentPage="about" />
       
       {/* Hero Section */}
@@ -303,6 +304,9 @@ export default function About() {
           </div>
         </div>
       </footer>
+      
+      {/* Mobile Bottom Navigation */}
+      <MobileBottomNav currentPage="about" />
     </div>
   );
 }

@@ -5,6 +5,7 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
 import LanguageContent from '@/components/LanguageContent';
 import Navigation from '@/components/Navigation';
+import MobileBottomNav from '@/components/MobileBottomNav';
 import { useState } from 'react';
 import Image from 'next/image';
 
@@ -103,7 +104,7 @@ export default function Services() {
     setCurrentCakeIndex((prev) => (prev - 1 + cakes.length) % cakes.length);
   };
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 pb-20 md:pb-0">
       <Navigation currentPage="services" />
 
       {/* Hero Section */}
@@ -579,6 +580,9 @@ export default function Services() {
           </div>
         </div>
       </footer>
+      
+      {/* Mobile Bottom Navigation */}
+      <MobileBottomNav currentPage="services" />
     </div>
   );
 }

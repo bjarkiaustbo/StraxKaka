@@ -245,6 +245,24 @@ export default function Subscription() {
       const existingSubscriptions = JSON.parse(localStorage.getItem('straxkaka_subscriptions') || '[]');
       existingSubscriptions.push(subscriptionData);
       localStorage.setItem('straxkaka_subscriptions', JSON.stringify(existingSubscriptions));
+
+      // Send email notification
+      try {
+        const emailResponse = await fetch('/api/subscription/notify', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(subscriptionData),
+        });
+
+        if (!emailResponse.ok) {
+          console.warn('Email notification failed, but subscription was saved');
+        }
+      } catch (emailError) {
+        console.warn('Email notification error:', emailError);
+        // Don't fail the submission if email fails
+      }
       
       if (paymentMethod === 'aur') {
         setSuccess(t('subscription.payment.success_message'));
