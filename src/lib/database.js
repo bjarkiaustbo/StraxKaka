@@ -1,7 +1,7 @@
-// Cross-device data storage using file-based API
-const API_BASE = '/api/data/submissions';
+// Cross-device data storage using simple API
+const API_BASE = '/api/submissions';
 
-// Read submissions from file-based API
+// Read submissions from API
 export const readSubmissions = async () => {
   try {
     const response = await fetch(API_BASE);
@@ -18,7 +18,7 @@ export const readSubmissions = async () => {
   }
 };
 
-// Write submissions to file-based API
+// Write submissions to API
 export const writeSubmissions = async (submissions) => {
   try {
     const response = await fetch(API_BASE, {

@@ -107,7 +107,7 @@ export default function Admin() {
       
       // Load from cross-device API first
       console.log('Loading data from cross-device API...');
-      const response = await fetch('/api/data/submissions');
+      const response = await fetch('/api/submissions');
       
       if (response.ok) {
         const data = await response.json();

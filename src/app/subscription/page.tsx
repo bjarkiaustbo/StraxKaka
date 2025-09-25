@@ -248,7 +248,7 @@ export default function Subscription() {
       
       try {
         // Get existing data from API
-        const response = await fetch('/api/data/submissions');
+        const response = await fetch('/api/submissions');
         
         if (response.ok) {
           const data = await response.json();
@@ -261,7 +261,7 @@ export default function Subscription() {
         console.log('Added new submission, total count:', existingSubmissions.length);
         
         // Save back to API
-        const saveResponse = await fetch('/api/data/submissions', {
+        const saveResponse = await fetch('/api/submissions', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
