@@ -174,7 +174,7 @@ export default function About() {
             <div>
               <h3 className="text-xl font-bold mb-4 text-yellow-500">StraxKaka</h3>
               <p className="text-gray-400">
-                <LanguageContent fallback="Lausn fyrir gleymdir afmælisdaga. Við muna fyrir þig.">
+                <LanguageContent fallback="Lausn fyrir gleymdir afmælisdagar. Við munum fyrir þig.">
                   {(t) => t('footer.description')}
                 </LanguageContent>
               </p>
