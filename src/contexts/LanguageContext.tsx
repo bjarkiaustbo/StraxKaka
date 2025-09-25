@@ -830,6 +830,7 @@ const translations = {
     'pricing.little_company': 'Little Company (1-25 employees)',
     'pricing.little_company_price': '15,000 ISK per month + cake costs',
     'pricing.contact_for_pricing': 'Contact for pricing',
+    'pricing.for_pricing': 'for pricing',
     'pricing.recommended': 'Recommended',
     'pricing.per_month': 'per month',
     'pricing.employees': 'employees',

@@ -104,11 +104,16 @@ export default function Admin() {
   const loadData = async () => {
     try {
       setLoading(true);
+      console.log('Loading data from server...');
       const response = await fetch('/api/submissions/sync');
+      console.log('Server response:', response.status);
+      
       if (response.ok) {
         const data = await response.json();
+        console.log('Server data:', data);
         setSubmissions(data.submissions || []);
       } else {
+        console.log('Server failed, falling back to localStorage');
         // Fallback to localStorage if server fails
         const storedSubmissions = localStorage.getItem('straxkaka_submissions');
         const storedSubscriptions = localStorage.getItem('straxkaka_subscriptions');
@@ -766,33 +771,35 @@ export default function Admin() {
         </div>
 
         {/* Phase 1: Quick Actions Bar */}
-        <div className="bg-white rounded-xl shadow-lg p-6 mb-8 border border-gray-200">
-          <div className="flex flex-wrap items-center justify-between gap-4">
-            <div className="flex items-center space-x-4">
+        <div className="bg-white rounded-xl shadow-lg p-4 md:p-6 mb-8 border border-gray-200">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div className="flex flex-col md:flex-row md:items-center space-y-2 md:space-y-0 md:space-x-4">
               <h3 className="text-lg font-semibold text-black">Quick Actions</h3>
-              <button
-                onClick={() => setShowCalendar(!showCalendar)}
-                className="px-4 py-2 bg-yellow-500 text-black rounded-lg text-sm font-medium hover:bg-yellow-600 transition-colors"
-              >
-                {showCalendar ? 'Hide Calendar' : 'Show Calendar'}
-              </button>
-              <button
-                onClick={() => setShowAnalytics(!showAnalytics)}
-                className="px-4 py-2 bg-black text-white rounded-lg text-sm font-medium hover:bg-gray-800 transition-colors"
-              >
-                {showAnalytics ? 'Hide Analytics' : 'Show Analytics'}
-              </button>
-              <button
-                onClick={() => setShowQuickStats(!showQuickStats)}
-                className="px-4 py-2 bg-yellow-500 text-black rounded-lg text-sm font-medium hover:bg-yellow-600 transition-colors"
-              >
-                {showQuickStats ? 'Hide Quick Stats' : 'Show Quick Stats'}
-              </button>
+              <div className="flex flex-wrap gap-2">
+                <button
+                  onClick={() => setShowCalendar(!showCalendar)}
+                  className="px-3 py-2 md:px-4 md:py-2 bg-yellow-500 text-black rounded-lg text-xs md:text-sm font-medium hover:bg-yellow-600 transition-colors"
+                >
+                  {showCalendar ? 'Hide Calendar' : 'Show Calendar'}
+                </button>
+                <button
+                  onClick={() => setShowAnalytics(!showAnalytics)}
+                  className="px-3 py-2 md:px-4 md:py-2 bg-black text-white rounded-lg text-xs md:text-sm font-medium hover:bg-gray-800 transition-colors"
+                >
+                  {showAnalytics ? 'Hide Analytics' : 'Show Analytics'}
+                </button>
+                <button
+                  onClick={() => setShowQuickStats(!showQuickStats)}
+                  className="px-3 py-2 md:px-4 md:py-2 bg-yellow-500 text-black rounded-lg text-xs md:text-sm font-medium hover:bg-yellow-600 transition-colors"
+                >
+                  {showQuickStats ? 'Hide Quick Stats' : 'Show Quick Stats'}
+                </button>
+              </div>
             </div>
-            <div className="flex items-center space-x-4">
-              <span className="text-sm text-gray-600">Upcoming Birthdays: <span className="text-black font-semibold">{upcomingBirthdays}</span></span>
-              <span className="text-gray-400">|</span>
-              <span className="text-sm text-gray-600">Monthly Revenue: <span className="text-black font-semibold">{totalRevenue.toLocaleString()} ISK</span></span>
+            <div className="flex flex-col md:flex-row md:items-center space-y-2 md:space-y-0 md:space-x-4">
+              <span className="text-xs md:text-sm text-gray-600">Upcoming Birthdays: <span className="text-black font-semibold">{upcomingBirthdays}</span></span>
+              <span className="hidden md:inline text-gray-400">|</span>
+              <span className="text-xs md:text-sm text-gray-600">Monthly Revenue: <span className="text-black font-semibold">{totalRevenue.toLocaleString()} ISK</span></span>
             </div>
           </div>
         </div>
