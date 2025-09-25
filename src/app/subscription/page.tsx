@@ -242,47 +242,31 @@ export default function Subscription() {
         orderId: orderId
       };
 
-      // Save to server first
-      let existingSubmissions = [];
+      // Save to localStorage first (primary storage)
+      console.log('Saving subscription to localStorage...');
+      const existingSubscriptions = JSON.parse(localStorage.getItem('straxkaka_subscriptions') || '[]');
+      existingSubscriptions.push(subscriptionData);
+      localStorage.setItem('straxkaka_subscriptions', JSON.stringify(existingSubscriptions));
+      console.log('Data saved to localStorage:', existingSubscriptions.length, 'total subscriptions');
+      
+      // Try to sync with server (optional)
       try {
-        console.log('Fetching existing submissions from server...');
-        const response = await fetch('/api/submissions/sync');
-        console.log('Server response status:', response.status);
-        
-        if (response.ok) {
-          const data = await response.json();
-          console.log('Server data received:', data);
-          existingSubmissions = data.submissions || [];
-        }
-        
-        console.log('Current submissions count:', existingSubmissions.length);
-        existingSubmissions.push(subscriptionData);
-        console.log('After adding new submission:', existingSubmissions.length);
-        
-        console.log('Sending updated submissions to server...');
+        console.log('Attempting to sync with server...');
         const syncResponse = await fetch('/api/submissions/sync', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ submissions: existingSubmissions }),
+          body: JSON.stringify({ submissions: existingSubscriptions }),
         });
         
-        console.log('Sync response status:', syncResponse.status);
-        if (!syncResponse.ok) {
-          const errorText = await syncResponse.text();
-          console.error('Sync failed with response:', errorText);
-          throw new Error('Failed to sync with server');
+        if (syncResponse.ok) {
+          console.log('Data successfully synced to server');
+        } else {
+          console.warn('Server sync failed, but data is saved locally');
         }
-        
-        console.log('Data successfully synced to server');
       } catch (syncError) {
-        console.warn('Server sync failed, falling back to localStorage:', syncError);
-        // Fallback to localStorage
-        existingSubmissions = JSON.parse(localStorage.getItem('straxkaka_subscriptions') || '[]');
-        existingSubmissions.push(subscriptionData);
-        localStorage.setItem('straxkaka_subscriptions', JSON.stringify(existingSubmissions));
-        console.log('Data saved to localStorage as fallback');
+        console.warn('Server sync failed, but data is saved locally:', syncError);
       }
 
       // Send email notification (optional)

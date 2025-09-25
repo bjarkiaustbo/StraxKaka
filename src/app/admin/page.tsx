@@ -104,38 +104,50 @@ export default function Admin() {
   const loadData = async () => {
     try {
       setLoading(true);
-      console.log('Loading data from server...');
-      const response = await fetch('/api/submissions/sync');
-      console.log('Server response:', response.status);
       
-      if (response.ok) {
-        const data = await response.json();
-        console.log('Server data:', data);
-        console.log('Submissions count:', data.submissions?.length || 0);
-        setSubmissions(data.submissions || []);
-      } else {
-        console.log('Server failed, falling back to localStorage');
-        // Fallback to localStorage if server fails
-        const storedSubmissions = localStorage.getItem('straxkaka_submissions');
-        const storedSubscriptions = localStorage.getItem('straxkaka_subscriptions');
-        
-        if (storedSubscriptions) {
-          setSubmissions(JSON.parse(storedSubscriptions));
-        } else if (storedSubmissions) {
-          setSubmissions(JSON.parse(storedSubmissions));
-        }
-      }
-    } catch (error) {
-      console.error('Error loading data:', error);
-      // Fallback to localStorage
+      // Always check localStorage first as primary source
+      console.log('Loading data from localStorage...');
       const storedSubmissions = localStorage.getItem('straxkaka_submissions');
       const storedSubscriptions = localStorage.getItem('straxkaka_subscriptions');
       
+      let localData = [];
       if (storedSubscriptions) {
-        setSubmissions(JSON.parse(storedSubscriptions));
+        localData = JSON.parse(storedSubscriptions);
+        console.log('Found subscriptions in localStorage:', localData.length);
       } else if (storedSubmissions) {
-        setSubmissions(JSON.parse(storedSubmissions));
+        localData = JSON.parse(storedSubmissions);
+        console.log('Found submissions in localStorage:', localData.length);
       }
+      
+      // Try to sync with server (optional)
+      try {
+        console.log('Attempting to sync with server...');
+        const response = await fetch('/api/submissions/sync');
+        if (response.ok) {
+          const data = await response.json();
+          console.log('Server data received:', data.submissions?.length || 0);
+          
+          // If server has data, use it; otherwise use localStorage
+          if (data.submissions && data.submissions.length > 0) {
+            setSubmissions(data.submissions);
+            console.log('Using server data:', data.submissions.length);
+          } else {
+            setSubmissions(localData);
+            console.log('Using localStorage data:', localData.length);
+          }
+        } else {
+          setSubmissions(localData);
+          console.log('Server failed, using localStorage data:', localData.length);
+        }
+      } catch (serverError) {
+        console.warn('Server sync failed, using localStorage:', serverError);
+        setSubmissions(localData);
+        console.log('Using localStorage data:', localData.length);
+      }
+      
+    } catch (error) {
+      console.error('Error loading data:', error);
+      setSubmissions([]);
     } finally {
       setLoading(false);
     }

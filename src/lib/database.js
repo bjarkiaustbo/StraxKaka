@@ -1,9 +1,10 @@
-// Simple in-memory storage for Vercel deployment
+// Simple in-memory storage that persists during the function execution
 let submissionsData = [];
 
 // Read submissions from memory
 export const readSubmissions = () => {
   try {
+    console.log('Reading submissions from memory:', submissionsData.length);
     return submissionsData;
   } catch (error) {
     console.error('Error reading submissions:', error);
@@ -15,7 +16,7 @@ export const readSubmissions = () => {
 export const writeSubmissions = (submissions) => {
   try {
     submissionsData = submissions;
-    console.log('Submissions updated:', submissions.length, 'entries');
+    console.log('Submissions updated in memory:', submissions.length, 'entries');
     return true;
   } catch (error) {
     console.error('Error writing submissions:', error);
