@@ -49,6 +49,7 @@ export default function Subscription() {
   });
   
   const [employees, setEmployees] = useState<Employee[]>([]);
+  const [savedEmployees, setSavedEmployees] = useState<Set<number>>(new Set());
   const [selectedTier, setSelectedTier] = useState<SubscriptionTier>('small');
   const [paymentMethod, setPaymentMethod] = useState<'aur' | 'bank_transfer'>('aur');
   const [showFileUpload, setShowFileUpload] = useState(false);
@@ -95,6 +96,29 @@ export default function Subscription() {
     setEmployees(prev => prev.map((emp, i) => 
       i === index ? { ...emp, [field]: value } : emp
     ));
+    // Remove from saved employees when editing
+    if (savedEmployees.has(index)) {
+      setSavedEmployees(prev => {
+        const newSet = new Set(prev);
+        newSet.delete(index);
+        return newSet;
+      });
+    }
+  };
+
+  const saveEmployee = (index: number) => {
+    const employee = employees[index];
+    if (employee.name && employee.birthday && employee.cakeType) {
+      setSavedEmployees(prev => new Set(prev).add(index));
+    }
+  };
+
+  const editEmployee = (index: number) => {
+    setSavedEmployees(prev => {
+      const newSet = new Set(prev);
+      newSet.delete(index);
+      return newSet;
+    });
   };
 
   const updateCompanyData = (field: keyof CompanyData, value: string) => {
@@ -647,114 +671,174 @@ export default function Subscription() {
             )}
 
             {/* Employee Forms */}
-            {employees.map((employee, index) => (
-              <div key={index} className="border border-gray-200 rounded-lg p-6 mb-6">
-                <div className="flex justify-between items-center mb-4">
-                  <LanguageContent fallback={
-                    <h3 className="text-lg font-semibold text-gray-900">Starfsmaður {index + 1}</h3>
-                  }>
-                    {(t) => <h3 className="text-lg font-semibold text-gray-900">{t('subscription.employees.employee')} {index + 1}</h3>}
-                  </LanguageContent>
-                  <button
-                    type="button"
-                    onClick={() => removeEmployee(index)}
-                    className="text-red-600 hover:text-red-700 font-medium"
-                  >
-                    <LanguageContent fallback="Fjarlægja">
-                      {(t) => t('subscription.employees.remove')}
-                    </LanguageContent>
-                  </button>
+            {employees.map((employee, index) => {
+              const isSaved = savedEmployees.has(index);
+              const isValid = employee.name && employee.birthday && employee.cakeType;
+              
+              return (
+                <div key={index} className={`border rounded-lg mb-4 transition-all duration-300 ${
+                  isSaved 
+                    ? 'border-green-300 bg-green-50 p-4' 
+                    : 'border-gray-200 bg-white p-6'
+                }`}>
+                  {isSaved ? (
+                    // Compact saved view
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center space-x-4 flex-1">
+                        <div className="flex items-center space-x-2">
+                          <span className="text-green-600 text-lg">✅</span>
+                          <span className="font-medium text-gray-900">{employee.name}</span>
+                        </div>
+                        <div className="flex items-center space-x-4 text-sm text-gray-600">
+                          <span>🎂 {new Date(employee.birthday).toLocaleDateString()}</span>
+                          <span>🍰 {CAKE_TYPES.find(cake => cake.id === employee.cakeType)?.nameIcelandic || employee.cakeType}</span>
+                          {employee.dietaryRestrictions && (
+                            <span className="text-red-600">⚠️ {employee.dietaryRestrictions}</span>
+                          )}
+                          {employee.specialNotes && (
+                            <span className="text-gray-500">📝 {employee.specialNotes}</span>
+                          )}
+                        </div>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <button
+                          type="button"
+                          onClick={() => editEmployee(index)}
+                          className="px-3 py-1 text-sm bg-blue-100 text-blue-800 rounded hover:bg-blue-200 transition-colors"
+                        >
+                          ✏️ Edit
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => removeEmployee(index)}
+                          className="px-3 py-1 text-sm bg-red-100 text-red-800 rounded hover:bg-red-200 transition-colors"
+                        >
+                          🗑️ Remove
+                        </button>
+                      </div>
+                    </div>
+                  ) : (
+                    // Full form view
+                    <>
+                      <div className="flex justify-between items-center mb-4">
+                        <LanguageContent fallback={
+                          <h3 className="text-lg font-semibold text-gray-900">Starfsmaður {index + 1}</h3>
+                        }>
+                          {(t) => <h3 className="text-lg font-semibold text-gray-900">{t('subscription.employees.employee')} {index + 1}</h3>}
+                        </LanguageContent>
+                        <div className="flex items-center space-x-2">
+                          {isValid && (
+                            <button
+                              type="button"
+                              onClick={() => saveEmployee(index)}
+                              className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors font-medium"
+                            >
+                              💾 Save
+                            </button>
+                          )}
+                          <button
+                            type="button"
+                            onClick={() => removeEmployee(index)}
+                            className="text-red-600 hover:text-red-700 font-medium"
+                          >
+                            <LanguageContent fallback="Fjarlægja">
+                              {(t) => t('subscription.employees.remove')}
+                            </LanguageContent>
+                          </button>
+                        </div>
+                      </div>
+
+                      <div className="grid md:grid-cols-2 gap-4">
+                        <div>
+                          <LanguageContent fallback={
+                            <label className="block text-sm font-medium text-gray-700 mb-2">Nafn *</label>
+                          }>
+                            {(t) => <label className="block text-sm font-medium text-gray-700 mb-2">{t('subscription.employees.name')} *</label>}
+                          </LanguageContent>
+                          <input
+                            type="text"
+                            required
+                            value={employee.name}
+                            onChange={(e) => updateEmployee(index, 'name', e.target.value)}
+                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                          />
+                        </div>
+
+                        <div>
+                          <LanguageContent fallback={
+                            <label className="block text-sm font-medium text-gray-700 mb-2">Afmælisdagur *</label>
+                          }>
+                            {(t) => <label className="block text-sm font-medium text-gray-700 mb-2">{t('subscription.employees.birthday')} *</label>}
+                          </LanguageContent>
+                          <BirthdayPicker
+                            value={employee.birthday}
+                            onChange={(value) => updateEmployee(index, 'birthday', value)}
+                            placeholder="Veldu afmælisdag"
+                            className="text-gray-700"
+                          />
+                          <p className="text-xs text-gray-500 mt-1">
+                            <LanguageContent fallback="Smelltu á reitinn til að velja dagsetningu">
+                              {(t) => t('subscription.employees.birthday_hint')}
+                            </LanguageContent>
+                          </p>
+                        </div>
+
+                        <div>
+                          <LanguageContent fallback={
+                            <label className="block text-sm font-medium text-gray-700 mb-2">Kökutegund *</label>
+                          }>
+                            {(t) => <label className="block text-sm font-medium text-gray-700 mb-2">{t('subscription.employees.cake_type')} *</label>}
+                          </LanguageContent>
+                          <select
+                            required
+                            value={employee.cakeType}
+                            onChange={(e) => updateEmployee(index, 'cakeType', e.target.value)}
+                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                          >
+                            <option value="">Veldu kökutegund</option>
+                            {CAKE_TYPES.map((cake) => (
+                              <option key={cake.id} value={cake.id}>
+                                {language === 'is' ? cake.nameIcelandic : cake.nameEnglish} - {cake.price.toLocaleString('is-IS')} ISK
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+
+                        <div>
+                          <LanguageContent fallback={
+                            <label className="block text-sm font-medium text-gray-700 mb-2">Matarheftir</label>
+                          }>
+                            {(t) => <label className="block text-sm font-medium text-gray-700 mb-2">{t('subscription.employees.dietary')}</label>}
+                          </LanguageContent>
+                          <input
+                            type="text"
+                            value={employee.dietaryRestrictions}
+                            onChange={(e) => updateEmployee(index, 'dietaryRestrictions', e.target.value)}
+                            placeholder="T.d. vegan, laktósa, nóta..."
+                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                          />
+                        </div>
+
+                        <div>
+                          <LanguageContent fallback={
+                            <label className="block text-sm font-medium text-gray-700 mb-2">Sérstakar athugasemdir</label>
+                          }>
+                            {(t) => <label className="block text-sm font-medium text-gray-700 mb-2">{t('subscription.employees.notes')}</label>}
+                          </LanguageContent>
+                          <input
+                            type="text"
+                            value={employee.specialNotes}
+                            onChange={(e) => updateEmployee(index, 'specialNotes', e.target.value)}
+                            placeholder="T.d. sérstök ósk um dekór..."
+                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                          />
+                        </div>
+                      </div>
+                    </>
+                  )}
                 </div>
-
-                <div className="grid md:grid-cols-2 gap-4">
-                  <div>
-                    <LanguageContent fallback={
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Nafn *</label>
-                    }>
-                      {(t) => <label className="block text-sm font-medium text-gray-700 mb-2">{t('subscription.employees.name')} *</label>}
-                    </LanguageContent>
-                    <input
-                      type="text"
-                      required
-                      value={employee.name}
-                      onChange={(e) => updateEmployee(index, 'name', e.target.value)}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
-                    />
-                  </div>
-
-                  <div>
-                    <LanguageContent fallback={
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Afmælisdagur *</label>
-                    }>
-                      {(t) => <label className="block text-sm font-medium text-gray-700 mb-2">{t('subscription.employees.birthday')} *</label>}
-                    </LanguageContent>
-                    <BirthdayPicker
-                      value={employee.birthday}
-                      onChange={(value) => updateEmployee(index, 'birthday', value)}
-                      placeholder="Veldu afmælisdag"
-                      className="text-gray-700"
-                    />
-                    <p className="text-xs text-gray-500 mt-1">
-                      <LanguageContent fallback="Smelltu á reitinn til að velja dagsetningu">
-                        {(t) => t('subscription.employees.birthday_hint')}
-                      </LanguageContent>
-                    </p>
-                  </div>
-
-                  <div>
-                    <LanguageContent fallback={
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Kökutegund *</label>
-                    }>
-                      {(t) => <label className="block text-sm font-medium text-gray-700 mb-2">{t('subscription.employees.cake_type')} *</label>}
-                    </LanguageContent>
-                    <select
-                      required
-                      value={employee.cakeType}
-                      onChange={(e) => updateEmployee(index, 'cakeType', e.target.value)}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
-                    >
-                      <option value="">Veldu kökutegund</option>
-                      {CAKE_TYPES.map((cake) => (
-                        <option key={cake.id} value={cake.id}>
-                          {language === 'is' ? cake.nameIcelandic : cake.nameEnglish} - {cake.price.toLocaleString('is-IS')} ISK
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-
-
-                  <div>
-                    <LanguageContent fallback={
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Matarheftir</label>
-                    }>
-                      {(t) => <label className="block text-sm font-medium text-gray-700 mb-2">{t('subscription.employees.dietary')}</label>}
-                    </LanguageContent>
-                    <input
-                      type="text"
-                      value={employee.dietaryRestrictions}
-                      onChange={(e) => updateEmployee(index, 'dietaryRestrictions', e.target.value)}
-                      placeholder="T.d. vegan, laktósa, nóta..."
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
-                    />
-                  </div>
-
-                  <div>
-                    <LanguageContent fallback={
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Sérstakar athugasemdir</label>
-                    }>
-                      {(t) => <label className="block text-sm font-medium text-gray-700 mb-2">{t('subscription.employees.notes')}</label>}
-                    </LanguageContent>
-                    <input
-                      type="text"
-                      value={employee.specialNotes}
-                      onChange={(e) => updateEmployee(index, 'specialNotes', e.target.value)}
-                      placeholder="T.d. sérstök ósk um dekór..."
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
-                    />
-                  </div>
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         )}
 

@@ -1391,6 +1391,7 @@ export default function Admin() {
                                     <p className="font-medium text-gray-900 truncate">{employee.name}</p>
                                     <div className="flex items-center space-x-4 text-xs text-gray-600 mt-1">
                                       <span>🎂 {new Date(employee.birthday).toLocaleDateString()}</span>
+                                      <span>📅 Delivery: {new Date(employee.birthday).toLocaleDateString()}</span>
                                       <span>🍰 {employee.cakeType || 'No cake selected'}</span>
                                       <span className={`px-2 py-1 rounded-full text-xs font-medium ${
                                         employee.employmentStatus === 'active' ? 'bg-green-100 text-green-800' :
