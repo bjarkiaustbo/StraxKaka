@@ -105,77 +105,81 @@ export default function Admin() {
     try {
       setLoading(true);
       
-      // Load from cross-device API first
-      console.log('Loading data from cross-device API...');
-      const response = await fetch('/api/submissions');
-      
-      if (response.ok) {
-        const data = await response.json();
-        console.log('Cross-device API data received:', data.submissions?.length || 0);
-        setSubmissions(data.submissions || []);
-      } else {
-        console.log('Cross-device API failed, falling back to localStorage');
-        // Fallback to localStorage
-        const storedSubmissions = localStorage.getItem('straxkaka_submissions');
-        const storedSubscriptions = localStorage.getItem('straxkaka_subscriptions');
-        
-        let localData = [];
-        if (storedSubscriptions) {
-          localData = JSON.parse(storedSubscriptions);
-          console.log('Found subscriptions in localStorage:', localData.length);
-        } else if (storedSubmissions) {
-          localData = JSON.parse(storedSubmissions);
-          console.log('Found submissions in localStorage:', localData.length);
-        }
-        
-        setSubmissions(localData);
-      }
-      
-    } catch (error) {
-      console.error('Error loading data:', error);
-      // Final fallback to localStorage
+      // Load from localStorage (primary storage)
+      console.log('Loading data from localStorage...');
       const storedSubmissions = localStorage.getItem('straxkaka_submissions');
       const storedSubscriptions = localStorage.getItem('straxkaka_subscriptions');
       
       let localData = [];
       if (storedSubscriptions) {
         localData = JSON.parse(storedSubscriptions);
+        console.log('Found subscriptions in localStorage:', localData.length);
       } else if (storedSubmissions) {
         localData = JSON.parse(storedSubmissions);
+        console.log('Found submissions in localStorage:', localData.length);
       }
       
       setSubmissions(localData);
+      console.log('Loaded from localStorage:', localData.length);
+      
+    } catch (error) {
+      console.error('Error loading data:', error);
+      setSubmissions([]);
     } finally {
       setLoading(false);
     }
   };
 
-  // Sync data with server
+  // Manual sync - copy data to clipboard for sharing
   const syncData = async () => {
     try {
-      const response = await fetch('/api/submissions/sync', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ submissions }),
-      });
+      const dataToShare = {
+        submissions,
+        timestamp: new Date().toISOString(),
+        device: navigator.userAgent
+      };
       
-      if (response.ok) {
-        console.log('Data synced successfully');
-      }
+      const dataString = JSON.stringify(dataToShare, null, 2);
+      await navigator.clipboard.writeText(dataString);
+      
+      alert('Data copied to clipboard! You can now paste this into another device to sync data.');
+      console.log('Data copied to clipboard for sharing');
     } catch (error) {
-      console.error('Sync error:', error);
+      console.error('Error copying data:', error);
+      alert('Failed to copy data. Please try again.');
     }
   };
 
-  // Auto-sync every 30 seconds
+  // Import data from clipboard
+  const importData = async () => {
+    try {
+      const clipboardText = await navigator.clipboard.readText();
+      const importedData = JSON.parse(clipboardText);
+      
+      if (importedData.submissions && Array.isArray(importedData.submissions)) {
+        setSubmissions(importedData.submissions);
+        
+        // Save to localStorage
+        localStorage.setItem('straxkaka_subscriptions', JSON.stringify(importedData.submissions));
+        
+        alert(`Successfully imported ${importedData.submissions.length} submissions!`);
+        console.log('Data imported from clipboard:', importedData.submissions.length);
+      } else {
+        alert('Invalid data format. Please make sure you copied the correct data.');
+      }
+    } catch (error) {
+      console.error('Error importing data:', error);
+      alert('Failed to import data. Please check the format and try again.');
+    }
+  };
+
+  // Auto-refresh data every 30 seconds
   useEffect(() => {
     if (!isAuthenticated) return;
     
-    const interval = setInterval(syncData, 30000); // 30 seconds
+    const interval = setInterval(loadData, 30000); // 30 seconds
     return () => clearInterval(interval);
-  }, [isAuthenticated, submissions]);
+  }, [isAuthenticated]);
 
   const handlePasswordSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -803,6 +807,18 @@ export default function Admin() {
                   className="px-3 py-2 md:px-4 md:py-2 bg-yellow-500 text-black rounded-lg text-xs md:text-sm font-medium hover:bg-yellow-600 transition-colors"
                 >
                   {showQuickStats ? 'Hide Quick Stats' : 'Show Quick Stats'}
+                </button>
+                <button
+                  onClick={syncData}
+                  className="px-3 py-2 md:px-4 md:py-2 bg-green-500 text-white rounded-lg text-xs md:text-sm font-medium hover:bg-green-600 transition-colors"
+                >
+                  📤 Export Data
+                </button>
+                <button
+                  onClick={importData}
+                  className="px-3 py-2 md:px-4 md:py-2 bg-blue-500 text-white rounded-lg text-xs md:text-sm font-medium hover:bg-blue-600 transition-colors"
+                >
+                  📥 Import Data
                 </button>
               </div>
             </div>
