@@ -247,6 +247,20 @@ export default function Subscription() {
       existingSubscriptions.push(subscriptionData);
       localStorage.setItem('straxkaka_subscriptions', JSON.stringify(existingSubscriptions));
 
+      // Sync with server
+      try {
+        await fetch('/api/submissions/sync', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ submissions: existingSubscriptions }),
+        });
+      } catch (syncError) {
+        console.warn('Sync error:', syncError);
+        // Don't fail the submission if sync fails
+      }
+
       // Send email notification
       try {
         const emailResponse = await fetch('/api/subscription/notify', {
@@ -511,7 +525,7 @@ export default function Subscription() {
 
         {/* Progress Indicator */}
         <div className="mb-8">
-          <div className="flex items-center justify-center space-x-3 md:space-x-4 overflow-x-auto pb-2">
+          <div className="flex items-center justify-center space-x-3 md:space-x-6 overflow-x-auto pb-2">
             {[
               { step: 1, icon: '🏢', label: 'Fyrirtæki' },
               { step: 2, icon: '👥', label: 'Starfsmenn' },
@@ -527,25 +541,25 @@ export default function Subscription() {
                   {currentStep >= step ? icon : step}
                 </div>
                 {step < 4 && (
-                  <div className={`hidden md:block w-12 h-1 mx-2 rounded-full transition-all duration-300 ${
+                  <div className={`hidden md:block w-16 h-1 mx-3 rounded-full transition-all duration-300 ${
                     currentStep > step ? 'bg-yellow-500' : 'bg-gray-300'
                   }`} />
                 )}
               </div>
             ))}
           </div>
-          <div className="flex justify-center mt-4 space-x-3 md:space-x-16 overflow-x-auto">
+          <div className="flex justify-center mt-4 space-x-4 md:space-x-16 overflow-x-auto">
             <LanguageContent fallback="Fyrirtækisupplýsingar">
-              {(t) => <span className={`text-xs md:text-sm font-medium whitespace-nowrap text-center ${currentStep === 1 ? 'text-yellow-600' : 'text-gray-500'}`}>{t('subscription.steps.company')}</span>}
+              {(t) => <span className={`text-xs md:text-sm font-medium whitespace-nowrap text-left md:text-center ${currentStep === 1 ? 'text-yellow-600' : 'text-gray-500'}`}>{t('subscription.steps.company')}</span>}
             </LanguageContent>
             <LanguageContent fallback="Starfsmenn">
-              {(t) => <span className={`text-xs md:text-sm font-medium whitespace-nowrap text-center ${currentStep === 2 ? 'text-yellow-600' : 'text-gray-500'}`}>{t('subscription.steps.employees')}</span>}
+              {(t) => <span className={`text-xs md:text-sm font-medium whitespace-nowrap text-left md:text-center ${currentStep === 2 ? 'text-yellow-600' : 'text-gray-500'}`}>{t('subscription.steps.employees')}</span>}
             </LanguageContent>
             <LanguageContent fallback="Áskrift">
-              {(t) => <span className={`text-xs md:text-sm font-medium whitespace-nowrap text-center ${currentStep === 3 ? 'text-yellow-600' : 'text-gray-500'}`}>{t('subscription.steps.subscription')}</span>}
+              {(t) => <span className={`text-xs md:text-sm font-medium whitespace-nowrap text-left md:text-center ${currentStep === 3 ? 'text-yellow-600' : 'text-gray-500'}`}>{t('subscription.steps.subscription')}</span>}
             </LanguageContent>
             <LanguageContent fallback="Greiðsla">
-              {(t) => <span className={`text-xs md:text-sm font-medium whitespace-nowrap text-center ${currentStep === 4 ? 'text-yellow-600' : 'text-gray-500'}`}>{t('subscription.steps.payment')}</span>}
+              {(t) => <span className={`text-xs md:text-sm font-medium whitespace-nowrap text-left md:text-center ${currentStep === 4 ? 'text-yellow-600' : 'text-gray-500'}`}>{t('subscription.steps.payment')}</span>}
             </LanguageContent>
           </div>
         </div>
@@ -651,7 +665,7 @@ export default function Subscription() {
                 <button
                   type="button"
                   onClick={() => setShowFileUpload(!showFileUpload)}
-                  className="bg-yellow-500 text-black px-4 py-2 rounded-lg hover:bg-yellow-400 transition-colors font-medium"
+                  className="bg-yellow-500 text-black px-2 py-1 md:px-4 md:py-2 rounded-lg hover:bg-yellow-400 transition-colors font-medium text-sm md:text-base"
                 >
                   <LanguageContent fallback="Hlaða upp skrá">
                     {(t) => t('subscription.employees.file_upload')}
@@ -660,7 +674,7 @@ export default function Subscription() {
                 <button
                   type="button"
                   onClick={addEmployee}
-                  className="bg-yellow-500 text-black px-4 py-2 rounded-lg hover:bg-yellow-400 transition-colors font-medium"
+                  className="bg-yellow-500 text-black px-2 py-1 md:px-4 md:py-2 rounded-lg hover:bg-yellow-400 transition-colors font-medium text-sm md:text-base"
                 >
                   <LanguageContent fallback="Bæta við starfsmanni">
                     {(t) => t('subscription.employees.add')}
@@ -672,6 +686,27 @@ export default function Subscription() {
             {/* File Upload Section */}
             {showFileUpload && (
               <div className="mb-6">
+                <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
+                  <div className="flex items-start space-x-3">
+                    <div className="flex-shrink-0">
+                      <svg className="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <h3 className="text-sm font-medium text-blue-800 mb-1">
+                        <LanguageContent fallback="Athugið">
+                          {(t) => t('subscription.file_upload.warning_title')}
+                        </LanguageContent>
+                      </h3>
+                      <p className="text-sm text-blue-700">
+                        <LanguageContent fallback="Vinsamlegast hafðu samband við okkur fyrir þetta.">
+                          {(t) => t('subscription.file_upload.warning_message')}
+                        </LanguageContent>
+                      </p>
+                    </div>
+                  </div>
+                </div>
                 <EnhancedFileUpload
                   onEmployeesAdded={handleFileEmployeesAdded}
                   onError={handleFileError}
@@ -702,40 +737,40 @@ export default function Subscription() {
                 }`}>
                   {isSaved ? (
                     // Compact saved view
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-4 flex-1">
+                    <div className="flex flex-col md:flex-row md:items-center justify-between space-y-2 md:space-y-0">
+                      <div className="flex flex-col md:flex-row md:items-center space-y-1 md:space-y-0 md:space-x-4 flex-1">
                         <div className="flex items-center space-x-2">
-                          <span className="text-yellow-600 text-lg">✅</span>
-                          <span className="font-medium text-gray-900">{employee.name}</span>
+                          <span className="text-yellow-600 text-sm md:text-lg">✅</span>
+                          <span className="font-medium text-gray-900 text-sm md:text-base">{employee.name}</span>
                         </div>
-                        <div className="flex items-center space-x-4 text-sm text-gray-600">
+                        <div className="flex flex-wrap items-center gap-2 md:gap-4 text-xs md:text-sm text-gray-600">
                           <span className="flex items-center space-x-1">
-                            <span className="text-yellow-600">🎂</span>
+                            <span className="text-yellow-600 text-xs">🎂</span>
                             <span>{new Date(employee.birthday).toLocaleDateString()}</span>
                           </span>
                           <span className="flex items-center space-x-1">
-                            <span className="text-yellow-600">🍰</span>
-                            <span>{CAKE_TYPES.find(cake => cake.id === employee.cakeType)?.nameIcelandic || employee.cakeType}</span>
+                            <span className="text-yellow-600 text-xs">🍰</span>
+                            <span className="truncate max-w-20">{CAKE_TYPES.find(cake => cake.id === employee.cakeType)?.nameIcelandic || employee.cakeType}</span>
                           </span>
                           {employee.dietaryRestrictions && (
                             <span className="flex items-center space-x-1 text-red-600">
-                              <span>⚠️</span>
-                              <span>{employee.dietaryRestrictions}</span>
+                              <span className="text-xs">⚠️</span>
+                              <span className="truncate max-w-16">{employee.dietaryRestrictions}</span>
                             </span>
                           )}
                           {employee.specialNotes && (
                             <span className="flex items-center space-x-1 text-gray-500">
-                              <span>📝</span>
-                              <span>{employee.specialNotes}</span>
+                              <span className="text-xs">📝</span>
+                              <span className="truncate max-w-16">{employee.specialNotes}</span>
                             </span>
                           )}
                         </div>
                       </div>
-                      <div className="flex items-center space-x-2">
+                      <div className="flex items-center space-x-1 md:space-x-2">
                         <button
                           type="button"
                           onClick={() => editEmployee(index)}
-                          className="px-3 py-1 text-sm bg-yellow-100 text-yellow-800 rounded hover:bg-yellow-200 transition-colors font-medium"
+                          className="px-2 py-1 md:px-3 md:py-1 text-xs md:text-sm bg-yellow-100 text-yellow-800 rounded hover:bg-yellow-200 transition-colors font-medium"
                         >
                           ✏️ <LanguageContent fallback="Breyta">
                             {(t) => t('subscription.employees.edit')}
@@ -744,7 +779,7 @@ export default function Subscription() {
                         <button
                           type="button"
                           onClick={() => removeEmployee(index)}
-                          className="px-3 py-1 text-sm bg-red-100 text-red-800 rounded hover:bg-red-200 transition-colors font-medium"
+                          className="px-2 py-1 md:px-3 md:py-1 text-xs md:text-sm bg-red-100 text-red-800 rounded hover:bg-red-200 transition-colors font-medium"
                         >
                           🗑️ <LanguageContent fallback="Fjarlægja">
                             {(t) => t('subscription.employees.remove')}

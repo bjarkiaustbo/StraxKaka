@@ -122,6 +122,33 @@ export default function Admin() {
     }
   };
 
+  // Sync data with server
+  const syncData = async () => {
+    try {
+      const response = await fetch('/api/submissions/sync', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ submissions }),
+      });
+      
+      if (response.ok) {
+        console.log('Data synced successfully');
+      }
+    } catch (error) {
+      console.error('Sync error:', error);
+    }
+  };
+
+  // Auto-sync every 30 seconds
+  useEffect(() => {
+    if (!isAuthenticated) return;
+    
+    const interval = setInterval(syncData, 30000); // 30 seconds
+    return () => clearInterval(interval);
+  }, [isAuthenticated, submissions]);
+
   const handlePasswordSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (password === 'straxkaka2025') {
