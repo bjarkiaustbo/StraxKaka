@@ -111,6 +111,7 @@ export default function Admin() {
       if (response.ok) {
         const data = await response.json();
         console.log('Server data:', data);
+        console.log('Submissions count:', data.submissions?.length || 0);
         setSubmissions(data.submissions || []);
       } else {
         console.log('Server failed, falling back to localStorage');
