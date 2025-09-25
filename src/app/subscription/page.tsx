@@ -242,20 +242,20 @@ export default function Subscription() {
         orderId: orderId
       };
 
-      // Save to external storage service (JSONBin) - primary storage
-      console.log('Saving subscription to external storage...');
-      let existingSubmissions = [];
+      // Save to Firebase Firestore - primary storage
+      console.log('Saving subscription to Firebase Firestore...');
       
       try {
-        // Get existing data from external storage
+        // Get existing data from Firestore
         const response = await fetch('/api/submissions');
+        let existingSubmissions = [];
         
         if (response.ok) {
           const data = await response.json();
           existingSubmissions = data.submissions || [];
-          console.log('Retrieved existing data from external storage:', existingSubmissions.length);
+          console.log('Retrieved existing data from Firestore:', existingSubmissions.length);
         } else {
-          console.log('External storage failed, using localStorage fallback');
+          console.log('Firestore failed, using localStorage fallback');
           // Fallback to localStorage
           existingSubmissions = JSON.parse(localStorage.getItem('straxkaka_subscriptions') || '[]');
         }
@@ -264,7 +264,7 @@ export default function Subscription() {
         existingSubmissions.push(subscriptionData);
         console.log('Added new submission, total count:', existingSubmissions.length);
         
-        // Save to external storage
+        // Save to Firestore
         const saveResponse = await fetch('/api/submissions', {
           method: 'POST',
           headers: {
@@ -274,9 +274,9 @@ export default function Subscription() {
         });
         
         if (saveResponse.ok) {
-          console.log('Data successfully saved to external storage');
+          console.log('Data successfully saved to Firestore');
         } else {
-          throw new Error('Failed to save to external storage');
+          throw new Error('Failed to save to Firestore');
         }
         
         // Also save to localStorage as backup
@@ -284,9 +284,9 @@ export default function Subscription() {
         console.log('Data also saved to localStorage as backup');
         
       } catch (error) {
-        console.warn('External storage failed, falling back to localStorage only:', error);
+        console.warn('Firestore failed, falling back to localStorage only:', error);
         // Fallback to localStorage only
-        existingSubmissions = JSON.parse(localStorage.getItem('straxkaka_subscriptions') || '[]');
+        const existingSubmissions = JSON.parse(localStorage.getItem('straxkaka_subscriptions') || '[]');
         existingSubmissions.push(subscriptionData);
         localStorage.setItem('straxkaka_subscriptions', JSON.stringify(existingSubmissions));
         console.log('Data saved to localStorage only:', existingSubmissions.length);

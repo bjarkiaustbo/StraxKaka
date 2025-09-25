@@ -105,16 +105,16 @@ export default function Admin() {
     try {
       setLoading(true);
       
-      // Load from external storage service (JSONBin)
-      console.log('Loading data from external storage...');
+      // Load from Firebase Firestore
+      console.log('Loading data from Firebase Firestore...');
       const response = await fetch('/api/submissions');
       
       if (response.ok) {
         const data = await response.json();
-        console.log('External storage data received:', data.submissions?.length || 0);
+        console.log('Firestore data received:', data.submissions?.length || 0);
         setSubmissions(data.submissions || []);
       } else {
-        console.log('External storage failed, falling back to localStorage...');
+        console.log('Firestore failed, falling back to localStorage...');
         // Fallback to localStorage
         const storedSubmissions = localStorage.getItem('straxkaka_submissions');
         const storedSubscriptions = localStorage.getItem('straxkaka_subscriptions');
