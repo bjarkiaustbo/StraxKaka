@@ -242,23 +242,34 @@ export default function Subscription() {
         orderId: orderId
       };
 
-      // Save to localStorage
-      const existingSubscriptions = JSON.parse(localStorage.getItem('straxkaka_subscriptions') || '[]');
-      existingSubscriptions.push(subscriptionData);
-      localStorage.setItem('straxkaka_subscriptions', JSON.stringify(existingSubscriptions));
-
-      // Sync with server
+      // Save to server first
+      let existingSubmissions = [];
       try {
-        await fetch('/api/submissions/sync', {
+        const response = await fetch('/api/submissions/sync');
+        if (response.ok) {
+          const data = await response.json();
+          existingSubmissions = data.submissions || [];
+        }
+        
+        existingSubmissions.push(subscriptionData);
+        
+        const syncResponse = await fetch('/api/submissions/sync', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ submissions: existingSubscriptions }),
+          body: JSON.stringify({ submissions: existingSubmissions }),
         });
+        
+        if (!syncResponse.ok) {
+          throw new Error('Failed to sync with server');
+        }
       } catch (syncError) {
-        console.warn('Sync error:', syncError);
-        // Don't fail the submission if sync fails
+        console.warn('Server sync failed, falling back to localStorage:', syncError);
+        // Fallback to localStorage
+        existingSubmissions = JSON.parse(localStorage.getItem('straxkaka_subscriptions') || '[]');
+        existingSubmissions.push(subscriptionData);
+        localStorage.setItem('straxkaka_subscriptions', JSON.stringify(existingSubmissions));
       }
 
       // Send email notification
@@ -655,13 +666,13 @@ export default function Subscription() {
         {/* Step 2: Employees */}
         {currentStep === 2 && (
           <div className="bg-white rounded-2xl shadow-lg p-8">
-            <div className="flex justify-between items-center mb-6">
+            <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-6 space-y-4 md:space-y-0">
               <LanguageContent fallback={
                 <h2 className="text-2xl font-bold text-gray-900">Starfsmenn</h2>
               }>
                 {(t) => <h2 className="text-2xl font-bold text-gray-900">{t('subscription.employees.title')}</h2>}
               </LanguageContent>
-              <div className="flex space-x-2">
+              <div className="flex space-x-2 md:space-x-2">
                 <button
                   type="button"
                   onClick={() => setShowFileUpload(!showFileUpload)}

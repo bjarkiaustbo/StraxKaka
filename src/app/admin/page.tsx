@@ -101,11 +101,27 @@ export default function Admin() {
     return () => clearInterval(interval);
   }, [isAuthenticated]);
 
-  const loadData = () => {
-    if (typeof window === 'undefined') return;
-    
+  const loadData = async () => {
     try {
       setLoading(true);
+      const response = await fetch('/api/submissions/sync');
+      if (response.ok) {
+        const data = await response.json();
+        setSubmissions(data.submissions || []);
+      } else {
+        // Fallback to localStorage if server fails
+        const storedSubmissions = localStorage.getItem('straxkaka_submissions');
+        const storedSubscriptions = localStorage.getItem('straxkaka_subscriptions');
+        
+        if (storedSubscriptions) {
+          setSubmissions(JSON.parse(storedSubscriptions));
+        } else if (storedSubmissions) {
+          setSubmissions(JSON.parse(storedSubmissions));
+        }
+      }
+    } catch (error) {
+      console.error('Error loading data:', error);
+      // Fallback to localStorage
       const storedSubmissions = localStorage.getItem('straxkaka_submissions');
       const storedSubscriptions = localStorage.getItem('straxkaka_subscriptions');
       
@@ -114,9 +130,6 @@ export default function Admin() {
       } else if (storedSubmissions) {
         setSubmissions(JSON.parse(storedSubmissions));
       }
-    } catch (error) {
-      console.error('Error loading data:', error);
-      setSubmissions([]);
     } finally {
       setLoading(false);
     }
@@ -1027,33 +1040,35 @@ export default function Admin() {
                 <span className="text-sm text-gray-600">{selectedCompanies.length} companies selected</span>
               </div>
               <div className="flex items-center space-x-3">
-                <button
-                  onClick={() => {
-                    selectedCompanies.forEach(id => markAsPaidWithWebhook(id));
-                    setSelectedCompanies([]);
-                  }}
-                  className="px-4 py-2 bg-yellow-500 text-black rounded-lg text-sm font-medium hover:bg-yellow-600 transition-colors"
-                >
-                  Mark All as Paid
-                </button>
-                <button
-                  onClick={() => {
-                    selectedCompanies.forEach(id => markAsPending(id));
-                    setSelectedCompanies([]);
-                  }}
-                  className="px-4 py-2 bg-yellow-500 text-black rounded-lg text-sm font-medium hover:bg-yellow-600 transition-colors"
-                >
-                  Mark All as Pending
-                </button>
-                <button
-                  onClick={() => {
-                    selectedCompanies.forEach(id => toggleSubscriptionStatus(id));
-                    setSelectedCompanies([]);
-                  }}
-                  className="px-4 py-2 bg-yellow-500 text-black rounded-lg text-sm font-medium hover:bg-yellow-600 transition-colors"
-                >
-                  Toggle Subscriptions
-                </button>
+                <div className="flex flex-wrap gap-2">
+                  <button
+                    onClick={() => {
+                      selectedCompanies.forEach(id => markAsPaidWithWebhook(id));
+                      setSelectedCompanies([]);
+                    }}
+                    className="px-3 py-2 md:px-4 md:py-2 bg-yellow-500 text-black rounded-lg text-xs md:text-sm font-medium hover:bg-yellow-600 transition-colors"
+                  >
+                    Mark All as Paid
+                  </button>
+                  <button
+                    onClick={() => {
+                      selectedCompanies.forEach(id => markAsPending(id));
+                      setSelectedCompanies([]);
+                    }}
+                    className="px-3 py-2 md:px-4 md:py-2 bg-yellow-500 text-black rounded-lg text-xs md:text-sm font-medium hover:bg-yellow-600 transition-colors"
+                  >
+                    Mark All as Pending
+                  </button>
+                  <button
+                    onClick={() => {
+                      selectedCompanies.forEach(id => toggleSubscriptionStatus(id));
+                      setSelectedCompanies([]);
+                    }}
+                    className="px-3 py-2 md:px-4 md:py-2 bg-yellow-500 text-black rounded-lg text-xs md:text-sm font-medium hover:bg-yellow-600 transition-colors"
+                  >
+                    Toggle Subscriptions
+                  </button>
+                </div>
                 <button
                   onClick={() => setSelectedCompanies([])}
                   className="px-4 py-2 bg-gray-500 text-white rounded-lg text-sm font-medium hover:bg-gray-600 transition-colors"
@@ -1324,35 +1339,37 @@ export default function Admin() {
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium" onClick={(e) => e.stopPropagation()}>
                         <div className="flex flex-col space-y-1">
-                          {submission.status !== 'paid' ? (
+                          <div className="flex flex-wrap gap-1 md:gap-2">
+                            {submission.status !== 'paid' ? (
+                              <button
+                                onClick={() => markAsPaidWithWebhook(submission.id)}
+                                className="px-2 py-1 md:px-3 md:py-1 bg-yellow-500 text-black rounded text-xs font-medium hover:bg-yellow-600 transition-colors"
+                              >
+                                Mark Paid
+                              </button>
+                            ) : (
+                              <button
+                                onClick={() => markAsPending(submission.id)}
+                                className="px-2 py-1 md:px-3 md:py-1 bg-yellow-500 text-black rounded text-xs font-medium hover:bg-yellow-600 transition-colors"
+                              >
+                                Mark Pending
+                              </button>
+                            )}
                             <button
-                              onClick={() => markAsPaidWithWebhook(submission.id)}
-                              className="px-3 py-1 bg-yellow-500 text-black rounded text-xs font-medium hover:bg-yellow-600 transition-colors"
+                              onClick={() => setSelectedSubmission(submission)}
+                              className="px-2 py-1 md:px-3 md:py-1 bg-yellow-500 text-black rounded text-xs font-medium hover:bg-yellow-600 transition-colors"
                             >
-                              Mark Paid
+                              View Details
                             </button>
-                          ) : (
                             <button
-                              onClick={() => markAsPending(submission.id)}
-                              className="px-3 py-1 bg-yellow-500 text-black rounded text-xs font-medium hover:bg-yellow-600 transition-colors"
+                            onClick={() => {
+                              toggleSubscriptionStatus(submission.id);
+                            }}
+                              className="px-2 py-1 md:px-3 md:py-1 bg-yellow-500 text-black rounded text-xs font-medium hover:bg-yellow-600 transition-colors"
                             >
-                              Mark Pending
+                              {submission.subscriptionStatus === 'active' ? 'Pause' : 'Resume'}
                             </button>
-                          )}
-                          <button
-                            onClick={() => setSelectedSubmission(submission)}
-                            className="px-3 py-1 bg-yellow-500 text-black rounded text-xs font-medium hover:bg-yellow-600 transition-colors"
-                          >
-                            View Details
-                          </button>
-                          <button
-                          onClick={() => {
-                            toggleSubscriptionStatus(submission.id);
-                          }}
-                            className="px-3 py-1 bg-yellow-500 text-black rounded text-xs font-medium hover:bg-yellow-600 transition-colors"
-                          >
-                            {submission.subscriptionStatus === 'active' ? 'Pause' : 'Resume'}
-                          </button>
+                          </div>
                         </div>
                       </td>
                       </tr>
