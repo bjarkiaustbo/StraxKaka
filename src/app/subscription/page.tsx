@@ -9,6 +9,7 @@ import LanguageContent from '@/components/LanguageContent';
 import EnhancedFileUpload from '@/components/EnhancedFileUpload';
 import PricingTable from '@/components/PricingTable';
 import Navigation from '@/components/Navigation';
+import MobileBottomNav from '@/components/MobileBottomNav';
 import BirthdayPicker from '@/components/BirthdayPicker';
 
 interface Employee {
@@ -435,7 +436,7 @@ export default function Subscription() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 pb-20 md:pb-0">
       <Navigation currentPage="subscription" />
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -1253,6 +1254,9 @@ export default function Subscription() {
           )}
         </div>
       </div>
+      
+      {/* Mobile Bottom Navigation */}
+      <MobileBottomNav currentPage="subscription" />
     </div>
   );
 }

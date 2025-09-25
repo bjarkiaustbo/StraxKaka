@@ -33,9 +33,9 @@ export default function Navigation({
   return (
     <nav className="bg-black shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center py-6">
+        <div className="flex justify-between items-center py-4 md:py-6">
           <div className="flex items-center">
-            <Link href="/" className="text-2xl font-bold text-yellow-500">StraxKaka</Link>
+            <Link href="/" className="text-xl md:text-2xl font-bold text-yellow-500">StraxKaka</Link>
           </div>
           
           {/* Desktop Navigation */}
@@ -67,22 +67,22 @@ export default function Navigation({
             ))}
           </div>
           
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-2 md:space-x-4">
             <LanguageSwitcher />
             <Link
               href="/straxlife"
-              className="text-gray-300 hover:text-yellow-400 transition-colors text-sm font-medium"
+              className="text-gray-300 hover:text-yellow-400 transition-colors text-xs md:text-sm font-medium"
             >
               StraxLife
             </Link>
             {showCTA && (
               <LanguageContent fallback={
-                <Link href={ctaLink} className="bg-yellow-500 text-black px-6 py-2 rounded-full hover:bg-yellow-400 transition-colors font-semibold">
+                <Link href={ctaLink} className="bg-yellow-500 text-black px-3 md:px-6 py-1 md:py-2 rounded-full hover:bg-yellow-400 transition-colors font-semibold text-xs md:text-sm">
                   {t(ctaText)}
                 </Link>
               }>
                 {(t) => (
-                  <Link href={ctaLink} className="bg-yellow-500 text-black px-6 py-2 rounded-full hover:bg-yellow-400 transition-colors font-semibold">
+                  <Link href={ctaLink} className="bg-yellow-500 text-black px-3 md:px-6 py-1 md:py-2 rounded-full hover:bg-yellow-400 transition-colors font-semibold text-xs md:text-sm">
                     {t(ctaText)}
                   </Link>
                 )}

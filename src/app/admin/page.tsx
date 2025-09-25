@@ -502,14 +502,17 @@ export default function Admin() {
       const birthdayMonth = birthday.getMonth();
       const birthdayDate = birthday.getDate();
       
-      // Check if birthday is in the next 30 days (only month and date matter)
-      const daysUntilBirthday = (birthdayMonth - todayMonth) * 30 + (birthdayDate - todayDate);
+      // Create this year's birthday
+      const thisYearBirthday = new Date(today.getFullYear(), birthdayMonth, birthdayDate);
       
-      // Handle year transition
-      if (daysUntilBirthday < 0) {
-        const daysUntilNextYearBirthday = (12 - todayMonth + birthdayMonth) * 30 + (birthdayDate - todayDate);
-        return daysUntilNextYearBirthday >= 0 && daysUntilNextYearBirthday <= 30;
-      }
+      // If birthday has passed this year, check next year
+      const birthdayToCheck = thisYearBirthday < today ? 
+        new Date(today.getFullYear() + 1, birthdayMonth, birthdayDate) : 
+        thisYearBirthday;
+      
+      // Calculate days until birthday
+      const timeDiff = birthdayToCheck.getTime() - today.getTime();
+      const daysUntilBirthday = Math.ceil(timeDiff / (1000 * 3600 * 24));
       
       return daysUntilBirthday >= 0 && daysUntilBirthday <= 30;
     }).length;

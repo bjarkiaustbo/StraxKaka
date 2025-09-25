@@ -11,7 +11,7 @@ export default function StraxLife() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black flex items-center justify-center relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black flex flex-col items-center justify-center relative overflow-hidden">
       {/* Animated Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-yellow-500/10 rounded-full blur-3xl animate-pulse"></div>
@@ -20,7 +20,7 @@ export default function StraxLife() {
       </div>
 
       {/* Main Content */}
-      <div className={`relative z-10 text-center transition-all duration-1000 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+      <div className={`relative z-10 text-center transition-all duration-1000 flex-1 flex flex-col justify-center ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
         {/* Company Logo/Name */}
         <div className="mb-16">
           <h1 className="text-6xl md:text-8xl font-bold text-white mb-4 tracking-wider">
@@ -69,7 +69,7 @@ export default function StraxLife() {
         </div>
 
         {/* Footer */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
+        <div className="mt-auto pt-8 pb-8">
           <p className="text-gray-600 text-sm">
             © 2025 StraxLife. All rights reserved.
           </p>
@@ -94,4 +94,5 @@ export default function StraxLife() {
     </div>
   );
 }
+
 
