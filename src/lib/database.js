@@ -1,36 +1,21 @@
-import fs from 'fs';
-import path from 'path';
+// Simple in-memory storage for Vercel deployment
+let submissionsData = [];
 
-const DATA_FILE = path.join(process.cwd(), 'data', 'submissions.json');
-
-// Ensure data directory exists
-const ensureDataDir = () => {
-  const dataDir = path.dirname(DATA_FILE);
-  if (!fs.existsSync(dataDir)) {
-    fs.mkdirSync(dataDir, { recursive: true });
-  }
-};
-
-// Read submissions from file
+// Read submissions from memory
 export const readSubmissions = () => {
   try {
-    ensureDataDir();
-    if (fs.existsSync(DATA_FILE)) {
-      const data = fs.readFileSync(DATA_FILE, 'utf8');
-      return JSON.parse(data);
-    }
-    return [];
+    return submissionsData;
   } catch (error) {
     console.error('Error reading submissions:', error);
     return [];
   }
 };
 
-// Write submissions to file
+// Write submissions to memory
 export const writeSubmissions = (submissions) => {
   try {
-    ensureDataDir();
-    fs.writeFileSync(DATA_FILE, JSON.stringify(submissions, null, 2));
+    submissionsData = submissions;
+    console.log('Submissions updated:', submissions.length, 'entries');
     return true;
   } catch (error) {
     console.error('Error writing submissions:', error);

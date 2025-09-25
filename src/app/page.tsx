@@ -239,7 +239,7 @@ export default function Home() {
                 </h3>
                 <div className="text-4xl font-bold mb-2 text-yellow-500">
                   <LanguageContent fallback="Hafa samband">
-                    {(t) => t('pricing.contact_for_pricing')}
+                    {(t) => t('pricing.contact')}
                   </LanguageContent>
                 </div>
                 <div className="text-lg mb-6">
@@ -273,7 +273,7 @@ export default function Home() {
                 </h3>
                 <div className="text-4xl font-bold mb-2 text-yellow-500">
                   <LanguageContent fallback="Hafa samband">
-                    {(t) => t('pricing.contact_for_pricing')}
+                    {(t) => t('pricing.contact')}
                   </LanguageContent>
                 </div>
                 <div className="text-lg mb-6">
