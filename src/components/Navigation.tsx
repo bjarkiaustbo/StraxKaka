@@ -17,7 +17,7 @@ export default function Navigation({
   currentPage = '', 
   showCTA = true, 
   ctaText = 'nav.start_now',
-  ctaLink = '/contact' 
+  ctaLink = '/subscription' 
 }: NavigationProps) {
   const { t } = useLanguage();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);

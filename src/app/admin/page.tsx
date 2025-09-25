@@ -63,6 +63,20 @@ export default function Admin() {
   const [lastContactNotes, setLastContactNotes] = useState('');
   const [showAnalytics, setShowAnalytics] = useState(false);
   const [selectedEmployee, setSelectedEmployee] = useState<{employee: Employee, companyName: string} | null>(null);
+
+  // Function to calculate next birthday date
+  const getNextBirthdayDate = (birthday: string) => {
+    const today = new Date();
+    const birthdayDate = new Date(birthday);
+    const thisYearBirthday = new Date(today.getFullYear(), birthdayDate.getMonth(), birthdayDate.getDate());
+    
+    // If birthday has passed this year, use next year
+    const nextBirthday = thisYearBirthday < today ? 
+      new Date(today.getFullYear() + 1, birthdayDate.getMonth(), birthdayDate.getDate()) : 
+      thisYearBirthday;
+    
+    return nextBirthday;
+  };
   const [showQuickStats, setShowQuickStats] = useState(false);
 
   // Check if already authenticated
@@ -1416,7 +1430,7 @@ export default function Admin() {
                                     <p className="font-medium text-gray-900 truncate">{employee.name}</p>
                                     <div className="flex items-center space-x-4 text-xs text-gray-600 mt-1">
                                       <span>🎂 {new Date(employee.birthday).toLocaleDateString()}</span>
-                                      <span>📅 Delivery: {new Date(employee.birthday).toLocaleDateString()}</span>
+                                      <span>📅 Next Birthday: {getNextBirthdayDate(employee.birthday).toLocaleDateString()}</span>
                                       <span>🍰 {employee.cakeType || 'No cake selected'}</span>
                                       <span className={`px-2 py-1 rounded-full text-xs font-medium ${
                                         employee.employmentStatus === 'active' ? 'bg-green-100 text-green-800' :
@@ -1922,12 +1936,9 @@ export default function Admin() {
                       <h4 className="font-semibold text-gray-900 mb-2">Delivery Information</h4>
                       <div className="space-y-2">
                         <div className="flex justify-between">
-                          <span className="text-sm text-gray-600">Delivery Date:</span>
+                          <span className="text-sm text-gray-600">Next Birthday:</span>
                           <span className="text-sm font-medium text-gray-900">
-                            {selectedEmployee.employee.deliveryDate ? 
-                              new Date(selectedEmployee.employee.deliveryDate).toLocaleDateString() 
-                              : 'Not scheduled'
-                            }
+                            {getNextBirthdayDate(selectedEmployee.employee.birthday).toLocaleDateString()}
                           </span>
                         </div>
                         <div className="flex justify-between">
