@@ -76,6 +76,17 @@ export default function Admin() {
     }
   }, []);
 
+  // Auto-refresh data every 30 seconds when authenticated
+  useEffect(() => {
+    if (!isAuthenticated) return;
+    
+    const interval = setInterval(() => {
+      loadData();
+    }, 30000); // Refresh every 30 seconds
+    
+    return () => clearInterval(interval);
+  }, [isAuthenticated]);
+
   const loadData = () => {
     if (typeof window === 'undefined') return;
     
@@ -174,7 +185,7 @@ export default function Admin() {
 
   const exportToCSV = () => {
     const csvContent = [
-      ['Employee Name', 'Birthday', 'Cake Type', 'Cake Cost', 'Delivery Status', 'Company Name', 'Contact Person', 'Email', 'Phone', 'Delivery Address', 'Subscription Tier', 'Payment Status', 'Monthly Cost', 'Order ID', 'Dietary Restrictions', 'Special Notes'],
+      ['Employee Name', 'Birthday', 'Cake Type', 'Cake Cost', 'Delivery Status', 'Company Name', 'Contact Person', 'Email', 'Phone', 'Delivery Address', 'Subscription Tier', 'Payment Status', 'Order ID', 'Dietary Restrictions', 'Special Notes'],
       ...filteredSubmissions.flatMap(sub => 
         (sub.employees || []).map(emp => {
           const cakeType = CAKE_TYPES.find(cake => cake.id === emp.cakeType);
@@ -191,7 +202,6 @@ export default function Admin() {
             sub.deliveryAddress || '',
             sub.subscriptionTier || '',
             sub.status || '',
-            (sub.monthlyCost || 0).toString(),
             sub.orderId || '',
             emp.dietaryRestrictions || '',
             emp.specialNotes || ''
@@ -213,7 +223,7 @@ export default function Admin() {
     try {
       // Prepare data for Google Sheets
       const data = [
-        ['Employee Name', 'Birthday', 'Cake Type', 'Cake Cost', 'Delivery Status', 'Company Name', 'Contact Person', 'Email', 'Phone', 'Delivery Address', 'Subscription Tier', 'Payment Status', 'Monthly Cost', 'Order ID', 'Dietary Restrictions', 'Special Notes'],
+        ['Employee Name', 'Birthday', 'Cake Type', 'Cake Cost', 'Delivery Status', 'Company Name', 'Contact Person', 'Email', 'Phone', 'Delivery Address', 'Subscription Tier', 'Payment Status', 'Order ID', 'Dietary Restrictions', 'Special Notes'],
         ...filteredSubmissions.flatMap(sub => 
           (sub.employees || []).map(emp => {
             const cakeType = CAKE_TYPES.find(cake => cake.id === emp.cakeType);
@@ -488,8 +498,16 @@ export default function Admin() {
     return total + sub.employees.filter(emp => {
       if (emp.employmentStatus !== 'active') return false;
       const birthday = new Date(emp.birthday);
-      birthday.setFullYear(today.getFullYear());
-      return birthday >= today && birthday <= next30Days;
+      
+      // Set birthday to this year
+      const thisYearBirthday = new Date(today.getFullYear(), birthday.getMonth(), birthday.getDate());
+      
+      // If birthday has passed this year, check next year
+      const birthdayToCheck = thisYearBirthday < today ? 
+        new Date(today.getFullYear() + 1, birthday.getMonth(), birthday.getDate()) : 
+        thisYearBirthday;
+      
+      return birthdayToCheck >= today && birthdayToCheck <= next30Days;
     }).length;
   }, 0);
 

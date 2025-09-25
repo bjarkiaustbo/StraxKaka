@@ -125,7 +125,8 @@ export default function About() {
                   alt="Founder of StraxKaka"
                   width={192}
                   height={192}
-                  className="rounded-full object-cover shadow-lg"
+                  className="rounded-full object-cover shadow-lg w-48 h-48"
+                  style={{ aspectRatio: '1/1' }}
                 />
               </div>
               <h3 className="text-2xl font-bold text-gray-900 mb-2">
