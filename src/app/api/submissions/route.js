@@ -1,5 +1,5 @@
 // Cross-device storage using Firebase Firestore
-// Using Firebase REST API to avoid server-side SDK issues
+// Using Firebase REST API with proper authentication
 
 const FIREBASE_PROJECT_ID = 'straxlife-5f3b0';
 const FIREBASE_API_KEY = 'AIzaSyDYo2GJKr2q7JUVkKiCM1w-aEc-33QUiQk';
@@ -8,11 +8,16 @@ const FIRESTORE_URL = `https://firestore.googleapis.com/v1/projects/${FIREBASE_P
 export async function GET() {
   try {
     console.log('GET /api/submissions - fetching from Firestore...');
+    console.log('Firestore URL:', FIRESTORE_URL);
     
-    const response = await fetch(FIRESTORE_URL);
+    const response = await fetch(`${FIRESTORE_URL}?key=${FIREBASE_API_KEY}`);
+    
+    console.log('Firestore response status:', response.status);
     
     if (response.ok) {
       const data = await response.json();
+      console.log('Firestore response data:', JSON.stringify(data, null, 2));
+      
       const submissions = [];
       
       if (data.documents) {
@@ -48,10 +53,11 @@ export async function GET() {
         message: 'Data retrieved from Firestore successfully'
       });
     } else {
-      console.error('Failed to fetch from Firestore:', response.status);
+      const errorText = await response.text();
+      console.error('Failed to fetch from Firestore:', response.status, errorText);
       return Response.json({ 
         success: false, 
-        error: 'Failed to fetch from Firestore',
+        error: `Failed to fetch from Firestore: ${response.status} - ${errorText}`,
         submissions: [],
         count: 0
       }, { status: 500 });
@@ -60,7 +66,7 @@ export async function GET() {
     console.error('Error in GET /api/submissions:', error);
     return Response.json({ 
       success: false, 
-      error: 'Failed to read submissions from Firestore' 
+      error: `Failed to read submissions from Firestore: ${error.message}` 
     }, { status: 500 });
   }
 }
@@ -103,7 +109,7 @@ export async function POST(request) {
             }
           };
           
-          const response = await fetch(FIRESTORE_URL, {
+          const response = await fetch(`${FIRESTORE_URL}?key=${FIREBASE_API_KEY}`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -114,7 +120,9 @@ export async function POST(request) {
           if (response.ok) {
             results.push({ success: true });
           } else {
-            results.push({ success: false, error: 'Failed to save to Firestore' });
+            const errorText = await response.text();
+            console.error('Failed to save to Firestore:', response.status, errorText);
+            results.push({ success: false, error: `Failed to save to Firestore: ${response.status} - ${errorText}` });
           }
         } catch (error) {
           results.push({ success: false, error: error.message });
