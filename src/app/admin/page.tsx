@@ -489,25 +489,29 @@ export default function Admin() {
   );
   const totalRevenue = submissions.reduce((total, sub) => total + (sub.monthlyCost || 0), 0);
   
-  // Get upcoming birthdays (next 30 days)
+  // Get upcoming birthdays (next 30 days) - only check month and date
   const upcomingBirthdays = submissions.reduce((total, sub) => {
     if (!sub.employees) return total;
     const today = new Date();
-    const next30Days = new Date(today.getTime() + 30 * 24 * 60 * 60 * 1000);
+    const todayMonth = today.getMonth();
+    const todayDate = today.getDate();
     
     return total + sub.employees.filter(emp => {
       if (emp.employmentStatus !== 'active') return false;
       const birthday = new Date(emp.birthday);
+      const birthdayMonth = birthday.getMonth();
+      const birthdayDate = birthday.getDate();
       
-      // Set birthday to this year
-      const thisYearBirthday = new Date(today.getFullYear(), birthday.getMonth(), birthday.getDate());
+      // Check if birthday is in the next 30 days (only month and date matter)
+      const daysUntilBirthday = (birthdayMonth - todayMonth) * 30 + (birthdayDate - todayDate);
       
-      // If birthday has passed this year, check next year
-      const birthdayToCheck = thisYearBirthday < today ? 
-        new Date(today.getFullYear() + 1, birthday.getMonth(), birthday.getDate()) : 
-        thisYearBirthday;
+      // Handle year transition
+      if (daysUntilBirthday < 0) {
+        const daysUntilNextYearBirthday = (12 - todayMonth + birthdayMonth) * 30 + (birthdayDate - todayDate);
+        return daysUntilNextYearBirthday >= 0 && daysUntilNextYearBirthday <= 30;
+      }
       
-      return birthdayToCheck >= today && birthdayToCheck <= next30Days;
+      return daysUntilBirthday >= 0 && daysUntilBirthday <= 30;
     }).length;
   }, 0);
 
@@ -733,7 +737,7 @@ export default function Admin() {
               </button>
               <button
                 onClick={() => setShowQuickStats(!showQuickStats)}
-                className="px-4 py-2 bg-purple-500 text-white rounded-lg text-sm font-medium hover:bg-purple-600 transition-colors"
+                className="px-4 py-2 bg-yellow-500 text-black rounded-lg text-sm font-medium hover:bg-yellow-600 transition-colors"
               >
                 {showQuickStats ? 'Hide Quick Stats' : 'Show Quick Stats'}
               </button>
@@ -774,7 +778,7 @@ export default function Admin() {
                     key={i}
                     className={`p-2 text-center text-sm rounded-lg ${
                       i === 0 ? 'bg-yellow-500/20 text-yellow-500 font-semibold border border-yellow-500/30' :
-                      dayBirthdays > 0 ? 'bg-purple-500/20 text-purple-400 border border-purple-500/30' :
+                      dayBirthdays > 0 ? 'bg-yellow-500/20 text-yellow-400 border border-yellow-500/30' :
                       'text-gray-400 hover:bg-gray-800 hover:text-gray-200'
                     }`}
                   >
@@ -843,16 +847,16 @@ export default function Admin() {
             <h3 className="text-lg font-semibold text-black mb-6">Quick Stats Dashboard</h3>
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
               {/* Today's Deliveries */}
-              <div className="bg-blue-50 rounded-lg p-4">
+              <div className="bg-yellow-50 rounded-lg p-4">
                 <div className="flex items-center">
-                  <div className="p-2 bg-blue-500 rounded-lg">
+                  <div className="p-2 bg-yellow-500 rounded-lg">
                     <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                     </svg>
                   </div>
                   <div className="ml-4">
                     <p className="text-sm text-gray-600">Today&apos;s Deliveries</p>
-                    <p className="text-2xl font-bold text-blue-600">
+                    <p className="text-2xl font-bold text-yellow-600">
                       {submissions.flatMap(sub => sub.employees || [])
                         .filter(emp => {
                           const today = new Date().toDateString();
@@ -865,16 +869,16 @@ export default function Admin() {
               </div>
 
               {/* This Week's Deliveries */}
-              <div className="bg-green-50 rounded-lg p-4">
+              <div className="bg-yellow-50 rounded-lg p-4">
                 <div className="flex items-center">
-                  <div className="p-2 bg-green-500 rounded-lg">
+                  <div className="p-2 bg-yellow-500 rounded-lg">
                     <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                     </svg>
                   </div>
                   <div className="ml-4">
                     <p className="text-sm text-gray-600">This Week</p>
-                    <p className="text-2xl font-bold text-green-600">
+                    <p className="text-2xl font-bold text-yellow-600">
                       {submissions.flatMap(sub => sub.employees || [])
                         .filter(emp => {
                           const today = new Date();
@@ -907,16 +911,16 @@ export default function Admin() {
               </div>
 
               {/* Completed Deliveries */}
-              <div className="bg-purple-50 rounded-lg p-4">
+              <div className="bg-yellow-50 rounded-lg p-4">
                 <div className="flex items-center">
-                  <div className="p-2 bg-purple-500 rounded-lg">
+                  <div className="p-2 bg-yellow-500 rounded-lg">
                     <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                   </div>
                   <div className="ml-4">
                     <p className="text-sm text-gray-600">Completed</p>
-                    <p className="text-2xl font-bold text-purple-600">
+                    <p className="text-2xl font-bold text-yellow-600">
                       {submissions.flatMap(sub => sub.employees || [])
                         .filter(emp => emp.deliveryStatus === 'delivered').length}
                     </p>
@@ -991,7 +995,7 @@ export default function Admin() {
                     selectedCompanies.forEach(id => markAsPaidWithWebhook(id));
                     setSelectedCompanies([]);
                   }}
-                  className="px-4 py-2 bg-green-500 text-white rounded-lg text-sm font-medium hover:bg-green-600 transition-colors"
+                  className="px-4 py-2 bg-yellow-500 text-black rounded-lg text-sm font-medium hover:bg-yellow-600 transition-colors"
                 >
                   Mark All as Paid
                 </button>
@@ -1009,7 +1013,7 @@ export default function Admin() {
                     selectedCompanies.forEach(id => toggleSubscriptionStatus(id));
                     setSelectedCompanies([]);
                   }}
-                  className="px-4 py-2 bg-blue-500 text-white rounded-lg text-sm font-medium hover:bg-blue-600 transition-colors"
+                  className="px-4 py-2 bg-yellow-500 text-black rounded-lg text-sm font-medium hover:bg-yellow-600 transition-colors"
                 >
                   Toggle Subscriptions
                 </button>
@@ -1068,7 +1072,7 @@ export default function Admin() {
                   </button>
                   <button
                     onClick={bulkMarkAsPaid}
-                    className="px-3 py-1 bg-green-500/20 text-green-400 rounded-full text-sm font-medium hover:bg-green-500/30 transition-colors border border-green-500/30"
+                    className="px-3 py-1 bg-yellow-500/20 text-yellow-400 rounded-full text-sm font-medium hover:bg-yellow-500/30 transition-colors border border-yellow-500/30"
                   >
                     Mark Selected as Paid
                   </button>
@@ -1088,7 +1092,7 @@ export default function Admin() {
               </button>
               <button
                 onClick={exportToGoogleSheets}
-                className="px-4 py-2 bg-green-500/20 text-green-500 rounded-lg text-sm font-medium hover:bg-green-500/30 transition-colors border border-green-500/30"
+                className="px-4 py-2 bg-yellow-500/20 text-yellow-500 rounded-lg text-sm font-medium hover:bg-yellow-500/30 transition-colors border border-yellow-500/30"
               >
                 Export to Google Sheets
               </button>
@@ -1286,7 +1290,7 @@ export default function Admin() {
                           {submission.status !== 'paid' ? (
                             <button
                               onClick={() => markAsPaidWithWebhook(submission.id)}
-                              className="px-3 py-1 bg-green-500 text-white rounded text-xs font-medium hover:bg-green-600 transition-colors"
+                              className="px-3 py-1 bg-yellow-500 text-black rounded text-xs font-medium hover:bg-yellow-600 transition-colors"
                             >
                               Mark Paid
                             </button>
@@ -1300,7 +1304,7 @@ export default function Admin() {
                           )}
                           <button
                             onClick={() => setSelectedSubmission(submission)}
-                            className="px-3 py-1 bg-blue-500 text-white rounded text-xs font-medium hover:bg-blue-600 transition-colors"
+                            className="px-3 py-1 bg-yellow-500 text-black rounded text-xs font-medium hover:bg-yellow-600 transition-colors"
                           >
                             View Details
                           </button>
@@ -1308,7 +1312,7 @@ export default function Admin() {
                           onClick={() => {
                             toggleSubscriptionStatus(submission.id);
                           }}
-                            className="px-3 py-1 bg-purple-500 text-white rounded text-xs font-medium hover:bg-purple-600 transition-colors"
+                            className="px-3 py-1 bg-yellow-500 text-black rounded text-xs font-medium hover:bg-yellow-600 transition-colors"
                           >
                             {submission.subscriptionStatus === 'active' ? 'Pause' : 'Resume'}
                           </button>
@@ -1951,7 +1955,7 @@ export default function Admin() {
                         }
                         setSelectedEmployee(null);
                       }}
-                      className="px-4 py-2 bg-green-500 text-white rounded-lg text-sm font-medium hover:bg-green-600 transition-colors"
+                      className="px-4 py-2 bg-yellow-500 text-black rounded-lg text-sm font-medium hover:bg-yellow-600 transition-colors"
                     >
                       {selectedEmployee.employee.deliveryStatus === 'delivered' ? 'Mark as Pending' : 'Mark as Delivered'}
                     </button>
