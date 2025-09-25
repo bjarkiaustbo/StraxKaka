@@ -285,8 +285,9 @@ export default function Subscription() {
         console.log('Data saved to localStorage as fallback');
       }
 
-      // Send email notification
+      // Send email notification (optional)
       try {
+        console.log('Attempting to send email notification...');
         const emailResponse = await fetch('/api/subscription/notify', {
           method: 'POST',
           headers: {
@@ -295,11 +296,13 @@ export default function Subscription() {
           body: JSON.stringify(subscriptionData),
         });
 
-        if (!emailResponse.ok) {
+        if (emailResponse.ok) {
+          console.log('Email notification sent successfully');
+        } else {
           console.warn('Email notification failed, but subscription was saved');
         }
       } catch (emailError) {
-        console.warn('Email notification error:', emailError);
+        console.warn('Email notification error (non-critical):', emailError);
         // Don't fail the submission if email fails
       }
       
