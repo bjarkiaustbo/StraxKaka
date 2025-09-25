@@ -105,49 +105,46 @@ export default function Admin() {
     try {
       setLoading(true);
       
-      // Always check localStorage first as primary source
-      console.log('Loading data from localStorage...');
+      // Load from cross-device API first
+      console.log('Loading data from cross-device API...');
+      const response = await fetch('/api/data/submissions');
+      
+      if (response.ok) {
+        const data = await response.json();
+        console.log('Cross-device API data received:', data.submissions?.length || 0);
+        setSubmissions(data.submissions || []);
+      } else {
+        console.log('Cross-device API failed, falling back to localStorage');
+        // Fallback to localStorage
+        const storedSubmissions = localStorage.getItem('straxkaka_submissions');
+        const storedSubscriptions = localStorage.getItem('straxkaka_subscriptions');
+        
+        let localData = [];
+        if (storedSubscriptions) {
+          localData = JSON.parse(storedSubscriptions);
+          console.log('Found subscriptions in localStorage:', localData.length);
+        } else if (storedSubmissions) {
+          localData = JSON.parse(storedSubmissions);
+          console.log('Found submissions in localStorage:', localData.length);
+        }
+        
+        setSubmissions(localData);
+      }
+      
+    } catch (error) {
+      console.error('Error loading data:', error);
+      // Final fallback to localStorage
       const storedSubmissions = localStorage.getItem('straxkaka_submissions');
       const storedSubscriptions = localStorage.getItem('straxkaka_subscriptions');
       
       let localData = [];
       if (storedSubscriptions) {
         localData = JSON.parse(storedSubscriptions);
-        console.log('Found subscriptions in localStorage:', localData.length);
       } else if (storedSubmissions) {
         localData = JSON.parse(storedSubmissions);
-        console.log('Found submissions in localStorage:', localData.length);
       }
       
-      // Try to sync with server (optional)
-      try {
-        console.log('Attempting to sync with server...');
-        const response = await fetch('/api/submissions/sync');
-        if (response.ok) {
-          const data = await response.json();
-          console.log('Server data received:', data.submissions?.length || 0);
-          
-          // If server has data, use it; otherwise use localStorage
-          if (data.submissions && data.submissions.length > 0) {
-            setSubmissions(data.submissions);
-            console.log('Using server data:', data.submissions.length);
-          } else {
-            setSubmissions(localData);
-            console.log('Using localStorage data:', localData.length);
-          }
-        } else {
-          setSubmissions(localData);
-          console.log('Server failed, using localStorage data:', localData.length);
-        }
-      } catch (serverError) {
-        console.warn('Server sync failed, using localStorage:', serverError);
-        setSubmissions(localData);
-        console.log('Using localStorage data:', localData.length);
-      }
-      
-    } catch (error) {
-      console.error('Error loading data:', error);
-      setSubmissions([]);
+      setSubmissions(localData);
     } finally {
       setLoading(false);
     }

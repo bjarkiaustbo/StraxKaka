@@ -242,31 +242,45 @@ export default function Subscription() {
         orderId: orderId
       };
 
-      // Save to localStorage first (primary storage)
-      console.log('Saving subscription to localStorage...');
-      const existingSubscriptions = JSON.parse(localStorage.getItem('straxkaka_subscriptions') || '[]');
-      existingSubscriptions.push(subscriptionData);
-      localStorage.setItem('straxkaka_subscriptions', JSON.stringify(existingSubscriptions));
-      console.log('Data saved to localStorage:', existingSubscriptions.length, 'total subscriptions');
+      // Save to cross-device API first
+      console.log('Saving subscription to cross-device API...');
+      let existingSubmissions = [];
       
-      // Try to sync with server (optional)
       try {
-        console.log('Attempting to sync with server...');
-        const syncResponse = await fetch('/api/submissions/sync', {
+        // Get existing data from API
+        const response = await fetch('/api/data/submissions');
+        
+        if (response.ok) {
+          const data = await response.json();
+          existingSubmissions = data.submissions || [];
+          console.log('Retrieved existing data from API:', existingSubmissions.length);
+        }
+        
+        // Add new submission
+        existingSubmissions.push(subscriptionData);
+        console.log('Added new submission, total count:', existingSubmissions.length);
+        
+        // Save back to API
+        const saveResponse = await fetch('/api/data/submissions', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ submissions: existingSubscriptions }),
+          body: JSON.stringify({ submissions: existingSubmissions }),
         });
         
-        if (syncResponse.ok) {
-          console.log('Data successfully synced to server');
+        if (saveResponse.ok) {
+          console.log('Data successfully saved to cross-device API');
         } else {
-          console.warn('Server sync failed, but data is saved locally');
+          throw new Error('Failed to save to cross-device API');
         }
-      } catch (syncError) {
-        console.warn('Server sync failed, but data is saved locally:', syncError);
+      } catch (apiError) {
+        console.warn('Cross-device API failed, falling back to localStorage:', apiError);
+        // Fallback to localStorage
+        existingSubmissions = JSON.parse(localStorage.getItem('straxkaka_subscriptions') || '[]');
+        existingSubmissions.push(subscriptionData);
+        localStorage.setItem('straxkaka_subscriptions', JSON.stringify(existingSubmissions));
+        console.log('Data saved to localStorage as fallback:', existingSubmissions.length);
       }
 
       // Send email notification (optional)
