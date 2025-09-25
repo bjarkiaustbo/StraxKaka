@@ -511,15 +511,15 @@ export default function Subscription() {
 
         {/* Progress Indicator */}
         <div className="mb-8">
-          <div className="flex items-center justify-center space-x-2 md:space-x-4 overflow-x-auto pb-2">
+          <div className="flex items-center justify-center space-x-3 md:space-x-4 overflow-x-auto pb-2">
             {[
               { step: 1, icon: '🏢', label: 'Fyrirtæki' },
               { step: 2, icon: '👥', label: 'Starfsmenn' },
               { step: 3, icon: '📋', label: 'Áskrift' },
               { step: 4, icon: '💳', label: 'Greiðsla' }
             ].map(({ step, icon }) => (
-              <div key={step} className="flex items-center flex-shrink-0">
-                <div className={`w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center text-sm md:text-lg font-medium transition-all duration-300 ${
+              <div key={step} className="flex flex-col items-center flex-shrink-0 min-w-0">
+                <div className={`w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center text-base md:text-xl font-medium transition-all duration-300 ${
                   currentStep >= step 
                     ? 'bg-yellow-500 text-black shadow-lg' 
                     : 'bg-gray-300 text-gray-600'
@@ -534,18 +534,18 @@ export default function Subscription() {
               </div>
             ))}
           </div>
-          <div className="flex justify-center mt-4 space-x-4 md:space-x-16 overflow-x-auto">
+          <div className="flex justify-center mt-4 space-x-3 md:space-x-16 overflow-x-auto">
             <LanguageContent fallback="Fyrirtækisupplýsingar">
-              {(t) => <span className={`text-xs md:text-sm font-medium whitespace-nowrap ${currentStep === 1 ? 'text-yellow-600' : 'text-gray-500'}`}>{t('subscription.steps.company')}</span>}
+              {(t) => <span className={`text-xs md:text-sm font-medium whitespace-nowrap text-center ${currentStep === 1 ? 'text-yellow-600' : 'text-gray-500'}`}>{t('subscription.steps.company')}</span>}
             </LanguageContent>
             <LanguageContent fallback="Starfsmenn">
-              {(t) => <span className={`text-xs md:text-sm font-medium whitespace-nowrap ${currentStep === 2 ? 'text-yellow-600' : 'text-gray-500'}`}>{t('subscription.steps.employees')}</span>}
+              {(t) => <span className={`text-xs md:text-sm font-medium whitespace-nowrap text-center ${currentStep === 2 ? 'text-yellow-600' : 'text-gray-500'}`}>{t('subscription.steps.employees')}</span>}
             </LanguageContent>
             <LanguageContent fallback="Áskrift">
-              {(t) => <span className={`text-xs md:text-sm font-medium whitespace-nowrap ${currentStep === 3 ? 'text-yellow-600' : 'text-gray-500'}`}>{t('subscription.steps.subscription')}</span>}
+              {(t) => <span className={`text-xs md:text-sm font-medium whitespace-nowrap text-center ${currentStep === 3 ? 'text-yellow-600' : 'text-gray-500'}`}>{t('subscription.steps.subscription')}</span>}
             </LanguageContent>
             <LanguageContent fallback="Greiðsla">
-              {(t) => <span className={`text-xs md:text-sm font-medium whitespace-nowrap ${currentStep === 4 ? 'text-yellow-600' : 'text-gray-500'}`}>{t('subscription.steps.payment')}</span>}
+              {(t) => <span className={`text-xs md:text-sm font-medium whitespace-nowrap text-center ${currentStep === 4 ? 'text-yellow-600' : 'text-gray-500'}`}>{t('subscription.steps.payment')}</span>}
             </LanguageContent>
           </div>
         </div>

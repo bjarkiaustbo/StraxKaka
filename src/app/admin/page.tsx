@@ -503,32 +503,22 @@ export default function Admin() {
   );
   const totalRevenue = submissions.reduce((total, sub) => total + (sub.monthlyCost || 0), 0);
   
-  // Get upcoming birthdays (next 30 days) - only check month and date
+  // Get upcoming birthdays (next 3 days) - check delivery dates
   const upcomingBirthdays = submissions.reduce((total, sub) => {
     if (!sub.employees) return total;
     const today = new Date();
-    const todayMonth = today.getMonth();
-    const todayDate = today.getDate();
     
     return total + sub.employees.filter(emp => {
       if (emp.employmentStatus !== 'active') return false;
-      const birthday = new Date(emp.birthday);
-      const birthdayMonth = birthday.getMonth();
-      const birthdayDate = birthday.getDate();
       
-      // Create this year's birthday
-      const thisYearBirthday = new Date(today.getFullYear(), birthdayMonth, birthdayDate);
+      // Get next birthday date
+      const nextBirthday = getNextBirthdayDate(emp.birthday);
       
-      // If birthday has passed this year, check next year
-      const birthdayToCheck = thisYearBirthday < today ? 
-        new Date(today.getFullYear() + 1, birthdayMonth, birthdayDate) : 
-        thisYearBirthday;
-      
-      // Calculate days until birthday
-      const timeDiff = birthdayToCheck.getTime() - today.getTime();
+      // Calculate days until next birthday
+      const timeDiff = nextBirthday.getTime() - today.getTime();
       const daysUntilBirthday = Math.ceil(timeDiff / (1000 * 3600 * 24));
       
-      return daysUntilBirthday >= 0 && daysUntilBirthday <= 30;
+      return daysUntilBirthday >= 0 && daysUntilBirthday <= 3;
     }).length;
   }, 0);
 
@@ -784,9 +774,12 @@ export default function Admin() {
                   if (!sub.employees) return count;
                   return count + sub.employees.filter(emp => {
                     if (emp.employmentStatus !== 'active') return false;
-                    const birthday = new Date(emp.birthday);
-                    birthday.setFullYear(date.getFullYear());
-                    return birthday.toDateString() === date.toDateString();
+                    
+                    // Get next birthday date
+                    const nextBirthday = getNextBirthdayDate(emp.birthday);
+                    
+                    // Check if this date matches the next birthday
+                    return nextBirthday.toDateString() === date.toDateString();
                   }).length;
                 }, 0);
                 
