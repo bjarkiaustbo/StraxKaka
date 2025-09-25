@@ -14,10 +14,19 @@ const firebaseConfig = {
   measurementId: "G-43V9MYP0M3"
 };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-const analytics = getAnalytics(app);
+// Initialize Firebase only on client side
+let app, db, analytics;
+
+if (typeof window !== 'undefined') {
+  app = initializeApp(firebaseConfig);
+  db = getFirestore(app);
+  analytics = getAnalytics(app);
+} else {
+  // Server-side initialization
+  app = initializeApp(firebaseConfig);
+  db = getFirestore(app);
+  // Skip analytics on server side
+}
 
 // Export Firestore functions
 export { db, collection, addDoc, getDocs, doc, setDoc, updateDoc, deleteDoc };

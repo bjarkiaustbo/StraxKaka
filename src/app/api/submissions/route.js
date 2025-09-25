@@ -1,11 +1,11 @@
-// Cross-device storage using Firebase Firestore
-import { getAllSubmissions, saveSubmission } from '../../../lib/firebase.js';
+// Cross-device storage using Firebase Firestore Admin SDK
+import { getAllSubmissionsAdmin, saveSubmissionAdmin } from '../../../lib/firebase-admin.js';
 
 export async function GET() {
   try {
     console.log('GET /api/submissions - fetching from Firestore...');
     
-    const result = await getAllSubmissions();
+    const result = await getAllSubmissionsAdmin();
     
     if (result.success) {
       return Response.json({ 
@@ -41,7 +41,7 @@ export async function POST(request) {
       // Save each submission to Firestore
       const results = [];
       for (const submission of submissions) {
-        const result = await saveSubmission(submission);
+        const result = await saveSubmissionAdmin(submission);
         results.push(result);
       }
       
