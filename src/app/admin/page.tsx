@@ -105,26 +105,48 @@ export default function Admin() {
     try {
       setLoading(true);
       
-      // Load from localStorage (primary storage)
-      console.log('Loading data from localStorage...');
+      // Load from external storage service (JSONBin)
+      console.log('Loading data from external storage...');
+      const response = await fetch('/api/submissions');
+      
+      if (response.ok) {
+        const data = await response.json();
+        console.log('External storage data received:', data.submissions?.length || 0);
+        setSubmissions(data.submissions || []);
+      } else {
+        console.log('External storage failed, falling back to localStorage...');
+        // Fallback to localStorage
+        const storedSubmissions = localStorage.getItem('straxkaka_submissions');
+        const storedSubscriptions = localStorage.getItem('straxkaka_subscriptions');
+        
+        let localData = [];
+        if (storedSubscriptions) {
+          localData = JSON.parse(storedSubscriptions);
+          console.log('Found subscriptions in localStorage:', localData.length);
+        } else if (storedSubmissions) {
+          localData = JSON.parse(storedSubmissions);
+          console.log('Found submissions in localStorage:', localData.length);
+        }
+        
+        setSubmissions(localData);
+        console.log('Loaded from localStorage fallback:', localData.length);
+      }
+      
+    } catch (error) {
+      console.error('Error loading data:', error);
+      // Final fallback to localStorage
       const storedSubmissions = localStorage.getItem('straxkaka_submissions');
       const storedSubscriptions = localStorage.getItem('straxkaka_subscriptions');
       
       let localData = [];
       if (storedSubscriptions) {
         localData = JSON.parse(storedSubscriptions);
-        console.log('Found subscriptions in localStorage:', localData.length);
       } else if (storedSubmissions) {
         localData = JSON.parse(storedSubmissions);
-        console.log('Found submissions in localStorage:', localData.length);
       }
       
       setSubmissions(localData);
-      console.log('Loaded from localStorage:', localData.length);
-      
-    } catch (error) {
-      console.error('Error loading data:', error);
-      setSubmissions([]);
+      console.log('Final fallback to localStorage:', localData.length);
     } finally {
       setLoading(false);
     }

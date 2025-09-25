@@ -242,17 +242,30 @@ export default function Subscription() {
         orderId: orderId
       };
 
-      // Save to localStorage (primary storage)
-      console.log('Saving subscription to localStorage...');
-      const existingSubmissions = JSON.parse(localStorage.getItem('straxkaka_subscriptions') || '[]');
-      existingSubmissions.push(subscriptionData);
-      localStorage.setItem('straxkaka_subscriptions', JSON.stringify(existingSubmissions));
-      console.log('Data saved to localStorage:', existingSubmissions.length, 'total subscriptions');
+      // Save to external storage service (JSONBin) - primary storage
+      console.log('Saving subscription to external storage...');
+      let existingSubmissions = [];
       
-      // Try to sync with server (optional)
       try {
-        console.log('Attempting to sync with server...');
-        const syncResponse = await fetch('/api/submissions', {
+        // Get existing data from external storage
+        const response = await fetch('/api/submissions');
+        
+        if (response.ok) {
+          const data = await response.json();
+          existingSubmissions = data.submissions || [];
+          console.log('Retrieved existing data from external storage:', existingSubmissions.length);
+        } else {
+          console.log('External storage failed, using localStorage fallback');
+          // Fallback to localStorage
+          existingSubmissions = JSON.parse(localStorage.getItem('straxkaka_subscriptions') || '[]');
+        }
+        
+        // Add new submission
+        existingSubmissions.push(subscriptionData);
+        console.log('Added new submission, total count:', existingSubmissions.length);
+        
+        // Save to external storage
+        const saveResponse = await fetch('/api/submissions', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -260,13 +273,23 @@ export default function Subscription() {
           body: JSON.stringify({ submissions: existingSubmissions }),
         });
         
-        if (syncResponse.ok) {
-          console.log('Data successfully synced to server');
+        if (saveResponse.ok) {
+          console.log('Data successfully saved to external storage');
         } else {
-          console.warn('Server sync failed, but data is saved locally');
+          throw new Error('Failed to save to external storage');
         }
-      } catch (syncError) {
-        console.warn('Server sync failed, but data is saved locally:', syncError);
+        
+        // Also save to localStorage as backup
+        localStorage.setItem('straxkaka_subscriptions', JSON.stringify(existingSubmissions));
+        console.log('Data also saved to localStorage as backup');
+        
+      } catch (error) {
+        console.warn('External storage failed, falling back to localStorage only:', error);
+        // Fallback to localStorage only
+        existingSubmissions = JSON.parse(localStorage.getItem('straxkaka_subscriptions') || '[]');
+        existingSubmissions.push(subscriptionData);
+        localStorage.setItem('straxkaka_subscriptions', JSON.stringify(existingSubmissions));
+        console.log('Data saved to localStorage only:', existingSubmissions.length);
       }
 
       // Send email notification (optional)
