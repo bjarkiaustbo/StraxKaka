@@ -1,17 +1,12 @@
 'use client';
 
-import { useState } from 'react';
 import Link from 'next/link';
-import { useLanguage } from '@/contexts/LanguageContext';
-import LanguageSwitcher from '@/components/LanguageSwitcher';
+import Image from 'next/image';
 import LanguageContent from '@/components/LanguageContent';
 import Navigation from '@/components/Navigation';
 import MobileBottomNav from '@/components/MobileBottomNav';
-import PricingTable from '@/components/PricingTable';
 
 export default function Home() {
-  const { t } = useLanguage();
-  const [employeeCount, setEmployeeCount] = useState(0);
 
   return (
       <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
@@ -138,9 +133,11 @@ export default function Home() {
 
           <div className="max-w-4xl mx-auto">
             <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
-              <img 
-                src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" 
+              <Image 
+                src="https://images.pexels.com/photos/140831/pexels-photo-140831.jpeg?auto=compress&cs=tinysrgb&w=1200&h=400&fit=crop" 
                 alt="Birthday cake celebration" 
+                width={1200}
+                height={400}
                 className="w-full h-64 object-cover"
               />
               <div className="p-8">

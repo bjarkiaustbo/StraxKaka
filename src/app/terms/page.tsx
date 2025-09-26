@@ -3,7 +3,6 @@
 import Link from 'next/link';
 import { useLanguage } from '@/contexts/LanguageContext';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
-import LanguageContent from '@/components/LanguageContent';
 
 export default function Terms() {
   const { t } = useLanguage();
