@@ -153,19 +153,6 @@ export default function Home() {
                     {(t) => t('blog.article.excerpt')}
                   </LanguageContent>
                 </p>
-                
-                {/* Additional cake image within article content */}
-                <div className="flex justify-center mb-8">
-                  <div className="relative w-80 h-48 rounded-lg overflow-hidden shadow-md">
-                    <Image 
-                      src="/article-cake.jpeg" 
-                      alt="Delicious birthday cake for workplace celebrations" 
-                      width={320}
-                      height={192}
-                      className="w-full h-full object-cover object-center hover:scale-105 transition-transform duration-300"
-                    />
-                  </div>
-                </div>
                 <Link 
                   href="/blog/workplace-celebrations"
                   className="inline-flex items-center bg-yellow-500 text-black px-6 py-3 rounded-lg font-semibold hover:bg-yellow-400 transition-colors"
