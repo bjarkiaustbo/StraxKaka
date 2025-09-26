@@ -64,14 +64,14 @@ export default function Admin() {
   const [passwordError, setPasswordError] = useState('');
   const [submissions, setSubmissions] = useState<CompanySubmission[]>([]);
   const [loading, setLoading] = useState(true);
-  const [selectedSubmission, setSelectedSubmission] = useState<CompanySubmission | null>(null);
+  // const [selectedSubmission, setSelectedSubmission] = useState<CompanySubmission | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [filterCompany, setFilterCompany] = useState('');
   const [filterStatus, setFilterStatus] = useState('');
   const [filterSubscriptionStatus, setFilterSubscriptionStatus] = useState('');
-  const [filterDeliveryStatus, setFilterDeliveryStatus] = useState('');
-  const [filterPriority, setFilterPriority] = useState('');
-  const [showOnlyActiveEmployees, setShowOnlyActiveEmployees] = useState(false);
+  // const [filterDeliveryStatus, setFilterDeliveryStatus] = useState('');
+  // const [filterPriority, setFilterPriority] = useState('');
+  // const [showOnlyActiveEmployees, setShowOnlyActiveEmployees] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
 
   // Check if already authenticated

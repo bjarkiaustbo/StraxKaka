@@ -2,7 +2,6 @@
 
 import Link from 'next/link';
 import { useLanguage } from '@/contexts/LanguageContext';
-import LanguageSwitcher from '@/components/LanguageSwitcher';
 import LanguageContent from '@/components/LanguageContent';
 import Navigation from '@/components/Navigation';
 import MobileBottomNav from '@/components/MobileBottomNav';
@@ -112,9 +111,11 @@ export default function Services() {
         <div className="max-w-4xl mx-auto text-center">
           {/* Logo */}
           <div className="mb-8 flex justify-center">
-            <img 
+            <Image 
               src="/logo.svg" 
               alt="StraxKaka Logo" 
+              width={48}
+              height={48}
               className="h-12 w-auto"
             />
           </div>

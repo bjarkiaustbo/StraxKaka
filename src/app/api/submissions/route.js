@@ -19,18 +19,33 @@ export async function GET() {
           submissions.push({
             id: doc.name.split('/').pop(),
             companyName: fields.companyName?.stringValue || '',
-            contactPerson: fields.contactPerson?.stringValue || '',
-            email: fields.email?.stringValue || '',
+            contactPersonName: fields.contactPersonName?.stringValue || fields.contactPerson?.stringValue || '',
+            contactEmail: fields.contactEmail?.stringValue || fields.email?.stringValue || '',
+            contactPhone: fields.contactPhone?.stringValue || '',
+            deliveryAddress: fields.deliveryAddress?.stringValue || '',
             subscriptionTier: fields.subscriptionTier?.stringValue || '',
             status: fields.status?.stringValue || '',
+            subscriptionStatus: fields.subscriptionStatus?.stringValue || '',
+            monthlyCost: fields.monthlyCost?.doubleValue || fields.monthlyCost?.integerValue || 0,
             dateCreated: fields.dateCreated?.stringValue || '',
             orderId: fields.orderId?.stringValue || '',
+            lastPaymentDate: fields.lastPaymentDate?.stringValue || '',
+            nextPaymentDate: fields.nextPaymentDate?.stringValue || '',
+            paymentReminderSent: fields.paymentReminderSent?.booleanValue || false,
+            notes: fields.notes?.stringValue || '',
+            lastContactDate: fields.lastContactDate?.stringValue || '',
+            lastContactNotes: fields.lastContactNotes?.stringValue || '',
             employees: fields.employees?.arrayValue?.values?.map(emp => ({
               name: emp.mapValue?.fields?.name?.stringValue || '',
               birthday: emp.mapValue?.fields?.birthday?.stringValue || '',
-              cakePreference: emp.mapValue?.fields?.cakePreference?.stringValue || '',
+              cakeType: emp.mapValue?.fields?.cakeType?.stringValue || emp.mapValue?.fields?.cakePreference?.stringValue || '',
+              cakeSize: emp.mapValue?.fields?.cakeSize?.stringValue || '',
+              dietaryRestrictions: emp.mapValue?.fields?.dietaryRestrictions?.stringValue || '',
               specialNotes: emp.mapValue?.fields?.specialNotes?.stringValue || '',
-              employmentStatus: emp.mapValue?.fields?.employmentStatus?.stringValue || 'active'
+              employmentStatus: emp.mapValue?.fields?.employmentStatus?.stringValue || 'active',
+              deliveryStatus: emp.mapValue?.fields?.deliveryStatus?.stringValue || 'pending',
+              deliveryDate: emp.mapValue?.fields?.deliveryDate?.stringValue || '',
+              deliveryNotes: emp.mapValue?.fields?.deliveryNotes?.stringValue || ''
             })) || []
           });
         });
@@ -72,12 +87,22 @@ export async function POST(request) {
           const firestoreDoc = {
             fields: {
               companyName: { stringValue: submission.companyName || '' },
-              contactPerson: { stringValue: submission.contactPerson || '' },
-              email: { stringValue: submission.email || '' },
+              contactPersonName: { stringValue: submission.contactPersonName || submission.contactPerson || '' },
+              contactEmail: { stringValue: submission.contactEmail || submission.email || '' },
+              contactPhone: { stringValue: submission.contactPhone || '' },
+              deliveryAddress: { stringValue: submission.deliveryAddress || '' },
               subscriptionTier: { stringValue: submission.subscriptionTier || '' },
               status: { stringValue: submission.status || '' },
+              subscriptionStatus: { stringValue: submission.subscriptionStatus || '' },
+              monthlyCost: { doubleValue: submission.monthlyCost || 0 },
               dateCreated: { stringValue: submission.dateCreated || new Date().toISOString() },
               orderId: { stringValue: submission.orderId || '' },
+              lastPaymentDate: { stringValue: submission.lastPaymentDate || '' },
+              nextPaymentDate: { stringValue: submission.nextPaymentDate || '' },
+              paymentReminderSent: { booleanValue: submission.paymentReminderSent || false },
+              notes: { stringValue: submission.notes || '' },
+              lastContactDate: { stringValue: submission.lastContactDate || '' },
+              lastContactNotes: { stringValue: submission.lastContactNotes || '' },
               employees: {
                 arrayValue: {
                   values: (submission.employees || []).map(emp => ({
@@ -85,9 +110,14 @@ export async function POST(request) {
                       fields: {
                         name: { stringValue: emp.name || '' },
                         birthday: { stringValue: emp.birthday || '' },
-                        cakePreference: { stringValue: emp.cakePreference || '' },
+                        cakeType: { stringValue: emp.cakeType || emp.cakePreference || '' },
+                        cakeSize: { stringValue: emp.cakeSize || '' },
+                        dietaryRestrictions: { stringValue: emp.dietaryRestrictions || '' },
                         specialNotes: { stringValue: emp.specialNotes || '' },
-                        employmentStatus: { stringValue: emp.employmentStatus || 'active' }
+                        employmentStatus: { stringValue: emp.employmentStatus || 'active' },
+                        deliveryStatus: { stringValue: emp.deliveryStatus || 'pending' },
+                        deliveryDate: { stringValue: emp.deliveryDate || '' },
+                        deliveryNotes: { stringValue: emp.deliveryNotes || '' }
                       }
                     }
                   }))

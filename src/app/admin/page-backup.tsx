@@ -63,7 +63,6 @@ interface CompanySubmission {
 }
 
 export default function Admin() {
-  const { t } = useLanguage();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [password, setPassword] = useState('');
   const [passwordError, setPasswordError] = useState('');
@@ -173,27 +172,27 @@ export default function Admin() {
     }
   };
 
-  const updatePaymentStatus = (companyId: string, newStatus: 'pending_payment' | 'paid' | 'cancelled') => {
-    const updatedSubmissions = submissions.map(sub => 
-      sub.id === companyId ? { ...sub, status: newStatus } : sub
-    );
-    setSubmissions(updatedSubmissions);
-    if (typeof window !== 'undefined') {
-      if (typeof window !== 'undefined') {
-      localStorage.setItem('straxkaka_subscriptions', JSON.stringify(updatedSubmissions));
-    }
-    }
-  };
+  // const updatePaymentStatus = (companyId: string, newStatus: 'pending_payment' | 'paid' | 'cancelled') => {
+  //   const updatedSubmissions = submissions.map(sub => 
+  //     sub.id === companyId ? { ...sub, status: newStatus } : sub
+  //   );
+  //   setSubmissions(updatedSubmissions);
+  //   if (typeof window !== 'undefined') {
+  //     if (typeof window !== 'undefined') {
+  //     localStorage.setItem('straxkaka_subscriptions', JSON.stringify(updatedSubmissions));
+  //   }
+  //   }
+  // };
 
-  const toggleDeliveredStatus = (companyId: string) => {
-    const updatedSubmissions = submissions.map(sub => 
-      sub.id === companyId ? { ...sub, delivered: !sub.delivered } : sub
-    );
-    setSubmissions(updatedSubmissions);
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('straxkaka_subscriptions', JSON.stringify(updatedSubmissions));
-    }
-  };
+  // const toggleDeliveredStatus = (companyId: string) => {
+  //   const updatedSubmissions = submissions.map(sub => 
+  //     sub.id === companyId ? { ...sub, delivered: !sub.delivered } : sub
+  //   );
+  //   setSubmissions(updatedSubmissions);
+  //   if (typeof window !== 'undefined') {
+  //     localStorage.setItem('straxkaka_subscriptions', JSON.stringify(updatedSubmissions));
+  //   }
+  // };
 
   const updateDeliveryStatus = (companyId: string, newStatus: 'scheduled' | 'in_transit' | 'delivered' | 'failed') => {
     const updatedSubmissions = submissions.map(sub => 
@@ -225,31 +224,31 @@ export default function Admin() {
     }
   };
 
-  const addCommunicationNote = (companyId: string, method: string, notes: string) => {
-    const newNote = {
-      date: new Date().toISOString(),
-      method,
-      notes,
-      user: 'Admin'
-    };
-    
-    const updatedSubmissions = submissions.map(sub => 
-      sub.id === companyId ? { 
-        ...sub, 
-        communicationHistory: [...sub.communicationHistory, newNote],
-        lastContactDate: new Date().toISOString(),
-        lastContactMethod: method as 'email' | 'phone' | 'in_person'
-      } : sub
-    );
-    setSubmissions(updatedSubmissions);
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('straxkaka_subscriptions', JSON.stringify(updatedSubmissions));
-    }
-  };
+  // const addCommunicationNote = (companyId: string, method: string, notes: string) => {
+  //   const newNote = {
+  //     date: new Date().toISOString(),
+  //     method,
+  //     notes,
+  //     user: 'Admin'
+  //   };
+  //   
+  //   const updatedSubmissions = submissions.map(sub => 
+  //     sub.id === companyId ? { 
+  //       ...sub, 
+  //       communicationHistory: [...sub.communicationHistory, newNote],
+  //       lastContactDate: new Date().toISOString(),
+  //       lastContactMethod: method as 'email' | 'phone' | 'in_person'
+  //     } : sub
+  //   );
+  //   setSubmissions(updatedSubmissions);
+  //   if (typeof window !== 'undefined') {
+  //     localStorage.setItem('straxkaka_subscriptions', JSON.stringify(updatedSubmissions));
+  //   }
+  // };
 
   const getUpcomingBirthdays = () => {
     const today = new Date();
-    const next30Days = new Date(today.getTime() + 30 * 24 * 60 * 60 * 1000);
+    // const next30Days = new Date(today.getTime() + 30 * 24 * 60 * 60 * 1000);
     
     const upcomingBirthdays: Array<{
       employee: Employee;

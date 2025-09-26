@@ -9,7 +9,6 @@ interface MobileBottomNavProps {
 }
 
 export default function MobileBottomNav({ currentPage = '' }: MobileBottomNavProps) {
-  const { t } = useLanguage();
 
   const navItems = [
     { 

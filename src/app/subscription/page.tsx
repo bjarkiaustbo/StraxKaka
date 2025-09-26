@@ -1,13 +1,11 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { useSubscription, SubscriptionTier, SubscriptionStatus, CAKE_TYPES } from '@/contexts/SubscriptionContext';
-import LanguageSwitcher from '@/components/LanguageSwitcher';
+import { useSubscription, SubscriptionTier, CAKE_TYPES } from '@/contexts/SubscriptionContext';
 import LanguageContent from '@/components/LanguageContent';
 import EnhancedFileUpload from '@/components/EnhancedFileUpload';
-import PricingTable from '@/components/PricingTable';
 import Navigation from '@/components/Navigation';
 import MobileBottomNav from '@/components/MobileBottomNav';
 import BirthdayPicker from '@/components/BirthdayPicker';

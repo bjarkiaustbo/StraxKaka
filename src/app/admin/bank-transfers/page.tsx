@@ -17,7 +17,6 @@ interface BankTransfer {
 }
 
 export default function BankTransfersPage() {
-  const { t } = useLanguage();
   const [transfers, setTransfers] = useState<BankTransfer[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
