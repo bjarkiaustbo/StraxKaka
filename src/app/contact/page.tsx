@@ -218,7 +218,6 @@ export default function Contact() {
                 <li><a href="/privacy" className="hover:text-yellow-400">{t('footer.legal.privacy')}</a></li>
                 <li><a href="/terms" className="hover:text-yellow-400">{t('footer.legal.terms')}</a></li>
                 <li><a href="/cookies" className="hover:text-yellow-400">{t('footer.legal.cookies')}</a></li>
-                <li><a href="/legal" className="hover:text-yellow-400">{t('footer.legal.legal')}</a></li>
               </ul>
             </div>
           </div>

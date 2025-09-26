@@ -184,7 +184,6 @@ export default function Terms() {
                 <li><a href="/privacy" className="hover:text-yellow-400">Persónuverndarstefna</a></li>
                 <li><a href="/terms" className="hover:text-yellow-400">Skilmálar</a></li>
                 <li><a href="/cookies" className="hover:text-yellow-400">Vafrakökur</a></li>
-                <li><a href="/legal" className="hover:text-yellow-400">Löglegar upplýsingar</a></li>
               </ul>
             </div>
           </div>

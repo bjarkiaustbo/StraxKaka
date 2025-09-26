@@ -18,7 +18,7 @@ export default function Services() {
       nameIcelandic: 'Rósakaka ljóst sukkulaði',
       nameEnglish: 'Rose Cake Light Chocolate',
       price: 12454,
-      image: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+      image: '/cake-placeholder.jpg',
       dietary: 'Contains dairy, eggs, gluten'
     },
     {
@@ -26,7 +26,7 @@ export default function Services() {
       nameIcelandic: 'Rósakaka dökkt súkkulaði',
       nameEnglish: 'Rose Cake Dark Chocolate',
       price: 12454,
-      image: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+      image: '/cake-placeholder.jpg',
       dietary: 'Contains dairy, eggs, gluten'
     },
     {
@@ -34,7 +34,7 @@ export default function Services() {
       nameIcelandic: 'Skúffukaka á bakka',
       nameEnglish: 'Skúffukaka on Tray',
       price: 13326,
-      image: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+      image: '/cake-placeholder.jpg',
       dietary: 'Contains dairy, eggs, gluten'
     },
     {
@@ -42,7 +42,7 @@ export default function Services() {
       nameIcelandic: 'Jarðaberja',
       nameEnglish: 'Strawberry',
       price: 14666,
-      image: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+      image: '/cake-placeholder.jpg',
       dietary: 'Contains dairy, eggs, gluten'
     },
     {
@@ -50,7 +50,7 @@ export default function Services() {
       nameIcelandic: 'Sitronuost',
       nameEnglish: 'Lemon Cheese',
       price: 14666,
-      image: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+      image: '/cake-placeholder.jpg',
       dietary: 'Contains dairy, eggs, gluten'
     },
     {
@@ -58,7 +58,7 @@ export default function Services() {
       nameIcelandic: 'Biscoff',
       nameEnglish: 'Biscoff',
       price: 14666,
-      image: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+      image: '/cake-placeholder.jpg',
       dietary: 'Contains dairy, eggs, gluten'
     },
     {
@@ -66,7 +66,7 @@ export default function Services() {
       nameIcelandic: 'Daim',
       nameEnglish: 'Daim',
       price: 14666,
-      image: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+      image: '/cake-placeholder.jpg',
       dietary: 'Contains dairy, eggs, gluten'
     },
     {
@@ -74,7 +74,7 @@ export default function Services() {
       nameIcelandic: 'Tiramisu',
       nameEnglish: 'Tiramisu',
       price: 14666,
-      image: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+      image: '/cake-placeholder.jpg',
       dietary: 'Contains dairy, eggs, gluten'
     },
     {
@@ -82,7 +82,7 @@ export default function Services() {
       nameIcelandic: 'Súkkulaði með karamellukremi',
       nameEnglish: 'Chocolate with Caramel Cream',
       price: 14666,
-      image: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+      image: '/cake-placeholder.jpg',
       dietary: 'Contains dairy, eggs, gluten'
     },
     {
@@ -90,7 +90,7 @@ export default function Services() {
       nameIcelandic: 'Súkkulaði með súkkulaðikremi',
       nameEnglish: 'Chocolate with Chocolate Cream',
       price: 14666,
-      image: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+      image: '/cake-placeholder.jpg',
       dietary: 'Contains dairy, eggs, gluten'
     }
   ];
@@ -571,7 +571,6 @@ export default function Services() {
                 <li><a href="/privacy" className="hover:text-yellow-400">{t('footer.legal.privacy')}</a></li>
                 <li><a href="/terms" className="hover:text-yellow-400">{t('footer.legal.terms')}</a></li>
                 <li><a href="/cookies" className="hover:text-yellow-400">{t('footer.legal.cookies')}</a></li>
-                <li><a href="/legal" className="hover:text-yellow-400">{t('footer.legal.legal')}</a></li>
               </ul>
             </div>
           </div>

@@ -4,7 +4,6 @@ import Link from 'next/link';
 import LanguageContent from '@/components/LanguageContent';
 import Navigation from '@/components/Navigation';
 import MobileBottomNav from '@/components/MobileBottomNav';
-import Image from 'next/image';
 
 export default function Home() {
 
@@ -133,13 +132,13 @@ export default function Home() {
 
           <div className="max-w-4xl mx-auto">
             <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
-              <Image 
-                src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" 
-                alt="Birthday cake celebration" 
-                width={1200}
-                height={256}
-                className="w-full h-64 object-cover"
-              />
+              <div className="w-full h-64 bg-gradient-to-br from-yellow-400 to-orange-500 flex items-center justify-center">
+                <div className="text-center text-white">
+                  <div className="text-6xl mb-4">🎂</div>
+                  <h2 className="text-2xl font-bold">Birthday Cake Celebration</h2>
+                  <p className="text-lg opacity-90">Delicious cakes for workplace celebrations</p>
+                </div>
+              </div>
               <div className="p-8">
                 <h3 className="text-2xl font-bold text-gray-900 mb-4">
                   <LanguageContent fallback="Sætt leyndarmál að hamingjusamari vinnustað: Aldrei gleyma afmælum aftur">

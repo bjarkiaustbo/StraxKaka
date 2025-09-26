@@ -79,6 +79,8 @@ const translations = {
     
     // Legal pages
     'privacy.title': 'Persónuverndarstefna',
+    'privacy.last_updated': 'Síðast uppfært',
+    'privacy.date': '26. september 2025',
     'cookies.title': 'Vafrakökustefna',
     'cookies.last_updated': 'Síðast uppfært',
     'cookies.date': '18. september 2025',
@@ -589,6 +591,8 @@ const translations = {
     
     // Legal pages
     'privacy.title': 'Privacy Policy',
+    'privacy.last_updated': 'Last updated',
+    'privacy.date': 'September 26, 2025',
     'cookies.title': 'Cookie Policy',
     'cookies.last_updated': 'Last updated',
     'cookies.date': 'September 18, 2025',

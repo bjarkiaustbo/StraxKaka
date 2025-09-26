@@ -43,7 +43,12 @@ export default function Privacy() {
           
           <div className="prose prose-lg max-w-none">
             <p className="text-gray-600 mb-6">
-              <strong>Last updated:</strong> September 26, 2025
+              <LanguageContent fallback={<strong>Last updated:</strong>}>
+                {(t) => <strong>{t('privacy.last_updated')}:</strong>}
+              </LanguageContent>
+              <LanguageContent fallback="September 26, 2025">
+                {(t) => t('privacy.date')}
+              </LanguageContent>
             </p>
 
             <p className="text-gray-700 mb-6">
@@ -185,7 +190,6 @@ export default function Privacy() {
                 <li><a href="/privacy" className="hover:text-yellow-400">Persónuverndarstefna</a></li>
                 <li><a href="/terms" className="hover:text-yellow-400">Skilmálar</a></li>
                 <li><a href="/cookies" className="hover:text-yellow-400">Vafrakökur</a></li>
-                <li><a href="/legal" className="hover:text-yellow-400">Löglegar upplýsingar</a></li>
               </ul>
             </div>
           </div>
