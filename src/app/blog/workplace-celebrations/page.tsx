@@ -15,13 +15,13 @@ export default function BlogArticle() {
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
             <div className="w-full h-64 rounded-2xl shadow-lg mb-8 overflow-hidden">
-              <Image 
-                src="https://images.pexels.com/photos/140831/pexels-photo-140831.jpeg?auto=compress&cs=tinysrgb&w=800&h=400&fit=crop" 
-                alt="Birthday cake celebration" 
-                width={800}
-                height={400}
-                className="w-full h-full object-cover"
-              />
+        <Image 
+          src="https://images.pexels.com/photos/205961/pexels-photo-205961.jpeg?auto=compress&cs=tinysrgb&w=800&h=400&fit=crop" 
+          alt="Birthday cake celebration" 
+          width={800}
+          height={400}
+          className="w-full h-full object-cover"
+        />
             </div>
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
               <LanguageContent fallback="Mikilvægi afmælisfagnaðar á vinnustaðnum">

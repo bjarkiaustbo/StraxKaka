@@ -133,13 +133,13 @@ export default function Home() {
 
           <div className="max-w-4xl mx-auto">
             <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
-              <Image 
-                src="https://images.pexels.com/photos/140831/pexels-photo-140831.jpeg?auto=compress&cs=tinysrgb&w=1200&h=400&fit=crop" 
-                alt="Birthday cake celebration" 
-                width={1200}
-                height={400}
-                className="w-full h-64 object-cover"
-              />
+        <Image 
+          src="https://images.pexels.com/photos/205961/pexels-photo-205961.jpeg?auto=compress&cs=tinysrgb&w=1200&h=400&fit=crop" 
+          alt="Birthday cake celebration" 
+          width={1200}
+          height={400}
+          className="w-full h-64 object-cover"
+        />
               <div className="p-8">
                 <h3 className="text-2xl font-bold text-gray-900 mb-4">
                   <LanguageContent fallback="Sætt leyndarmál að hamingjusamari vinnustað: Aldrei gleyma afmælum aftur">
