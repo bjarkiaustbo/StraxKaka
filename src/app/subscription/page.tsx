@@ -275,26 +275,6 @@ export default function Subscription() {
         throw error;
       }
 
-      // Send email notification (optional)
-      try {
-        console.log('Attempting to send email notification...');
-        const emailResponse = await fetch('/api/subscription/notify', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(subscriptionData),
-        });
-
-        if (emailResponse.ok) {
-          console.log('Email notification sent successfully');
-        } else {
-          console.warn('Email notification failed, but subscription was saved');
-        }
-      } catch (emailError) {
-        console.warn('Email notification error (non-critical):', emailError);
-        // Don't fail the submission if email fails
-      }
       
       if (paymentMethod === 'aur') {
         setSuccess(t('subscription.payment.success_message'));

@@ -1,5 +1,4 @@
 import { NextResponse } from 'next/server';
-import { sendContactEmail } from '@/lib/emailService';
 
 export async function POST(request) {
   try {
@@ -22,20 +21,12 @@ export async function POST(request) {
       );
     }
 
-    // Send email using the email service
-    const emailResult = await sendContactEmail({ name, email, company, phone, message });
-    
-    if (!emailResult.success) {
-      console.error('Failed to send email:', emailResult.error);
-      return NextResponse.json(
-        { success: false, error: 'Failed to send email' },
-        { status: 500 }
-      );
-    }
+    // Log the contact form submission (email service removed)
+    console.log('Contact form submission:', { name, email, company, phone, message });
 
     return NextResponse.json({
       success: true,
-      message: 'Message sent successfully'
+      message: 'Message received successfully'
     });
 
   } catch (error) {

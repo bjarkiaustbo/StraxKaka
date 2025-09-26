@@ -18,7 +18,7 @@ export default function Services() {
       nameIcelandic: 'Rósakaka ljóst sukkulaði',
       nameEnglish: 'Rose Cake Light Chocolate',
       price: 12454,
-      image: '/cakes/rose-light.jpg',
+      image: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
       dietary: 'Contains dairy, eggs, gluten'
     },
     {
@@ -26,7 +26,7 @@ export default function Services() {
       nameIcelandic: 'Rósakaka dökkt súkkulaði',
       nameEnglish: 'Rose Cake Dark Chocolate',
       price: 12454,
-      image: '/cakes/rose-dark.jpg',
+      image: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
       dietary: 'Contains dairy, eggs, gluten'
     },
     {
@@ -34,7 +34,7 @@ export default function Services() {
       nameIcelandic: 'Skúffukaka á bakka',
       nameEnglish: 'Skúffukaka on Tray',
       price: 13326,
-      image: '/cakes/skuffu.jpg',
+      image: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
       dietary: 'Contains dairy, eggs, gluten'
     },
     {
@@ -42,7 +42,7 @@ export default function Services() {
       nameIcelandic: 'Jarðaberja',
       nameEnglish: 'Strawberry',
       price: 14666,
-      image: '/cakes/strawberry.jpg',
+      image: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
       dietary: 'Contains dairy, eggs, gluten'
     },
     {
@@ -50,7 +50,7 @@ export default function Services() {
       nameIcelandic: 'Sitronuost',
       nameEnglish: 'Lemon Cheese',
       price: 14666,
-      image: '/cakes/lemon-cheese.jpg',
+      image: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
       dietary: 'Contains dairy, eggs, gluten'
     },
     {
@@ -58,7 +58,7 @@ export default function Services() {
       nameIcelandic: 'Biscoff',
       nameEnglish: 'Biscoff',
       price: 14666,
-      image: '/cakes/biscoff.jpg',
+      image: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
       dietary: 'Contains dairy, eggs, gluten'
     },
     {
@@ -66,7 +66,7 @@ export default function Services() {
       nameIcelandic: 'Daim',
       nameEnglish: 'Daim',
       price: 14666,
-      image: '/cakes/daim.jpg',
+      image: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
       dietary: 'Contains dairy, eggs, gluten'
     },
     {
@@ -74,7 +74,7 @@ export default function Services() {
       nameIcelandic: 'Tiramisu',
       nameEnglish: 'Tiramisu',
       price: 14666,
-      image: '/cakes/tiramisu.jpg',
+      image: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
       dietary: 'Contains dairy, eggs, gluten'
     },
     {
@@ -82,7 +82,7 @@ export default function Services() {
       nameIcelandic: 'Súkkulaði með karamellukremi',
       nameEnglish: 'Chocolate with Caramel Cream',
       price: 14666,
-      image: '/cakes/chocolate-caramel.jpg',
+      image: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
       dietary: 'Contains dairy, eggs, gluten'
     },
     {
@@ -90,7 +90,7 @@ export default function Services() {
       nameIcelandic: 'Súkkulaði með súkkulaðikremi',
       nameEnglish: 'Chocolate with Chocolate Cream',
       price: 14666,
-      image: '/cakes/chocolate-cream.jpg',
+      image: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
       dietary: 'Contains dairy, eggs, gluten'
     }
   ];

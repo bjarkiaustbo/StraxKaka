@@ -123,6 +123,24 @@ export default function Admin() {
     }
   };
 
+  const updateSubmissionsInFirebase = async (updatedSubmissions: Submission[]) => {
+    try {
+      const response = await fetch('/api/submissions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ submissions: updatedSubmissions }),
+      });
+      
+      if (!response.ok) {
+        console.error('Failed to update submissions in Firebase');
+      }
+    } catch (error) {
+      console.error('Error updating submissions in Firebase:', error);
+    }
+  };
+
 
   // Auto-refresh data every 30 seconds
   useEffect(() => {
@@ -147,24 +165,20 @@ export default function Admin() {
   };
 
 
-  const markAsPaid = (companyId: string) => {
+  const markAsPaid = async (companyId: string) => {
     const updatedSubmissions = submissions.map((sub: Submission) => 
       sub.id === companyId ? { ...sub, status: 'paid' } : sub
     );
     setSubmissions(updatedSubmissions);
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('straxkaka_subscriptions', JSON.stringify(updatedSubmissions));
-    }
+    await updateSubmissionsInFirebase(updatedSubmissions);
   };
 
-  const markAsPending = (companyId: string) => {
+  const markAsPending = async (companyId: string) => {
     const updatedSubmissions = submissions.map((sub: Submission) => 
       sub.id === companyId ? { ...sub, status: 'pending_payment' } : sub
     );
     setSubmissions(updatedSubmissions);
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('straxkaka_subscriptions', JSON.stringify(updatedSubmissions));
-    }
+    await updateSubmissionsInFirebase(updatedSubmissions);
   };
 
   const toggleCompanySelection = (companyId: string) => {
@@ -183,26 +197,22 @@ export default function Admin() {
     setSelectedCompanies([]);
   };
 
-  const bulkMarkAsPaid = () => {
+  const bulkMarkAsPaid = async () => {
     if (selectedCompanies.length === 0) return;
     const updatedSubmissions = submissions.map((sub: Submission) => 
       selectedCompanies.includes(sub.id) ? { ...sub, status: 'paid' } : sub
     );
     setSubmissions(updatedSubmissions);
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('straxkaka_subscriptions', JSON.stringify(updatedSubmissions));
-    }
+    await updateSubmissionsInFirebase(updatedSubmissions);
     setSelectedCompanies([]);
   };
 
-  const bulkRemove = () => {
+  const bulkRemove = async () => {
     if (selectedCompanies.length === 0) return;
     if (confirm(`Are you sure you want to remove ${selectedCompanies.length} companies?`)) {
       const updatedSubmissions = submissions.filter((sub: Submission) => !selectedCompanies.includes(sub.id));
       setSubmissions(updatedSubmissions);
-      if (typeof window !== 'undefined') {
-        localStorage.setItem('straxkaka_subscriptions', JSON.stringify(updatedSubmissions));
-      }
+      await updateSubmissionsInFirebase(updatedSubmissions);
       setSelectedCompanies([]);
     }
   };
@@ -297,7 +307,7 @@ export default function Admin() {
   };
 
   // Phase 1: Delivery Status Management
-  const updateDeliveryStatus = (submissionId: string, employeeIndex: number, status: Employee['deliveryStatus']) => {
+  const updateDeliveryStatus = async (submissionId: string, employeeIndex: number, status: Employee['deliveryStatus']) => {
     const updatedSubmissions = submissions.map(sub => {
       if (sub.id === submissionId && sub.employees) {
         const updatedEmployees = [...sub.employees];
@@ -311,13 +321,11 @@ export default function Admin() {
       return sub;
     });
     setSubmissions(updatedSubmissions);
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('straxkaka_subscriptions', JSON.stringify(updatedSubmissions));
-    }
+    await updateSubmissionsInFirebase(updatedSubmissions);
   };
 
   // Phase 1: Employee Management
-  const updateEmployee = (submissionId: string, employeeIndex: number, updatedEmployee: Employee) => {
+  const updateEmployee = async (submissionId: string, employeeIndex: number, updatedEmployee: Employee) => {
     const updatedSubmissions = submissions.map(sub => {
       if (sub.id === submissionId && sub.employees) {
         const updatedEmployees = [...sub.employees];
@@ -327,13 +335,11 @@ export default function Admin() {
       return sub;
     });
     setSubmissions(updatedSubmissions);
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('straxkaka_subscriptions', JSON.stringify(updatedSubmissions));
-    }
+    await updateSubmissionsInFirebase(updatedSubmissions);
     setEditingEmployee(null);
   };
 
-  const addEmployee = (submissionId: string) => {
+  const addEmployee = async (submissionId: string) => {
     if (!newEmployee.name || !newEmployee.birthday || !newEmployee.cakeType) return;
     
     const employee: Employee = {
@@ -357,14 +363,12 @@ export default function Admin() {
       return sub;
     });
     setSubmissions(updatedSubmissions);
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('straxkaka_subscriptions', JSON.stringify(updatedSubmissions));
-    }
+    await updateSubmissionsInFirebase(updatedSubmissions);
     setNewEmployee({});
     setShowAddEmployee(null);
   };
 
-  const removeEmployee = (submissionId: string, employeeIndex: number) => {
+  const removeEmployee = async (submissionId: string, employeeIndex: number) => {
     if (confirm('Are you sure you want to remove this employee?')) {
       const updatedSubmissions = submissions.map(sub => {
         if (sub.id === submissionId && sub.employees) {
@@ -374,15 +378,12 @@ export default function Admin() {
         return sub;
       });
       setSubmissions(updatedSubmissions);
-      if (typeof window !== 'undefined') {
-        localStorage.setItem('straxkaka_subscriptions', JSON.stringify(updatedSubmissions));
-      }
     }
   };
 
 
   // Phase 1: Pause/Resume Subscription
-  const toggleSubscriptionStatus = (submissionId: string) => {
+  const toggleSubscriptionStatus = async (submissionId: string) => {
     const updatedSubmissions = submissions.map(sub => {
       if (sub.id === submissionId) {
         const newStatus = sub.subscriptionStatus === 'active' ? 'paused' : 'active';
@@ -391,13 +392,11 @@ export default function Admin() {
       return sub;
     });
     setSubmissions(updatedSubmissions);
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('straxkaka_subscriptions', JSON.stringify(updatedSubmissions));
-    }
+    await updateSubmissionsInFirebase(updatedSubmissions);
   };
 
   // Notes Management
-  const updateNotes = (submissionId: string) => {
+  const updateNotes = async (submissionId: string) => {
     const updatedSubmissions = submissions.map(sub => {
       if (sub.id === submissionId) {
         return { ...sub, notes: notesText };
@@ -405,15 +404,13 @@ export default function Admin() {
       return sub;
     });
     setSubmissions(updatedSubmissions);
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('straxkaka_subscriptions', JSON.stringify(updatedSubmissions));
-    }
+    await updateSubmissionsInFirebase(updatedSubmissions);
     setEditingNotes(null);
     setNotesText('');
   };
 
   // Last Contact Management
-  const updateLastContact = (submissionId: string) => {
+  const updateLastContact = async (submissionId: string) => {
     const updatedSubmissions = submissions.map(sub => {
       if (sub.id === submissionId) {
         return { 
@@ -425,9 +422,7 @@ export default function Admin() {
       return sub;
     });
     setSubmissions(updatedSubmissions);
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('straxkaka_subscriptions', JSON.stringify(updatedSubmissions));
-    }
+    await updateSubmissionsInFirebase(updatedSubmissions);
     setEditingLastContact(null);
     setLastContactDate('');
     setLastContactNotes('');

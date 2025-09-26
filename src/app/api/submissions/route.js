@@ -80,10 +80,38 @@ export async function POST(request) {
     const { submissions } = await request.json();
     
     if (Array.isArray(submissions)) {
+      // First, get existing submissions to check for duplicates
+      const existingResponse = await fetch(`${FIRESTORE_URL}?key=${FIREBASE_API_KEY}`);
+      let existingSubmissions = [];
+      
+      if (existingResponse.ok) {
+        const existingData = await existingResponse.json();
+        if (existingData.documents) {
+          existingSubmissions = existingData.documents.map(doc => ({
+            id: doc.name.split('/').pop(),
+            companyName: doc.fields?.companyName?.stringValue || '',
+            contactEmail: doc.fields?.contactEmail?.stringValue || doc.fields?.email?.stringValue || '',
+            orderId: doc.fields?.orderId?.stringValue || ''
+          }));
+        }
+      }
+      
       const results = [];
       
       for (const submission of submissions) {
         try {
+          // Check for duplicates based on company name, email, or order ID
+          const isDuplicate = existingSubmissions.some(existing => 
+            existing.companyName === submission.companyName ||
+            existing.contactEmail === (submission.contactEmail || submission.email) ||
+            existing.orderId === submission.orderId
+          );
+          
+          if (isDuplicate) {
+            console.log('Skipping duplicate submission:', submission.companyName);
+            results.push({ success: true, skipped: true, reason: 'duplicate' });
+            continue;
+          }
           const firestoreDoc = {
             fields: {
               companyName: { stringValue: submission.companyName || '' },
