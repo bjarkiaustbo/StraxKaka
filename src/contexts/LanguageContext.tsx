@@ -77,6 +77,13 @@ const translations = {
     'footer.legal.legal': 'Löglegar upplýsingar',
     'footer.copyright': '© 2025 StraxKaka. Allur réttur áskilinn. Byrjaði árið 2025.',
     
+    // Legal pages
+    'privacy.title': 'Persónuverndarstefna',
+    'cookies.title': 'Vafrakökustefna',
+    'cookies.last_updated': 'Síðast uppfært',
+    'cookies.date': '18. september 2025',
+    'legal.title': 'Löglegar upplýsingar',
+    
     // Common
     'common.phone': '+354 790 4777',
     'common.email': 'orders.straxkaka@outlook.com',
@@ -579,6 +586,13 @@ const translations = {
     'footer.legal.cookies': 'Cookie Policy',
     'footer.legal.legal': 'Legal Information',
     'footer.copyright': '© 2025 StraxKaka. All rights reserved. Started in 2025.',
+    
+    // Legal pages
+    'privacy.title': 'Privacy Policy',
+    'cookies.title': 'Cookie Policy',
+    'cookies.last_updated': 'Last updated',
+    'cookies.date': 'September 18, 2025',
+    'legal.title': 'Legal Information',
     
     // Common
     'common.phone': '+354 790 4777',
