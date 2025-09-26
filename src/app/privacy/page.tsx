@@ -34,17 +34,25 @@ export default function Privacy() {
       {/* Content */}
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="bg-white rounded-2xl shadow-lg p-8">
-          <h1 className="text-4xl font-bold text-gray-900 mb-8">Persónuverndarstefna</h1>
+          <h1 className="text-4xl font-bold text-gray-900 mb-8">PRIVACY POLICY</h1>
           
           <div className="prose prose-lg max-w-none">
             <p className="text-gray-600 mb-6">
-              <strong>Síðast uppfært:</strong> 18. september 2025
+              <strong>Last updated:</strong> September 26, 2025
             </p>
 
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">1. Inngangur</h2>
             <p className="text-gray-700 mb-6">
-              StraxKaka ehf. (&ldquo;við&rdquo;, &ldquo;okkur&rdquo;, &ldquo;fyrirtækið&rdquo;) er ábyrgt fyrir vinnslu persónuupplýsinga sem lýst er í þessari persónuverndarstefnu. 
-              Við tökum persónuvernd mjög alvarlega og vinnum í samræmi við almenna persónuverndarreglugerðina (GDPR) og íslenskan lög um persónuvernd og vinnslu persónuupplýsinga.
+              This Privacy Notice for <strong>StraxLife</strong> (&ldquo;we,&rdquo; &ldquo;us,&rdquo; or &ldquo;our&rdquo;), describes how and why we might access, collect, store, use, and/or share (&ldquo;process&rdquo;) your personal information when you use our services (&ldquo;Services&rdquo;), including when you:
+            </p>
+            
+            <ul className="list-disc pl-6 text-gray-700 mb-6">
+              <li>Visit our website at <a href="https://straxkaka.is" className="text-yellow-600 hover:text-yellow-700">straxkaka.is</a> or any website of ours that links to this Privacy Notice</li>
+              <li>Use <strong>StraxKaka</strong>. <strong>A cake automation service, that delivers cakes to companies on birthdays</strong></li>
+              <li>Engage with us in other related ways, including any sales, marketing, or events</li>
+            </ul>
+            
+            <p className="text-gray-700 mb-6">
+              <strong>Questions or concerns?</strong> Reading this Privacy Notice will help you understand your privacy rights and choices. We are responsible for making decisions about how your personal information is processed. If you do not agree with our policies and practices, please do not use our Services. If you still have any questions or concerns, please contact us at <a href="mailto:orders.straxkaka@outlook.com" className="text-yellow-600 hover:text-yellow-700">orders.straxkaka@outlook.com</a>.
             </p>
 
             <h2 className="text-2xl font-bold text-gray-900 mb-4">2. Hvaða upplýsingar söfnum við</h2>
