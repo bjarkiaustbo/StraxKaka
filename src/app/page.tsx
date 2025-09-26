@@ -133,13 +133,15 @@ export default function Home() {
 
           <div className="max-w-4xl mx-auto">
             <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
-              <Image 
-                src="/article-cake.jpeg" 
-                alt="Beautiful birthday cake with candles" 
-                width={1200}
-                height={400}
-                className="w-full h-64 object-cover"
-              />
+              <div className="relative w-full h-64 bg-gradient-to-br from-yellow-50 to-amber-50 flex items-center justify-center">
+                <Image 
+                  src="/article-cake.jpeg" 
+                  alt="Beautiful birthday cake with candles" 
+                  width={1200}
+                  height={400}
+                  className="w-full h-full object-cover object-center"
+                />
+              </div>
               <div className="p-8">
                 <h3 className="text-2xl font-bold text-gray-900 mb-4">
                   <LanguageContent fallback="Sætt leyndarmál að hamingjusamari vinnustað: Aldrei gleyma afmælum aftur">
@@ -151,6 +153,19 @@ export default function Home() {
                     {(t) => t('blog.article.excerpt')}
                   </LanguageContent>
                 </p>
+                
+                {/* Additional cake image within article content */}
+                <div className="flex justify-center mb-8">
+                  <div className="relative w-80 h-48 rounded-lg overflow-hidden shadow-md">
+                    <Image 
+                      src="/article-cake.jpeg" 
+                      alt="Delicious birthday cake for workplace celebrations" 
+                      width={320}
+                      height={192}
+                      className="w-full h-full object-cover object-center hover:scale-105 transition-transform duration-300"
+                    />
+                  </div>
+                </div>
                 <Link 
                   href="/blog/workplace-celebrations"
                   className="inline-flex items-center bg-yellow-500 text-black px-6 py-3 rounded-lg font-semibold hover:bg-yellow-400 transition-colors"
