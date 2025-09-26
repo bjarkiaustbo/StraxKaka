@@ -326,6 +326,11 @@ export default function Subscription() {
             src="/StraxKaka.jpg" 
             alt="StraxKaka Logo" 
             className="h-16 md:h-20 w-auto object-contain max-w-full"
+            style={{
+              maxHeight: '5rem',
+              height: 'auto',
+              width: 'auto'
+            }}
           />
         </div>
 
@@ -465,6 +470,11 @@ export default function Subscription() {
           src="/StraxKaka.jpg" 
           alt="StraxKaka Logo" 
           className="h-16 md:h-20 w-auto object-contain max-w-full"
+          style={{
+            maxHeight: '5rem',
+            height: 'auto',
+            width: 'auto'
+          }}
         />
       </div>
 

@@ -82,3 +82,4 @@ paymentLogSchema.statics.getAdminActivity = function(adminName, startDate, endDa
 export default mongoose.models.PaymentLog || mongoose.model('PaymentLog', paymentLogSchema);
 
 
+
