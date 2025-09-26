@@ -1,14 +1,11 @@
 'use client';
 
 import Link from 'next/link';
-import { useLanguage } from '@/contexts/LanguageContext';
-
 interface AdminNavigationProps {
   currentPage?: string;
 }
 
 export default function AdminNavigation({ currentPage = '' }: AdminNavigationProps) {
-  const { t } = useLanguage();
 
   const navItems = [
     { key: 'dashboard', href: '/admin', label: 'Dashboard' },
