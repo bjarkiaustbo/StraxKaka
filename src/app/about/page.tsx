@@ -30,26 +30,6 @@ export default function About() {
         </div>
       </section>
 
-      {/* Logo Section */}
-      <section className="py-12 bg-gradient-to-r from-gray-50 to-gray-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <div className="flex justify-center mb-4">
-              <img 
-                src="/logo-nobg.jpg" 
-                alt="StraxKaka Logo"
-                className="h-24 md:h-32 w-auto object-contain max-w-full"
-                style={{
-                  maxHeight: '8rem',
-                  height: 'auto',
-                  width: 'auto'
-                }}
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Problem Section */}
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

@@ -320,19 +320,6 @@ export default function Subscription() {
       <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
         <Navigation currentPage="subscription" />
 
-        {/* Logo Section */}
-        <div className="flex justify-center py-6">
-          <img 
-            src="/logo-nobg.jpg" 
-            alt="StraxKaka Logo" 
-            className="h-16 md:h-20 w-auto object-contain max-w-full"
-            style={{
-              maxHeight: '5rem',
-              height: 'auto',
-              width: 'auto'
-            }}
-          />
-        </div>
 
         {/* Success Message */}
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
@@ -463,20 +450,6 @@ export default function Subscription() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 pb-20 md:pb-0">
       <Navigation currentPage="subscription" />
-
-      {/* Logo Section */}
-      <div className="flex justify-center py-6">
-        <img 
-          src="/logo-nobg.jpg" 
-          alt="StraxKaka Logo" 
-          className="h-16 md:h-20 w-auto object-contain max-w-full"
-          style={{
-            maxHeight: '5rem',
-            height: 'auto',
-            width: 'auto'
-          }}
-        />
-      </div>
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Service Overview */}
