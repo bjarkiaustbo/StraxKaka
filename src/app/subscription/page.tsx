@@ -323,7 +323,7 @@ export default function Subscription() {
         {/* Logo Section */}
         <div className="flex justify-center py-6">
           <img 
-            src="/StraxKaka.jpg" 
+            src="/logo-nobg.jpg" 
             alt="StraxKaka Logo" 
             className="h-16 md:h-20 w-auto object-contain max-w-full"
             style={{
@@ -467,7 +467,7 @@ export default function Subscription() {
       {/* Logo Section */}
       <div className="flex justify-center py-6">
         <img 
-          src="/StraxKaka.jpg" 
+          src="/logo-nobg.jpg" 
           alt="StraxKaka Logo" 
           className="h-16 md:h-20 w-auto object-contain max-w-full"
           style={{

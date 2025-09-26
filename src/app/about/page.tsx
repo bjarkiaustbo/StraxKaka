@@ -36,7 +36,7 @@ export default function About() {
           <div className="text-center">
             <div className="flex justify-center mb-4">
               <img 
-                src="/StraxKaka.jpg" 
+                src="/logo-nobg.jpg" 
                 alt="StraxKaka Logo"
                 className="h-24 md:h-32 w-auto object-contain max-w-full"
                 style={{
