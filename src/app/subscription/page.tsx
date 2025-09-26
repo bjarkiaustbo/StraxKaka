@@ -9,7 +9,6 @@ import EnhancedFileUpload from '@/components/EnhancedFileUpload';
 import Navigation from '@/components/Navigation';
 import MobileBottomNav from '@/components/MobileBottomNav';
 import BirthdayPicker from '@/components/BirthdayPicker';
-import Image from 'next/image';
 
 interface Employee {
   name: string;
