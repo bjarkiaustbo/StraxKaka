@@ -7,17 +7,10 @@ const FIRESTORE_URL = `https://firestore.googleapis.com/v1/projects/${FIREBASE_P
 
 export async function GET() {
   try {
-    console.log('GET /api/submissions - fetching from Firestore...');
-    console.log('Firestore URL:', FIRESTORE_URL);
-    
     const response = await fetch(`${FIRESTORE_URL}?key=${FIREBASE_API_KEY}`);
-    
-    console.log('Firestore response status:', response.status);
     
     if (response.ok) {
       const data = await response.json();
-      console.log('Firestore response data:', JSON.stringify(data, null, 2));
-      
       const submissions = [];
       
       if (data.documents) {
@@ -43,21 +36,17 @@ export async function GET() {
         });
       }
       
-      console.log('Retrieved submissions from Firestore:', submissions.length);
-      
       return Response.json({ 
         success: true, 
         submissions,
-        count: submissions.length,
-        source: 'Firebase Firestore',
-        message: 'Data retrieved from Firestore successfully'
+        count: submissions.length
       });
     } else {
       const errorText = await response.text();
       console.error('Failed to fetch from Firestore:', response.status, errorText);
       return Response.json({ 
         success: false, 
-        error: `Failed to fetch from Firestore: ${response.status} - ${errorText}`,
+        error: 'Failed to fetch from Firestore',
         submissions: [],
         count: 0
       }, { status: 500 });
@@ -66,7 +55,7 @@ export async function GET() {
     console.error('Error in GET /api/submissions:', error);
     return Response.json({ 
       success: false, 
-      error: `Failed to read submissions from Firestore: ${error.message}` 
+      error: 'Failed to read submissions from Firestore' 
     }, { status: 500 });
   }
 }
@@ -74,10 +63,8 @@ export async function GET() {
 export async function POST(request) {
   try {
     const { submissions } = await request.json();
-    console.log('POST /api/submissions - received', submissions?.length || 0, 'submissions');
     
     if (Array.isArray(submissions)) {
-      // Save each submission to Firestore using REST API
       const results = [];
       
       for (const submission of submissions) {
@@ -120,9 +107,7 @@ export async function POST(request) {
           if (response.ok) {
             results.push({ success: true });
           } else {
-            const errorText = await response.text();
-            console.error('Failed to save to Firestore:', response.status, errorText);
-            results.push({ success: false, error: `Failed to save to Firestore: ${response.status} - ${errorText}` });
+            results.push({ success: false, error: 'Failed to save to Firestore' });
           }
         } catch (error) {
           results.push({ success: false, error: error.message });
@@ -130,13 +115,11 @@ export async function POST(request) {
       }
       
       const successCount = results.filter(r => r.success).length;
-      console.log(`Successfully saved ${successCount}/${submissions.length} submissions to Firestore`);
       
       return Response.json({ 
         success: true, 
-        message: `Submissions saved to Firestore successfully (${successCount}/${submissions.length})`,
-        count: successCount,
-        source: 'Firebase Firestore'
+        message: `Submissions saved successfully (${successCount}/${submissions.length})`,
+        count: successCount
       });
     } else {
       return Response.json({ 

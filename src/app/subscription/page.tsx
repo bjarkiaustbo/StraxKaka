@@ -242,9 +242,7 @@ export default function Subscription() {
         orderId: orderId
       };
 
-      // Save to Firebase Firestore - primary storage
-      console.log('Saving subscription to Firebase Firestore...');
-      
+      // Save to Firebase Firestore
       try {
         // Get existing data from Firestore
         const response = await fetch('/api/submissions');
@@ -253,16 +251,13 @@ export default function Subscription() {
         if (response.ok) {
           const data = await response.json();
           existingSubmissions = data.submissions || [];
-          console.log('Retrieved existing data from Firestore:', existingSubmissions.length);
         } else {
-          console.log('Firestore failed, using localStorage fallback');
-          // Fallback to localStorage
-          existingSubmissions = JSON.parse(localStorage.getItem('straxkaka_subscriptions') || '[]');
+          console.error('Failed to load existing data from Firestore');
+          existingSubmissions = [];
         }
         
         // Add new submission
         existingSubmissions.push(subscriptionData);
-        console.log('Added new submission, total count:', existingSubmissions.length);
         
         // Save to Firestore
         const saveResponse = await fetch('/api/submissions', {
@@ -273,23 +268,13 @@ export default function Subscription() {
           body: JSON.stringify({ submissions: existingSubmissions }),
         });
         
-        if (saveResponse.ok) {
-          console.log('Data successfully saved to Firestore');
-        } else {
+        if (!saveResponse.ok) {
           throw new Error('Failed to save to Firestore');
         }
         
-        // Also save to localStorage as backup
-        localStorage.setItem('straxkaka_subscriptions', JSON.stringify(existingSubmissions));
-        console.log('Data also saved to localStorage as backup');
-        
       } catch (error) {
-        console.warn('Firestore failed, falling back to localStorage only:', error);
-        // Fallback to localStorage only
-        const existingSubmissions = JSON.parse(localStorage.getItem('straxkaka_subscriptions') || '[]');
-        existingSubmissions.push(subscriptionData);
-        localStorage.setItem('straxkaka_subscriptions', JSON.stringify(existingSubmissions));
-        console.log('Data saved to localStorage only:', existingSubmissions.length);
+        console.error('Failed to save subscription:', error);
+        throw error;
       }
 
       // Send email notification (optional)
