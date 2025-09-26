@@ -1,13 +1,13 @@
+'use client';
+
 import { Metadata } from 'next';
 import Link from 'next/link';
-
-export const metadata: Metadata = {
-  title: 'Vafrakökustefna - StraxKaka',
-  description: 'Vafrakökustefna StraxKaka - Hvernig við notum vafrakökur á vefsíðunni okkar.',
-  keywords: 'vafrakökur, StraxKaka, vafrakökustefna, persónuvernd, vefsíða',
-};
+import { useLanguage } from '@/contexts/LanguageContext';
+import LanguageSwitcher from '@/components/LanguageSwitcher';
+import LanguageContent from '@/components/LanguageContent';
 
 export default function Cookies() {
+  const { t } = useLanguage();
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
       {/* Navigation */}
@@ -18,14 +18,17 @@ export default function Cookies() {
                   <Link href="/" className="text-2xl font-bold text-yellow-500">StraxKaka</Link>
                 </div>
                 <div className="hidden md:flex space-x-8">
-                  <Link href="/" className="text-gray-300 hover:text-yellow-400 transition-colors">Heim</Link>
-                  <Link href="/about" className="text-gray-300 hover:text-yellow-400 transition-colors">Um okkur</Link>
-                  <Link href="/services" className="text-gray-300 hover:text-yellow-400 transition-colors">Þjónusta</Link>
-                  <Link href="/contact" className="text-gray-300 hover:text-yellow-400 transition-colors">Hafa samband</Link>
+                  <Link href="/" className="text-gray-300 hover:text-yellow-400 transition-colors">{t('nav.home')}</Link>
+                  <Link href="/about" className="text-gray-300 hover:text-yellow-400 transition-colors">{t('nav.about')}</Link>
+                  <Link href="/services" className="text-gray-300 hover:text-yellow-400 transition-colors">{t('nav.services')}</Link>
+                  <Link href="/contact" className="text-gray-300 hover:text-yellow-400 transition-colors">{t('nav.contact')}</Link>
                 </div>
-                <Link href="/contact" className="bg-yellow-500 text-black px-6 py-2 rounded-full hover:bg-yellow-400 transition-colors font-semibold">
-                  Byrja núna
-                </Link>
+                <div className="flex items-center space-x-4">
+                  <LanguageSwitcher />
+                  <Link href="/contact" className="bg-yellow-500 text-black px-6 py-2 rounded-full hover:bg-yellow-400 transition-colors font-semibold">
+                    {t('nav.start_now')}
+                  </Link>
+                </div>
           </div>
         </div>
       </nav>
@@ -33,11 +36,20 @@ export default function Cookies() {
       {/* Content */}
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="bg-white rounded-2xl shadow-lg p-8">
-          <h1 className="text-4xl font-bold text-gray-900 mb-8">Vafrakökustefna</h1>
+          <h1 className="text-4xl font-bold text-gray-900 mb-8">
+            <LanguageContent fallback="Cookie Policy">
+              {(t) => t('cookies.title')}
+            </LanguageContent>
+          </h1>
           
           <div className="prose prose-lg max-w-none">
             <p className="text-gray-600 mb-6">
-              <strong>Síðast uppfært:</strong> 18. september 2025
+              <LanguageContent fallback={<strong>Last updated:</strong>}>
+                {(t) => <strong>{t('cookies.last_updated')}:</strong>}
+              </LanguageContent>
+              <LanguageContent fallback="September 18, 2025">
+                {(t) => t('cookies.date')}
+              </LanguageContent>
             </p>
 
             <h2 className="text-2xl font-bold text-gray-900 mb-4">1. Hvað eru vafrakökur?</h2>
@@ -141,7 +153,7 @@ export default function Cookies() {
               Ef þú hefur spurningar um vafrakökustefnuna, hafðu samband við okkur:
             </p>
             <div className="bg-yellow-50 p-4 rounded-lg mb-6">
-              <p className="text-gray-700"><strong>StraxKaka ehf.</strong></p>
+              <p className="text-gray-700"><strong>StraxLife ehf.</strong></p>
               <p className="text-gray-700">Netfang: orders.straxkaka@outlook.com</p>
               <p className="text-gray-700">Sími: +354 790 4777</p>
             </div>

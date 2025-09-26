@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 export const metadata: Metadata = {
   title: 'Löglegar upplýsingar - StraxKaka',
-  description: 'Löglegar upplýsingar um StraxKaka ehf. - fyrirtækisupplýsingar, skráning og tengiliðir.',
+  description: 'Löglegar upplýsingar um StraxLife ehf. - fyrirtækisupplýsingar, skráning og tengiliðir.',
   keywords: 'löglegar upplýsingar, StraxKaka, fyrirtæki, skráning, tengiliðir',
 };
 
@@ -38,10 +38,10 @@ export default function Legal() {
           <div className="prose prose-lg max-w-none">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">Fyrirtækisupplýsingar</h2>
             <div className="bg-yellow-50 p-6 rounded-lg mb-8">
-              <h3 className="text-xl font-semibold text-gray-900 mb-4">StraxKaka ehf.</h3>
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">StraxLife ehf.</h3>
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
-                  <p className="text-gray-700"><strong>Fyrirtækisheiti:</strong> StraxKaka ehf.</p>
+                  <p className="text-gray-700"><strong>Fyrirtækisheiti:</strong> StraxLife ehf.</p>
                   <p className="text-gray-700"><strong>Kennitala:</strong> 123456-7890</p>
                   <p className="text-gray-700"><strong>Stofnun:</strong> 2025</p>
                   <p className="text-gray-700"><strong>Rechtsform:</strong> Einstaklingsfyrirtæki</p>
@@ -93,10 +93,10 @@ export default function Legal() {
             <div className="bg-yellow-50 p-6 rounded-lg mb-8">
               <p className="text-gray-700 mb-4">
                 Allur efni á vefsíðunni, þar á meðal texti, myndir, hönnun og hugbúnaður, 
-                er í eigu StraxKaka ehf. eða er notað með leyfi eiganda.
+                er í eigu StraxLife ehf. eða er notað með leyfi eiganda.
               </p>
               <p className="text-gray-700 mb-4">
-                <strong>Vörumerki:</strong> StraxKaka er vörumerki StraxKaka ehf.
+                <strong>Vörumerki:</strong> StraxKaka er vörumerki StraxLife ehf.
               </p>
               <p className="text-gray-700">
                 <strong>Hugverk:</strong> Allur hugbúnaður og tækni er verndaður með höfundarrétti.
@@ -106,14 +106,14 @@ export default function Legal() {
             <h2 className="text-2xl font-bold text-gray-900 mb-4">Ábyrgð og fyrirvara</h2>
             <div className="bg-gray-50 p-6 rounded-lg mb-8">
               <p className="text-gray-700 mb-4">
-                StraxKaka ehf. tekur ábyrgð á því að veita þjónustuna með viðeigandi hætti, 
+                StraxLife ehf. tekur ábyrgð á því að veita þjónustuna með viðeigandi hætti, 
                 en takmarkar ábyrgð sína í samræmi við íslenskan lög.
               </p>
               <p className="text-gray-700 mb-4">
                 Upplýsingar á vefsíðunni eru veittar án fyrirvara um nákvæmni eða tímanlega gildi.
               </p>
               <p className="text-gray-700">
-                StraxKaka ehf. tekur ekki ábyrgð á skaða sem stafa af notkun vefsíðunnar.
+                StraxLife ehf. tekur ekki ábyrgð á skaða sem stafa af notkun vefsíðunnar.
               </p>
             </div>
 
@@ -135,7 +135,7 @@ export default function Legal() {
             <h2 className="text-2xl font-bold text-gray-900 mb-4">Ágreiningur</h2>
             <div className="bg-gray-50 p-6 rounded-lg mb-8">
               <p className="text-gray-700 mb-4">
-                Ágreiningur milli StraxKaka ehf. og viðskiptavina skal leysa með samningaviðræðum 
+                Ágreiningur milli StraxLife ehf. og viðskiptavina skal leysa með samningaviðræðum 
                 eða fyrir íslenskum dómstólum.
               </p>
               <p className="text-gray-700">
@@ -146,7 +146,7 @@ export default function Legal() {
             <h2 className="text-2xl font-bold text-gray-900 mb-4">Breytingar</h2>
             <div className="bg-yellow-50 p-6 rounded-lg mb-8">
               <p className="text-gray-700">
-                StraxKaka ehf. getur breytt þessum löglegum upplýsingum hvenær sem er. 
+                StraxLife ehf. getur breytt þessum löglegum upplýsingum hvenær sem er. 
                 Breytingar verða birtar á vefsíðunni og verða í gildi frá birtingu.
               </p>
             </div>
@@ -156,7 +156,7 @@ export default function Legal() {
               <p className="text-gray-700 mb-4">
                 Ef þú hefur spurningar um þessar löglegu upplýsingar, hafðu samband við okkur:
               </p>
-              <p className="text-gray-700"><strong>StraxKaka ehf.</strong></p>
+              <p className="text-gray-700"><strong>StraxLife ehf.</strong></p>
               <p className="text-gray-700">Netfang: orders.straxkaka@outlook.com</p>
               <p className="text-gray-700">Sími: +354 790 4777</p>
             </div>

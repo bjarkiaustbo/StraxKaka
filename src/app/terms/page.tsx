@@ -43,7 +43,7 @@ export default function Terms() {
 
             <h2 className="text-2xl font-bold text-gray-900 mb-4">1. Inngangur</h2>
             <p className="text-gray-700 mb-6">
-              Þessir skilmálar gilda um notkun á þjónustu StraxKaka ehf. (&ldquo;fyrirtækið&rdquo;, &ldquo;við&rdquo;, &ldquo;okkur&rdquo;) 
+              Þessir skilmálar gilda um notkun á þjónustu StraxLife ehf. (&ldquo;fyrirtækið&rdquo;, &ldquo;við&rdquo;, &ldquo;okkur&rdquo;) 
               sem veitir AI sjálfvirkni þjónustu fyrir afmæliskökur fyrir fyrirtæki. Með því að nota þjónustuna 
               samþykkir þú þessa skilmála.
             </p>
@@ -132,7 +132,7 @@ export default function Terms() {
               Ef þú hefur spurningar um þessa skilmála, hafðu samband við okkur:
             </p>
             <div className="bg-yellow-50 p-4 rounded-lg mb-6">
-              <p className="text-gray-700"><strong>StraxKaka ehf.</strong></p>
+              <p className="text-gray-700"><strong>StraxLife ehf.</strong></p>
               <p className="text-gray-700">Netfang: orders.straxkaka@outlook.com</p>
               <p className="text-gray-700">Sími: +354 790 4777</p>
             </div>

@@ -129,7 +129,7 @@ export default function Privacy() {
               hafðu samband við okkur:
             </p>
             <div className="bg-yellow-50 p-4 rounded-lg mb-6">
-              <p className="text-gray-700"><strong>StraxKaka ehf.</strong></p>
+              <p className="text-gray-700"><strong>StraxLife ehf.</strong></p>
               <p className="text-gray-700">Netfang: orders.straxkaka@outlook.com</p>
               <p className="text-gray-700">Sími: +354 790 4777</p>
             </div>

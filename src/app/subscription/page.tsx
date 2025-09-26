@@ -1110,17 +1110,17 @@ export default function Subscription() {
                     <div className="text-center">
                       <div className="text-lg font-semibold text-gray-900 mb-2">
                         <LanguageContent fallback="Vinsamlegast hafðu samband fyrir verð">
-                          {(t) => t('subscription.payment.contact_pricing')}
+                          {(t) => t('subscription.payment.contact_pricing') || 'Contact for pricing'}
                         </LanguageContent>
                       </div>
                       <div className="text-sm text-gray-600">
-                        <LanguageContent fallback="Email: orders.straxkaka@outlook.com">
-                          {(t) => t('subscription.payment.contact_email')}
+                        <LanguageContent fallback="orders.straxkaka@outlook.com">
+                          {(t) => t('subscription.payment.contact_email') || 'orders.straxkaka@outlook.com'}
                         </LanguageContent>
                       </div>
                       <div className="text-sm text-gray-600">
-                        <LanguageContent fallback="Sími: +354 790 4777">
-                          {(t) => t('subscription.payment.contact_phone')}
+                        <LanguageContent fallback="+354 790 4777">
+                          {(t) => t('subscription.payment.contact_phone') || '+354 790 4777'}
                         </LanguageContent>
                       </div>
                     </div>
