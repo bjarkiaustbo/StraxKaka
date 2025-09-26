@@ -16,8 +16,8 @@ export default function BlogArticle() {
           <div className="text-center mb-12">
             <div className="w-full h-64 rounded-2xl shadow-lg mb-8 overflow-hidden">
         <Image 
-          src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" 
-          alt="Birthday cake celebration" 
+          src="/article-cake.jpeg" 
+          alt="Beautiful birthday cake with candles" 
           width={800}
           height={400}
           className="w-full h-full object-cover"
@@ -70,7 +70,7 @@ export default function BlogArticle() {
                   </LanguageContent>
                 </h2>
                 <p className="text-gray-700 leading-relaxed">
-                  <LanguageContent fallback="Aftur á móti, þegar afmæli gleymist, getur það valdið streitu, misskilningi og jafnvel pirringi, sem smátt og smátt skemmir starfsanda og vinnumenningu. Starfsmenn í mannauði reyna að muna öll afmæli, en í uppteknum vinnustofum með mörgum starfsmönnum er auðvelt að gleyma einhverjum. Jafnvel þegar einhver man, getur ferlið við að panta, samræma og afhenda köku verið tímafrekt og stressandi.">
+                  <LanguageContent fallback="Aftur á móti, þegar afmæli gleymist, getur það valdið streitu, misskilningi og jafnvel pirringi, sem smátt og smátt skemmir starfsanda og vinnumenningu. Starfsmenn í mannauði reyna að muna öll afmæli, en í uppteknum vinnustofum með mörgum starfsmönnum er auðvelt að gleyma einhverjum. Jafnvel þegar einhver man, getur ferlið við að panta, samræma og afhenda kaku verið tímafrekt og stressandi.">
                     {(t) => t('blog.content.cost_forgetting.desc')}
                   </LanguageContent>
                 </p>
@@ -134,12 +134,12 @@ export default function BlogArticle() {
               {/* More Than Just Cake */}
               <div>
                 <h2 className="text-xl font-bold text-gray-900 mb-4">
-                  <LanguageContent fallback="Meira en bara köka">
+                  <LanguageContent fallback="Meira en bara kaka">
                     {(t) => t('blog.content.more_than_cake.title')}
                   </LanguageContent>
                 </h2>
                 <p className="text-gray-700 leading-relaxed">
-                  <LanguageContent fallback="Þetta snýst ekki bara um kökuna—heldur um að byggja menningu þar sem fólk finnur sig metið. Hvert afmæli er áminning um að hver starfsmaður skiptir máli, sem skapar vinnustað þar sem fólk hlakkar til að mæta, vinnur betur saman og byggir sterkari tengsl.">
+                  <LanguageContent fallback="Þetta snýst ekki bara um kakuna—heldur um að byggja menningu þar sem fólk finnur sig metið. Hvert afmæli er áminning um að hver starfsmaður skiptir máli, sem skapar vinnustað þar sem fólk hlakkar til að mæta, vinnur betur saman og byggir sterkari tengsl.">
                     {(t) => t('blog.content.more_than_cake.desc')}
                   </LanguageContent>
                 </p>
