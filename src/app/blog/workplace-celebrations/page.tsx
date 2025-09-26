@@ -1,11 +1,10 @@
 'use client';
 
-import { useLanguage } from '@/contexts/LanguageContext';
 import Navigation from '@/components/Navigation';
 import LanguageContent from '@/components/LanguageContent';
+import Image from 'next/image';
 
 export default function BlogArticle() {
-  const { t } = useLanguage();
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
@@ -15,9 +14,11 @@ export default function BlogArticle() {
       <section className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
-            <img 
+            <Image 
               src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" 
               alt="Birthday cake celebration" 
+              width={1200}
+              height={256}
               className="w-full h-64 object-cover rounded-2xl shadow-lg mb-8"
             />
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">

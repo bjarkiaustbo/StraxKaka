@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Link from 'next/link';
 import { useLanguage } from '@/contexts/LanguageContext';
 import LanguageContent from '@/components/LanguageContent';
 import AdminNavigation from '@/components/AdminNavigation';
@@ -35,9 +34,7 @@ interface Order {
 }
 
 export default function Dashboard() {
-  const { t } = useLanguage();
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
   const [upcomingBirthdays, setUpcomingBirthdays] = useState<Birthday[]>([]);
   const [todayDeliveries, setTodayDeliveries] = useState<Delivery[]>([]);
   const [recentOrders, setRecentOrders] = useState<Order[]>([]);
@@ -424,12 +421,6 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* Error Message */}
-        {error && (
-          <div className="mt-8 bg-red-50 border border-red-200 rounded-lg p-4">
-            <p className="text-red-600">{error}</p>
-          </div>
-        )}
       </div>
     </div>
   );

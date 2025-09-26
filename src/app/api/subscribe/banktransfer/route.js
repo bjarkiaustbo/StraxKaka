@@ -14,8 +14,7 @@ export async function POST(request) {
       phone, 
       employees, 
       subscriptionTier, 
-      monthlyCost,
-      paymentMethod 
+      monthlyCost
     } = body;
 
     // Validate required fields

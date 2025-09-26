@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import recurringBilling from '@/lib/recurringBilling';
 
-export async function POST(request) {
+export async function POST() {
   try {
     // This endpoint can be called manually or by a cron job
     const result = await recurringBilling.processRecurringBilling();
@@ -26,7 +26,7 @@ export async function POST(request) {
   }
 }
 
-export async function GET(request) {
+export async function GET() {
   try {
     const stats = await recurringBilling.getBillingStats();
     
