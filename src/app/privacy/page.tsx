@@ -52,13 +52,27 @@ export default function Privacy() {
             </p>
 
             <p className="text-gray-700 mb-6">
-              This Privacy Notice for <strong>StraxLife</strong> (&ldquo;we,&rdquo; &ldquo;us,&rdquo; or &ldquo;our&rdquo;), describes how and why we might access, collect, store, use, and/or share (&ldquo;process&rdquo;) your personal information when you use our services (&ldquo;Services&rdquo;), including when you:
+              <LanguageContent fallback="This Privacy Notice for StraxLife (&ldquo;we,&rdquo; &ldquo;us,&rdquo; or &ldquo;our&rdquo;), describes how and why we might access, collect, store, use, and/or share (&ldquo;process&rdquo;) your personal information when you use our services (&ldquo;Services&rdquo;), including when you:">
+                {(t) => t('privacy.intro')}
+              </LanguageContent>
             </p>
             
             <ul className="list-disc pl-6 text-gray-700 mb-6">
-              <li>Visit our website at <a href="https://straxkaka.is" className="text-yellow-600 hover:text-yellow-700">straxkaka.is</a> or any website of ours that links to this Privacy Notice</li>
-              <li>Use <strong>StraxKaka</strong>. <strong>A cake automation service, that delivers cakes to companies on birthdays</strong></li>
-              <li>Engage with us in other related ways, including any sales, marketing, or events</li>
+              <li>
+                <LanguageContent fallback="Visit our website at straxkaka.is or any website of ours that links to this Privacy Notice">
+                  {(t) => t('privacy.website')}
+                </LanguageContent>
+              </li>
+              <li>
+                <LanguageContent fallback="Use StraxKaka. A cake automation service, that delivers cakes to companies on birthdays">
+                  {(t) => t('privacy.service')}
+                </LanguageContent>
+              </li>
+              <li>
+                <LanguageContent fallback="Engage with us in other related ways, including any sales, marketing, or events">
+                  {(t) => t('privacy.engage')}
+                </LanguageContent>
+              </li>
             </ul>
             
             <p className="text-gray-700 mb-6">

@@ -52,10 +52,15 @@ export default function Cookies() {
               </LanguageContent>
             </p>
 
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">1. Hvað eru vafrakökur?</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">
+              <LanguageContent fallback="1. What are cookies?">
+                {(t) => `1. ${t('cookies.what_are')}`}
+              </LanguageContent>
+            </h2>
             <p className="text-gray-700 mb-6">
-              Vafrakökur eru lítil textaskrár sem eru vistaðar á tölvu þinni eða farsíma þegar þú heimsækir vefsíðu. 
-              Þær hjálpa vefsíðunni að muna upplýsingar um þig og stillingar þínar til að bæta notendaupplifunina.
+              <LanguageContent fallback="Cookies are small files that are stored on your computer or phone when you visit a website. They help the website remember information about you, so you can use it better the next time you come back.">
+                {(t) => t('cookies.what_are_text')}
+              </LanguageContent>
             </p>
 
             <h2 className="text-2xl font-bold text-gray-900 mb-4">2. Hvernig notum við vafrakökur</h2>

@@ -13,12 +13,12 @@ export default function BlogArticle() {
       <section className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
-            <div className="w-full h-64 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-2xl shadow-lg mb-8 flex items-center justify-center">
-              <div className="text-center text-white">
-                <div className="text-6xl mb-4">🎂</div>
-                <h2 className="text-2xl font-bold">Birthday Cake Celebration</h2>
-                <p className="text-lg opacity-90">Delicious cakes for workplace celebrations</p>
-              </div>
+            <div className="w-full h-64 rounded-2xl shadow-lg mb-8 overflow-hidden">
+              <img 
+                src="https://images.pexels.com/photos/140831/pexels-photo-140831.jpeg?auto=compress&cs=tinysrgb&w=800&h=400&fit=crop" 
+                alt="Birthday cake celebration" 
+                className="w-full h-full object-cover"
+              />
             </div>
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
               <LanguageContent fallback="Mikilvægi afmælisfagnaðar á vinnustaðnum">
