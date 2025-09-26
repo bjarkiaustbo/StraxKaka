@@ -84,89 +84,261 @@ export default function Privacy() {
               </LanguageContent>
             </p>
 
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">2. Hvaða upplýsingar söfnum við</h2>
-            <p className="text-gray-700 mb-4">Við söfnum eftirfarandi tegundum persónuupplýsinga:</p>
-            <ul className="list-disc pl-6 text-gray-700 mb-6">
-              <li><strong>Upplýsingar um fyrirtæki:</strong> Nafn fyrirtækis, heimilisfang, símanúmer, netfang</li>
-              <li><strong>Upplýsingar um starfsmenn:</strong> Nafn, afmælisdagur, starfsheiti, deild</li>
-              <li><strong>HR kerfisupplýsingar:</strong> Gagnagrunnar sem innihalda afmælisdagaupplýsingar</li>
-              <li><strong>Vafrakökur:</strong> Upplýsingar um vafrann þinn og notkun á vefsíðunni</li>
-              <li><strong>Samskiptaupplýsingar:</strong> Skilaboð sem þú sendir okkur í gegnum tengiliðaform</li>
-            </ul>
-
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">3. Tilgangur vinnslu</h2>
-            <p className="text-gray-700 mb-4">Við vinnum persónuupplýsingar fyrir eftirfarandi tilgangi:</p>
-            <ul className="list-disc pl-6 text-gray-700 mb-6">
-              <li>Afmælisdagaskráning og kökupöntun fyrir starfsmenn fyrirtækja</li>
-              <li>AI sjálfvirkni fyrir afmæliskökur</li>
-              <li>Samskipti við viðskiptavini</li>
-              <li>Þjónustuþróun og gæðastjórnun</li>
-              <li>Löglegar skyldur og reglufylgni</li>
-            </ul>
-
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">4. Réttarstoð vinnslu</h2>
-            <p className="text-gray-700 mb-6">
-              Við vinnum persónuupplýsingar á grundvelli samþykkis, samnings, löglegs hagsmuna og löglegra skyldna 
-              í samræmi við 6. gr. GDPR.
-            </p>
-
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">5. Hvað lengi geymum við upplýsingarnar</h2>
-            <p className="text-gray-700 mb-6">
-              Við geymum persónuupplýsingar eins lengi og nauðsynlegt er fyrir tilgang vinnslunnar eða eins lengi 
-              og lög krefjast. Afmælisdagaupplýsingar eru geymdar þar til starfsmaður hættir hjá fyrirtækinu eða 
-              þjónustusamningur lýkur.
-            </p>
-
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">6. Deiling upplýsinga</h2>
-            <p className="text-gray-700 mb-6">
-              Við deilum persónuupplýsingum aðeins með þriðja aðila sem eru nauðsynlegir fyrir þjónustuna, 
-              svo sem kökubúðir fyrir afhendingu. Allir þriðju aðilar eru bundnir samningum um persónuvernd.
-            </p>
-
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">7. Réttindi þín</h2>
-            <p className="text-gray-700 mb-4">Þú hefur eftirfarandi réttindi:</p>
-            <ul className="list-disc pl-6 text-gray-700 mb-6">
-              <li><strong>Upplýsingaréttur:</strong> Að fá upplýsingar um vinnslu persónuupplýsinga</li>
-              <li><strong>Breytingaréttur:</strong> Að fá leiðréttingu rangra upplýsinga</li>
-              <li><strong>Eyðingarréttur:</strong> Að fá eytt persónuupplýsingum</li>
-              <li><strong>Takmarkaniréttur:</strong> Að takmarka vinnslu persónuupplýsinga</li>
-              <li><strong>Gagnabirtingarréttur:</strong> Að fá persónuupplýsingar í rafrænu formi</li>
-              <li><strong>Mótmælaréttur:</strong> Að mótmæla vinnslu persónuupplýsinga</li>
-            </ul>
-
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">8. Öryggi</h2>
-            <p className="text-gray-700 mb-6">
-              Við notum viðeigandi tæknilega og skipulagsleg öryggisráðstafanir til að vernda persónuupplýsingar 
-              gegn óleyfilegri vinnslu, tapi, eyðingu eða skemmdum.
-            </p>
-
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">9. Vafrakökur</h2>
-            <p className="text-gray-700 mb-6">
-              Vefsíðan notar vafrakökur til að bæta notendaupplifun. Þú getur stillt vafrann þinn til að 
-              hafna vafrakökum, en það getur haft áhrif á virkni vefsíðunnar.
-            </p>
-
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">10. Breytingar á stefnunni</h2>
-            <p className="text-gray-700 mb-6">
-              Við getum breytt þessari persónuverndarstefnu. Breytingar verða birtar á vefsíðunni og 
-              þú verður tilkynnt um verulegar breytingar.
-            </p>
-
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">11. Hafa samband</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">
+              <LanguageContent fallback="2. What information do we collect">
+                {(t) => `2. ${t('privacy.what_collect_title')}`}
+              </LanguageContent>
+            </h2>
             <p className="text-gray-700 mb-4">
-              Ef þú hefur spurningar um þessa persónuverndarstefnu eða vilt nýta réttindi þín, 
-              hafðu samband við okkur:
+              <LanguageContent fallback="We collect the following types of personal information:">
+                {(t) => t('privacy.what_collect_text')}
+              </LanguageContent>
+            </p>
+            <ul className="list-disc pl-6 text-gray-700 mb-6">
+              <li>
+                <LanguageContent fallback="Company information:">
+                  {(t) => <strong>{t('privacy.company_info')}</strong>}
+                </LanguageContent>
+                <LanguageContent fallback="Company name, address, phone number, email">
+                  {(t) => ` ${t('privacy.company_info_text')}`}
+                </LanguageContent>
+              </li>
+              <li>
+                <LanguageContent fallback="Employee information:">
+                  {(t) => <strong>{t('privacy.employee_info')}</strong>}
+                </LanguageContent>
+                <LanguageContent fallback="Name, birthday, job title, department">
+                  {(t) => ` ${t('privacy.employee_info_text')}`}
+                </LanguageContent>
+              </li>
+              <li>
+                <LanguageContent fallback="HR system information:">
+                  {(t) => <strong>{t('privacy.hr_info')}</strong>}
+                </LanguageContent>
+                <LanguageContent fallback="Databases containing birthday information">
+                  {(t) => ` ${t('privacy.hr_info_text')}`}
+                </LanguageContent>
+              </li>
+              <li>
+                <LanguageContent fallback="Cookies:">
+                  {(t) => <strong>{t('privacy.cookies_info')}</strong>}
+                </LanguageContent>
+                <LanguageContent fallback="Information about your browser and website usage">
+                  {(t) => ` ${t('privacy.cookies_info_text')}`}
+                </LanguageContent>
+              </li>
+              <li>
+                <LanguageContent fallback="Communication information:">
+                  {(t) => <strong>{t('privacy.communication_info')}</strong>}
+                </LanguageContent>
+                <LanguageContent fallback="Messages you send us through contact forms">
+                  {(t) => ` ${t('privacy.communication_info_text')}`}
+                </LanguageContent>
+              </li>
+            </ul>
+
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">
+              <LanguageContent fallback="3. Purpose of processing">
+                {(t) => `3. ${t('privacy.purpose_title')}`}
+              </LanguageContent>
+            </h2>
+            <p className="text-gray-700 mb-4">
+              <LanguageContent fallback="We process personal information for the following purposes:">
+                {(t) => t('privacy.purpose_text')}
+              </LanguageContent>
+            </p>
+            <ul className="list-disc pl-6 text-gray-700 mb-6">
+              <li>
+                <LanguageContent fallback="Birthday registration and cake ordering for company employees">
+                  {(t) => t('privacy.birthday_registration')}
+                </LanguageContent>
+              </li>
+              <li>
+                <LanguageContent fallback="AI automation for birthday cakes">
+                  {(t) => t('privacy.ai_automation')}
+                </LanguageContent>
+              </li>
+              <li>
+                <LanguageContent fallback="Communication with customers">
+                  {(t) => t('privacy.customer_communication')}
+                </LanguageContent>
+              </li>
+              <li>
+                <LanguageContent fallback="Service development and quality management">
+                  {(t) => t('privacy.service_development')}
+                </LanguageContent>
+              </li>
+              <li>
+                <LanguageContent fallback="Legal obligations and compliance">
+                  {(t) => t('privacy.legal_obligations')}
+                </LanguageContent>
+              </li>
+            </ul>
+
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">
+              <LanguageContent fallback="4. Legal basis for processing">
+                {(t) => `4. ${t('privacy.legal_basis_title')}`}
+              </LanguageContent>
+            </h2>
+            <p className="text-gray-700 mb-6">
+              <LanguageContent fallback="We process personal information based on consent, contract, legitimate interest, and legal obligations in accordance with Article 6 of GDPR.">
+                {(t) => t('privacy.legal_basis_text')}
+              </LanguageContent>
+            </p>
+
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">
+              <LanguageContent fallback="5. How long we keep the information">
+                {(t) => `5. ${t('privacy.retention_title')}`}
+              </LanguageContent>
+            </h2>
+            <p className="text-gray-700 mb-6">
+              <LanguageContent fallback="We keep personal information as long as necessary for the purpose of processing or as long as required by law. Birthday information is kept until the employee leaves the company or the service agreement ends.">
+                {(t) => t('privacy.retention_text')}
+              </LanguageContent>
+            </p>
+
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">
+              <LanguageContent fallback="6. Information sharing">
+                {(t) => `6. ${t('privacy.sharing_title')}`}
+              </LanguageContent>
+            </h2>
+            <p className="text-gray-700 mb-6">
+              <LanguageContent fallback="We only share personal information with third parties who are necessary for the service, such as bakeries for delivery. All third parties are bound by data protection agreements.">
+                {(t) => t('privacy.sharing_text')}
+              </LanguageContent>
+            </p>
+
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">
+              <LanguageContent fallback="7. Your rights">
+                {(t) => `7. ${t('privacy.rights_title')}`}
+              </LanguageContent>
+            </h2>
+            <p className="text-gray-700 mb-4">
+              <LanguageContent fallback="You have the following rights:">
+                {(t) => t('privacy.rights_text')}
+              </LanguageContent>
+            </p>
+            <ul className="list-disc pl-6 text-gray-700 mb-6">
+              <li>
+                <LanguageContent fallback="Right to information:">
+                  {(t) => <strong>{t('privacy.right_info')}</strong>}
+                </LanguageContent>
+                <LanguageContent fallback="To receive information about the processing of personal information">
+                  {(t) => ` ${t('privacy.right_info_text')}`}
+                </LanguageContent>
+              </li>
+              <li>
+                <LanguageContent fallback="Right to correction:">
+                  {(t) => <strong>{t('privacy.right_correction')}</strong>}
+                </LanguageContent>
+                <LanguageContent fallback="To have incorrect information corrected">
+                  {(t) => ` ${t('privacy.right_correction_text')}`}
+                </LanguageContent>
+              </li>
+              <li>
+                <LanguageContent fallback="Right to deletion:">
+                  {(t) => <strong>{t('privacy.right_deletion')}</strong>}
+                </LanguageContent>
+                <LanguageContent fallback="To have personal information deleted">
+                  {(t) => ` ${t('privacy.right_deletion_text')}`}
+                </LanguageContent>
+              </li>
+              <li>
+                <LanguageContent fallback="Right to restriction:">
+                  {(t) => <strong>{t('privacy.right_restriction')}</strong>}
+                </LanguageContent>
+                <LanguageContent fallback="To restrict the processing of personal information">
+                  {(t) => ` ${t('privacy.right_restriction_text')}`}
+                </LanguageContent>
+              </li>
+              <li>
+                <LanguageContent fallback="Right to data portability:">
+                  {(t) => <strong>{t('privacy.right_portability')}</strong>}
+                </LanguageContent>
+                <LanguageContent fallback="To receive personal information in electronic format">
+                  {(t) => ` ${t('privacy.right_portability_text')}`}
+                </LanguageContent>
+              </li>
+              <li>
+                <LanguageContent fallback="Right to object:">
+                  {(t) => <strong>{t('privacy.right_objection')}</strong>}
+                </LanguageContent>
+                <LanguageContent fallback="To object to the processing of personal information">
+                  {(t) => ` ${t('privacy.right_objection_text')}`}
+                </LanguageContent>
+              </li>
+            </ul>
+
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">
+              <LanguageContent fallback="8. Security">
+                {(t) => `8. ${t('privacy.security_title')}`}
+              </LanguageContent>
+            </h2>
+            <p className="text-gray-700 mb-6">
+              <LanguageContent fallback="We use appropriate technical and organizational security measures to protect personal information against unauthorized processing, loss, destruction, or damage.">
+                {(t) => t('privacy.security_text')}
+              </LanguageContent>
+            </p>
+
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">
+              <LanguageContent fallback="9. Cookies">
+                {(t) => `9. ${t('privacy.cookies_title')}`}
+              </LanguageContent>
+            </h2>
+            <p className="text-gray-700 mb-6">
+              <LanguageContent fallback="The website uses cookies to improve user experience. You can set your browser to reject cookies, but this may affect the functionality of the website.">
+                {(t) => t('privacy.cookies_text')}
+              </LanguageContent>
+            </p>
+
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">
+              <LanguageContent fallback="10. Changes to this policy">
+                {(t) => `10. ${t('privacy.changes_title')}`}
+              </LanguageContent>
+            </h2>
+            <p className="text-gray-700 mb-6">
+              <LanguageContent fallback="We may change this privacy policy. Changes will be published on the website and you will be notified of significant changes.">
+                {(t) => t('privacy.changes_text')}
+              </LanguageContent>
+            </p>
+
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">
+              <LanguageContent fallback="11. Contact us">
+                {(t) => `11. ${t('privacy.contact_title')}`}
+              </LanguageContent>
+            </h2>
+            <p className="text-gray-700 mb-4">
+              <LanguageContent fallback="If you have questions about this privacy policy or want to exercise your rights, contact us:">
+                {(t) => t('privacy.contact_text')}
+              </LanguageContent>
             </p>
             <div className="bg-yellow-50 p-4 rounded-lg mb-6">
-              <p className="text-gray-700"><strong>StraxLife ehf.</strong></p>
-              <p className="text-gray-700">Netfang: orders.straxkaka@outlook.com</p>
-              <p className="text-gray-700">Sími: +354 790 4777</p>
+              <p className="text-gray-700">
+                <LanguageContent fallback="StraxLife ehf.">
+                  {(t) => t('privacy.contact')}
+                </LanguageContent>
+              </p>
+              <p className="text-gray-700">
+                <LanguageContent fallback="Email: orders.straxkaka@outlook.com">
+                  {(t) => t('privacy.email')}
+                </LanguageContent>
+              </p>
+              <p className="text-gray-700">
+                <LanguageContent fallback="Phone: +354 790 4777">
+                  {(t) => t('privacy.phone')}
+                </LanguageContent>
+              </p>
             </div>
 
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">12. Kvörtun</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">
+              <LanguageContent fallback="12. Complaint">
+                {(t) => `12. ${t('privacy.complaint_title')}`}
+              </LanguageContent>
+            </h2>
             <p className="text-gray-700 mb-6">
-              Þú getur kvartað til Persónuverndar um vinnslu persónuupplýsinga. 
-              Upplýsingar um kvörtunarferlið finnur þú á vefsíðu Persónuverndar.
+              <LanguageContent fallback="You can complain to the Data Protection Authority about the processing of personal information. Information about the complaint process can be found on the Data Protection Authority website.">
+                {(t) => t('privacy.complaint_text')}
+              </LanguageContent>
             </p>
           </div>
         </div>
