@@ -46,6 +46,7 @@ export default function Admin() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [password, setPassword] = useState('');
   const [passwordError, setPasswordError] = useState('');
+  const [sessionToken, setSessionToken] = useState('');
   const [submissions, setSubmissions] = useState<Submission[]>([]);
   const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
@@ -82,13 +83,35 @@ export default function Admin() {
   // Check if already authenticated
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      const authStatus = localStorage.getItem('straxkaka_admin_auth');
-      if (authStatus === 'true') {
-        setIsAuthenticated(true);
-        loadData();
+      const storedToken = localStorage.getItem('straxkaka_admin_token');
+      if (storedToken) {
+        checkSession(storedToken);
       }
     }
   }, []);
+
+  const checkSession = async (token: string) => {
+    try {
+      const response = await fetch(`/api/admin/auth?token=${token}`);
+      const data = await response.json();
+      
+      if (data.success && data.authenticated) {
+        setSessionToken(token);
+        setIsAuthenticated(true);
+        loadData();
+      } else {
+        // Session expired or invalid
+        localStorage.removeItem('straxkaka_admin_token');
+        setSessionToken('');
+        setIsAuthenticated(false);
+      }
+    } catch (error) {
+      console.error('Session check failed:', error);
+      localStorage.removeItem('straxkaka_admin_token');
+      setSessionToken('');
+      setIsAuthenticated(false);
+    }
+  };
 
   // Auto-refresh data every 30 seconds when authenticated
   useEffect(() => {
@@ -150,20 +173,55 @@ export default function Admin() {
     return () => clearInterval(interval);
   }, [isAuthenticated]);
 
-  const handlePasswordSubmit = (e: React.FormEvent) => {
+  const handlePasswordSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (password === 'straxkaka2025') {
-      setIsAuthenticated(true);
-      if (typeof window !== 'undefined') {
-        localStorage.setItem('straxkaka_admin_auth', 'true');
+    setPasswordError('');
+    
+    try {
+      const response = await fetch('/api/admin/auth', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ password }),
+      });
+      
+      const data = await response.json();
+      
+      if (data.success) {
+        setSessionToken(data.sessionToken);
+        setIsAuthenticated(true);
+        if (typeof window !== 'undefined') {
+          localStorage.setItem('straxkaka_admin_token', data.sessionToken);
+        }
+        setPasswordError('');
+        loadData();
+      } else {
+        setPasswordError(data.error || 'Incorrect password');
       }
-      setPasswordError('');
-      loadData();
-    } else {
-      setPasswordError('Incorrect password');
+    } catch (error) {
+      console.error('Authentication error:', error);
+      setPasswordError('Authentication failed. Please try again.');
     }
   };
 
+  const handleLogout = async () => {
+    try {
+      if (sessionToken) {
+        await fetch(`/api/admin/auth?token=${sessionToken}`, {
+          method: 'DELETE',
+        });
+      }
+    } catch (error) {
+      console.error('Logout error:', error);
+    } finally {
+      setSessionToken('');
+      setIsAuthenticated(false);
+      if (typeof window !== 'undefined') {
+        localStorage.removeItem('straxkaka_admin_token');
+      }
+    }
+  };
 
   const markAsPaid = async (companyId: string) => {
     const updatedSubmissions = submissions.map((sub: Submission) => 
@@ -657,9 +715,17 @@ export default function Admin() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-4xl font-bold text-black mb-4">Admin Dashboard</h1>
-          <p className="text-gray-600 text-lg">Manage company subscriptions and employees</p>
+        <div className="mb-8 flex justify-between items-start">
+          <div>
+            <h1 className="text-4xl font-bold text-black mb-4">Admin Dashboard</h1>
+            <p className="text-gray-600 text-lg">Manage company subscriptions and employees</p>
+          </div>
+          <button
+            onClick={handleLogout}
+            className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors"
+          >
+            Logout
+          </button>
         </div>
 
         {/* Stats */}
