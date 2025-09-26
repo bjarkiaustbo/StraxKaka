@@ -36,13 +36,11 @@ export default function About() {
           <div className="text-center">
             <div className="flex justify-center mb-4">
               {/* Using regular img tag for better compatibility */}
-              <Image 
+              <img 
                 src="/StraxKaka.jpg" 
                 alt="StraxKaka Logo"
-                width={400}
-                height={120}
-                className="h-24 md:h-32 w-auto object-contain"
-                priority
+                className="h-24 md:h-32 w-auto object-contain max-w-full"
+                loading="eager"
               />
             </div>
           </div>

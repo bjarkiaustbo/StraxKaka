@@ -323,12 +323,10 @@ export default function Subscription() {
 
         {/* Logo Section */}
         <div className="flex justify-center py-6">
-          <Image 
+          <img 
             src="/StraxKaka.jpg" 
             alt="StraxKaka Logo" 
-            width={300}
-            height={90}
-            className="h-16 md:h-20 w-auto object-contain"
+            className="h-16 md:h-20 w-auto object-contain max-w-full"
           />
         </div>
 
@@ -464,12 +462,10 @@ export default function Subscription() {
 
       {/* Logo Section */}
       <div className="flex justify-center py-6">
-        <Image 
+        <img 
           src="/StraxKaka.jpg" 
           alt="StraxKaka Logo" 
-          width={300}
-          height={90}
-          className="h-16 md:h-20 w-auto object-contain"
+          className="h-16 md:h-20 w-auto object-contain max-w-full"
         />
       </div>
 
