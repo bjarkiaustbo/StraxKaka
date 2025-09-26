@@ -193,3 +193,30 @@ export async function POST(request) {
     }, { status: 500 });
   }
 }
+
+export async function DELETE(request) {
+  try {
+    const { searchParams } = new URL(request.url);
+    const submissionId = searchParams.get('id');
+    
+    if (!submissionId) {
+      return Response.json({ success: false, error: 'Submission ID is required' }, { status: 400 });
+    }
+
+    // Delete the document from Firestore
+    const response = await fetch(`${FIRESTORE_URL}/${submissionId}?key=${FIREBASE_API_KEY}`, {
+      method: 'DELETE'
+    });
+    
+    if (response.ok) {
+      return Response.json({ success: true, message: 'Submission deleted successfully' });
+    } else {
+      console.error('Failed to delete submission from Firestore:', await response.text());
+      return Response.json({ success: false, error: 'Failed to delete submission from Firestore' }, { status: 500 });
+    }
+
+  } catch (error) {
+    console.error('Error deleting submission from Firestore:', error);
+    return Response.json({ success: false, error: 'Failed to delete submission from Firestore' }, { status: 500 });
+  }
+}

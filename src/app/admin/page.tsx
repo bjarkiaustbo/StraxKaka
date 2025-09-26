@@ -210,10 +210,29 @@ export default function Admin() {
   const bulkRemove = async () => {
     if (selectedCompanies.length === 0) return;
     if (confirm(`Are you sure you want to remove ${selectedCompanies.length} companies?`)) {
-      const updatedSubmissions = submissions.filter((sub: Submission) => !selectedCompanies.includes(sub.id));
-      setSubmissions(updatedSubmissions);
-      await updateSubmissionsInFirebase(updatedSubmissions);
-      setSelectedCompanies([]);
+      try {
+        // Delete each selected company from Firebase
+        for (const companyId of selectedCompanies) {
+          const response = await fetch(`/api/submissions?id=${companyId}`, {
+            method: 'DELETE'
+          });
+          
+          if (!response.ok) {
+            console.error(`Failed to delete company ${companyId}`);
+          }
+        }
+        
+        // Update local state
+        const updatedSubmissions = submissions.filter((sub: Submission) => !selectedCompanies.includes(sub.id));
+        setSubmissions(updatedSubmissions);
+        setSelectedCompanies([]);
+        
+        // Reload data to ensure consistency
+        await loadData();
+      } catch (error) {
+        console.error('Error removing companies:', error);
+        alert('Failed to remove companies. Please try again.');
+      }
     }
   };
 

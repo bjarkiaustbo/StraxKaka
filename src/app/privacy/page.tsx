@@ -76,7 +76,12 @@ export default function Privacy() {
             </ul>
             
             <p className="text-gray-700 mb-6">
-              <strong>Questions or concerns?</strong> Reading this Privacy Notice will help you understand your privacy rights and choices. We are responsible for making decisions about how your personal information is processed. If you do not agree with our policies and practices, please do not use our Services. If you still have any questions or concerns, please contact us at <a href="mailto:orders.straxkaka@outlook.com" className="text-yellow-600 hover:text-yellow-700">orders.straxkaka@outlook.com</a>.
+              <LanguageContent fallback={<strong>Questions or concerns?</strong>}>
+                {(t) => <strong>{t('privacy.questions_title')}</strong>}
+              </LanguageContent>
+              <LanguageContent fallback="Reading this Privacy Notice will help you understand your privacy rights and choices. We are responsible for making decisions about how your personal information is processed. If you do not agree with our policies and practices, please do not use our Services. If you still have any questions or concerns, please contact us at orders.straxkaka@outlook.com.">
+                {(t) => t('privacy.questions_text')}
+              </LanguageContent>
             </p>
 
             <h2 className="text-2xl font-bold text-gray-900 mb-4">2. Hvaða upplýsingar söfnum við</h2>
