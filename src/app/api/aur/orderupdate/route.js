@@ -18,7 +18,7 @@ export async function POST(request) {
       return NextResponse.json({ received: true }, { status: 200 });
     }
 
-    const { orderId, status, transactionId, amount, isSuccessful, isFailed } = webhookData;
+    const { orderId, status, transactionId, isSuccessful, isFailed } = webhookData;
 
     // Find payment by order ID
     const payment = await Payment.findOne({ orderId: orderId });
@@ -71,7 +71,7 @@ export async function POST(request) {
 }
 
 // Handle GET requests (for webhook verification)
-export async function GET(request) {
+export async function GET() {
   return NextResponse.json({ 
     message: 'Aur webhook endpoint is active',
     timestamp: new Date().toISOString()

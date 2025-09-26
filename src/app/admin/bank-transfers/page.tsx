@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useLanguage } from '@/contexts/LanguageContext';
 import AdminNavigation from '@/components/AdminNavigation';
 
 interface BankTransfer {

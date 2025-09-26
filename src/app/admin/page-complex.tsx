@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
+import Image from 'next/image';
 import AdminNavigation from '@/components/AdminNavigation';
 import AdminErrorBoundary from '@/components/AdminErrorBoundary';
 
@@ -64,13 +65,13 @@ export default function Admin() {
   const [passwordError, setPasswordError] = useState('');
   const [submissions, setSubmissions] = useState<CompanySubmission[]>([]);
   const [loading, setLoading] = useState(true);
-  // const [selectedSubmission, setSelectedSubmission] = useState<CompanySubmission | null>(null);
+  const [selectedSubmission, setSelectedSubmission] = useState<CompanySubmission | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [filterCompany, setFilterCompany] = useState('');
   const [filterStatus, setFilterStatus] = useState('');
   const [filterSubscriptionStatus, setFilterSubscriptionStatus] = useState('');
-  // const [filterDeliveryStatus, setFilterDeliveryStatus] = useState('');
-  // const [filterPriority, setFilterPriority] = useState('');
+  const [filterDeliveryStatus] = useState('');
+  const [filterPriority] = useState('');
   // const [showOnlyActiveEmployees, setShowOnlyActiveEmployees] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
 
@@ -183,9 +184,11 @@ export default function Admin() {
           <div className="max-w-md mx-auto px-4 py-20">
             <div className="bg-white rounded-lg shadow-lg p-8">
               <div className="text-center mb-8">
-                <img 
+                <Image 
                   src="/logo.svg" 
                   alt="Strax Logo" 
+                  width={48}
+                  height={48}
                   className="h-12 w-auto mx-auto mb-4"
                 />
                 <h1 className="text-2xl font-bold text-gray-900">Admin Login</h1>
@@ -251,9 +254,11 @@ export default function Admin() {
           {/* Header */}
           <div className="mb-8 flex justify-between items-center">
             <div className="flex items-center space-x-4">
-              <img 
+              <Image 
                 src="/logo.svg" 
                 alt="Strax Logo" 
+                width={48}
+                height={48}
                 className="h-12 w-auto"
               />
               <div>

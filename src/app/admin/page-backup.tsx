@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { useLanguage } from '@/contexts/LanguageContext';
+import Image from 'next/image';
 import LanguageContent from '@/components/LanguageContent';
 import AdminNavigation from '@/components/AdminNavigation';
 import AdminErrorBoundary from '@/components/AdminErrorBoundary';
@@ -376,9 +376,11 @@ export default function Admin() {
         {/* Header */}
         <div className="mb-8 flex justify-between items-center">
           <div className="flex items-center space-x-4">
-            <img 
+            <Image 
               src="/logo.svg" 
               alt="Strax Logo" 
+              width={48}
+              height={48}
               className="h-12 w-auto"
             />
             <div>

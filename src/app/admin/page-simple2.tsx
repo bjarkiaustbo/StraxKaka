@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 interface Submission {
   id: string;
@@ -82,9 +83,11 @@ export default function Admin() {
       <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center">
         <div className="bg-white rounded-lg shadow-lg p-8 w-full max-w-md">
           <div className="text-center mb-8">
-            <img 
+            <Image 
               src="/logo.svg" 
               alt="Strax Logo" 
+              width={48}
+              height={48}
               className="h-12 w-auto mx-auto mb-4"
             />
             <h1 className="text-2xl font-bold text-gray-900">Admin Login</h1>
@@ -140,9 +143,11 @@ export default function Admin() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-6">
             <div className="flex items-center">
-              <img 
+              <Image 
                 src="/logo.svg" 
                 alt="Strax Logo" 
+                width={32}
+                height={32}
                 className="h-8 w-auto mr-2"
               />
               <span className="text-2xl font-bold text-yellow-500">Strax Admin</span>
@@ -279,6 +284,7 @@ export default function Admin() {
     </div>
   );
 }
+
 
 
 

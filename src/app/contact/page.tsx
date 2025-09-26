@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
-import LanguageContent from '@/components/LanguageContent';
 import Navigation from '@/components/Navigation';
 import MobileBottomNav from '@/components/MobileBottomNav';
 import Image from 'next/image';
