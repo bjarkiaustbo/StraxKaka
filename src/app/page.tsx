@@ -50,7 +50,7 @@ export default function Home() {
               </LanguageContent>
                 </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              <LanguageContent fallback="Við leysum vandamálið sem allir þekkja: gleymdir afmælisdagum sem skaða samstöðu og stemningu">
+              <LanguageContent fallback="Við viljum gera það einfalt að fagna á vinnustaðnum - Fleiri kökur, minna stress.">
                 {(t) => t('home.features.subtitle')}
               </LanguageContent>
             </p>
@@ -134,7 +134,7 @@ export default function Home() {
           <div className="max-w-4xl mx-auto">
             <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
               <div className="relative w-full h-64 bg-gradient-to-br from-yellow-50 to-amber-50 flex items-center justify-center">
-                <Image 
+        <Image
                   src="/article-cake.jpeg" 
                   alt="Beautiful birthday cake with candles" 
                   width={1200}
@@ -330,7 +330,7 @@ export default function Home() {
             <div>
               <h3 className="text-xl font-bold mb-4 text-yellow-500">StraxKaka</h3>
               <p className="text-gray-400">
-                <LanguageContent fallback="Lausn fyrir gleymdir afmælisdaga. Við muna fyrir þig.">
+                <LanguageContent fallback="Fögnum öllum, við gerum það einfalt">
                   {(t) => t('footer.description')}
                 </LanguageContent>
               </p>

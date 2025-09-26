@@ -25,7 +25,7 @@ const translations = {
     'home.hero.title': 'Afmælisdagar sem gleðja alla',
     'home.hero.subtitle': 'Með StraxKaka verður dagurinn aðeins sætari, kökurnar birtast á réttum degi og réttum tíma.',
     'home.features.title': 'Hvað gerir StraxKaka',
-    'home.features.subtitle': 'Við tryggjum að allir afmælisdagar verða haldnir upp á, á réttan hátt',
+    'home.features.subtitle': 'Við viljum gera það einfalt að fagna á vinnustaðnum - Fleiri kökur, minna stress.',
     'home.how_it_works.title': 'Svo einfalt er þetta',
     'home.how_it_works.subtitle': 'Þú skráir, við sérum um allt annað',
     'home.why.title': 'Af hverju StraxKaka?',
@@ -60,7 +60,7 @@ const translations = {
     'how_it_works.step3.desc': 'Á afmælisdaginn birtast kökurnar á vinnustaðnum. Starfsmenn fagna og stemningin batnar.',
     
     // Footer
-    'footer.description': 'Lausn fyrir gleymdir afmælisdaga. Við muna fyrir þig.',
+    'footer.description': 'Fögnum öllum, við gerum það einfalt',
     'footer.services.title': 'Þjónusta',
     'footer.services.birthday': 'Afmælisdagaskráning',
     'footer.services.ai': 'AI sjálfvirkni',
@@ -476,7 +476,7 @@ const translations = {
     
     // Services page
     'services.hero.title': 'Þjónustan okkar',
-    'services.hero.subtitle': 'Við leysum vandamálið sem allir þekkja: gleymdir afmælisdagum sem skaða samstöðu og stemningu',
+    'services.hero.subtitle': 'Við viljum gera það einfalt að fagna á vinnustaðnum - Fleiri kökur, minna stress.',
     'services.process.title': 'Hvernig virkar það?',
     'services.process.subtitle': 'Einfalt ferli í 4 skrefum',
     'services.detailed.title': 'Þjónustan okkar',
