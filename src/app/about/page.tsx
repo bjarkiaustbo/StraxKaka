@@ -131,6 +131,12 @@ export default function About() {
                   unoptimized
                 />
               </div>
+              
+              {/* Founder Name in Cursive */}
+              <p className="text-2xl text-gray-700 mb-4 font-serif italic" style={{fontFamily: 'Georgia, serif'}}>
+                Bjarki Austbø
+              </p>
+              
               <h3 className="text-2xl font-bold text-gray-900 mb-2">
                 <LanguageContent fallback="Stofnandi StraxKaka">
                   {(t) => t('about.founder.title')}
