@@ -1,13 +1,13 @@
+'use client';
+
 import { Metadata } from 'next';
 import Link from 'next/link';
-
-export const metadata: Metadata = {
-  title: 'Löglegar upplýsingar - StraxKaka',
-  description: 'Löglegar upplýsingar um StraxLife ehf. - fyrirtækisupplýsingar, skráning og tengiliðir.',
-  keywords: 'löglegar upplýsingar, StraxKaka, fyrirtæki, skráning, tengiliðir',
-};
+import { useLanguage } from '@/contexts/LanguageContext';
+import LanguageSwitcher from '@/components/LanguageSwitcher';
+import LanguageContent from '@/components/LanguageContent';
 
 export default function Legal() {
+  const { t } = useLanguage();
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
       {/* Navigation */}
@@ -18,14 +18,17 @@ export default function Legal() {
                   <Link href="/" className="text-2xl font-bold text-yellow-500">StraxKaka</Link>
                 </div>
                 <div className="hidden md:flex space-x-8">
-                  <Link href="/" className="text-gray-300 hover:text-yellow-400 transition-colors">Heim</Link>
-                  <Link href="/about" className="text-gray-300 hover:text-yellow-400 transition-colors">Um okkur</Link>
-                  <Link href="/services" className="text-gray-300 hover:text-yellow-400 transition-colors">Þjónusta</Link>
-                  <Link href="/contact" className="text-gray-300 hover:text-yellow-400 transition-colors">Hafa samband</Link>
+                  <Link href="/" className="text-gray-300 hover:text-yellow-400 transition-colors">{t('nav.home')}</Link>
+                  <Link href="/about" className="text-gray-300 hover:text-yellow-400 transition-colors">{t('nav.about')}</Link>
+                  <Link href="/services" className="text-gray-300 hover:text-yellow-400 transition-colors">{t('nav.services')}</Link>
+                  <Link href="/contact" className="text-gray-300 hover:text-yellow-400 transition-colors">{t('nav.contact')}</Link>
                 </div>
-                <Link href="/contact" className="bg-yellow-500 text-black px-6 py-2 rounded-full hover:bg-yellow-400 transition-colors font-semibold">
-                  Byrja núna
-                </Link>
+                <div className="flex items-center space-x-4">
+                  <LanguageSwitcher />
+                  <Link href="/contact" className="bg-yellow-500 text-black px-6 py-2 rounded-full hover:bg-yellow-400 transition-colors font-semibold">
+                    {t('nav.start_now')}
+                  </Link>
+                </div>
           </div>
         </div>
       </nav>
@@ -33,7 +36,11 @@ export default function Legal() {
       {/* Content */}
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="bg-white rounded-2xl shadow-lg p-8">
-          <h1 className="text-4xl font-bold text-gray-900 mb-8">Löglegar upplýsingar</h1>
+          <h1 className="text-4xl font-bold text-gray-900 mb-8">
+            <LanguageContent fallback="Legal Information">
+              {(t) => t('legal.title')}
+            </LanguageContent>
+          </h1>
           
           <div className="prose prose-lg max-w-none">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">Fyrirtækisupplýsingar</h2>
@@ -196,12 +203,16 @@ export default function Legal() {
             </div>
             
             <div>
-              <h4 className="text-lg font-semibold mb-4 text-yellow-500">Löglegar síður</h4>
+              <h4 className="text-lg font-semibold mb-4 text-yellow-500">
+                <LanguageContent fallback="Legal Pages">
+                  {(t) => t('footer.legal.title')}
+                </LanguageContent>
+              </h4>
               <ul className="space-y-2 text-gray-400">
-                <li><a href="/privacy" className="hover:text-yellow-400">Persónuverndarstefna</a></li>
-                <li><a href="/terms" className="hover:text-yellow-400">Skilmálar</a></li>
-                <li><a href="/cookies" className="hover:text-yellow-400">Vafrakökur</a></li>
-                <li><a href="/legal" className="hover:text-yellow-400">Löglegar upplýsingar</a></li>
+                <li><a href="/privacy" className="hover:text-yellow-400">{t('footer.legal.privacy')}</a></li>
+                <li><a href="/terms" className="hover:text-yellow-400">{t('footer.legal.terms')}</a></li>
+                <li><a href="/cookies" className="hover:text-yellow-400">{t('footer.legal.cookies')}</a></li>
+                <li><a href="/legal" className="hover:text-yellow-400">{t('footer.legal.legal')}</a></li>
               </ul>
             </div>
           </div>

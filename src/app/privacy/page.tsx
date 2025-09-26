@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useLanguage } from '@/contexts/LanguageContext';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
+import LanguageContent from '@/components/LanguageContent';
 
 export default function Privacy() {
   const { t } = useLanguage();
@@ -34,7 +35,11 @@ export default function Privacy() {
       {/* Content */}
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="bg-white rounded-2xl shadow-lg p-8">
-          <h1 className="text-4xl font-bold text-gray-900 mb-8">PRIVACY POLICY</h1>
+          <h1 className="text-4xl font-bold text-gray-900 mb-8">
+            <LanguageContent fallback="PRIVACY POLICY">
+              {(t) => t('privacy.title')}
+            </LanguageContent>
+          </h1>
           
           <div className="prose prose-lg max-w-none">
             <p className="text-gray-600 mb-6">

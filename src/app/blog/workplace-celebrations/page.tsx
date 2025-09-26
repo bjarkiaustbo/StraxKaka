@@ -2,7 +2,6 @@
 
 import Navigation from '@/components/Navigation';
 import LanguageContent from '@/components/LanguageContent';
-import Image from 'next/image';
 
 export default function BlogArticle() {
 
