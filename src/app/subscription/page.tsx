@@ -9,6 +9,7 @@ import EnhancedFileUpload from '@/components/EnhancedFileUpload';
 import Navigation from '@/components/Navigation';
 import MobileBottomNav from '@/components/MobileBottomNav';
 import BirthdayPicker from '@/components/BirthdayPicker';
+import Image from 'next/image';
 
 interface Employee {
   name: string;
@@ -320,6 +321,17 @@ export default function Subscription() {
       <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
         <Navigation currentPage="subscription" />
 
+        {/* Logo Section */}
+        <div className="flex justify-center py-6">
+          <Image 
+            src="/STRAXKAKA.png" 
+            alt="StraxKaka Logo" 
+            width={300}
+            height={90}
+            className="h-16 md:h-20 w-auto object-contain"
+          />
+        </div>
+
         {/* Success Message */}
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
           <div className="bg-white rounded-2xl shadow-lg p-8 text-center">
@@ -449,6 +461,17 @@ export default function Subscription() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 pb-20 md:pb-0">
       <Navigation currentPage="subscription" />
+
+      {/* Logo Section */}
+      <div className="flex justify-center py-6">
+        <Image 
+          src="/STRAXKAKA.png" 
+          alt="StraxKaka Logo" 
+          width={300}
+          height={90}
+          className="h-16 md:h-20 w-auto object-contain"
+        />
+      </div>
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Service Overview */}
