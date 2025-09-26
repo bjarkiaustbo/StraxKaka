@@ -16,7 +16,7 @@ export default function BlogArticle() {
           <div className="text-center mb-12">
             <div className="w-full h-64 rounded-2xl shadow-lg mb-8 overflow-hidden">
         <Image 
-          src="https://images.pexels.com/photos/205961/pexels-photo-205961.jpeg?auto=compress&cs=tinysrgb&w=800&h=400&fit=crop" 
+          src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" 
           alt="Birthday cake celebration" 
           width={800}
           height={400}
