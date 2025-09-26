@@ -1098,12 +1098,34 @@ export default function Subscription() {
                   <span className="font-medium">{employees.length}</span>
                 </div>
                 
-                <div className="flex justify-between text-lg font-semibold border-t pt-3">
-                  <LanguageContent fallback={<span className="text-gray-900">Mánaðargjald:</span>}>
-                    {(t) => <span className="text-gray-900">{t('subscription.payment.monthly_cost')}:</span>}
-                  </LanguageContent>
-                  <span className="text-yellow-600">{calculateSubscriptionCost(employees.length).cost.toLocaleString('is-IS')} ISK</span>
-                </div>
+                {selectedTier === 'small' ? (
+                  <div className="flex justify-between text-lg font-semibold border-t pt-3">
+                    <LanguageContent fallback={<span className="text-gray-900">Mánaðargjald:</span>}>
+                      {(t) => <span className="text-gray-900">{t('subscription.payment.monthly_cost')}:</span>}
+                    </LanguageContent>
+                    <span className="text-yellow-600">{calculateSubscriptionCost(employees.length).cost.toLocaleString('is-IS')} ISK</span>
+                  </div>
+                ) : (
+                  <div className="border-t pt-3">
+                    <div className="text-center">
+                      <div className="text-lg font-semibold text-gray-900 mb-2">
+                        <LanguageContent fallback="Vinsamlegast hafðu samband fyrir verð">
+                          {(t) => t('subscription.payment.contact_pricing')}
+                        </LanguageContent>
+                      </div>
+                      <div className="text-sm text-gray-600">
+                        <LanguageContent fallback="Email: orders.straxkaka@outlook.com">
+                          {(t) => t('subscription.payment.contact_email')}
+                        </LanguageContent>
+                      </div>
+                      <div className="text-sm text-gray-600">
+                        <LanguageContent fallback="Sími: +354 790 4777">
+                          {(t) => t('subscription.payment.contact_phone')}
+                        </LanguageContent>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
 

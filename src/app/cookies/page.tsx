@@ -151,6 +151,17 @@ export default function Cookies() {
               Fyrir nánari upplýsingar um vafrakökur og persónuvernd, sjá 
               <a href="/privacy" className="text-yellow-600 hover:text-yellow-700">persónuverndarstefnu okkar</a>.
             </p>
+            
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">11. Vafrakökustefna</h2>
+            <p className="text-gray-700 mb-6">
+              Nánari upplýsingar um vafrakökur má finna á 
+              <a href="https://www.termsfeed.com/live/024fcc1c-47d4-4ab0-bdd3-c28fe60a5c27" 
+                 target="_blank" 
+                 rel="noopener noreferrer" 
+                 className="text-yellow-600 hover:text-yellow-700">
+                vafrakökustefnu okkar
+              </a>.
+            </p>
           </div>
         </div>
       </div>
