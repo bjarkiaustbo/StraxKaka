@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "StraxKaka - Aldrei gleyma afmælisdögum starfsmanna",
-  description: "AI sjálfvirkni fyrirtæki sem panta kökur fyrir starfsmenn fyrirtækja svo enginn gleymi afmælisdögum. StraxKaka - afmæliskökur fyrir íslensk fyrirtæki.",
+  description: "Fögnum öllum, við gerum það einfalt - StraxKaka tryggir að enginn afmælisdagur gleymist. Sjálfvirk kökuafhending fyrir íslensk fyrirtæki.",
   keywords: "afmæliskökur, starfsmenn, fyrirtæki, Ísland, sjálfvirkni, AI, kökur, afmælisdagar, HR sjálfvirkni, fyrirtækjaþjónusta",
   authors: [{ name: "StraxKaka" }],
   creator: "StraxKaka",
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     url: 'https://www.straxkaka.is',
     siteName: 'StraxKaka',
     title: 'StraxKaka - Aldrei gleyma afmælisdögum starfsmanna',
-    description: 'AI sjálfvirkni fyrirtæki sem panta kökur fyrir starfsmenn fyrirtækja svo enginn gleymi afmælisdögum.',
+    description: 'Fögnum öllum, við gerum það einfalt - StraxKaka tryggir að enginn afmælisdagur gleymist.',
     images: [
       {
         url: '/logo.svg',
@@ -52,7 +52,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'StraxKaka - Aldrei gleyma afmælisdögum starfsmanna',
-    description: 'AI sjálfvirkni fyrirtæki sem panta kökur fyrir starfsmenn fyrirtækja svo enginn gleymi afmælisdögum.',
+    description: 'Fögnum öllum, við gerum það einfalt - StraxKaka tryggir að enginn afmælisdagur gleymist.',
     images: ['/logo.svg'],
   },
   formatDetection: {
@@ -65,6 +65,23 @@ export const metadata: Metadata = {
   },
 };
 
+// Structured data for Google logo
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "StraxKaka",
+  "url": "https://www.straxkaka.is",
+  "logo": "https://www.straxkaka.is/logo.svg",
+  "description": "Fögnum öllum, við gerum það einfalt - StraxKaka tryggir að enginn afmælisdagur gleymist.",
+  "address": {
+    "@type": "PostalAddress",
+    "addressCountry": "IS"
+  },
+  "sameAs": [
+    "https://www.straxkaka.is"
+  ]
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -72,6 +89,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="is">
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(structuredData),
+          }}
+        />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >

@@ -1,6 +1,6 @@
 # StraxKaka Website
 
-AI sjálfvirkni fyrirtæki sem panta kökur fyrir starfsmenn fyrirtækja svo enginn gleymi afmælisdögum.
+Fögnum öllum, við gerum það einfalt - StraxKaka tryggir að enginn afmælisdagur gleymist.
 
 ## Tæknistack
 
