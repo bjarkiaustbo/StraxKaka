@@ -35,12 +35,8 @@ export default function Navigation({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-4 md:py-6">
           <div className="flex items-center">
-            <Link href="/" className="flex items-center space-x-2 text-xl md:text-2xl font-bold text-yellow-500">
-              {/* Cake Icon */}
-              <svg className="w-6 h-6 md:w-8 md:h-8" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 3a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1v-.27C6.4 6.39 6 5.74 6 5a2 2 0 0 1 2-2c.74 0 1.39.4 1.73 1H11.27c.34-.6.99-1 1.73-1zm0 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zM8 4a1 1 0 1 0 0 2 1 1 0 0 0 0-2zM6 9v11h8V9H6zm1 2h6v1H7v-1zm0 2h6v1H7v-1zm0 2h6v1H7v-1z"/>
-              </svg>
-              <span>StraxKaka</span>
+            <Link href="/" className="text-xl md:text-2xl font-bold text-yellow-500">
+              StraxKaka
             </Link>
           </div>
           
@@ -73,7 +69,7 @@ export default function Navigation({
             ))}
           </div>
           
-          <div className="flex items-center space-x-2 md:space-x-4">
+          <div className="flex items-center space-x-3 md:space-x-4">
             <LanguageSwitcher />
             <Link
               href="/straxlife"

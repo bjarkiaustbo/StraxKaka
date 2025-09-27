@@ -8,7 +8,7 @@ export default function LanguageSwitcher() {
   // Don't render until hydrated to prevent hydration mismatch
   if (!isHydrated) {
     return (
-      <div className="flex items-center space-x-2">
+      <div className="flex items-center space-x-3">
         <div className="px-3 py-1 rounded-full text-sm font-medium bg-yellow-500 text-black">
           IS
         </div>
@@ -20,7 +20,7 @@ export default function LanguageSwitcher() {
   }
 
   return (
-    <div className="flex items-center space-x-2">
+    <div className="flex items-center space-x-3">
       <button
         onClick={() => setLanguage('is')}
         className={`px-3 py-1 rounded-full text-sm font-medium transition-colors ${

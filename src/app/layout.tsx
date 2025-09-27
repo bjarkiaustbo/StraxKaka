@@ -42,10 +42,10 @@ export const metadata: Metadata = {
     description: 'Afmæliskaka kerfi - Fögnum öllum, það skiptir máli.',
     images: [
       {
-        url: '/logo.svg',
+        url: '/cake-favicon.svg',
         width: 200,
-        height: 60,
-        alt: 'StraxKaka Logo',
+        height: 200,
+        alt: 'StraxKaka Cake Logo',
       },
     ],
   },
@@ -53,7 +53,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'StraxKaka - Afmæliskaka kerfi',
     description: 'Afmæliskaka kerfi - Fögnum öllum, það skiptir máli.',
-    images: ['/logo.svg'],
+    images: ['/cake-favicon.svg'],
   },
   formatDetection: {
     email: false,
@@ -63,6 +63,11 @@ export const metadata: Metadata = {
   verification: {
     google: 'your-google-verification-code',
   },
+  icons: {
+    icon: '/cake-favicon.svg',
+    shortcut: '/cake-favicon.svg',
+    apple: '/cake-favicon.svg',
+  },
 };
 
 // Structured data for Google logo
@@ -71,7 +76,7 @@ const structuredData = {
   "@type": "Organization",
   "name": "StraxKaka",
   "url": "https://www.straxkaka.is",
-  "logo": "https://www.straxkaka.is/logo.svg",
+  "logo": "https://www.straxkaka.is/cake-favicon.svg",
   "description": "Afmæliskaka kerfi - Fögnum öllum, það skiptir máli.",
   "address": {
     "@type": "PostalAddress",
