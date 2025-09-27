@@ -1,6 +1,6 @@
 # StraxKaka Website
 
-Fögnum öllum, við gerum það einfalt - StraxKaka tryggir að enginn afmælisdagur gleymist.
+Afmæliskaka kerfi - Fögnum öllum, það skiptir máli.
 
 ## Tæknistack
 

@@ -16,8 +16,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "StraxKaka - Aldrei gleyma afmælisdögum starfsmanna",
-  description: "Fögnum öllum, við gerum það einfalt - StraxKaka tryggir að enginn afmælisdagur gleymist. Sjálfvirk kökuafhending fyrir íslensk fyrirtæki.",
+  title: "StraxKaka - Afmæliskaka kerfi",
+  description: "Afmæliskaka kerfi - Fögnum öllum, það skiptir máli. StraxKaka tryggir að enginn afmælisdagur gleymist á vinnustaðnum.",
   keywords: "afmæliskökur, starfsmenn, fyrirtæki, Ísland, sjálfvirkni, AI, kökur, afmælisdagar, HR sjálfvirkni, fyrirtækjaþjónusta",
   authors: [{ name: "StraxKaka" }],
   creator: "StraxKaka",
@@ -38,8 +38,8 @@ export const metadata: Metadata = {
     locale: 'is_IS',
     url: 'https://www.straxkaka.is',
     siteName: 'StraxKaka',
-    title: 'StraxKaka - Aldrei gleyma afmælisdögum starfsmanna',
-    description: 'Fögnum öllum, við gerum það einfalt - StraxKaka tryggir að enginn afmælisdagur gleymist.',
+    title: 'StraxKaka - Afmæliskaka kerfi',
+    description: 'Afmæliskaka kerfi - Fögnum öllum, það skiptir máli.',
     images: [
       {
         url: '/logo.svg',
@@ -51,8 +51,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'StraxKaka - Aldrei gleyma afmælisdögum starfsmanna',
-    description: 'Fögnum öllum, við gerum það einfalt - StraxKaka tryggir að enginn afmælisdagur gleymist.',
+    title: 'StraxKaka - Afmæliskaka kerfi',
+    description: 'Afmæliskaka kerfi - Fögnum öllum, það skiptir máli.',
     images: ['/logo.svg'],
   },
   formatDetection: {
@@ -72,7 +72,7 @@ const structuredData = {
   "name": "StraxKaka",
   "url": "https://www.straxkaka.is",
   "logo": "https://www.straxkaka.is/logo.svg",
-  "description": "Fögnum öllum, við gerum það einfalt - StraxKaka tryggir að enginn afmælisdagur gleymist.",
+  "description": "Afmæliskaka kerfi - Fögnum öllum, það skiptir máli.",
   "address": {
     "@type": "PostalAddress",
     "addressCountry": "IS"
