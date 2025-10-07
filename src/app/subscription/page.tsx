@@ -364,7 +364,7 @@ export default function Subscription() {
                           Sendu greiðsluna á þetta AUR númer með viðmiðunarnúmeri: <strong>{bankDetails?.orderId}</strong>
                         </p>
                         <p className="text-yellow-700 text-sm mt-1">
-                          Upphæð: <strong>1.000 ISK</strong>
+                          Upphæð: <strong>1000 ISK</strong>
                         </p>
                       </div>
                     </>
@@ -1108,15 +1108,15 @@ export default function Subscription() {
                   <LanguageContent fallback={<span className="text-gray-900">Upphæð:</span>}>
                     {(t) => <span className="text-gray-900">{t('subscription.payment.amount')}:</span>}
                   </LanguageContent>
-                  <span className="text-yellow-600">1.000 ISK</span>
+                  <span className="text-yellow-600">1000 ISK</span>
                 </div>
                 
                 <div className="border-t pt-3">
                   <div className="flex justify-between text-lg font-semibold">
-                    <LanguageContent fallback={<span className="text-gray-900">Samtals:</span>}>
-                      {(t) => <span className="text-gray-900">{t('subscription.payment.total')}:</span>}
+                    <LanguageContent fallback={<span className="text-gray-900">Uppsetningargjald:</span>}>
+                      {(t) => <span className="text-gray-900">{t('subscription.payment.startup_fee')}:</span>}
                     </LanguageContent>
-                    <span className="text-yellow-600">1.000 ISK</span>
+                    <span className="text-yellow-600">1000 ISK</span>
                   </div>
                 </div>
               </div>
@@ -1163,9 +1163,7 @@ export default function Subscription() {
                             <p className="text-sm text-gray-600">
                               Greiðsla verður send á símanúmerið þitt: <strong>{companyData.contactPhone}</strong>
                             </p>
-                            <p className="text-xs text-gray-500 mt-1">
-                              Þú færð SMS með hlekk til að ljúka greiðslunni
-                            </p>
+                            
                           </>
                         }>
                           {(t) => (
@@ -1174,9 +1172,7 @@ export default function Subscription() {
                               <p className="text-sm text-gray-600">
                                 {t('subscription.payment.aur.description').replace('{phone}', companyData.contactPhone)}
                               </p>
-                              <p className="text-xs text-gray-500 mt-1">
-                                {t('subscription.payment.aur.sms_note')}
-                              </p>
+                              
                             </>
                           )}
                         </LanguageContent>
