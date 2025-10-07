@@ -1322,12 +1322,6 @@ export default function Admin() {
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="text-sm font-medium text-gray-900">{submission.companyName || 'N/A'}</div>
-                          <div className="text-sm text-gray-500">
-                            {submission.subscriptionTier ? 
-                              submission.subscriptionTier.charAt(0).toUpperCase() + submission.subscriptionTier.slice(1) : 
-                              'Unknown'
-                            }
-                          </div>
                           {submission.orderId && (
                             <div className="text-xs text-gray-400">ID: {submission.orderId}</div>
                           )}
@@ -1510,7 +1504,7 @@ export default function Admin() {
                       <p><strong>Email:</strong> {selectedSubmission.contactEmail}</p>
                       <p><strong>Phone:</strong> {selectedSubmission.contactPhone || 'N/A'}</p>
                       <p><strong>Address:</strong> {selectedSubmission.deliveryAddress || 'N/A'}</p>
-                      <p><strong>Subscription:</strong> {selectedSubmission.subscriptionTier}</p>
+                      
                       <p><strong>Status:</strong> {selectedSubmission.status}</p>
                       <p><strong>Pricing:</strong> 
                         {selectedSubmission.subscriptionTier === 'small' ? '15.000 ISK per cake + 1.000 ISK startup fee' : 
