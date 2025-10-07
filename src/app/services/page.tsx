@@ -19,7 +19,9 @@ export default function Services() {
       nameEnglish: 'Rose Cake Light Chocolate',
       price: 15000,
       image: '/cake-placeholder.jpg',
-      dietary: 'Contains dairy, eggs, gluten'
+      dietary: 'Contains dairy, eggs, gluten',
+      allergensIcelandic: 'Mjólkurvörur, hveiti, egg',
+      allergensEnglish: 'Dairy products, wheat, eggs'
     },
     {
       id: 'rose_dark',
@@ -27,7 +29,9 @@ export default function Services() {
       nameEnglish: 'Rose Cake Dark Chocolate',
       price: 15000,
       image: '/cake-placeholder.jpg',
-      dietary: 'Contains dairy, eggs, gluten'
+      dietary: 'Contains dairy, eggs, gluten',
+      allergensIcelandic: 'Mjólkurvörur, hveiti, egg',
+      allergensEnglish: 'Dairy products, wheat, eggs'
     },
     {
       id: 'skuffu',
@@ -35,7 +39,9 @@ export default function Services() {
       nameEnglish: 'Skúffukaka on Tray',
       price: 15000,
       image: '/cake-placeholder.jpg',
-      dietary: 'Contains dairy, eggs, gluten'
+      dietary: 'Contains dairy, eggs, gluten',
+      allergensIcelandic: 'Mjólkurvörur, hveiti, egg',
+      allergensEnglish: 'Dairy products, wheat, eggs'
     },
     {
       id: 'strawberry',
@@ -43,7 +49,9 @@ export default function Services() {
       nameEnglish: 'Strawberry',
       price: 15000,
       image: '/cake-placeholder.jpg',
-      dietary: 'Contains dairy, eggs, gluten'
+      dietary: 'Contains dairy, eggs, gluten',
+      allergensIcelandic: 'Súrmjólk (mjólk, mjólkursýrugerlar), egg, hveiti, hveitisterkja, mjólkursykur, undanrennuduft',
+      allergensEnglish: 'Sour milk (milk, lactic acid bacteria), eggs, wheat, wheat starch, milk sugar, skimmed milk powder'
     },
     {
       id: 'lemon_cheese',
@@ -51,7 +59,9 @@ export default function Services() {
       nameEnglish: 'Lemon Cheese',
       price: 15000,
       image: '/cake-placeholder.jpg',
-      dietary: 'Contains dairy, eggs, gluten'
+      dietary: 'Contains dairy, eggs, gluten',
+      allergensIcelandic: 'Mjólkurvörur, hveiti, hafrar, egg',
+      allergensEnglish: 'Dairy products, wheat, oats, eggs'
     },
     {
       id: 'biscoff',
@@ -59,7 +69,9 @@ export default function Services() {
       nameEnglish: 'Biscoff',
       price: 15000,
       image: '/cake-placeholder.jpg',
-      dietary: 'Contains dairy, eggs, gluten'
+      dietary: 'Contains dairy, eggs, gluten',
+      allergensIcelandic: 'EGG, MJÓLKURAFURÐIR, GLÚTEIN, SOYA',
+      allergensEnglish: 'EGGS, DAIRY PRODUCTS, GLUTEN, SOY'
     },
     {
       id: 'daim',
@@ -67,7 +79,9 @@ export default function Services() {
       nameEnglish: 'Daim',
       price: 15000,
       image: '/cake-placeholder.jpg',
-      dietary: 'Contains dairy, eggs, gluten'
+      dietary: 'Contains dairy, eggs, gluten',
+      allergensIcelandic: 'Súrmjólk (mjólk, mjólkursýrugerlar), undanrennuduft, egg, rjómi, dökkt súkkulaði, hveiti, mjólkursykur, hveitisterkja, smjör, mjólkurduft',
+      allergensEnglish: 'Sour milk (milk, lactic acid bacteria), skimmed milk powder, eggs, cream, dark chocolate, wheat, milk sugar, wheat starch, butter, milk powder'
     },
     {
       id: 'tiramisu',
@@ -75,7 +89,9 @@ export default function Services() {
       nameEnglish: 'Tiramisu',
       price: 15000,
       image: '/cake-placeholder.jpg',
-      dietary: 'Contains dairy, eggs, gluten'
+      dietary: 'Contains dairy, eggs, gluten',
+      allergensIcelandic: 'GLÚTEN, MJÓLK, EGG',
+      allergensEnglish: 'GLUTEN, MILK, EGGS'
     },
     {
       id: 'chocolate_caramel',
@@ -83,7 +99,9 @@ export default function Services() {
       nameEnglish: 'Chocolate with Caramel Cream',
       price: 15000,
       image: '/cake-placeholder.jpg',
-      dietary: 'Contains dairy, eggs, gluten'
+      dietary: 'Contains dairy, eggs, gluten',
+      allergensIcelandic: 'Karamellu glassúr, egg, hveiti, suðusúkkulaði, mysuduft, hveitiglúten',
+      allergensEnglish: 'Caramel glaze, eggs, wheat, boiled chocolate, whey powder, wheat gluten'
     },
     {
       id: 'chocolate_cream',
@@ -91,7 +109,9 @@ export default function Services() {
       nameEnglish: 'Chocolate with Chocolate Cream',
       price: 15000,
       image: '/cake-placeholder.jpg',
-      dietary: 'Contains dairy, eggs, gluten'
+      dietary: 'Contains dairy, eggs, gluten',
+      allergensIcelandic: 'Súkkulaðiglassúr, egg, hveiti, suðusúkkulaði, mysuduft, hveitiglúten',
+      allergensEnglish: 'Chocolate glaze, eggs, wheat, boiled chocolate, whey powder, wheat gluten'
     }
   ];
 
@@ -317,6 +337,12 @@ export default function Services() {
                       <LanguageContent fallback="Afhending innifalin">
                         {(t) => t('services.cakes.delivery_included')}
                       </LanguageContent>
+                    </p>
+                    <p className="text-xs text-gray-400 hidden sm:block mb-2">
+                      <LanguageContent fallback="Ofnæmisvaldar:">
+                        {(t) => t('services.cakes.allergens')}
+                      </LanguageContent>
+                      {language === 'is' ? cakes[currentCakeIndex].allergensIcelandic : cakes[currentCakeIndex].allergensEnglish}
                     </p>
                     <p className="text-xs text-gray-400 hidden sm:block">
                       {cakes[currentCakeIndex].dietary}

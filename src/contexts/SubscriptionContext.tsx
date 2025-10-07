@@ -64,35 +64,35 @@ export interface SubscriptionPricing {
 export const SUBSCRIPTION_PRICING: SubscriptionPricing[] = [
   {
     tier: 'small',
-    name: 'Small (1-5 employees)',
+    name: 'Small (1-15 employees)',
     minEmployees: 1,
-    maxEmployees: 5,
+    maxEmployees: 15,
     basePrice: 15000,
     pricePerEmployee: 0,
     description: '15,000 ISK per birthday cake delivered'
   },
   {
     tier: 'medium',
-    name: 'Medium (6-10 employees)',
-    minEmployees: 6,
-    maxEmployees: 10,
+    name: 'Medium (16-49 employees)',
+    minEmployees: 16,
+    maxEmployees: 49,
     basePrice: 14750,
     pricePerEmployee: 0,
     description: '14,750 ISK per birthday cake delivered'
   },
   {
     tier: 'large',
-    name: 'Large (11-20 employees)',
-    minEmployees: 11,
-    maxEmployees: 20,
+    name: 'Large (50+ employees)',
+    minEmployees: 50,
+    maxEmployees: 999,
     basePrice: 14500,
     pricePerEmployee: 0,
     description: '14,500 ISK per birthday cake delivered'
   },
   {
     tier: 'enterprise',
-    name: 'Enterprise (21+ employees)',
-    minEmployees: 21,
+    name: 'Enterprise (50+ employees)',
+    minEmployees: 50,
     maxEmployees: 999,
     basePrice: 14500,
     pricePerEmployee: 0,
