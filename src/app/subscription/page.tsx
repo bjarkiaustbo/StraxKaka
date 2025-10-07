@@ -326,11 +326,17 @@ export default function Subscription() {
             {paymentMethod === 'aur' ? (
               <>
                 <div className="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                  <span className="text-3xl">📱</span>
+                  <svg className="w-8 h-8 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                  </svg>
                 </div>
                 <LanguageContent fallback={
                   <>
-                    <h1 className="text-3xl font-bold text-gray-900 mb-4">Greiðslubeiðni send!</h1>
+                    <h1 className="text-3xl font-bold text-gray-900 mb-4">
+                      <LanguageContent fallback="Vinsamlegast fylgdu leiðbeiningunum">
+                        {(t) => t('subscription.payment.success_title')}
+                      </LanguageContent>
+                    </h1>
                     <p className="text-xl text-gray-600 mb-8">
                       Við höfum sent greiðslubeiðni á símanúmerið þitt. Vinsamlegast ljúktu greiðslunni til að virkja áskriftina.
                     </p>
@@ -358,7 +364,7 @@ export default function Subscription() {
                           Sendu greiðsluna á þetta AUR númer með viðmiðunarnúmeri: <strong>{bankDetails?.orderId}</strong>
                         </p>
                         <p className="text-yellow-700 text-sm mt-1">
-                          Upphæð: <strong>{bankDetails?.amount?.toLocaleString('is-IS') || '0'} ISK</strong>
+                          Upphæð: <strong>1.000 ISK</strong>
                         </p>
                       </div>
                     </>
@@ -390,7 +396,7 @@ export default function Subscription() {
                           </div>
                           <div className="flex justify-between text-lg font-semibold border-t pt-2">
                             <span className="text-blue-700">Upphæð:</span>
-                            <span className="text-blue-900">{bankDetails.amount?.toLocaleString('is-IS') || '0'} ISK</span>
+                            <span className="text-blue-900">1.000 ISK</span>
                           </div>
                         </div>
                         <p className="text-blue-600 text-sm mt-4 text-center">
@@ -420,7 +426,7 @@ export default function Subscription() {
                             </div>
                             <div className="flex justify-between text-lg font-semibold border-t pt-2">
                               <span className="text-blue-700">{t('subscription.payment.bank_transfer.amount')}:</span>
-                              <span className="text-blue-900">{bankDetails.amount?.toLocaleString('is-IS') || '0'} ISK</span>
+                              <span className="text-blue-900">1.000 ISK</span>
                             </div>
                           </div>
                           <p className="text-blue-600 text-sm mt-4 text-center">
@@ -1098,32 +1104,9 @@ export default function Subscription() {
                   <span className="font-medium">{employees.length}</span>
                 </div>
                 
-                {selectedTier === 'small' ? (
-                  <div className="flex justify-between">
-                    <LanguageContent fallback={<span className="text-gray-900">Kökugjald:</span>}>
-                      {(t) => <span className="text-gray-900">{t('subscription.payment.monthly_cost')}:</span>}
-                    </LanguageContent>
-                    <span className="text-yellow-600">{calculateSubscriptionCost(employees.length).cost.toLocaleString('is-IS')} ISK</span>
-                  </div>
-                ) : selectedTier === 'medium' ? (
-                  <div className="flex justify-between">
-                    <LanguageContent fallback={<span className="text-gray-900">Kökugjald:</span>}>
-                      {(t) => <span className="text-gray-900">{t('subscription.payment.monthly_cost')}:</span>}
-                    </LanguageContent>
-                    <span className="text-yellow-600">14.750 ISK</span>
-                  </div>
-                ) : (
-                  <div className="flex justify-between">
-                    <LanguageContent fallback={<span className="text-gray-900">Kökugjald:</span>}>
-                      {(t) => <span className="text-gray-900">{t('subscription.payment.monthly_cost')}:</span>}
-                    </LanguageContent>
-                    <span className="text-yellow-600">14.500 ISK</span>
-                  </div>
-                )}
-                
                 <div className="flex justify-between">
-                  <LanguageContent fallback={<span className="text-gray-900">Uppsetningargjald:</span>}>
-                    {(t) => <span className="text-gray-900">{t('subscription.payment.startup_fee')}:</span>}
+                  <LanguageContent fallback={<span className="text-gray-900">Upphæð:</span>}>
+                    {(t) => <span className="text-gray-900">{t('subscription.payment.amount')}:</span>}
                   </LanguageContent>
                   <span className="text-yellow-600">1.000 ISK</span>
                 </div>
@@ -1133,10 +1116,7 @@ export default function Subscription() {
                     <LanguageContent fallback={<span className="text-gray-900">Samtals:</span>}>
                       {(t) => <span className="text-gray-900">{t('subscription.payment.total')}:</span>}
                     </LanguageContent>
-                    <span className="text-yellow-600">
-                      {selectedTier === 'small' ? (calculateSubscriptionCost(employees.length).cost + 1000).toLocaleString('is-IS') : 
-                       selectedTier === 'medium' ? '15.750' : '15.500'} ISK
-                    </span>
+                    <span className="text-yellow-600">1.000 ISK</span>
                   </div>
                 </div>
               </div>
@@ -1171,7 +1151,11 @@ export default function Subscription() {
                       className="h-4 w-4 text-yellow-600 focus:ring-yellow-500 border-gray-300"
                     />
                     <label htmlFor="aur-payment" className="ml-3 flex items-center">
-                      <span className="text-2xl mr-3">📱</span>
+                      <span className="text-2xl mr-3">
+                        <svg className="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                        </svg>
+                      </span>
                       <div>
                         <LanguageContent fallback={
                           <>
