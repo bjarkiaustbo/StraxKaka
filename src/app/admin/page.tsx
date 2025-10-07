@@ -844,7 +844,16 @@ export default function Admin() {
             <div className="flex flex-col md:flex-row md:items-center space-y-2 md:space-y-0 md:space-x-4">
               <span className="text-xs md:text-sm text-gray-600">Upcoming Birthdays: <span className="text-black font-semibold">{upcomingBirthdays}</span></span>
               <span className="hidden md:inline text-gray-400">|</span>
-              <span className="text-xs md:text-sm text-gray-600">Monthly Revenue: <span className="text-black font-semibold">{totalRevenue.toLocaleString()} ISK</span></span>
+              <span className="text-xs md:text-sm text-gray-600">Per-Cake Revenue: <span className="text-black font-semibold">
+                {(() => {
+                  const totalRevenue = submissions.reduce((sum, sub) => {
+                    const tierPrice = sub.subscriptionTier === 'small' ? 15000 : 
+                                     sub.subscriptionTier === 'medium' ? 14750 : 14500;
+                    return sum + (tierPrice * (sub.employees?.length || 0));
+                  }, 0);
+                  return totalRevenue.toLocaleString() + ' ISK';
+                })()}
+              </span></span>
             </div>
           </div>
         </div>
@@ -1142,7 +1151,7 @@ export default function Admin() {
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 text-gray-900 placeholder-gray-500"
-                placeholder="Search by company name, contact, email, or subscription tier..."
+                placeholder="Search by company name, contact, email, or subscription tier (Small: 15k, Medium: 14.75k, Large: 14.5k ISK per cake)..."
               />
             </div>
             <div>
@@ -1340,8 +1349,12 @@ export default function Admin() {
                       </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="text-sm text-gray-900">
-                            <div className="font-semibold">{(submission.monthlyCost || 0).toLocaleString()} ISK</div>
-                            <div className="text-xs text-gray-500">monthly subscription</div>
+                            <div className="font-semibold">
+                              {submission.subscriptionTier === 'small' ? '15.000' : 
+                               submission.subscriptionTier === 'medium' ? '14.750' : 
+                               submission.subscriptionTier === 'large' ? '14.500' : '14.500'} ISK
+                            </div>
+                            <div className="text-xs text-gray-500">per cake + 1.000 ISK startup</div>
                           </div>
                         </td>
                       <td className="px-6 py-4 whitespace-nowrap">
@@ -1474,7 +1487,12 @@ export default function Admin() {
                       <p><strong>Address:</strong> {selectedSubmission.deliveryAddress || 'N/A'}</p>
                       <p><strong>Subscription:</strong> {selectedSubmission.subscriptionTier}</p>
                       <p><strong>Status:</strong> {selectedSubmission.status}</p>
-                      <p><strong>Monthly Subscription:</strong> {(selectedSubmission.monthlyCost || 0).toLocaleString()} ISK</p>
+                      <p><strong>Pricing:</strong> 
+                        {selectedSubmission.subscriptionTier === 'small' ? '15.000 ISK per cake + 1.000 ISK startup fee' : 
+                         selectedSubmission.subscriptionTier === 'medium' ? '14.750 ISK per cake + 1.000 ISK startup fee' : 
+                         selectedSubmission.subscriptionTier === 'large' ? '14.500 ISK per cake + 1.000 ISK startup fee' : 
+                         '14.500 ISK per cake + 1.000 ISK startup fee'}
+                      </p>
                       {selectedSubmission.employees && selectedSubmission.employees.length > 0 && (
                         <div className="mt-4">
                           <p><strong>Cake Preferences & Costs:</strong></p>

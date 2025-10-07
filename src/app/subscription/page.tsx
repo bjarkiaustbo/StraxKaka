@@ -992,18 +992,18 @@ export default function Subscription() {
                         </LanguageContent>
                       </h3>
                       <div className="text-4xl font-bold mb-2 text-yellow-500">
-                        <LanguageContent fallback="Hafa samband">
-                          {(t) => t('pricing.contact_for_pricing')}
+                        <LanguageContent fallback="14.750 ISK">
+                          {(t) => t('pricing.starter.price')}
                         </LanguageContent>
                       </div>
                       <div className="text-lg mb-6">
-                        <LanguageContent fallback="fyrir verð">
-                          {(t) => t('pricing.for_pricing')}
+                        <LanguageContent fallback="fyrir hverja afmælisköku">
+                          {(t) => t('pricing.starter.billing')}
                         </LanguageContent>
                       </div>
                       <div className="text-sm mb-8">
-                        <LanguageContent fallback="Hentar fyrir 26-50 starfsmenn">
-                          {(t) => t('pricing.medium.description')}
+                        <LanguageContent fallback="Hentar fyrir vaxandi fyrirtæki">
+                          {(t) => t('pricing.starter.description')}
                         </LanguageContent>
                       </div>
                       {selectedTier === 'medium' && (
@@ -1030,18 +1030,18 @@ export default function Subscription() {
                         </LanguageContent>
                       </h3>
                       <div className="text-4xl font-bold mb-2 text-yellow-500">
-                        <LanguageContent fallback="Hafa samband">
-                          {(t) => t('pricing.contact_for_pricing')}
+                        <LanguageContent fallback="14.500 ISK">
+                          {(t) => t('pricing.professional.price')}
                         </LanguageContent>
                       </div>
                       <div className="text-lg mb-6">
-                        <LanguageContent fallback="fyrir verð">
-                          {(t) => t('pricing.for_pricing')}
+                        <LanguageContent fallback="fyrir hverja afmælisköku">
+                          {(t) => t('pricing.professional.billing')}
                         </LanguageContent>
                       </div>
                       <div className="text-sm mb-8">
-                        <LanguageContent fallback="Hentar fyrir 51+ starfsmenn">
-                          {(t) => t('pricing.large.description')}
+                        <LanguageContent fallback="Hentar fyrir stofnuð fyrirtæki">
+                          {(t) => t('pricing.professional.description')}
                         </LanguageContent>
                       </div>
                       {selectedTier === 'large' && (
@@ -1099,33 +1099,46 @@ export default function Subscription() {
                 </div>
                 
                 {selectedTier === 'small' ? (
-                  <div className="flex justify-between text-lg font-semibold border-t pt-3">
-                    <LanguageContent fallback={<span className="text-gray-900">Mánaðargjald:</span>}>
+                  <div className="flex justify-between">
+                    <LanguageContent fallback={<span className="text-gray-900">Kökugjald:</span>}>
                       {(t) => <span className="text-gray-900">{t('subscription.payment.monthly_cost')}:</span>}
                     </LanguageContent>
                     <span className="text-yellow-600">{calculateSubscriptionCost(employees.length).cost.toLocaleString('is-IS')} ISK</span>
                   </div>
+                ) : selectedTier === 'medium' ? (
+                  <div className="flex justify-between">
+                    <LanguageContent fallback={<span className="text-gray-900">Kökugjald:</span>}>
+                      {(t) => <span className="text-gray-900">{t('subscription.payment.monthly_cost')}:</span>}
+                    </LanguageContent>
+                    <span className="text-yellow-600">14.750 ISK</span>
+                  </div>
                 ) : (
-                  <div className="border-t pt-3">
-                    <div className="text-center">
-                      <div className="text-lg font-semibold text-gray-900 mb-2">
-                        <LanguageContent fallback="Vinsamlegast hafðu samband fyrir verð">
-                          {(t) => t('subscription.payment.contact_pricing') || 'Contact for pricing'}
-                        </LanguageContent>
-                      </div>
-                      <div className="text-sm text-gray-600">
-                        <LanguageContent fallback="orders.straxkaka@outlook.com">
-                          {(t) => t('subscription.payment.contact_email') || 'orders.straxkaka@outlook.com'}
-                        </LanguageContent>
-                      </div>
-                      <div className="text-sm text-gray-600">
-                        <LanguageContent fallback="+354 790 4777">
-                          {(t) => t('subscription.payment.contact_phone') || '+354 790 4777'}
-                        </LanguageContent>
-                      </div>
-                    </div>
+                  <div className="flex justify-between">
+                    <LanguageContent fallback={<span className="text-gray-900">Kökugjald:</span>}>
+                      {(t) => <span className="text-gray-900">{t('subscription.payment.monthly_cost')}:</span>}
+                    </LanguageContent>
+                    <span className="text-yellow-600">14.500 ISK</span>
                   </div>
                 )}
+                
+                <div className="flex justify-between">
+                  <LanguageContent fallback={<span className="text-gray-900">Uppsetningargjald:</span>}>
+                    {(t) => <span className="text-gray-900">{t('subscription.payment.startup_fee')}:</span>}
+                  </LanguageContent>
+                  <span className="text-yellow-600">1.000 ISK</span>
+                </div>
+                
+                <div className="border-t pt-3">
+                  <div className="flex justify-between text-lg font-semibold">
+                    <LanguageContent fallback={<span className="text-gray-900">Samtals:</span>}>
+                      {(t) => <span className="text-gray-900">{t('subscription.payment.total')}:</span>}
+                    </LanguageContent>
+                    <span className="text-yellow-600">
+                      {selectedTier === 'small' ? (calculateSubscriptionCost(employees.length).cost + 1000).toLocaleString('is-IS') : 
+                       selectedTier === 'medium' ? '15.750' : '15.500'} ISK
+                    </span>
+                  </div>
+                </div>
               </div>
             </div>
 
