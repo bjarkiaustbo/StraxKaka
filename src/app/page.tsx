@@ -237,26 +237,26 @@ export default function Home() {
                   </LanguageContent>
                 </h3>
                 <div className="text-4xl font-bold mb-2 text-yellow-500">
-                  <LanguageContent fallback="Hafa samband">
-                    {(t) => t('pricing.contact')}
+                  <LanguageContent fallback="14.750 ISK">
+                    {(t) => t('pricing.starter.price')}
                   </LanguageContent>
                 </div>
                 <div className="text-lg mb-6">
-                  <LanguageContent fallback="fyrir verð">
-                    {(t) => t('pricing.for_pricing')}
+                  <LanguageContent fallback="fyrir hverja afmælisköku">
+                    {(t) => t('pricing.starter.billing')}
                   </LanguageContent>
                 </div>
                 <div className="text-sm mb-8">
-                  <LanguageContent fallback="Hentar fyrir 26-50 starfsmenn">
-                    {(t) => t('pricing.medium.description')}
+                  <LanguageContent fallback="Hentar fyrir vaxandi fyrirtæki">
+                    {(t) => t('pricing.starter.description')}
                   </LanguageContent>
                 </div>
                 <Link 
-                  href="/contact"
+                  href="/subscription"
                   className="w-full bg-yellow-500 text-black px-6 py-3 rounded-lg font-semibold hover:bg-yellow-400 transition-colors inline-block"
                 >
-                  <LanguageContent fallback="Hafa samband">
-                    {(t) => t('nav.contact')}
+                  <LanguageContent fallback="Byrja núna">
+                    {(t) => t('nav.start_now')}
                   </LanguageContent>
                 </Link>
               </div>
@@ -271,26 +271,26 @@ export default function Home() {
                   </LanguageContent>
                 </h3>
                 <div className="text-4xl font-bold mb-2 text-yellow-500">
-                  <LanguageContent fallback="Hafa samband">
-                    {(t) => t('pricing.contact')}
+                  <LanguageContent fallback="14.500 ISK">
+                    {(t) => t('pricing.professional.price')}
                   </LanguageContent>
                 </div>
                 <div className="text-lg mb-6">
-                  <LanguageContent fallback="fyrir verð">
-                    {(t) => t('pricing.for_pricing')}
+                  <LanguageContent fallback="fyrir hverja afmælisköku">
+                    {(t) => t('pricing.professional.billing')}
                   </LanguageContent>
                 </div>
                 <div className="text-sm mb-8">
-                  <LanguageContent fallback="Hentar fyrir 51+ starfsmenn">
-                    {(t) => t('pricing.large.description')}
+                  <LanguageContent fallback="Hentar fyrir stofnuð fyrirtæki">
+                    {(t) => t('pricing.professional.description')}
                   </LanguageContent>
                 </div>
                 <Link 
-                  href="/contact"
+                  href="/subscription"
                   className="w-full bg-yellow-500 text-black px-6 py-3 rounded-lg font-semibold hover:bg-yellow-400 transition-colors inline-block"
                 >
-                  <LanguageContent fallback="Hafa samband">
-                    {(t) => t('nav.contact')}
+                  <LanguageContent fallback="Byrja núna">
+                    {(t) => t('nav.start_now')}
                   </LanguageContent>
                 </Link>
               </div>

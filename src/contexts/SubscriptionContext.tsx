@@ -24,7 +24,6 @@ export interface Company {
   subscriptionStatus: SubscriptionStatus;
   subscriptionStartDate?: string;
   subscriptionEndDate?: string;
-  monthlyCost: number;
   employeeCount: number;
   dateCreated: string;
 }
@@ -65,39 +64,39 @@ export interface SubscriptionPricing {
 export const SUBSCRIPTION_PRICING: SubscriptionPricing[] = [
   {
     tier: 'small',
-    name: 'Little Company',
+    name: 'Small (1-5 employees)',
     minEmployees: 1,
-    maxEmployees: 25,
+    maxEmployees: 5,
     basePrice: 15000,
     pricePerEmployee: 0,
-    description: 'Perfect for small teams - includes cake costs'
+    description: '15,000 ISK per birthday cake delivered'
   },
   {
     tier: 'medium',
-    name: 'Medium Company',
-    minEmployees: 26,
-    maxEmployees: 50,
-    basePrice: 0,
+    name: 'Medium (6-10 employees)',
+    minEmployees: 6,
+    maxEmployees: 10,
+    basePrice: 14750,
     pricePerEmployee: 0,
-    description: 'Contact for pricing'
+    description: '14,750 ISK per birthday cake delivered'
   },
   {
     tier: 'large',
-    name: 'Large Company',
-    minEmployees: 51,
-    maxEmployees: 100,
-    basePrice: 0,
+    name: 'Large (11-20 employees)',
+    minEmployees: 11,
+    maxEmployees: 20,
+    basePrice: 14500,
     pricePerEmployee: 0,
-    description: 'Contact for pricing'
+    description: '14,500 ISK per birthday cake delivered'
   },
   {
     tier: 'enterprise',
-    name: 'Enterprise',
-    minEmployees: 101,
+    name: 'Enterprise (21+ employees)',
+    minEmployees: 21,
     maxEmployees: 999,
-    basePrice: 0,
+    basePrice: 14500,
     pricePerEmployee: 0,
-    description: 'Contact for pricing'
+    description: '14,500 ISK per birthday cake delivered'
   }
 ];
 
@@ -162,7 +161,7 @@ export function SubscriptionProvider({ children }: { children: ReactNode }) {
     );
     
     if (!pricing) {
-      return { tier: 'enterprise' as SubscriptionTier, cost: 0 };
+      return { tier: 'enterprise' as SubscriptionTier, cost: 14500 };
     }
     
     return { tier: pricing.tier, cost: pricing.basePrice };

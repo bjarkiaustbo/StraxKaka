@@ -106,8 +106,8 @@ export default function PricingTable({
                         {formatPrice(pricing.basePrice)}
                       </div>
                       <div className={`text-sm ${isSelected ? 'text-gray-700' : 'text-gray-300'}`}>
-                        <LanguageContent fallback="á mánuði + kökugjöld">
-                          {(t) => `${t('pricing.per_month')} + cake costs`}
+                        <LanguageContent fallback="fyrir hverja afmælisköku">
+                          {(t) => t('pricing.per_month')}
                         </LanguageContent>
                       </div>
                     </div>
