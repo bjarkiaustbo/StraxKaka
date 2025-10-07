@@ -583,8 +583,24 @@ export default function Admin() {
     if (sortField === 'company') {
       return (a.companyName || '').localeCompare(b.companyName || '');
     }
-    const aNext = getNextBirthdayDate(((a.employees && a.employees[0]?.birthday) || '1900-01-01')).getTime();
-    const bNext = getNextBirthdayDate(((b.employees && b.employees[0]?.birthday) || '1900-01-01')).getTime();
+    
+    // For birthday sorting, find the earliest upcoming birthday among all employees
+    const getEarliestBirthday = (submission: Submission) => {
+      if (!submission.employees || submission.employees.length === 0) {
+        return new Date('2099-12-31').getTime(); // Put companies with no employees at the end
+      }
+      
+      const activeEmployees = submission.employees.filter(emp => emp.employmentStatus === 'active');
+      if (activeEmployees.length === 0) {
+        return new Date('2099-12-31').getTime(); // Put companies with no active employees at the end
+      }
+      
+      const birthdays = activeEmployees.map(emp => getNextBirthdayDate(emp.birthday).getTime());
+      return Math.min(...birthdays);
+    };
+    
+    const aNext = getEarliestBirthday(a);
+    const bNext = getEarliestBirthday(b);
     return aNext - bNext;
   });
 
@@ -755,19 +771,6 @@ export default function Admin() {
             </div>
           </div>
 
-          <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
-            <div className="flex items-center">
-              <div className="p-3 bg-yellow-500 rounded-xl">
-                <svg className="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </div>
-              <div className="ml-4">
-                <p className="text-2xl font-bold text-black">{activeCompanies}</p>
-                <p className="text-sm font-medium text-gray-600">Active Companies</p>
-              </div>
-            </div>
-          </div>
 
           <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
             <div className="flex items-center">
@@ -1168,7 +1171,7 @@ export default function Admin() {
 
         {/* Search and Filters */}
         <div className="bg-white rounded-xl shadow-lg p-6 mb-8 border border-gray-200">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
             <div className="lg:col-span-2">
               <label className="block text-sm font-medium text-gray-700 mb-2">Search Companies</label>
               <input
@@ -1190,6 +1193,17 @@ export default function Admin() {
                 <option value="paid">Paid</option>
                 <option value="pending_payment">Pending Payment</option>
                 <option value="cancelled">Cancelled</option>
+              </select>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Sort by</label>
+              <select
+                value={sortField}
+                onChange={(e) => setSortField(e.target.value as 'company' | 'birthday')}
+                className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 text-gray-900"
+              >
+                <option value="company">Company Name</option>
+                <option value="birthday">Next Birthday</option>
               </select>
             </div>
           </div>
@@ -1283,7 +1297,6 @@ export default function Admin() {
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">Contact Person</th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">Delivery Address</th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">Delivery Status</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">Subscription</th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">Payment</th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">Notes</th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">Last Contact</th>
@@ -1347,16 +1360,6 @@ export default function Admin() {
                             {employee.deliveryStatus?.replace('_', ' ') || 'pending'}
                           </span>
                         </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                          submission.subscriptionStatus === 'active' ? 'bg-green-100 text-green-800' :
-                          submission.subscriptionStatus === 'paused' ? 'bg-yellow-100 text-yellow-800' :
-                          submission.subscriptionStatus === 'cancelled' ? 'bg-red-100 text-red-800' :
-                          'bg-gray-100 text-gray-800'
-                        }`}>
-                          {submission.subscriptionStatus ? submission.subscriptionStatus.charAt(0).toUpperCase() + submission.subscriptionStatus.slice(1) : 'Unknown'}
-                        </span>
-                      </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
                           submission.status === 'paid' ? 'bg-green-100 text-green-800' :
