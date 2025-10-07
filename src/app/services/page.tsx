@@ -17,7 +17,7 @@ export default function Services() {
       id: 'rose_light',
       nameIcelandic: 'Rósakaka ljóst sukkulaði',
       nameEnglish: 'Rose Cake Light Chocolate',
-      price: 12454,
+      price: 15000,
       image: '/cake-placeholder.jpg',
       dietary: 'Contains dairy, eggs, gluten'
     },
@@ -25,7 +25,7 @@ export default function Services() {
       id: 'rose_dark',
       nameIcelandic: 'Rósakaka dökkt súkkulaði',
       nameEnglish: 'Rose Cake Dark Chocolate',
-      price: 12454,
+      price: 15000,
       image: '/cake-placeholder.jpg',
       dietary: 'Contains dairy, eggs, gluten'
     },
@@ -33,7 +33,7 @@ export default function Services() {
       id: 'skuffu',
       nameIcelandic: 'Skúffukaka á bakka',
       nameEnglish: 'Skúffukaka on Tray',
-      price: 13326,
+      price: 15000,
       image: '/cake-placeholder.jpg',
       dietary: 'Contains dairy, eggs, gluten'
     },
@@ -41,7 +41,7 @@ export default function Services() {
       id: 'strawberry',
       nameIcelandic: 'Jarðaberja',
       nameEnglish: 'Strawberry',
-      price: 14666,
+      price: 15000,
       image: '/cake-placeholder.jpg',
       dietary: 'Contains dairy, eggs, gluten'
     },
@@ -49,7 +49,7 @@ export default function Services() {
       id: 'lemon_cheese',
       nameIcelandic: 'Sitronuost',
       nameEnglish: 'Lemon Cheese',
-      price: 14666,
+      price: 15000,
       image: '/cake-placeholder.jpg',
       dietary: 'Contains dairy, eggs, gluten'
     },
@@ -57,7 +57,7 @@ export default function Services() {
       id: 'biscoff',
       nameIcelandic: 'Biscoff',
       nameEnglish: 'Biscoff',
-      price: 14666,
+      price: 15000,
       image: '/cake-placeholder.jpg',
       dietary: 'Contains dairy, eggs, gluten'
     },
@@ -65,7 +65,7 @@ export default function Services() {
       id: 'daim',
       nameIcelandic: 'Daim',
       nameEnglish: 'Daim',
-      price: 14666,
+      price: 15000,
       image: '/cake-placeholder.jpg',
       dietary: 'Contains dairy, eggs, gluten'
     },
@@ -73,7 +73,7 @@ export default function Services() {
       id: 'tiramisu',
       nameIcelandic: 'Tiramisu',
       nameEnglish: 'Tiramisu',
-      price: 14666,
+      price: 15000,
       image: '/cake-placeholder.jpg',
       dietary: 'Contains dairy, eggs, gluten'
     },
@@ -81,7 +81,7 @@ export default function Services() {
       id: 'chocolate_caramel',
       nameIcelandic: 'Súkkulaði með karamellukremi',
       nameEnglish: 'Chocolate with Caramel Cream',
-      price: 14666,
+      price: 15000,
       image: '/cake-placeholder.jpg',
       dietary: 'Contains dairy, eggs, gluten'
     },
@@ -89,7 +89,7 @@ export default function Services() {
       id: 'chocolate_cream',
       nameIcelandic: 'Súkkulaði með súkkulaðikremi',
       nameEnglish: 'Chocolate with Chocolate Cream',
-      price: 14666,
+      price: 15000,
       image: '/cake-placeholder.jpg',
       dietary: 'Contains dairy, eggs, gluten'
     }

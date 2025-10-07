@@ -39,16 +39,16 @@ export interface CakeType {
 }
 
 export const CAKE_TYPES: CakeType[] = [
-  { id: 'rosakaka_ljos_sukkuladi', nameIcelandic: 'Rósakaka ljóst sukkulaði', nameEnglish: 'Rose cake light chocolate', price: 12454 },
-  { id: 'rosakaka_dokkt_sukkuladi', nameIcelandic: 'Rósakaka dökkt súkkulaði', nameEnglish: 'Rose cake dark chocolate', price: 12454 },
-  { id: 'skuffukaka_bakka', nameIcelandic: 'Skúffukaka á bakka', nameEnglish: 'Sheet cake', price: 13327 },
-  { id: 'jardaberja', nameIcelandic: 'Jarðaberja', nameEnglish: 'Strawberry', price: 14667 },
-  { id: 'sitronuost', nameIcelandic: 'Sitronuost', nameEnglish: 'Lemon cheese', price: 14667 },
-  { id: 'biscoff', nameIcelandic: 'Biscoff', nameEnglish: 'Biscoff', price: 14667 },
-  { id: 'daim', nameIcelandic: 'Daim', nameEnglish: 'Daim', price: 14667 },
-  { id: 'tiramisu', nameIcelandic: 'Tiramisu', nameEnglish: 'Tiramisu', price: 14667 },
-  { id: 'sukkuladi_karamellukremi', nameIcelandic: 'Súkkulaði með karamellukremi', nameEnglish: 'Chocolate with caramel cream', price: 14667 },
-  { id: 'sukkuladi_sukkuladikremi', nameIcelandic: 'Súkkulaði með súkkulaðikremi', nameEnglish: 'Chocolate with chocolate cream', price: 14667 }
+  { id: 'rosakaka_ljos_sukkuladi', nameIcelandic: 'Rósakaka ljóst sukkulaði', nameEnglish: 'Rose cake light chocolate', price: 15000 },
+  { id: 'rosakaka_dokkt_sukkuladi', nameIcelandic: 'Rósakaka dökkt súkkulaði', nameEnglish: 'Rose cake dark chocolate', price: 15000 },
+  { id: 'skuffukaka_bakka', nameIcelandic: 'Skúffukaka á bakka', nameEnglish: 'Sheet cake', price: 15000 },
+  { id: 'jardaberja', nameIcelandic: 'Jarðaberja', nameEnglish: 'Strawberry', price: 15000 },
+  { id: 'sitronuost', nameIcelandic: 'Sitronuost', nameEnglish: 'Lemon cheese', price: 15000 },
+  { id: 'biscoff', nameIcelandic: 'Biscoff', nameEnglish: 'Biscoff', price: 15000 },
+  { id: 'daim', nameIcelandic: 'Daim', nameEnglish: 'Daim', price: 15000 },
+  { id: 'tiramisu', nameIcelandic: 'Tiramisu', nameEnglish: 'Tiramisu', price: 15000 },
+  { id: 'sukkuladi_karamellukremi', nameIcelandic: 'Súkkulaði með karamellukremi', nameEnglish: 'Chocolate with caramel cream', price: 15000 },
+  { id: 'sukkuladi_sukkuladikremi', nameIcelandic: 'Súkkulaði með súkkulaðikremi', nameEnglish: 'Chocolate with chocolate cream', price: 15000 }
 ];
 
 export interface SubscriptionPricing {

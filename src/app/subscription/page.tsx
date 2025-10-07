@@ -854,7 +854,7 @@ export default function Subscription() {
                       <option value="">Veldu kökutegund</option>
                       {CAKE_TYPES.map((cake) => (
                         <option key={cake.id} value={cake.id}>
-                          {language === 'is' ? cake.nameIcelandic : cake.nameEnglish} - {cake.price.toLocaleString('is-IS')} ISK
+                          {language === 'is' ? cake.nameIcelandic : cake.nameEnglish}
                         </option>
                       ))}
                     </select>
