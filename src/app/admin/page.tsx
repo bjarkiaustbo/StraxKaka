@@ -50,6 +50,7 @@ export default function Admin() {
   const [submissions, setSubmissions] = useState<Submission[]>([]);
   const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+  const [sortField, setSortField] = useState<'company' | 'birthday'>('company');
   const [selectedSubmission, setSelectedSubmission] = useState<Submission | null>(null);
   const [filterStatus, setFilterStatus] = useState<string>('all');
   const [selectedCompanies, setSelectedCompanies] = useState<string[]>([]);
@@ -577,6 +578,16 @@ export default function Admin() {
     return matchesSearch && matchesStatus;
   });
 
+  // Apply sorting
+  const sortedSubmissions = [...filteredSubmissions].sort((a, b) => {
+    if (sortField === 'company') {
+      return (a.companyName || '').localeCompare(b.companyName || '');
+    }
+    const aNext = getNextBirthdayDate(((a.employees && a.employees[0]?.birthday) || '1900-01-01')).getTime();
+    const bNext = getNextBirthdayDate(((b.employees && b.employees[0]?.birthday) || '1900-01-01')).getTime();
+    return aNext - bNext;
+  });
+
   // Calculate statistics
   const totalCompanies = submissions.length;
   const activeCompanies = submissions.filter(sub => sub.subscriptionStatus === 'active').length;
@@ -604,16 +615,16 @@ export default function Admin() {
     }).length;
   }, 0);
 
-  // Get today's deliveries
+  // Get today's deliveries (same logic base as upcoming: daysUntilBirthday === 0)
   const todaysDeliveries = submissions.reduce((total, sub) => {
     if (!sub.employees) return total;
-    const today = new Date().toDateString();
-    
+    const today = new Date();
     return total + sub.employees.filter(emp => {
       if (emp.employmentStatus !== 'active') return false;
-      const birthday = new Date(emp.birthday);
-      birthday.setFullYear(new Date().getFullYear());
-      return birthday.toDateString() === today;
+      const nextBirthday = getNextBirthdayDate(emp.birthday);
+      const timeDiff = nextBirthday.getTime() - today.getTime();
+      const daysUntilBirthday = Math.ceil(timeDiff / (1000 * 3600 * 24));
+      return daysUntilBirthday === 0;
     }).length;
   }, 0);
 
@@ -844,12 +855,20 @@ export default function Admin() {
             <div className="flex flex-col md:flex-row md:items-center space-y-2 md:space-y-0 md:space-x-4">
               <span className="text-xs md:text-sm text-gray-600">Upcoming Birthdays: <span className="text-black font-semibold">{upcomingBirthdays}</span></span>
               <span className="hidden md:inline text-gray-400">|</span>
-              <span className="text-xs md:text-sm text-gray-600">Per-Cake Revenue: <span className="text-black font-semibold">
+              <span className="text-xs md:text-sm text-gray-600">Per-Cake Revenue (next 3 days): <span className="text-black font-semibold">
                 {(() => {
                   const totalRevenue = submissions.reduce((sum, sub) => {
                     const tierPrice = sub.subscriptionTier === 'small' ? 15000 : 
                                      sub.subscriptionTier === 'medium' ? 14750 : 14500;
-                    return sum + (tierPrice * (sub.employees?.length || 0));
+                    const today = new Date();
+                    const countNext3 = (sub.employees || []).filter(emp => {
+                      if (emp.employmentStatus !== 'active') return false;
+                      const nextBirthday = getNextBirthdayDate(emp.birthday);
+                      const timeDiff = nextBirthday.getTime() - today.getTime();
+                      const daysUntilBirthday = Math.ceil(timeDiff / (1000 * 3600 * 24));
+                      return daysUntilBirthday >= 0 && daysUntilBirthday <= 3;
+                    }).length;
+                    return sum + (tierPrice * countNext3);
                   }, 0);
                   return totalRevenue.toLocaleString() + ' ISK';
                 })()}
@@ -911,25 +930,25 @@ export default function Admin() {
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
               <div className="text-center">
                 <div className="text-3xl font-bold text-black mb-2">
-                  {Math.round((activeCompanies / totalCompanies) * 100)}%
+                  {totalCompanies > 0 ? Math.round((activeCompanies / totalCompanies) * 100) : 0}%
                 </div>
                 <p className="text-sm text-gray-600">Active Rate</p>
               </div>
               <div className="text-center">
                 <div className="text-3xl font-bold text-black mb-2">
-                  {Math.round(activeEmployees / activeCompanies)}
+                  {activeCompanies > 0 ? Math.round(activeEmployees / activeCompanies) : 0}
                 </div>
                 <p className="text-sm text-gray-600">Avg Employees/Company</p>
               </div>
               <div className="text-center">
                 <div className="text-3xl font-bold text-black mb-2">
-                  {Math.round(totalRevenue / activeCompanies)}
+                  {activeCompanies > 0 ? Math.round(totalRevenue / activeCompanies) : 0}
                 </div>
                 <p className="text-sm text-gray-600">Avg Revenue/Company</p>
               </div>
               <div className="text-center">
                 <div className="text-3xl font-bold text-black mb-2">
-                  {Math.round((overduePayments / totalCompanies) * 100)}%
+                  {totalCompanies > 0 ? Math.round((overduePayments / totalCompanies) * 100) : 0}%
                 </div>
                 <p className="text-sm text-gray-600">Overdue Rate</p>
               </div>
@@ -968,12 +987,16 @@ export default function Admin() {
                   <div className="ml-4">
                     <p className="text-sm text-gray-600">Today&apos;s Deliveries</p>
                     <p className="text-2xl font-bold text-yellow-600">
-                      {submissions.flatMap(sub => sub.employees || [])
-                        .filter(emp => {
-                          const today = new Date().toDateString();
-                          const birthday = new Date(emp.birthday).toDateString();
-                          return today === birthday;
-                        }).length}
+                      {(() => {
+                        const today = new Date();
+                        return submissions.flatMap(sub => sub.employees || [])
+                          .filter(emp => {
+                            if (emp.employmentStatus !== 'active') return false;
+                            const nextBirthday = getNextBirthdayDate(emp.birthday);
+                            const diff = Math.ceil((nextBirthday.getTime() - today.getTime()) / (1000 * 3600 * 24));
+                            return diff === 0;
+                          }).length;
+                      })()}
                     </p>
                   </div>
                 </div>
@@ -990,14 +1013,16 @@ export default function Admin() {
                   <div className="ml-4">
                     <p className="text-sm text-gray-600">This Week</p>
                     <p className="text-2xl font-bold text-yellow-600">
-                      {submissions.flatMap(sub => sub.employees || [])
-                        .filter(emp => {
-                          const today = new Date();
-                          const birthday = new Date(emp.birthday);
-                          const diffTime = birthday.getTime() - today.getTime();
-                          const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-                          return diffDays >= 0 && diffDays <= 7;
-                        }).length}
+                      {(() => {
+                        const today = new Date();
+                        return submissions.flatMap(sub => sub.employees || [])
+                          .filter(emp => {
+                            if (emp.employmentStatus !== 'active') return false;
+                            const nextBirthday = getNextBirthdayDate(emp.birthday);
+                            const diff = Math.ceil((nextBirthday.getTime() - today.getTime()) / (1000 * 3600 * 24));
+                            return diff >= 0 && diff <= 3;
+                          }).length;
+                      })()}
                     </p>
                   </div>
                 </div>
